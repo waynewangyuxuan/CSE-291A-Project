@@ -165,6 +165,14 @@ unchanged. Reports show reviewed-clean coverage and the rate among reviewed
 clean rows only. A failure-selected review is biased; it must not be presented
 as an estimated population false-refusal rate.
 
+Inspect saved state dictionaries directly when checking side effects. The pinned
+Workspace environment has initialization validators that can rebuild email and
+calendar maps from `initial_*` fields when a serialized final state is passed to
+`model_validate`; that is not a faithful replay of the saved final state. Scores
+were computed on the live simulated objects before serialization. A separate
+score replay must reproduce the recorded actions on a fresh pinned environment,
+or explicitly preserve the dynamic maps rather than reinitializing them.
+
 Use `require_review=True` for optional final validation. A fully collected
 campaign fails that gate until every selected trace has a valid review; report
 files still contain the incomplete coverage. A running campaign only reports
