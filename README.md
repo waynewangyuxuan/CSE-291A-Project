@@ -9,6 +9,12 @@ The canonical BF16 checkpoint is converted to F16; normalization weights remain
 F32. The earlier Q4 pilot is development evidence only. Tools operate on the
 benchmark's simulated resources. No paid inference API or cloud account is required.
 
+The [complete Phase 1 assessment](results/phase1/evaluation-assessment.md) covers
+all **600 episodes / 60 tasks / two seeds**: 575 normal returns, 25 retained
+errors and 168 distinct reviewed traces. It reports capability, attack success,
+refusal, latency, tokens, memory and a justified Phase 2 direction. The
+[results guide](results/phase1/README.md) links the audited tables and figures.
+
 ## Quick start
 
 Prerequisites: Apple Silicon macOS, Python 3.12, and [uv](https://docs.astral.sh/uv/).
@@ -62,7 +68,7 @@ make phase1-audit       # offline checks: 60 distinct tasks, source/checkers and
 make phase1            # run the frozen campaign against the ready F16 service
 make phase1-status     # inspect authoritative progress in another terminal
 make phase1-resume     # resume an interrupted campaign with the same code/config/deployment
-make phase1-analyze    # regenerate initial metrics, tables, review queue and latency plot
+make phase1-analyze    # regenerate cohort metrics, tables, review coverage and latency plot
 ```
 
 The campaign contains **60 distinct tasks across four suites**, two attack styles,
@@ -87,7 +93,7 @@ does not establish a model's task capability or complete semantic checker validi
 The [complete clean baseline](results/phase1/clean-baseline-assessment.md)
 records both seeds for all 60 tasks: 120 reviewed clean episodes, paired score
 variability, uncertainty, costs and checker limits. This clean subset is an
-interim checkpoint within the 600-episode campaign. The earlier
+archived interim checkpoint within the completed 600-episode campaign. The earlier
 [first-seed assessment](results/phase1/seed17-clean-assessment.md) remains archived.
 
 Analysis reports coverage while collection is in progress. The final preliminary

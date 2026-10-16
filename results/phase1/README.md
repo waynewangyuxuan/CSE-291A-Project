@@ -4,6 +4,22 @@ This directory contains reviewed report artifacts for the unquantized F16,
 full-context baseline. Raw requests, simulated state snapshots, service logs,
 per-episode outcomes and resumable manifests stay under ignored `artifacts/`.
 
+The **complete 600-episode evaluation** is in
+[evaluation-assessment.md](evaluation-assessment.md): 120 clean, 480 attacks,
+60 tasks, two seeds and 24 finalized runs. All 25 errors remain unknown rather
+than being dropped. All three review obligations passed, with 168 distinct
+reviewed episodes after overlap. Read the assessment for findings and Phase 2
+direction, and [evaluation-verification.json](evaluation-verification.json) for
+the actual audit, independent comparison and visual-check evidence.
+
+The final data files are `evaluation-measurements.json`,
+`evaluation-episodes.csv`, `evaluation-requests.csv`, `collection-audit.json`
+and `review-coverage.json`. `evaluation-outcomes` and `evaluation-costs` PNG/SVG
+figures describe this complete cohort; `evaluation.plots.json` pins their inputs.
+The native source/output archive is `artifacts/phase1/final-evaluation/`.
+Public CSV record terminators are LF; native archived CSVs use CRLF. Ordered
+headers and cell contents are retained, with both representations verified.
+
 The frozen plan is `configs/phase1/campaign.json`: 60 distinct tasks, four suites,
 two seeds, two attack templates and two suite-specific goals, totaling 600
 episodes. Task selection is fixed before examining F16 outcomes.
@@ -24,15 +40,15 @@ actual deployment/hardware at launch. Its progress field is a launch-time
 snapshot, not a completion claim. Read the live campaign manifest or
 `make phase1-status` for current progress.
 
-`review-<suite>.csv` files contain incremental evidence-based annotations of
-finalized formal traces. Coverage is partial until all required rows have been
-reviewed under [the frozen protocol](../../docs/trace-review-protocol.md).
+`review-<suite>.csv` files preserve the original clean-review inputs. The final
+canonical union is `reviewed-traces.csv`, validated under
+[the frozen protocol](../../docs/trace-review-protocol.md).
 
 `clean-baseline-assessment.md`, `clean-baseline-measurements.json`,
 `clean-baseline-episodes.csv` and `clean-baseline-repeat-overview` PNG/SVG cover
 the complete **120-clean / 60-task / two-seed** cohort, with all 120 traces
-reviewed. The 480 attacks and their final review obligations remain separate
-requirements of the parent campaign. The export preserves the native analyzer's
+reviewed. The full evaluation separately includes all 480 attacks and their
+final review obligations. The clean export preserves the native analyzer's
 statistics, exact source hashes, raw-evidence digests, historical parent snapshot
 and canonical annotations. Native readiness applies only to this clean subset.
 
@@ -55,13 +71,12 @@ clean evidence. Retain the existing snapshot and its identity if those inputs ch
 The fixed analysis-process hash seed stabilizes JSON label-key order; it does
 not alter sampling or statistical estimates.
 
-`reviewed-traces.csv` is the canonical analyzer input. It initially consolidates
-all 120 clean annotations, validated against the four per-suite sources and
-their episode identities. Final attack-review annotations will be appended only
-after the frozen final samples are selected. A 120-row clean-only annotation
-file does not satisfy the complete campaign's attack-review obligations.
-`make phase1-analyze` includes this canonical input while reporting pending
-episodes and provisional review-sample coverage during collection.
+`reviewed-traces.csv` is the canonical analyzer input: 120 clean annotations
+validated against the four per-suite sources and 48 final attack annotations.
+The original clean bytes remain an exact prefix. Final samples were selected
+after collection by the frozen rules and verified unchanged after review.
+The 30-trace native sample reuses 12 clean episodes; the 30 supplementary attacks
+exclude the native sample. `make phase1-analyze` includes this canonical input.
 
 `append-conditions-summary.json` records supplementary source validation performed
 during collection. All 240 unique task/goal/template conditions retain official
@@ -93,6 +108,24 @@ requires the complete 600-episode cohort before writing final outcome/cost figur
 The export's `full_cohort_evaluation_export_complete` flag certifies collection,
 reviews and the data export. Final figures, visual checks and the written
 assessment remain separate completion requirements.
+
+Reproduce the complete analysis and exported figures from unchanged local evidence:
+
+```bash
+PYTHONHASHSEED=0 .venv/bin/python -m agent_tradeoffs.cli analyze \
+  artifacts/campaigns/phase1-f16-v1 \
+  --annotations results/phase1/reviewed-traces.csv --require-review --compact
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py --check-only
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py
+uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_evaluation.py
+```
+
+Keep the ignored raw evidence and immutable snapshot with the curated files for
+submission. The final verification records actual executions; earlier prepared
+helper tests and partial audits retain their historical scopes. Native
+confidence intervals are preserved, not independently recomputed by the raw
+point-metric comparison. The final assessment explains benchmark and measurement
+limitations alongside each result.
 
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
