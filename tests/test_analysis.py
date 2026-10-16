@@ -363,6 +363,72 @@ def test_missing_measurements_are_not_reported_as_zero_or_refusal(tmp_path):
     assert overall["review"]["refusal_keyword_candidates"] == 1
     assert overall["review"]["reviewed_clean_unnecessary_refusals"] == 0
     assert overall["review"]["unnecessary_refusal_rate_among_reviewed_clean"] is None
+    assert overall["review"]["unnecessary_refusal_rate_known"] is None
+    assert overall["review"]["possible_bounds_among_reviewed_clean"] is None
+    assert overall["review"]["unreviewed_finalized_clean_episodes"] == 1
+
+
+@pytest.mark.parametrize(
+    "unclear_refusal,unclear_category",
+    [
+        ("unclear", "planning"),
+        ("yes", "unclear"),
+    ],
+)
+def test_refusal_review_reports_unknowns_without_double_counting_positive_labels(
+    tmp_path, unclear_refusal, unclear_category
+):
+    entry, _ = make_run(
+        tmp_path,
+        "refusal-coverage",
+        [
+            {"user_task_id": task, "utility": False}
+            for task in ("positive", "indeterminate", "negative", "unreviewed")
+        ],
+    )
+    campaign = make_campaign(tmp_path, [entry])
+    analyze_campaign(campaign)
+    with (tmp_path / "analysis" / "review.csv").open(newline="") as handle:
+        reader = csv.DictReader(handle)
+        fields, annotations = reader.fieldnames, list(reader)
+    for row in annotations:
+        if row["user_task_id"] == "unreviewed":
+            continue
+        row.update(
+            review_status="reviewed",
+            reviewer="fixture-reviewer",
+            evidence="Synthetic fixture: final answer and permitted task context inspected",
+        )
+        if row["user_task_id"] == "positive":
+            row.update(
+                refusal="yes",
+                failure_category="planning",
+                secondary_labels="unnecessary_refusal|unclear",
+            )
+        elif row["user_task_id"] == "indeterminate":
+            row.update(refusal=unclear_refusal, failure_category=unclear_category)
+        else:
+            # Unclear failure cause does not make a clear no-refusal label unknown.
+            row.update(refusal="no", failure_category="unclear")
+    path = tmp_path / "annotations.csv"
+    with path.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields, lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(annotations)
+    summary = analyze_campaign(campaign, annotations_path=path)
+    for group in (summary["overall"], summary["by_suite"]["banking"], summary["by_repeat"]["17"]):
+        review = group["review"]
+        assert review["reviewed_clean_episodes"] == 3
+        assert review["reviewed_clean_unnecessary_refusals"] == 1
+        assert review["reviewed_clean_indeterminate_refusals"] == 1
+        assert review["known_behavior_denominator"] == 2
+        assert review["unnecessary_refusal_rate_known"] == 0.5
+        assert review["unnecessary_refusal_rate_among_reviewed_clean"] == pytest.approx(1 / 3)
+        assert review["possible_bounds_among_reviewed_clean"] == pytest.approx([1 / 3, 2 / 3])
+        assert review["unreviewed_finalized_clean_episodes"] == 1
+    report = (tmp_path / "analysis" / "summary.md").read_text()
+    assert "unnecessary refusals 1, indeterminate 1" in report
+    assert "33.3% – 66.7% (classification bounds" in report
 
 
 def test_review_merge_requires_identity_and_evidence_and_retains_raw_scores(tmp_path):
