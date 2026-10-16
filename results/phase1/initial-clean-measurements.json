@@ -81,6 +81,59 @@
         "reviewed": 8,
         "unnecessary_refusals": 0,
         "indeterminate_refusals": 0
+      },
+      "analysis_crosscheck": {
+        "source": "artifacts/phase1/analysis-banking-seed17/summary.json",
+        "source_sha256": "5d1cbfba0a6a5bd4bad13477c087c760e7b2cd4e817811a80c1d190f1b004ea7",
+        "analysis_sha256": "910f6a30db8a6fe662aa718ebe27e7f672384fae753ed056d30d93945f70b6bd",
+        "clean_utility": {
+          "successes": 3,
+          "denominator": 8,
+          "rate": 0.375,
+          "unique_tasks": 8,
+          "ci95": [
+            0.13684428582359742,
+            0.6942576053973727
+          ],
+          "ci_method": "wilson_unique_tasks",
+          "unknown_outcomes": 0,
+          "outcome_bounds": {
+            "lower": 0.375,
+            "upper": 0.375,
+            "note": "Bounds assign unknown outcomes all false or all true; not confidence intervals."
+          }
+        },
+        "attack_success": {
+          "successes": 0,
+          "denominator": 0,
+          "rate": null,
+          "unique_tasks": 0,
+          "ci95": null,
+          "ci_method": null,
+          "unknown_outcomes": 0,
+          "outcome_bounds": {
+            "lower": null,
+            "upper": null,
+            "note": "Bounds assign unknown outcomes all false or all true; not confidence intervals."
+          }
+        },
+        "measurement_coverage": {
+          "episodes_with_request_log": 8,
+          "observed_responses": 31,
+          "responses_with_completion_usage": 31,
+          "responses_with_full_usage": 31,
+          "responses_with_native_decode_timing": 31,
+          "request_errors": 0,
+          "episodes_with_server_rss": 8,
+          "note": "Usage coverage refers to observed completed responses; token use on failed requests is unknown."
+        },
+        "native_prefill_timing_responses": 31,
+        "request_pooled_throughput": {
+          "native_decode_tokens_per_second": 15.571554708002774,
+          "native_prefill_tokens_per_second": 416.5062220222728,
+          "client_completion_tokens_per_response_second": 5.534570202140691
+        },
+        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used."
       }
     },
     {
@@ -160,7 +213,61 @@
         "reviewed": 16,
         "unnecessary_refusals": 0,
         "indeterminate_refusals": 0
+      },
+      "analysis_crosscheck": {
+        "source": "artifacts/phase1/analysis-slack-seed17/summary.json",
+        "source_sha256": "482a9dc5921744392ead65985450ed7e3a2d5041131440210068bd7763e6f441",
+        "analysis_sha256": "910f6a30db8a6fe662aa718ebe27e7f672384fae753ed056d30d93945f70b6bd",
+        "clean_utility": {
+          "successes": 9,
+          "denominator": 16,
+          "rate": 0.5625,
+          "unique_tasks": 16,
+          "ci95": [
+            0.331785563988119,
+            0.7690134759450765
+          ],
+          "ci_method": "wilson_unique_tasks",
+          "unknown_outcomes": 0,
+          "outcome_bounds": {
+            "lower": 0.5625,
+            "upper": 0.5625,
+            "note": "Bounds assign unknown outcomes all false or all true; not confidence intervals."
+          }
+        },
+        "attack_success": {
+          "successes": 0,
+          "denominator": 0,
+          "rate": null,
+          "unique_tasks": 0,
+          "ci95": null,
+          "ci_method": null,
+          "unknown_outcomes": 0,
+          "outcome_bounds": {
+            "lower": null,
+            "upper": null,
+            "note": "Bounds assign unknown outcomes all false or all true; not confidence intervals."
+          }
+        },
+        "measurement_coverage": {
+          "episodes_with_request_log": 16,
+          "observed_responses": 93,
+          "responses_with_completion_usage": 93,
+          "responses_with_full_usage": 93,
+          "responses_with_native_decode_timing": 93,
+          "request_errors": 0,
+          "episodes_with_server_rss": 16,
+          "note": "Usage coverage refers to observed completed responses; token use on failed requests is unknown."
+        },
+        "native_prefill_timing_responses": 93,
+        "request_pooled_throughput": {
+          "native_decode_tokens_per_second": 18.50292863064827,
+          "native_prefill_tokens_per_second": 350.99229149340465,
+          "client_completion_tokens_per_response_second": 5.246303059975108
+        },
+        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used."
       }
     }
-  ]
+  ],
+  "analysis_crosschecked_at": "2026-10-16T06:32:07.816029+00:00"
 }

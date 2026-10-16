@@ -13,11 +13,15 @@ identity is in [collection-provenance.json](collection-provenance.json).
 | Quantity | Banking, seed 17 | Slack, seed 17 |
 | --- | ---: | ---: |
 | Programmatic utility | 3/8 (37.5%) | 9/16 (56.25%) |
+| Descriptive 95% Wilson interval | 13.68%–69.43% | 33.18%–76.90% |
 | Completed / runtime errors | 8 / 0 | 16 / 0 |
 | Episode latency, mean / median | 27.38 / 21.96 s | 34.98 / 32.11 s |
 | Episode latency, sample SD / p95 | 16.88 / 54.95 s | 15.82 / 61.34 s |
 | Episode time, total | 219.03 s | 559.75 s |
 | Prompt / completion tokens | 59,232 / 1,210 | 142,069 / 2,934 |
+| Response/native-timing coverage | 31/31 | 93/93 |
+| Native decode / prefill throughput | 15.57 / 416.51 tokens/s | 18.50 / 350.99 tokens/s |
+| Client completion throughput | 5.53 tokens/s | 5.25 tokens/s |
 | Peak sampled server RSS | 20,084,719,616 bytes | 20,091,731,968 bytes |
 | Clean traces inspected | 8/8 | 16/16 |
 | Observed unnecessary refusal | 0/8 | 0/16 |
@@ -28,6 +32,12 @@ it does not measure total GPU/unified-memory use. Two recovered tool errors in
 Slack are recorded separately from infrastructure failures. Machine-readable
 measurements and source hashes are in
 [initial-clean-measurements.json](initial-clean-measurements.json).
+Wilson intervals here use one observation per distinct task and do not establish
+generalization beyond the selected tasks. The full repeated campaign requires
+task-cluster intervals instead. Throughput above pools request token counts over
+matching durations: native decode excludes the first token's nonexistent decode
+step, while client throughput includes prefill and response overhead. These
+clocks/scopes differ; sums of episode rates are not used.
 
 All 24 traces were inspected by `agent-trace-review/workload` or
 `agent-trace-review/metrics`, including

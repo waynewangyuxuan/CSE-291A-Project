@@ -185,3 +185,9 @@ Use multiple labels when failures overlap. Unnecessary refusal and task
 misunderstanding require inspected context; an unverified automatic rule may
 only nominate a case. The resulting examples and corrected labels support the
 preliminary assessment and a justified Phase 2 quantization/context study.
+
+The predeclared [trace-review protocol](trace-review-protocol.md) additionally
+requires all 120 clean traces for refusal coverage and 30 supplementary attack
+cases covering every suite/goal/template cell. The analyzer's original 30-trace
+gate remains required. These qualitative reviews identify agent reviewers and
+do not replace programmatic scores or claim independent human annotation.

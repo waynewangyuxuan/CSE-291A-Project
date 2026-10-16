@@ -76,6 +76,12 @@ statistics rather than invented zero values. Both all-attempt and completed-only
 cost groups are provided because timeout costs and successful task costs answer
 different questions.
 
+The generic distribution field `total` is additive for latency, token and call
+counts. Summed RSS peaks are not total memory consumption, and summed rates are
+not aggregate throughput. Report RSS maxima/quantiles and episode-rate
+distributions; compute pooled throughput from summed token counts divided by
+summed matching durations in `requests.csv` when needed.
+
 | Measurement | Source and practical meaning |
 |---|---|
 | Episode latency | Monotonic elapsed wall time; includes sequential requests, tools, client overhead and errors |
