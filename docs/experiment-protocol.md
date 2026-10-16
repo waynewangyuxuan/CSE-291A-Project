@@ -23,6 +23,11 @@ latencies are steady-service measurements, not cold-start latencies. Requests
 explicitly disable prompt-prefix reuse (`cache_prompt=false`) so earlier
 episodes do not silently accelerate later ones. Native server startup logs
 remain separate; raw usage retains any cache details returned by the service.
+This control also disables reuse between requests within one episode: the
+full-history baseline repeatedly processes prior tool content. Its measured
+prefill costs therefore describe this uncached protocol, not a deployment with
+managed prefix reuse. Phase 2 comparisons must keep that setting fixed or
+identify a caching experiment separately.
 
 ## Paired workload
 
