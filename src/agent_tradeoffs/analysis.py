@@ -962,7 +962,8 @@ def _markdown(summary: dict[str, Any]) -> str:
             f"indeterminate {refusal['reviewed_clean_indeterminate_refusals']}. "
             f"Possible incidence among reviewed clean episodes: {refusal_bounds_text} "
             "(classification bounds, not a confidence interval). "
-            f"Unreviewed finalized clean episodes: {refusal['unreviewed_finalized_clean_episodes']}; "
+            "Unreviewed finalized clean episodes: "
+            f"{refusal['unreviewed_finalized_clean_episodes']}; "
             "pending episodes have no inferred refusal label.",
             f"Selected-trace review gate: {summary['review_sample']['reviewed_selected_traces']} / "
             f"{summary['review_sample']['required_traces']} reviewed; "
