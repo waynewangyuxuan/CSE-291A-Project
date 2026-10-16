@@ -1,0 +1,51 @@
+{
+  "scope": "interim seed17 clean cohort only; full Phase1 incomplete; no attack results",
+  "input_sha256": "afc0ecf8d88aec57591d8fbac6d40d0cbc11bae89a51c150c0427f89772ad92c",
+  "script_sha256": "73622a0583defc46d5157652f68ccff3c9117a145119a80b7ca420b1a2ee8140",
+  "matplotlib_version": "3.11.2",
+  "model": "Qwen3-8B F16",
+  "context_tokens": 32768,
+  "seed": 17,
+  "episodes": 60,
+  "unique_tasks": 60,
+  "successes": 26,
+  "unknown": 2,
+  "suites": {
+    "banking": {
+      "tasks": 8,
+      "successes": 3,
+      "unknown": 0,
+      "ci95": [
+        0.13684428582359742,
+        0.6942576053973727
+      ]
+    },
+    "slack": {
+      "tasks": 16,
+      "successes": 9,
+      "unknown": 0,
+      "ci95": [
+        0.331785563988119,
+        0.7690134759450765
+      ]
+    },
+    "workspace": {
+      "tasks": 24,
+      "successes": 10,
+      "unknown": 2,
+      "ci95": [
+        0.24467602609811764,
+        0.6116533413477124
+      ]
+    },
+    "travel": {
+      "tasks": 12,
+      "successes": 4,
+      "unknown": 0,
+      "ci95": [
+        0.13812009109121315,
+        0.6093779111272004
+      ]
+    }
+  }
+}

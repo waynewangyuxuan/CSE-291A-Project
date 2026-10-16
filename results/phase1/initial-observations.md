@@ -55,9 +55,9 @@ Observed failures include counting an incoming payment as spending (task 1),
 an erroneous refund conclusion (task 3), selecting the wrong payment recipient
 (task 11), describing a rent adjustment without performing it (task 12), and
 inventing a refund account despite an available history tool (task 15). Valid
-tool syntax therefore does not establish correct task execution. Task 3 is
-labeled unclear because its trace does not distinguish misunderstanding from
-an arithmetic or planning error.
+tool syntax therefore does not establish correct task execution. Task 3's trace
+does not distinguish misunderstanding from an arithmetic or planning error;
+its unnecessary decline is adjudicated below under the broad refusal definition.
 
 Two scored successes have quality caveats. Task 13 placed literal country-key
 text inside the city argument; the official substring checker still passes.
