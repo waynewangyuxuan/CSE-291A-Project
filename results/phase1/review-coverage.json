@@ -1,0 +1,205 @@
+{
+  "complete": true,
+  "additional_selection": {
+    "requested": 30,
+    "selected": 30,
+    "selection_complete": true,
+    "base_sample_excluded": 30,
+    "empty_cells_after_exclusion": [],
+    "selected_unique_tasks": 27,
+    "selected_by_suite": {
+      "banking": 7,
+      "slack": 8,
+      "travel": 8,
+      "workspace": 7
+    },
+    "selected_by_seed": {
+      "seed-17": 15,
+      "seed-29": 15
+    },
+    "selected_by_outcome": {
+      "error": 4,
+      "exposed_success": 7,
+      "exposed_unsuccessful": 15,
+      "unexposed": 4
+    },
+    "selection_key_sha256": "9d01a5484de4b9dd825891ed172387a6b45044d0bd811dffc558b7264ca77c18",
+    "purpose": "Deterministic purposive trace review; not a prevalence sample."
+  },
+  "review_coverage": {
+    "all_clean": {
+      "clean_episodes": 120,
+      "reviewed": 120,
+      "unreviewed": 0,
+      "unnecessary_refusals": 2,
+      "indeterminate": 11,
+      "known_behavior_denominator": 109,
+      "unnecessary_refusal_rate_known": 0.01834862385321101,
+      "observed_incidence_all_clean": 0.016666666666666666,
+      "possible_bounds_including_unreviewed": [
+        0.016666666666666666,
+        0.10833333333333334
+      ]
+    },
+    "clean_by_suite": {
+      "banking": {
+        "clean_episodes": 16,
+        "reviewed": 16,
+        "unreviewed": 0,
+        "unnecessary_refusals": 1,
+        "indeterminate": 2,
+        "known_behavior_denominator": 14,
+        "unnecessary_refusal_rate_known": 0.07142857142857142,
+        "observed_incidence_all_clean": 0.0625,
+        "possible_bounds_including_unreviewed": [
+          0.0625,
+          0.1875
+        ]
+      },
+      "slack": {
+        "clean_episodes": 32,
+        "reviewed": 32,
+        "unreviewed": 0,
+        "unnecessary_refusals": 0,
+        "indeterminate": 0,
+        "known_behavior_denominator": 32,
+        "unnecessary_refusal_rate_known": 0.0,
+        "observed_incidence_all_clean": 0.0,
+        "possible_bounds_including_unreviewed": [
+          0.0,
+          0.0
+        ]
+      },
+      "travel": {
+        "clean_episodes": 24,
+        "reviewed": 24,
+        "unreviewed": 0,
+        "unnecessary_refusals": 0,
+        "indeterminate": 1,
+        "known_behavior_denominator": 23,
+        "unnecessary_refusal_rate_known": 0.0,
+        "observed_incidence_all_clean": 0.0,
+        "possible_bounds_including_unreviewed": [
+          0.0,
+          0.041666666666666664
+        ]
+      },
+      "workspace": {
+        "clean_episodes": 48,
+        "reviewed": 48,
+        "unreviewed": 0,
+        "unnecessary_refusals": 1,
+        "indeterminate": 8,
+        "known_behavior_denominator": 40,
+        "unnecessary_refusal_rate_known": 0.025,
+        "observed_incidence_all_clean": 0.020833333333333332,
+        "possible_bounds_including_unreviewed": [
+          0.020833333333333332,
+          0.1875
+        ]
+      }
+    },
+    "clean_by_seed": {
+      "seed-17": {
+        "clean_episodes": 60,
+        "reviewed": 60,
+        "unreviewed": 0,
+        "unnecessary_refusals": 2,
+        "indeterminate": 6,
+        "known_behavior_denominator": 54,
+        "unnecessary_refusal_rate_known": 0.037037037037037035,
+        "observed_incidence_all_clean": 0.03333333333333333,
+        "possible_bounds_including_unreviewed": [
+          0.03333333333333333,
+          0.13333333333333333
+        ]
+      },
+      "seed-29": {
+        "clean_episodes": 60,
+        "reviewed": 60,
+        "unreviewed": 0,
+        "unnecessary_refusals": 0,
+        "indeterminate": 5,
+        "known_behavior_denominator": 55,
+        "unnecessary_refusal_rate_known": 0.0,
+        "observed_incidence_all_clean": 0.0,
+        "possible_bounds_including_unreviewed": [
+          0.0,
+          0.08333333333333333
+        ]
+      }
+    },
+    "base_gate_reviewed": 30,
+    "base_gate_total": 30,
+    "additional_reviewed": 30,
+    "additional_total": 30,
+    "review_obligations_complete": true,
+    "reviewers": {
+      "agent-trace-review/workload": 7,
+      "agent-trace-review/workload+root": 1,
+      "agent-trace-review/metrics": 32,
+      "agent-trace-review/metrics+root-consistency": 4,
+      "agent-trace-review/runtime": 59,
+      "agent-trace-review/runtime+workload": 2,
+      "agent-trace-review/runtime+workload+root": 1,
+      "agent-trace-review/runtime+root-consistency": 2,
+      "agent-trace-review/consistency": 12,
+      "agent-trace-review/phase1_final_review_a": 16,
+      "agent-trace-review/phase1_final_review_b": 16,
+      "agent-trace-review/phase1_final_review_c": 16
+    },
+    "note": "Agent trace review is not independent human annotation; programmatic scores are unchanged."
+  },
+  "overlap_counts": {
+    "clean_and_base": 12,
+    "base_and_additional": 0,
+    "clean_and_additional": 0,
+    "distinct_required_episodes": 168,
+    "note": "Required union = 180 minus clean/base overlap; these are reviewed episodes, not independent observations."
+  },
+  "attack_cell_coverage": {
+    "required_cells": 16,
+    "base_and_additional_cells": 16,
+    "empty_cells_after_exclusion_verified": true
+  },
+  "snapshot_identity": "b8279ce686bf5d45a5d618b2ac199ed2c1574342c7d4887ceb28bb68ef8fb28b",
+  "native_base_selection": {
+    "required_traces": 30,
+    "selected_traces": 30,
+    "selected_unique_tasks": 29,
+    "reviewed_selected_traces": 30,
+    "complete": true,
+    "campaign_finalized": true,
+    "provisional_selection": false,
+    "selection_sha256": "2b8e612667bd4f21bdf105c8fe140195cb1eca904a1cf5ea4b2ebde6931ad428",
+    "selection_method": "stable SHA256 ranking, round-robin suite/outcome strata, prefer task diversity; deterministic purposive review, not a prevalence sample",
+    "selected_by_suite": {
+      "banking": 8,
+      "slack": 8,
+      "travel": 6,
+      "workspace": 8
+    },
+    "selected_by_stratum": {
+      "clean_failure": 8,
+      "invalid_output_or_tool_error": 7,
+      "scored_attack_success": 6,
+      "utility_preserving": 7,
+      "other": 8
+    }
+  },
+  "annotations": {
+    "path": "/Users/waynewang/CSE-291A-Project/artifacts/phase1/final-evaluation/annotations.csv",
+    "sha256": "f974411438a6f3f876e89481967f35db9f5a0a6b308fd2f32f47c2f90685dcb8",
+    "bytes": 246845
+  },
+  "base_sample": {
+    "path": "/Users/waynewang/CSE-291A-Project/artifacts/phase1/final-evaluation/analysis/review-sample.csv",
+    "sha256": "4630082cad883616afe5ba105e7ef020968a4aa6915428d9f75bf3d069c16f19",
+    "bytes": 57339
+  },
+  "additional_cases": {
+    "path": "/Users/waynewang/CSE-291A-Project/artifacts/phase1/final-evaluation/additional-review-cases.csv",
+    "sha256": "2c2503c4f3e9b5d9ccad7021c351388eb06cf4cab6d8fbac269b8f6af72b8e8b",
+    "bytes": 54878
+  }
+}

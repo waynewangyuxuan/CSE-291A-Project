@@ -76,7 +76,7 @@ def style_axes(ax):
     ax.grid(axis="x")
 
 
-def rate_point(ax, rate, y, color, marker, label=None):
+def rate_point(ax, rate, y, color, marker, label=None, *, label_after_interval=False):
     value = rate["rate"]
     if value is None:
         ax.text(0.98, y, "n=0", ha="right", va="center", color=color, fontsize=8)
@@ -92,10 +92,23 @@ def rate_point(ax, rate, y, color, marker, label=None):
         color=color,
         label=label,
     )
+    fraction = f"{rate['successes']}/{rate['denominator']}"
+    if label_after_interval:
+        ax.annotate(
+            fraction,
+            xy=(ci[1] if ci else value, y),
+            xytext=(6, 0),
+            textcoords="offset points",
+            ha="left",
+            va="center",
+            color=color,
+            fontsize=8,
+        )
+        return
     ax.text(
         value,
         y + 0.075,
-        f"{rate['successes']}/{rate['denominator']}",
+        fraction,
         ha="left" if value < 0.05 else "right" if value > 0.95 else "center",
         va="bottom",
         color=color,
@@ -136,7 +149,13 @@ def plot_outcomes(data, *, subtitle):
             ),
         ):
             rate_point(
-                attack_ax, rates[key], 3 - i + offset, color, marker, label if i == 0 else None
+                attack_ax,
+                rates[key],
+                3 - i + offset,
+                color,
+                marker,
+                label if i == 0 else None,
+                label_after_interval=True,
             )
     for ax in (utility_ax, attack_ax):
         style_axes(ax)

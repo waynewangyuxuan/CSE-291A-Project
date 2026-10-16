@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-16T18:28:21.503083+00:00",
+  "scope": "Actual verification of the complete frozen Phase1 data export and final figures; report quality and goal completion are checked separately.",
+  "verification_passed": true,
+  "campaign_identity": "b61d56e553d420327c917fb8c3ad7793bc1cce293e12fae07b90c0eefe99a2c1",
+  "snapshot_identity": "b8279ce686bf5d45a5d618b2ac199ed2c1574342c7d4887ceb28bb68ef8fb28b",
+  "cohort": {
+    "episodes": 600,
+    "clean": 120,
+    "attack": 480,
+    "unique_tasks": 60,
+    "seeds": [
+      17,
+      29
+    ],
+    "runs": 24,
+    "completed": 575,
+    "errors": 25
+  },
+  "official_collection_audit": {
+    "artifact": {
+      "path": "results/phase1/collection-audit.json",
+      "bytes": 9224,
+      "sha256": "9d00125815345a15c82cd7039f8b8ac6a9db9ed44863429a61ee124f3fa98908"
+    },
+    "status": "passed_complete",
+    "evidence_inventory_sha256": "b16d02cfd07066fb46edb5f1563faf27a26f5982f6424cd064c7a57b858e6f34",
+    "raw_scores_modified": false
+  },
+  "independent_raw_validation": {
+    "artifact": {
+      "path": "artifacts/phase1/helpers/phase1-full600-independent-v2.json",
+      "bytes": 3053313,
+      "sha256": "caecf51f8fa21ff691a6e561e3506aa759aa5d4470597bdbe31d3d5538586b6f"
+    },
+    "source": {
+      "path": "artifacts/phase1/helpers/phase1-full600-independent-v2.py",
+      "bytes": 56555,
+      "sha256": "d54ad94c2269e92c9e4ad5b604bf3bf0f7f64f50b16cb20a9d6b7f9df47ac628"
+    },
+    "actual_full600_execution_passed": true,
+    "raw_source_files": 2449,
+    "frozen_inputs": 28,
+    "metric_groups": 81,
+    "clean_groups": 15,
+    "scope_at_capture": "Raw collection only; its phase1_evaluation_complete=false preceded final review, export, plots and assessment."
+  },
+  "independent_native_comparison": {
+    "artifact": {
+      "path": "artifacts/phase1/helpers/phase1-full600-native-comparison-v4.json",
+      "bytes": 3328,
+      "sha256": "f94648e637a53de647c78a84ad686b45fa2658915ae4ce388438965c5d5b0036"
+    },
+    "source": {
+      "path": "artifacts/phase1/helpers/phase1-full600-native-comparison-v4.py",
+      "bytes": 40147,
+      "sha256": "9ce4d370293410005375232d82b3eb11e081c5a22cfe588fce02cef50e32d486"
+    },
+    "actual_full600_execution_passed": true,
+    "comparisons": 157574,
+    "differences": 0,
+    "owned_export_files": 21,
+    "all_owned_files_rechecked_unchanged": true,
+    "native_CIs_preserved": true,
+    "native_CIs_independently_recomputed": false,
+    "checker_semantics_or_review_judgments_independently_validated": false,
+    "scope": "Raw/native point metrics, counts/unknowns/bounds/control joins, original↔CSV requests/episodes, all/completed/utility-success cost distributions, matched pooled masks, RSS, and source evidence hashes. Source/runtime validity also requires the already-passed formal complete collection audit."
+  },
+  "csv_serialization": {
+    "native_record_terminator": "CRLF",
+    "curated_record_terminator": "LF",
+    "ordered_header_row_cell_equality": true,
+    "curated_bytes_equal_independent_LF_serialization": true,
+    "embedded_field_newlines_preserved": true,
+    "ordered_cells_including_headers": 79871
+  },
+  "review": {
+    "canonical": {
+      "path": "results/phase1/reviewed-traces.csv",
+      "bytes": 246845,
+      "sha256": "f974411438a6f3f876e89481967f35db9f5a0a6b308fd2f32f47c2f90685dcb8"
+    },
+    "clean_reviewed": 120,
+    "native_sample_reviewed": 30,
+    "additional_attacks_reviewed": 30,
+    "clean_native_overlap": 12,
+    "distinct_union": 168,
+    "attack_cells": 16,
+    "base_selection_sha256": "2b8e612667bd4f21bdf105c8fe140195cb1eca904a1cf5ea4b2ebde6931ad428",
+    "additional_selection_key_sha256": "9d01a5484de4b9dd825891ed172387a6b45044d0bd811dffc558b7264ca77c18",
+    "both_frozen_memberships_unchanged": true,
+    "nature": "Qualitative agent inspection; not independent human annotation or a validated LLM judge."
+  },
+  "figures": {
+    "sidecar": {
+      "path": "results/phase1/evaluation.plots.json",
+      "bytes": 603,
+      "sha256": "8f3fc8c0d3ee917e72f74d4047d4f0e6a5ff4f74ed46b791829822a4fd2b6f86"
+    },
+    "files": [
+      {
+        "path": "results/phase1/evaluation-outcomes.png",
+        "bytes": 344043,
+        "sha256": "99e78da7f33f0d10d79db8513e71a7fdcaac73214a9f7145107aba8dc33bf4f1"
+      },
+      {
+        "path": "results/phase1/evaluation-outcomes.svg",
+        "bytes": 59882,
+        "sha256": "f18f3110d8a50a25d79c32d9eabab0126fd4f108bb3e8752e8ba2e90dd18c807"
+      },
+      {
+        "path": "results/phase1/evaluation-costs.png",
+        "bytes": 204890,
+        "sha256": "1af7270c657f162142db538382b5da443804d9b7d7b5def7e95643fcdb5cf50b"
+      },
+      {
+        "path": "results/phase1/evaluation-costs.svg",
+        "bytes": 49403,
+        "sha256": "1c783908508e40023736e0cb691dcb7df6d30f03e4d2df2a02bd554132b8d6f8"
+      }
+    ],
+    "visual_qa": {
+      "path": "artifacts/phase1/final-review/final-plots-visual-qa.json",
+      "bytes": 7667,
+      "sha256": "43e3d7e93b124089a1c26090bdc71e14e01bb2d32802751434ca455a3bab841c"
+    },
+    "actual_final_PNGs_visually_inspected": true,
+    "PNG_SVG_embedded_metadata_matches_inputs": true,
+    "conclusion": "passed"
+  },
+  "retained_diagnostics": [
+    {
+      "artifact": "artifacts/phase1/final-evaluation-refused-missing-base-style",
+      "outcome": "Unowned export refused before any curated publication; compact native review CSV omitted attack_variant. Exporter now joins validated keys to complete episode rows. Seven focused export tests passed."
+    },
+    {
+      "artifact": {
+        "path": "artifacts/phase1/helpers/phase1-full600-native-comparison-v3.json",
+        "bytes": 3815,
+        "sha256": "f80989bbe2ef5ba49444a37bec9a75fc424425dc8da121fd0b108d9557e67ec1"
+      },
+      "outcome": "157572 checks, two byte-hash differences caused solely by intentional CSV record terminators; all other comparisons passed. V4 retains all157570 other comparisons, adds ordered cell checks and exact LF serialization; original source/proof retained."
+    },
+    {
+      "artifact": {
+        "path": "artifacts/phase1/helpers/phase1-full600-native-comparison-v4-focused-tests.json",
+        "bytes": 2418,
+        "sha256": "008c69c56f8526b5ae13fa1e2c5547e6e940c77bd623c44c63ac03cc083726d5"
+      },
+      "outcome": "12 synthetic serialization/unchanged-comparison tests passed; this preparation proof is separate from actual full600 V4 execution."
+    }
+  ],
+  "curated_inputs": [
+    {
+      "path": "results/phase1/evaluation-measurements.json",
+      "bytes": 1265000,
+      "sha256": "d6edb7a876d7d84b4ca04d7263d71119f862a2590d07af8287d8123cb91f00e6"
+    },
+    {
+      "path": "results/phase1/evaluation-episodes.csv",
+      "bytes": 595090,
+      "sha256": "45e9a8d88a30a15c292b7f65f50ef98d3dadc3b00ecd290d41f13be1cc8d2739"
+    },
+    {
+      "path": "results/phase1/evaluation-requests.csv",
+      "bytes": 513729,
+      "sha256": "2799da4b4c2fc5290a600e0dab6b6b055c48b46f37fcd4907d620d4580d9c092"
+    },
+    {
+      "path": "results/phase1/collection-audit.json",
+      "bytes": 9224,
+      "sha256": "9d00125815345a15c82cd7039f8b8ac6a9db9ed44863429a61ee124f3fa98908"
+    },
+    {
+      "path": "results/phase1/review-coverage.json",
+      "bytes": 6654,
+      "sha256": "5a6cae033239719728af2aae81bcf6ccbc8721edb5cdc965354e53036a439024"
+    }
+  ],
+  "reproducibility_note": "Original ignored artifacts/runs, artifacts/campaigns, final-evaluation snapshot and helper sources/proofs remain local. Preserve these when assembling the submission. Curated results alone cannot reconstruct lost action traces."
+}
