@@ -93,6 +93,11 @@ Keep the inference service unchanged during the campaign. Compatible restarts
 can resume; a different checkpoint, precision, context budget or runtime flags
 cannot silently join the same campaign.
 
+`make phase1-analyze` reads the canonical reviewed annotations and prints a
+compact progress summary. Full statistics, provenance, tables and figures remain
+under `artifacts/campaigns/phase1-f16-v1/analysis/`. Direct CLI analysis retains
+its full JSON output by default; add `--compact` for the same concise display.
+
 ## Where things belong
 
 | Location | Contents | Git |

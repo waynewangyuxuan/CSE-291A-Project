@@ -7,6 +7,7 @@ import dataclasses
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 RUNTIME_CONFIG = "configs/runtime-qwen3-8b-f16.toml"
 
@@ -22,6 +23,65 @@ def _print(value: object) -> None:
         raise TypeError(f"Cannot encode {type(item).__name__}")
 
     print(json.dumps(value, default=encode, indent=2, ensure_ascii=False))
+
+
+def _compact_analysis(summary: dict[str, Any]) -> dict[str, Any]:
+    """Project native analysis fields for stdout after full artifacts are saved."""
+    overall = summary["overall"]
+    return {
+        **{
+            key: summary[key]
+            for key in (
+                "campaign_id",
+                "output_dir",
+                "planned_episodes",
+                "planned_count_scope",
+                "finalized_episodes",
+                "missing_episodes",
+                "preliminary_evaluation_ready",
+            )
+        },
+        "overall": {
+            "episodes": overall["episodes"],
+            "unique_tasks": overall["unique_tasks"],
+            "completed": overall["completed"],
+            "errors_by_type": overall["errors_by_type"],
+            "rates": {
+                name: {
+                    key: overall["rates"][name][key]
+                    for key in ("successes", "denominator", "unknown_outcomes", "rate")
+                }
+                for name in (
+                    "clean_utility_all_attempts",
+                    "attack_utility_all_attempts",
+                    "attack_success_all_attempts",
+                    "attack_success_clean_completable_all_attempts",
+                    "attack_exposure",
+                )
+            },
+            "review": {
+                key: overall["review"][key]
+                for key in (
+                    "reviewed_episodes",
+                    "reviewed_clean_episodes",
+                    "total_clean_episodes",
+                    "unreviewed_finalized_clean_episodes",
+                    "reviewed_clean_unnecessary_refusals",
+                    "reviewed_clean_indeterminate_refusals",
+                )
+            },
+        },
+        "review_sample": {
+            key: summary["review_sample"][key]
+            for key in (
+                "required_traces",
+                "selected_traces",
+                "reviewed_selected_traces",
+                "complete",
+                "provisional_selection",
+            )
+        },
+    }
 
 
 def parser() -> argparse.ArgumentParser:
@@ -52,6 +112,9 @@ def parser() -> argparse.ArgumentParser:
     analyze.add_argument("--output", type=Path)
     analyze.add_argument("--annotations", type=Path)
     analyze.add_argument("--require-review", action="store_true")
+    analyze.add_argument(
+        "--compact", action="store_true", help="Print a concise JSON summary; save full artifacts."
+    )
     campaign = commands.add_parser("campaign")
     campaign_commands = campaign.add_subparsers(dest="campaign_command", required=True)
     campaign_run = campaign_commands.add_parser("run")
@@ -105,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
                 annotations_path=arguments.annotations,
                 require_review=arguments.require_review,
             )
+            if arguments.compact:
+                result = _compact_analysis(result)
         else:
             from agent_tradeoffs.campaign import campaign_status, run_campaign
 
