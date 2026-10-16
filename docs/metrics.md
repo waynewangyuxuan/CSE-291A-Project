@@ -177,3 +177,19 @@ trace review, `summary.md`
 is a compact report, and `latency.svg` plots empirical latency distributions
 without histogram bin choices. Derived outputs are safe to regenerate. Keep
 annotations separately so an unannotated report refresh cannot replace them.
+
+After collection, independently audit the stored evidence before accepting the
+600-episode report:
+
+```bash
+.venv/bin/python scripts/audit_phase1_results.py \
+  --require-complete --output results/phase1/collection-audit.json
+```
+
+This reads the frozen plan and recorded artifacts without contacting the model.
+It checks deployment/configuration identities, paired controls, actual request
+settings and tool schemas, preserved benign content, recomputed attack exposure,
+compression hashes/lengths and measurement agreement. Errors retain unknown
+scores. The completion gate requires 24 finalized runs, 600 finalized episodes,
+120 clean controls, 480 paired attacks and 60 distinct tasks. Omitting
+`--require-complete` allows a clearly labeled partial audit with pending cases.
