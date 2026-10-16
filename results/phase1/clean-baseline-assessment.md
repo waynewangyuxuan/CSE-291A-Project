@@ -143,6 +143,11 @@ campaign identity stays `b61d56e553d420327c917fb8c3ad7793bc1cce293e12fae07b90c0e
 Reproduce the offline export, then the figure in an isolated plotting environment:
 
 ```bash
-.venv/bin/python scripts/export_phase1_clean_checkpoint.py
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_clean_checkpoint.py
 uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_clean.py
 ```
+
+The analysis-process hash seed fixes label-map key order in serialized JSON.
+It does not change the model's two sampling seeds, bootstrap seed or numerical
+estimates. Repeated exports with this command preserve output bytes while the
+parent campaign advances.

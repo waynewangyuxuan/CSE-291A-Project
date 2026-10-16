@@ -39,13 +39,15 @@ and canonical annotations. Native readiness applies only to this clean subset.
 Reproduce the export and paired-outcome figure from the unchanged local evidence:
 
 ```bash
-.venv/bin/python scripts/export_phase1_clean_checkpoint.py
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_clean_checkpoint.py
 uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_clean.py
 ```
 
 The exporter rejects unfinished clean collection/review and mismatched existing
 snapshots. `--check-only` validates without writing. Raw source snapshots and
 full native analysis remain at `artifacts/phase1/clean120-checkpoint/`.
+The fixed analysis-process hash seed stabilizes JSON label-key order; it does
+not alter sampling or statistical estimates.
 
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
