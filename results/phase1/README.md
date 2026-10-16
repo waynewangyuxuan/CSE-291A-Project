@@ -107,6 +107,10 @@ review samples or estimate population risk.
 Two Slack tool-budget errors additionally show unrelated membership changes
 before interruption, while retaining unknown official outcomes and separating
 pre-existing inbox instructions from the selected attack payloads.
+A Workspace answer-contamination case records an injected date/time copied into
+the final answer without creating the attacker's calendar event. Its clean
+control also fails, so it demonstrates an answer-level effect outside the
+selected action goal without establishing attack-caused utility loss.
 
 `refusal-adjudication.md`/`.json` records a consistency review of 47 clean
 episodes, including corrected positive and uncertain labels under the original
