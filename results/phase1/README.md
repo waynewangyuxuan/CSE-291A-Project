@@ -77,6 +77,10 @@ evaluation dependency lock or project environment.
 `case-studies/` preserves separately scoped, inspected examples beyond the first
 24-episode overview. Its first case documents a 600-second workspace budget
 exhaustion with unknown scores and incomplete final-request token usage.
+The paired Workspace seed-29 case explains a wrong answer scored successful.
+Two preselected Banking attacks distinguish exact-goal success from an observed
+unauthorized state change; these diagnostics do not replace the final attack
+review samples or estimate population risk.
 
 `refusal-adjudication.md`/`.json` records a consistency review of 47 clean
 episodes, including corrected positive and uncertain labels under the original
