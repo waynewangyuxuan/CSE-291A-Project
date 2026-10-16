@@ -8,7 +8,7 @@ import json
 import sys
 from pathlib import Path
 
-RUNTIME_CONFIG = "configs/runtime-qwen3-8b-q4.toml"
+RUNTIME_CONFIG = "configs/runtime-qwen3-8b-f16.toml"
 
 
 def _print(value: object) -> None:
@@ -42,11 +42,23 @@ def parser() -> argparse.ArgumentParser:
     tasks.add_argument("--suite", default="banking")
     tasks.add_argument("--benchmark-version", default="v1.2.2")
     run = commands.add_parser("run")
-    run.add_argument("--config", default="configs/smoke.toml", type=Path)
+    run.add_argument("--config", default="configs/phase1/dev-smoke.toml", type=Path)
     run.add_argument("--run-id")
     run.add_argument("--resume", action="store_true")
     summary = commands.add_parser("summarize")
     summary.add_argument("run", type=Path)
+    analyze = commands.add_parser("analyze")
+    analyze.add_argument("campaign", type=Path)
+    analyze.add_argument("--output", type=Path)
+    analyze.add_argument("--annotations", type=Path)
+    analyze.add_argument("--require-review", action="store_true")
+    campaign = commands.add_parser("campaign")
+    campaign_commands = campaign.add_subparsers(dest="campaign_command", required=True)
+    campaign_run = campaign_commands.add_parser("run")
+    campaign_run.add_argument("--plan", default="configs/phase1/campaign.json", type=Path)
+    campaign_run.add_argument("--resume", action="store_true")
+    campaign_status = campaign_commands.add_parser("status")
+    campaign_status.add_argument("campaign", type=Path)
     return root
 
 
@@ -80,16 +92,34 @@ def main(argv: list[str] | None = None) -> int:
                 run_id=arguments.run_id,
                 resume=arguments.resume,
             )
-        else:
+        elif arguments.command == "summarize":
             from agent_tradeoffs.reporting import summarize_run
 
             result = summarize_run(arguments.run)
+        elif arguments.command == "analyze":
+            from agent_tradeoffs.analysis import analyze_campaign
+
+            result = analyze_campaign(
+                arguments.campaign,
+                output_dir=arguments.output,
+                annotations_path=arguments.annotations,
+                require_review=arguments.require_review,
+            )
+        else:
+            from agent_tradeoffs.campaign import campaign_status, run_campaign
+
+            if arguments.campaign_command == "run":
+                result = run_campaign(arguments.plan, resume=arguments.resume)
+            else:
+                result = campaign_status(arguments.campaign)
         _print(result)
         if arguments.command == "doctor" and not result.get("ready", False):
             return 1
         if arguments.command == "run" and result.get("error_episodes", 0):
             return 1
         if arguments.command == "serve" and result.get("exit_code", 0) != 0:
+            return 1
+        if arguments.command == "campaign" and result.get("status") == "finalized_with_errors":
             return 1
     except KeyboardInterrupt:
         print("Interrupted; completed episodes remain available for resume.", file=sys.stderr)

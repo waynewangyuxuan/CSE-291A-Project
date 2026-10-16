@@ -5,6 +5,12 @@ normalization tensors and F16 KV cache. No integer weight quantization is applie
 BF16 → F16 is a floating point format conversion, so this baseline should be
 described as **unquantized F16**, rather than bit-identical BF16 or FP32.
 
+The runtime context allocation is fixed at **32,768 tokens** before the first
+formal run. The 64 GB machine can accommodate the F16 weights and this F16 KV
+cache. This larger allocation reduces context overflow as a confounder in the
+full-context baseline. Phase 2 can apply explicit smaller context budgets;
+Phase 1 uses the full history without a truncation or summarization policy.
+
 The canonical source is [`Qwen/Qwen3-8B` at
 `b968826d9c46dd6066d109eabc6255188de91218`](https://huggingface.co/Qwen/Qwen3-8B/tree/b968826d9c46dd6066d109eabc6255188de91218).
 All five original safetensors shards are verified against their official LFS

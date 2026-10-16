@@ -3,15 +3,20 @@
 CSE 291A, Fall 2026. Controlled measurements of small local tool-using agents:
 weight quantization × context management, with capability and security reported separately.
 
-The Phase 1 baseline uses AgentDojo, Qwen3-8B Q4_K_M, and llama.cpp with Metal
-on Apple Silicon. Tools act on AgentDojo's simulated bank account and files.
-No paid inference API or cloud account is required.
+The formal Phase 1 baseline uses AgentDojo and **unquantized Qwen3-8B F16**,
+served by pinned llama.cpp with Metal, full 32K context and non-thinking tool use.
+The canonical BF16 checkpoint is converted to F16; normalization weights remain
+F32. The earlier Q4 pilot is development evidence only. Tools operate on the
+benchmark's simulated resources. No paid inference API or cloud account is required.
 
 ## Quick start
 
 Prerequisites: Apple Silicon macOS, Python 3.12, and [uv](https://docs.astral.sh/uv/).
 Run commands from the repository root. The first setup downloads dependencies,
-an official runtime archive, and a **5.03 GB** model; later inference is local.
+an official runtime archive, and **16.4 GB of original model weights** streamed
+through RAM into the F16 GGUF. Reserve approximately 17.3 GB free disk space
+plus dependency installation space; a second full model copy is not stored.
+See [model provenance](docs/model-provenance.md) for exact source hashes and conversion.
 
 ```bash
 make setup
@@ -38,16 +43,46 @@ For a background service, use
 The default endpoint is `http://127.0.0.1:8080/v1`.
 
 ```bash
-make pilot                                      # three development task pairs
+make pilot                                      # three F16 development task pairs
 make tasks                                      # inspect the pinned banking tasks
-uv run --frozen agent-tradeoffs run --config configs/baseline.toml --run-id pilot-01
-uv run --frozen agent-tradeoffs run --config configs/baseline.toml --run-id pilot-01 --resume
+uv run --frozen agent-tradeoffs run --config configs/phase1/dev-pilot.toml --run-id pilot-01
+uv run --frozen agent-tradeoffs run --config configs/phase1/dev-pilot.toml --run-id pilot-01 --resume
 uv run --frozen agent-tradeoffs summarize artifacts/runs/pilot-01
 make check
 ```
 
-Do not run experiments concurrently against the same service. A single server
-slot and serial episodes make per-episode timing and memory easier to interpret.
+An endpoint lock prevents concurrent evaluators in this project from sharing the
+same local service. A single server slot and serial episodes make per-episode
+timing and memory easier to interpret.
+
+## Frozen Phase 1 campaign
+
+```bash
+make phase1-audit       # offline checks: 60 distinct tasks, source/checkers and 600 episodes
+make phase1            # run the frozen campaign against the ready F16 service
+make phase1-status     # inspect authoritative progress in another terminal
+make phase1-resume     # resume an interrupted campaign with the same code/config/deployment
+make phase1-analyze    # regenerate initial metrics, tables, review queue and latency plot
+```
+
+The campaign contains **60 distinct tasks across four suites**, two attack styles,
+two suite-specific goals and two stochastic seeds: 120 clean and 480 adversarial
+episodes in 24 runs. Tasks are frozen before evaluating model behavior; errors
+and timeouts remain in the data. Each same-seed clean result is reused for the
+four corresponding attacks. See the [frozen plan](docs/phase1-plan.md) and
+[metric definitions](docs/metrics.md).
+
+Analysis reports coverage while collection is in progress. The final preliminary
+evaluation additionally requires inspection of the deterministic 30-trace sample:
+
+```bash
+uv run --frozen agent-tradeoffs analyze artifacts/campaigns/phase1-f16-v1 \
+  --annotations results/phase1/reviewed-traces.csv --require-review
+```
+
+Keep the inference service unchanged during the campaign. Compatible restarts
+can resume; a different checkpoint, precision, context budget or runtime flags
+cannot silently join the same campaign.
 
 ## Where things belong
 
@@ -61,6 +96,7 @@ slot and serial episodes make per-episode timing and memory easier to interpret.
 | `results/` | Deliberately selected report tables and figures | tracked |
 | `artifacts/runs/<run-id>/` | Raw manifests, requests, traces, outcomes and summaries | ignored |
 | `artifacts/runtime/` | Local service logs and process metadata | ignored |
+| `artifacts/campaigns/<campaign-id>/` | Frozen campaign snapshot, progress and generated analysis | ignored |
 | `.cache/` | Model weights, runtime binaries, downloads and dependency caches | ignored |
 | `.venv/` | Locked project Python environment | ignored |
 | `.vibehub/` | Local VibeHub metadata and instructions | ignored |
@@ -71,14 +107,15 @@ weight files or result CSVs in the root directory.
 
 ## Experiment boundaries
 
-The included workloads are **development smoke/pilot workloads**, not a held-out
-evaluation set. They establish a working measurement pipeline and do not justify
-security or model-selection conclusions. The attack appends malicious text to
-the original retrieved content so the legitimate task remains possible.
+The smoke/pilot workloads are development checks, separate from the frozen
+Phase 1 evaluation workload. The attack appends malicious text to the original
+retrieved content so the legitimate task remains possible. Finalized request and
+trace files are compressed losslessly as `.jsonl.gz` / `.json.gz`, with verified
+original digests; results and summaries stay plain JSON/CSV.
 
 The implementation currently supports full context. Truncation, summarization,
-multiple precision configurations, repeated seeds and a held-out evaluation
-manifest are subsequent Phase 2 work, not silently enabled experiment settings.
+and multiple precision configurations are subsequent Phase 2 work. The two-seed,
+fixed-subset F16 campaign is the Phase 1 baseline.
 
 See [the experiment protocol](docs/experiment-protocol.md) for outcome definitions
 and [architecture](docs/architecture.md) for extension points and artifact ownership.
