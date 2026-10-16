@@ -57,6 +57,20 @@ file does not satisfy the complete campaign's attack-review obligations.
 `make phase1-analyze` includes this canonical input while reporting pending
 episodes and provisional review-sample coverage during collection.
 
+`scripts/export_phase1_evaluation.py` is the final 600-episode export entry point.
+It is prepared during collection and refuses until the complete evidence audit,
+native review gate and all three protocol review obligations pass. Successful
+export publishes `evaluation-measurements.json`, `evaluation-episodes.csv`,
+`evaluation-requests.csv`, `collection-audit.json` and `review-coverage.json`.
+The latter records the overlap and distinct union of required reviews, both
+selection hashes and verified suite/goal/style coverage. Statistics reuse the
+native analyzer; raw results and official scores remain unchanged.
+
+Run with `PYTHONHASHSEED=0`, optionally `--check-only` to validate without writing.
+The source and full native output snapshot is `artifacts/phase1/final-evaluation/`.
+`scripts/plot_phase1_evaluation.py` consumes the successful export and also
+requires the complete 600-episode cohort before writing final outcome/cost figures.
+
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
 (banking and Slack, seed 17). Their frozen latency data is

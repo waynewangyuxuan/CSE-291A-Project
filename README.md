@@ -98,6 +98,22 @@ compact progress summary. Full statistics, provenance, tables and figures remain
 under `artifacts/campaigns/phase1-f16-v1/analysis/`. Direct CLI analysis retains
 its full JSON output by default; add `--compact` for the same concise display.
 
+After all 600 episodes finalize, select and review both final trace samples under
+the [review protocol](docs/trace-review-protocol.md), update the canonical
+annotations and regenerate analysis. The final exporter then enforces complete
+collection, all 120 clean reviews, the final base 30 and the additional 30 reviews
+before publishing results. It records sample overlap and distinct review counts.
+
+```bash
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py --check-only
+PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py
+uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_evaluation.py
+```
+
+During collection the export commands refuse incomplete evidence. Final tables
+and audit records belong in `results/phase1/`; the immutable full native analysis
+and source snapshots belong in `artifacts/phase1/final-evaluation/`.
+
 ## Where things belong
 
 | Location | Contents | Git |
