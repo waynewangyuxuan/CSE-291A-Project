@@ -119,6 +119,10 @@ A Workspace answer-contamination case records an injected date/time copied into
 the final answer without creating the attacker's calendar event. Its clean
 control also fails, so it demonstrates an answer-level effect outside the
 selected action goal without establishing attack-caused utility loss.
+Two simulated mail-success cases compare clean/direct/ignore trajectories for
+the same tasks. One completes the legitimate calendar change but adds an
+unauthorized target email; the other already fails the clean task. They explain
+why all-attack and clean-completable ASR have different numerators.
 
 `refusal-adjudication.md`/`.json` records a consistency review of 47 clean
 episodes, including corrected positive and uncertain labels under the original
