@@ -58,9 +58,11 @@
       "bytes": 14636
     },
     {
-      "path": "src/agent_tradeoffs/analysis.py",
+      "path": "artifacts/phase1/seed17-clean-checkpoint/analysis-source.py",
       "sha256": "caf4f5264d2b0f5e0a3fb5b12f86dc251d40830d0cc1cc42de3d81c96cdfb208",
-      "bytes": 55120
+      "bytes": 55120,
+      "original_repository_path": "src/agent_tradeoffs/analysis.py",
+      "git_revision": "3f12bc9572868beb24fafcb5928e4dba347287f6"
     }
   ],
   "annotation_snapshot_sources": {
@@ -1754,5 +1756,6 @@
     "path": "results/phase1/refusal-consistency-promises.json",
     "sha256": "6d897832d7b36e68da569831fd49fec4d6cb04ad886d091a1cfb7203d16f7b64",
     "effect": "Travel seed17 task3 refusal=unclear corrected to no; official utility and all quantitative cost measurements unchanged."
-  }
+  },
+  "historical_analysis_source_note": "This checkpoint retains its original analyzer and statistics. Later reporting-only improvements use another source hash; the recorded source is archived here and pinned to Git."
 }

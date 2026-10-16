@@ -663,6 +663,46 @@ def _summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _known_repeat_comparison(groups: list[list[dict[str, Any]]], field: str) -> dict[str, int]:
+    """Partition repeated cells and compare only completed Boolean observations."""
+    counts = {
+        "repeated_cells": len(groups),
+        "all_known_cells": 0,
+        "partial_unknown_cells": 0,
+        "all_unknown_cells": 0,
+        "comparable_cells": 0,
+        "noncomparable_cells": 0,
+        "known_agreement_cells": 0,
+        "known_disagreement_cells": 0,
+        "comparable_partial_unknown_cells": 0,
+        "partial_unknown_known_agreement_cells": 0,
+        "partial_unknown_known_disagreement_cells": 0,
+    }
+    for group in groups:
+        known = [
+            row[field]
+            for row in group
+            if row["status"] == "completed" and isinstance(row.get(field), bool)
+        ]
+        if not known:
+            coverage = "all_unknown"
+        elif len(known) == len(group):
+            coverage = "all_known"
+        else:
+            coverage = "partial_unknown"
+        counts[f"{coverage}_cells"] += 1
+        if len(known) < 2:
+            counts["noncomparable_cells"] += 1
+            continue
+        counts["comparable_cells"] += 1
+        outcome = "agreement" if len(set(known)) == 1 else "disagreement"
+        counts[f"known_{outcome}_cells"] += 1
+        if coverage == "partial_unknown":
+            counts["comparable_partial_unknown_cells"] += 1
+            counts[f"partial_unknown_known_{outcome}_cells"] += 1
+    return counts
+
+
 def _repeat_consistency(rows: list[dict[str, Any]]) -> dict[str, Any]:
     groups: dict[tuple, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
@@ -676,6 +716,7 @@ def _repeat_consistency(rows: list[dict[str, Any]]) -> dict[str, Any]:
             )
         ].append(row)
     repeated = [group for group in groups.values() if len(group) > 1]
+    repeated_attacks = [group for group in repeated if group[0]["condition"] == "attack"]
     return {
         "repeated_task_condition_cells": len(repeated),
         "utility_disagreement_cells": sum(
@@ -689,9 +730,16 @@ def _repeat_consistency(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "status_disagreement_cells": sum(
             len({row["status"] for row in group}) > 1 for group in repeated
         ),
+        "utility_known_comparison": _known_repeat_comparison(repeated, "utility"),
+        "attack_success_known_comparison": _known_repeat_comparison(
+            repeated_attacks, "attack_success"
+        ),
         "note": (
             "Repeated seeds estimate stochastic variability within a task/style/goal cell; "
-            "repeats do not increase independent task sample size."
+            "repeats do not increase independent task sample size. Legacy disagreement fields "
+            "compare raw values, including null. Known comparisons require at least two "
+            "completed Boolean observations; partial coverage retains unknown repeats. "
+            "Clean attack-success outcomes are not applicable and are excluded."
         ),
     }
 
@@ -931,6 +979,30 @@ def _markdown(summary: dict[str, Any]) -> str:
             "",
             "Intervals reflect variation over the selected tasks. Repeated episodes remain in "
             "task clusters; fixed cohort selection and a single host limit generalization.",
+            "",
+            "Known repeat comparisons require at least two completed Boolean outcomes per cell. "
+            "One known outcome plus unknowns, or all unknowns, does not establish agreement. "
+            "Legacy raw disagreement counts also include null-versus-Boolean changes.",
+            "",
+            "| Repeated outcome | Comparable / repeated cells | Known agreement / disagreement | "
+            "All-known / partial-unknown / all-unknown | Comparable partial-unknown |",
+            "|---|---:|---:|---:|---:|",
+        ]
+    )
+    for label, key in (
+        ("Utility", "utility_known_comparison"),
+        ("Attack success (attack cells only)", "attack_success_known_comparison"),
+    ):
+        comparison = summary["repeat_consistency"][key]
+        lines.append(
+            f"| {label} | {comparison['comparable_cells']} / {comparison['repeated_cells']} | "
+            f"{comparison['known_agreement_cells']} / {comparison['known_disagreement_cells']} | "
+            f"{comparison['all_known_cells']} / {comparison['partial_unknown_cells']} / "
+            f"{comparison['all_unknown_cells']} | "
+            f"{comparison['comparable_partial_unknown_cells']} |"
+        )
+    lines.extend(
+        [
             "",
             "| Condition | Latency median / p95 (s) | Prompt / completion tokens (mean) | "
             "Native decode tokens/s (median) |",

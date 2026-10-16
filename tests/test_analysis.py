@@ -8,7 +8,12 @@ import json
 
 import pytest
 
-from agent_tradeoffs.analysis import analyze_campaign, distribution, measured_rate
+from agent_tradeoffs.analysis import (
+    _repeat_consistency,
+    analyze_campaign,
+    distribution,
+    measured_rate,
+)
 
 
 def make_run(tmp_path, run_id, rows, *, suite="banking", repeat=17, style="append"):
@@ -175,6 +180,132 @@ def test_repeats_are_clustered_and_do_not_create_independent_task_count():
     assert repeated["ci95"] == [0, 1]
     assert repeated == measured_rate(rows * 8, "score")
     assert measured_rate(rows[:1] * 8, "score")["ci95"] is None
+
+
+def test_repeat_unknown_coverage_separates_known_flips_from_raw_changes(tmp_path):
+    cells = {
+        "known-flip": [True, False],
+        "one-known": [True, None],
+        "all-unknown": [None, None],
+        "partial-agreement": [True, True, None],
+        "partial-flip": [True, False, None],
+        "known-agreement": [False, False],
+        "unpaired": [True],
+    }
+    entries = []
+    for index, seed in enumerate((17, 29, 41)):
+        rows = []
+        for task, scores in cells.items():
+            if index < len(scores):
+                score = scores[index]
+                rows.append(
+                    {
+                        "user_task_id": task,
+                        "utility": score,
+                        "status": "error" if score is None else "completed",
+                    }
+                )
+        entry, _ = make_run(tmp_path, f"repeat-{seed}", rows, repeat=seed)
+        entries.append(entry)
+
+    summary = analyze_campaign(make_campaign(tmp_path, entries))
+    repeat = summary["repeat_consistency"]
+    assert repeat["repeated_task_condition_cells"] == 6
+    # True/None remains a raw disagreement, but supplies no known comparison.
+    assert repeat["utility_disagreement_cells"] == 4
+    assert repeat["status_disagreement_cells"] == 3
+    assert repeat["utility_known_comparison"] == {
+        "repeated_cells": 6,
+        "all_known_cells": 2,
+        "partial_unknown_cells": 3,
+        "all_unknown_cells": 1,
+        "comparable_cells": 4,
+        "noncomparable_cells": 2,
+        "known_agreement_cells": 2,
+        "known_disagreement_cells": 2,
+        "comparable_partial_unknown_cells": 2,
+        "partial_unknown_known_agreement_cells": 1,
+        "partial_unknown_known_disagreement_cells": 1,
+    }
+    attack = repeat["attack_success_known_comparison"]
+    assert attack["repeated_cells"] == attack["all_unknown_cells"] == 0
+    # Adding comparison coverage must not change existing utility denominators.
+    utility = summary["overall"]["rates"]["clean_utility_all_attempts"]
+    assert (utility["successes"], utility["denominator"], utility["unknown_outcomes"]) == (
+        6,
+        15,
+        5,
+    )
+    markdown = (tmp_path / "analysis" / "summary.md").read_text()
+    assert "| Utility | 4 / 6 | 2 / 2 | 2 / 3 / 1 | 2 |" in markdown
+    assert "| Attack success (attack cells only) | 0 / 0 |" in markdown
+
+
+def test_repeat_attack_coverage_preserves_suite_condition_goal_and_style_cells():
+    cells = [
+        ("banking", "clean", None, "ignored", [True, True]),
+        ("banking", "attack", "a", "direct", [True, True]),
+        ("banking", "attack", "a", "ignore", [False, False]),
+        ("banking", "attack", "b", "direct", [None, None]),
+        ("banking", "attack", "b", "ignore", [True, None]),
+        ("travel", "attack", "a", "direct", [True, False]),
+        ("banking", "attack", "c", "direct", [True, False, None]),
+        ("banking", "attack", "c", "ignore", [True, True, None]),
+        ("banking", "attack", "a", "unpaired", [True]),
+    ]
+    rows = []
+    for suite, condition, goal, style, scores in cells:
+        for index, score in enumerate(scores):
+            rows.append(
+                {
+                    "suite": suite,
+                    "condition": condition,
+                    "user_task_id": "same-task-id",
+                    "injection_task_id": goal,
+                    "attack_variant": f"clean-{index}" if condition == "clean" else style,
+                    "repeat_id": (17, 29, 41)[index],
+                    "status": "error" if score is None else "completed",
+                    "utility": score,
+                    "attack_success": score if condition == "attack" else None,
+                }
+            )
+    repeat = _repeat_consistency(rows)
+    assert repeat["repeated_task_condition_cells"] == 8
+    assert repeat["utility_disagreement_cells"] == 4
+    assert repeat["attack_success_disagreement_cells"] == 4
+    attack = repeat["attack_success_known_comparison"]
+    assert attack == {
+        "repeated_cells": 7,
+        "all_known_cells": 3,
+        "partial_unknown_cells": 3,
+        "all_unknown_cells": 1,
+        "comparable_cells": 5,
+        "noncomparable_cells": 2,
+        "known_agreement_cells": 3,
+        "known_disagreement_cells": 2,
+        "comparable_partial_unknown_cells": 2,
+        "partial_unknown_known_agreement_cells": 1,
+        "partial_unknown_known_disagreement_cells": 1,
+    }
+    assert repeat["utility_known_comparison"]["repeated_cells"] == 8
+    assert repeat["utility_known_comparison"]["known_agreement_cells"] == 4
+
+
+@pytest.mark.parametrize("status, value", [("completed", None), ("completed", 1), ("error", True)])
+def test_repeat_known_comparison_requires_completed_boolean_outcomes(status, value):
+    base = {
+        "suite": "banking",
+        "condition": "clean",
+        "user_task_id": "same-task",
+        "status": "completed",
+        "utility": True,
+        "attack_success": None,
+    }
+    repeat = _repeat_consistency([base, {**base, "status": status, "utility": value}])
+    known = repeat["utility_known_comparison"]
+    assert known["partial_unknown_cells"] == known["noncomparable_cells"] == 1
+    assert known["comparable_cells"] == known["known_agreement_cells"] == 0
+    assert known["known_disagreement_cells"] == 0
 
 
 def test_clean_control_coverage_distinguishes_unknown_false_and_missing(tmp_path):

@@ -72,10 +72,38 @@ Intervals describe variability over this selected workload. They do not turn a
 fixed, small cohort into an unbiased sample of all agent tasks or prompt attacks.
 The JSON includes results overall and by suite, repeat, attack style, and
 suite-specific attack goal, with clean controls retained for each subgroup.
-Repeat disagreement counts compare the
-same task/condition/attack-style/goal across seeds; style differences are not
-misreported as seed instability. Two stochastic repeats provide an initial
-variability check, not a precise variance estimate.
+Repeat comparisons group `(suite, user_task_id, condition, injection_task_id,
+attack_variant)`, with attack style ignored for clean episodes. A repeated cell
+has at least two finalized result rows; the campaign supplies distinct repeat
+IDs. Different suites, conditions, attack goals and styles are never pooled as
+one repeated cell. Missing or pending planned repetitions are absent from this
+coverage, rather than automatically assigned unknown outcomes.
+
+The legacy `utility_disagreement_cells` and `attack_success_disagreement_cells`
+compare raw values, including `null`. Thus `null → true` or `null → false` still
+counts as a legacy disagreement, without demonstrating a known success/failure
+flip. `status_disagreement_cells` is also unchanged.
+
+`utility_known_comparison` covers all repeated cells;
+`attack_success_known_comparison` covers **only repeated attack cells**, excluding
+clean attack-success values as not applicable. In each object:
+
+- `all_known_cells`, `partial_unknown_cells` and `all_unknown_cells` partition
+  `repeated_cells`. Known means a completed episode with a Boolean outcome.
+- `comparable_cells` requires at least two such known observations and equals
+  `known_agreement_cells + known_disagreement_cells`. All remaining cells are
+  `noncomparable_cells`. One known plus one unknown cannot establish either a
+  known flip or agreement; two unknowns are not evidence of stability.
+- With more than two repetitions, two known observations plus an unknown are
+  comparable but remain partially covered. `comparable_partial_unknown_cells`
+  identifies these cells, further split into
+  `partial_unknown_known_agreement_cells` and
+  `partial_unknown_known_disagreement_cells`. Agreement refers only to the
+  observed known values, without imputing the unknown repetitions.
+
+The Markdown report shows the known comparison denominator, agreement and
+disagreement counts, and unknown coverage. Two stochastic repeats provide an
+initial variability check, not a precise variance estimate.
 
 ## Performance, resource use and errors
 
