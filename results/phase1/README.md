@@ -44,3 +44,7 @@ The plotting script reads only curated files, validates run identities and
 summary agreement, and embeds input/script digests and the plotting version in
 the SVG/PNG metadata. This optional plotting environment does not change the
 evaluation dependency lock or project environment.
+
+`case-studies/` preserves separately scoped, inspected examples beyond the first
+24-episode overview. Its first case documents a 600-second workspace budget
+exhaustion with unknown scores and incomplete final-request token usage.
