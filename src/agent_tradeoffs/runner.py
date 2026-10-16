@@ -8,6 +8,7 @@ import importlib.metadata
 import json
 import platform
 import re
+import shutil
 import signal
 import threading
 import time
@@ -17,6 +18,7 @@ from contextlib import contextmanager
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 from urllib.request import urlopen
 
 import psutil
@@ -26,6 +28,7 @@ from agentdojo.attacks.important_instructions_attacks import ImportantInstructio
 from agentdojo.task_suite.load_suites import get_suite
 
 from agent_tradeoffs.agent import EpisodeTimeoutError, LocalAgent
+from agent_tradeoffs.artifact_io import compact_episode_artifacts
 from agent_tradeoffs.config import ExperimentConfig, stable_hash
 from agent_tradeoffs.reporting import atomic_json, summarize_run
 from agent_tradeoffs.runtime import _process_identity, sha256_file
@@ -33,6 +36,37 @@ from agent_tradeoffs.runtime import _process_identity, sha256_file
 
 class RuntimeDeploymentChangedError(RuntimeError):
     """The live process stopped matching the captured deployment during a run."""
+
+
+class StorageReserveError(RuntimeError):
+    """Beginning another episode would violate the configured disk reserve."""
+
+
+@contextmanager
+def endpoint_evaluation_lock(base_url: str):
+    """Serialize complete runs sharing a local service, regardless of output root."""
+    endpoint = urlparse(base_url)
+    # All accepted hostnames are loopback aliases. Treat them alike so localhost
+    # cannot accidentally bypass another evaluator using 127.0.0.1 or ::1.
+    port = endpoint.port or (443 if endpoint.scheme == "https" else 80)
+    key = stable_hash({"host": "loopback", "port": port})
+    directory = Path.cwd() / "artifacts" / "runtime" / "evaluator-locks"
+    directory.mkdir(parents=True, exist_ok=True)
+    with (directory / f"{key}.lock").open("a") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError as error:
+            raise ValueError("Another evaluator owns the local inference endpoint") from error
+        yield
+
+
+def require_disk_reserve(directory: Path, minimum_bytes: int) -> None:
+    free = shutil.disk_usage(directory).free
+    if free < minimum_bytes:
+        raise StorageReserveError(
+            f"Insufficient free disk before next episode: {free} bytes available, "
+            f"{minimum_bytes} bytes reserved; finalized evidence is retained"
+        )
 
 
 def guard_runtime_process(pid: int, expected_identity: dict[str, str]) -> None:
@@ -93,7 +127,15 @@ def plan_episodes(config: ExperimentConfig) -> list[dict[str, Any]]:
 def implementation_identity() -> dict[str, Any]:
     directory = Path(__file__).parent
     digest = hashlib.sha256()
-    for filename in ("agent.py", "config.py", "context.py", "reporting.py", "runner.py"):
+    for filename in (
+        "agent.py",
+        "artifact_io.py",
+        "config.py",
+        "context.py",
+        "reporting.py",
+        "runner.py",
+        "runtime.py",
+    ):
         digest.update(filename.encode())
         digest.update((directory / filename).read_bytes())
     distribution = importlib.metadata.distribution("agentdojo")
@@ -363,7 +405,24 @@ def run_episode(
 
 
 def run_experiment(
-    config: ExperimentConfig, run_id: str | None = None, resume: bool = False
+    config: ExperimentConfig,
+    run_id: str | None = None,
+    resume: bool = False,
+    *,
+    expected_runtime_identity: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    with endpoint_evaluation_lock(config.model.base_url):
+        return _run_experiment(
+            config, run_id, resume, expected_runtime_identity=expected_runtime_identity
+        )
+
+
+def _run_experiment(
+    config: ExperimentConfig,
+    run_id: str | None,
+    resume: bool,
+    *,
+    expected_runtime_identity: dict[str, Any] | None,
 ) -> dict[str, Any]:
     if resume and not run_id:
         raise ValueError("--resume requires an explicit run ID")
@@ -373,6 +432,11 @@ def run_experiment(
     episodes = plan_episodes(config)
     implementation = implementation_identity()
     runtime_snapshot, pid = capture_runtime(config)
+    if (
+        expected_runtime_identity is not None
+        and runtime_snapshot["semantic_identity"] != expected_runtime_identity
+    ):
+        raise ValueError("Run deployment does not match the campaign runtime identity")
     config = config.model_copy(
         update={"runner": config.runner.model_copy(update={"server_pid": pid})}
     )
@@ -440,7 +504,10 @@ def run_experiment(
                     if existing.get("identity") != identity:
                         raise ValueError(f"Result identity mismatch at {result_path}")
                     if not existing.get("retryable"):
+                        if config.runner.compact_artifacts:
+                            compact_episode_artifacts(episode_dir)
                         continue
+                require_disk_reserve(root, config.runner.min_free_disk_bytes)
                 # Retain interrupted attempt evidence before retrying it.
                 remnants = [path for path in episode_dir.iterdir() if path.is_file()]
                 if remnants:
@@ -455,6 +522,8 @@ def run_experiment(
                 summarize_run(run_dir)
                 if result.get("retryable"):
                     raise RuntimeDeploymentChangedError(result["error"]["message"])
+                if config.runner.compact_artifacts:
+                    compact_episode_artifacts(episode_dir)
             completed_loop = True
         finally:
             summary = summarize_run(run_dir)

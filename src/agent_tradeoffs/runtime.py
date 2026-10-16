@@ -37,8 +37,11 @@ class ModelArtifactConfig:
     filename: str = "Qwen3-8B-Q4_K_M.gguf"
     sha256: str = MODEL_SHA256
     local_dir: str = ".cache/models/qwen3-8b"
+    acquisition: str = "download"
 
     def __post_init__(self) -> None:
+        if self.acquisition not in {"download", "derived"}:
+            raise ValueError("model_artifact.acquisition must be download or derived")
         if not re.fullmatch(r"[0-9a-f]{40}", self.revision):
             raise ValueError("model_artifact.revision must be an immutable 40-character commit")
         if not re.fullmatch(r"[0-9a-f]{64}", self.sha256):
@@ -144,6 +147,9 @@ def download_model(config: RuntimeConfig | str | Path) -> dict[str, Any]:
     """Download one immutable GGUF and verify its official LFS SHA256."""
     cfg = _config(config)
     artifact = cfg.model_artifact
+    provenance = None
+    if artifact.acquisition == "derived":
+        provenance = _derived_provenance(cfg)
     if not cfg.model_path.is_file():
         from huggingface_hub import hf_hub_download
 
@@ -172,9 +178,38 @@ def download_model(config: RuntimeConfig | str | Path) -> dict[str, Any]:
         "size_bytes": cfg.model_path.stat().st_size,
         "mtime_ns": cfg.model_path.stat().st_mtime_ns,
         "verified_at": datetime.now(UTC).isoformat(),
+        "acquisition": artifact.acquisition,
     }
+    if provenance is not None:
+        manifest["provenance"] = provenance
     _write_json(cfg.model_path.with_suffix(".manifest.json"), manifest)
     return manifest
+
+
+def _derived_provenance(cfg: RuntimeConfig) -> dict[str, Any]:
+    path = cfg.model_path.with_suffix(".provenance.json")
+    if not cfg.model_path.is_file() or not path.is_file():
+        raise RuntimeError("Derived model is missing; run make model-f16 to prepare canonical F16")
+    provenance = json.loads(path.read_text())
+    artifact = cfg.model_artifact
+    expected = {
+        "kind": "derived_gguf",
+        "repo_id": artifact.repo_id,
+        "revision": artifact.revision,
+        "filename": artifact.filename,
+        "sha256": artifact.sha256,
+        "output_dtype": "F16",
+        "weight_quantization": "none",
+    }
+    if any(provenance.get(key) != value for key, value in expected.items()):
+        raise RuntimeError("Derived model provenance does not match the requested F16 artifact")
+    audit = provenance.get("gguf_audit", {})
+    if (
+        audit.get("quantized_tensor_count") != 0
+        or audit.get("metadata", {}).get("general.file_type") != 1
+    ):
+        raise RuntimeError("Derived model audit does not establish unquantized F16 weights")
+    return provenance
 
 
 def server_command(config: RuntimeConfig | str | Path) -> list[str]:
@@ -191,6 +226,7 @@ def server_command(config: RuntimeConfig | str | Path) -> list[str]:
         str(cfg.port),
         "--ctx-size",
         str(cfg.context_size),
+        "--no-context-shift",
         "--threads",
         str(cfg.threads),
         "--threads-batch",
@@ -279,6 +315,12 @@ def doctor(config: RuntimeConfig | str | Path) -> dict[str, Any]:
                 and manifest.get("mtime_ns") == cfg.model_path.stat().st_mtime_ns
                 and manifest.get("revision") == cfg.model_artifact.revision
             )
+        if cfg.model_artifact.acquisition == "derived":
+            try:
+                report["model_provenance"] = _derived_provenance(cfg)
+            except (OSError, ValueError, RuntimeError) as error:
+                report["model_verified"] = False
+                report["provenance_error"] = str(error)
     try:
         report["health"] = _request_json(cfg.base_url + "/health", timeout=2)
     except (OSError, URLError, HTTPError):
@@ -402,6 +444,8 @@ def start_server(config: RuntimeConfig | str | Path, wait_timeout: float = 180) 
         "runtime_version": report["runtime_version"],
         "context_size": cfg.context_size,
         "model_alias": cfg.model_alias,
+        "model_acquisition": cfg.model_artifact.acquisition,
+        "model_provenance": report.get("model_provenance"),
     }
     metadata_path = run_root / "server.json"
     _write_json(metadata_path, metadata)
@@ -420,6 +464,10 @@ def start_server(config: RuntimeConfig | str | Path, wait_timeout: float = 180) 
                     metadata["effective_server_props"] = _server_props(cfg)
                     metadata["status"] = "ready"
                     metadata["ready_at"] = datetime.now(UTC).isoformat()
+                    metadata["startup_seconds"] = (
+                        datetime.fromisoformat(metadata["ready_at"])
+                        - datetime.fromisoformat(metadata["started_at"])
+                    ).total_seconds()
                     _write_json(metadata_path, metadata)
                     _write_json(cfg.resolve(cfg.output_root) / "latest.json", metadata)
                     _write_json(cfg.resolve(cfg.output_root) / "server.json", metadata)

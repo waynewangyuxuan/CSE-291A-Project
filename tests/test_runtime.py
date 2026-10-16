@@ -28,6 +28,7 @@ def test_command_fixes_inference_controls(tmp_path: Path) -> None:
         "enable_thinking": False
     }
     assert "--offline" in command
+    assert "--no-context-shift" in command
 
 
 @pytest.mark.parametrize("host", ["0.0.0.0", "example.com", "192.168.1.1"])
@@ -91,3 +92,40 @@ def test_stop_refuses_reused_pid(tmp_path: Path, monkeypatch: pytest.MonkeyPatch
     with pytest.raises(RuntimeError, match="identity changed"):
         stop_server(config)
     assert signals == []
+
+
+def test_derived_missing_model_is_not_downloaded_as_a_nonexistent_hf_file(tmp_path: Path) -> None:
+    config = RuntimeConfig(
+        project_root=tmp_path,
+        model_artifact=ModelArtifactConfig(acquisition="derived"),
+    )
+    with pytest.raises(RuntimeError, match="make model-f16"):
+        download_model(config)
+
+
+def test_derived_model_requires_matching_nonquantized_provenance(tmp_path: Path) -> None:
+    import hashlib
+
+    payload = b"unit-test-artifact-only"
+    digest = hashlib.sha256(payload).hexdigest()
+    artifact = ModelArtifactConfig(acquisition="derived", sha256=digest)
+    config = RuntimeConfig(project_root=tmp_path, model_artifact=artifact)
+    config.model_path.parent.mkdir(parents=True)
+    config.model_path.write_bytes(payload)
+    provenance = {
+        "kind": "derived_gguf",
+        "repo_id": artifact.repo_id,
+        "revision": artifact.revision,
+        "filename": artifact.filename,
+        "sha256": digest,
+        "output_dtype": "F16",
+        "weight_quantization": "none",
+        "gguf_audit": {"quantized_tensor_count": 0, "metadata": {"general.file_type": 1}},
+    }
+    path = config.model_path.with_suffix(".provenance.json")
+    path.write_text(json.dumps(provenance))
+    assert download_model(config)["provenance"]["weight_quantization"] == "none"
+    provenance["gguf_audit"]["quantized_tensor_count"] = 1
+    path.write_text(json.dumps(provenance))
+    with pytest.raises(RuntimeError, match="unquantized F16"):
+        download_model(config)

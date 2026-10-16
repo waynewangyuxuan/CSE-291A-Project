@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import io
 import json
@@ -15,7 +16,7 @@ import yaml
 from agentdojo.task_suite.load_suites import get_suite
 from pydantic import ValidationError
 
-from agent_tradeoffs import runner
+from agent_tradeoffs import artifact_io, runner
 from agent_tradeoffs.agent import EpisodeTimeoutError, parse_tool_calls
 from agent_tradeoffs.config import ExperimentConfig, load_config
 from agent_tradeoffs.context import exposed_vectors
@@ -439,3 +440,111 @@ def test_runtime_drift_invalidates_episode_and_allows_compatible_resume(tmp_path
     assert resumed["error_episodes"] == 0
     assert len(calls) == 3
     assert list(result_path.parent.glob("interrupted_attempts/*/result.json"))
+
+
+def test_endpoint_lock_blocks_alias_and_output_root_bypass_before_capture(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    config = settings(tmp_path / "different-output", model={"base_url": "http://localhost:8080/v1"})
+    monkeypatch.setattr(
+        runner, "capture_runtime", lambda config: pytest.fail("Lock must precede runtime capture")
+    )
+    with runner.endpoint_evaluation_lock("http://127.0.0.1:8080/v1"):
+        with pytest.raises(ValueError, match="Another evaluator owns"):
+            runner.run_experiment(config, run_id="overlap")
+        # Distinct endpoints remain independent.
+        with runner.endpoint_evaluation_lock("http://127.0.0.1:8081/v1"):
+            pass
+    assert not (tmp_path / "different-output").exists()
+
+
+def test_campaign_runtime_mismatch_rejected_before_creating_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        runner, "capture_runtime", lambda config: ({"semantic_identity": {"ctx": 32768}}, None)
+    )
+    config = settings(tmp_path / "results")
+    with pytest.raises(ValueError, match="campaign runtime identity"):
+        runner.run_experiment(config, run_id="mismatch", expected_runtime_identity={"ctx": 16384})
+    assert not (tmp_path / "results").exists()
+
+
+def test_episode_disk_guard_compacts_and_resumes_without_retrying_unknowns(tmp_path, monkeypatch):
+    config = settings(
+        tmp_path,
+        experiment={"mode": "clean", "task_ids": ["user_task_0", "user_task_2"]},
+        runner={"output_root": str(tmp_path), "compact_artifacts": True},
+    )
+    monkeypatch.setattr(
+        runner, "capture_runtime", lambda config: ({"semantic_identity": {"fixture": True}}, None)
+    )
+    free = iter([512 * 1024**2, 64 * 1024**2])
+    monkeypatch.setattr(runner.shutil, "disk_usage", lambda path: SimpleNamespace(free=next(free)))
+    original = runner.run_episode
+    attempts = []
+
+    def scripted(*args, **kwargs):
+        attempts.append(args[1]["episode_id"])
+        response = ConnectionError("fixture offline") if len(attempts) == 1 else completion()
+        return original(*args, **kwargs, client=ScriptedClient([response]))
+
+    monkeypatch.setattr(runner, "run_episode", scripted)
+    with pytest.raises(runner.StorageReserveError, match="finalized evidence is retained"):
+        runner.run_experiment(config, run_id="storage")
+    directory = tmp_path / "storage"
+    manifest = json.loads((directory / "manifest.json").read_text())
+    assert manifest["status"] == "interrupted"
+    assert len(attempts) == 1
+    episode_dir = directory / "episodes" / attempts[0]
+    result_before = (episode_dir / "result.json").read_bytes()
+    result = json.loads(result_before)
+    assert result["status"] == "error"
+    assert result["utility"] is None and result["attack_success"] is None
+    assert not (episode_dir / "requests.jsonl").exists()
+    with gzip.open(episode_dir / "requests.jsonl.gz", "rt") as handle:
+        assert "fixture offline" in handle.read()
+    compression = json.loads((episode_dir / "compression.json").read_text())
+    assert len(compression["artifacts"]) == 2
+    monkeypatch.setattr(
+        runner.shutil, "disk_usage", lambda path: SimpleNamespace(free=512 * 1024**2)
+    )
+    resumed = runner.run_experiment(config, run_id="storage", resume=True)
+    assert resumed["finalized_episodes"] == 2 and resumed["error_episodes"] == 1
+    assert len(attempts) == 2
+    assert (episode_dir / "result.json").read_bytes() == result_before
+
+
+def test_compaction_stoppage_keeps_verifiable_original_or_gzip(tmp_path, monkeypatch):
+    (tmp_path / "result.json").write_text('{"status":"completed"}')
+    originals = {"requests.jsonl": b'{"event":"request"}\n', "trace.json": b'{"messages":[]}'}
+    for name, data in originals.items():
+        (tmp_path / name).write_bytes(data)
+    real_atomic = artifact_io.atomic_json
+    saves = []
+
+    def interrupted(path, value):
+        saves.append(path)
+        if len(saves) == 2:
+            raise OSError("fixture interrupted before second deletion")
+        return real_atomic(path, value)
+
+    monkeypatch.setattr(artifact_io, "atomic_json", interrupted)
+    with pytest.raises(OSError, match="interrupted"):
+        artifact_io.compact_episode_artifacts(tmp_path)
+    assert not (tmp_path / "requests.jsonl").exists()
+    assert (tmp_path / "trace.json").read_bytes() == originals["trace.json"]
+    partial = json.loads((tmp_path / "compression.json").read_text())
+    assert (
+        partial["artifacts"][0]["original_sha256"]
+        == hashlib.sha256(originals["requests.jsonl"]).hexdigest()
+    )
+    monkeypatch.setattr(artifact_io, "atomic_json", real_atomic)
+    report = artifact_io.compact_episode_artifacts(tmp_path)
+    assert len(report["artifacts"]) == 2
+    for name, data in originals.items():
+        assert not (tmp_path / name).exists()
+        with gzip.open(tmp_path / (name + ".gz"), "rb") as handle:
+            assert handle.read() == data
+    # A valid gzip with altered content must fail the recorded source digest.
+    with gzip.open(tmp_path / "trace.json.gz", "wb") as handle:
+        handle.write(b"changed evidence")
+    with pytest.raises(ValueError, match="digest mismatch"):
+        artifact_io.compact_episode_artifacts(tmp_path)
