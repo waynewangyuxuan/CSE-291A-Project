@@ -46,6 +46,12 @@ uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_pha
 The exporter rejects unfinished clean collection/review and mismatched existing
 snapshots. `--check-only` validates without writing. Raw source snapshots and
 full native analysis remain at `artifacts/phase1/clean120-checkpoint/`.
+
+The clean exporter reads the four `review-<suite>.csv` sources. Final attack
+reviews belong in `reviewed-traces.csv`, preserving the per-suite clean inputs.
+Re-export requires the original source paths and bytes, including the code and
+clean evidence. Retain the existing snapshot and its identity if those inputs change.
+
 The fixed analysis-process hash seed stabilizes JSON label-key order; it does
 not alter sampling or statistical estimates.
 
