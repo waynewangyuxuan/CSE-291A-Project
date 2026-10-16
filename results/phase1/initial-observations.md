@@ -10,6 +10,8 @@ The deployment is unquantized Qwen3-8B F16, non-thinking, full 32,768-token
 context, llama.cpp b11678/Metal on an Apple M2 Max with 64 GiB RAM. Full launch
 identity is in [collection-provenance.json](collection-provenance.json).
 
+![Partial clean utility and latency overview](initial-clean-overview.png)
+
 | Quantity | Banking, seed 17 | Slack, seed 17 |
 | --- | ---: | ---: |
 | Programmatic utility | 3/8 (37.5%) | 9/16 (56.25%) |
@@ -81,3 +83,7 @@ variability, attack resistance, or an effect of quantization/context policy.
 Subsequent assessment must include all suites, both seeds, paired attacks,
 unknown outcomes, exposure and the frozen review obligations. Cost comparisons
 remain descriptive because clean-first order does not remove host/thermal drift.
+Local trace review, small offline audits/tests and plotting setup also occurred
+while collection continued; the host was not reserved exclusively for inference.
+The initial Matplotlib/font setup occurred during seed-17 workspace collection,
+after the two runs plotted here. No quiescent-host performance claim is made.

@@ -27,3 +27,20 @@ snapshot, not a completion claim. Read the live campaign manifest or
 `review-<suite>.csv` files contain incremental evidence-based annotations of
 finalized formal traces. Coverage is partial until all required rows have been
 reviewed under [the frozen protocol](../../docs/trace-review-protocol.md).
+
+`initial-observations.md`, `initial-clean-measurements.json` and the
+`initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
+(banking and Slack, seed 17). Their frozen latency data is
+`initial-latencies.csv`. They contain no formal attack estimate and do not claim
+that the 600-episode campaign is complete.
+
+Reproduce that figure in a separate plotting environment with Matplotlib 3.11.2:
+
+```bash
+uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_initial.py
+```
+
+The plotting script reads only curated files, validates run identities and
+summary agreement, and embeds input/script digests and the plotting version in
+the SVG/PNG metadata. This optional plotting environment does not change the
+evaluation dependency lock or project environment.
