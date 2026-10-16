@@ -13,3 +13,8 @@ deployment identity, source run IDs, denominators, unknown/error counts, and
 measurement coverage. Partial collection must be labeled partial. Trace review
 annotations identify their reviewer and quote or locate the inspected evidence;
 they do not replace the programmatic utility and attack checkers.
+
+`f16-development-validation.json` preserves the five pre-evaluation F16 episodes
+from four development runs: four successful clean examples and one scored
+banking attack, with no runtime errors. It is excluded from the 600-episode
+formal cohort. See [the development validation note](../../docs/f16-development-validation.md).

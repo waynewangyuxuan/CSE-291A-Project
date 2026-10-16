@@ -66,9 +66,11 @@ as the aggregate.
 
 ## Deployment and decoding controls
 
-Evaluation uses `qwen3-8b-f16`, a 16,384-token server context, one inference slot,
+Evaluation uses `qwen3-8b-f16`, a **32,768-token** server context, one inference slot,
 F16 KV cache, and the full-context policy. Do not truncate or summarize in this
 baseline. Context overflow is a retained failure, not an implicit context policy.
+The 32K allocation was fixed before formal evaluation and is pinned in
+[`runtime-qwen3-8b-f16.toml`](../configs/runtime-qwen3-8b-f16.toml).
 Run one episode at a time and keep the same service warm after an explicit
 preflight probe. Startup and model loading remain separate from steady-service
 episode timing. Prompt-prefix reuse is disabled with `cache_prompt=false`.

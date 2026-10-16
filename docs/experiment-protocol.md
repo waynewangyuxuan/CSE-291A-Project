@@ -11,8 +11,11 @@ workload and checkers.
 The historical development deployment used Qwen3-8B Q4_K_M, non-thinking mode
 and greedy decoding with seed 0. The frozen Phase 1 evaluation uses **F16
 weights**, non-thinking mode, temperature 0.7, top-p 0.8, top-k 20, min-p 0,
-and seeds 17 and 29. Both use one llama.cpp server slot, 16,384 context tokens
-and f16 KV cache. The full held-out workload and controls are specified in
+and seeds 17 and 29. Both use one llama.cpp server slot and f16 KV cache.
+The historical Q4 development service allocated 16,384 context tokens; the
+formal F16 service allocates 32,768, fixed before evaluation. These development
+and formal runs are not a controlled precision comparison. The full held-out
+workload and controls are specified in
 [the Phase 1 plan](phase1-plan.md).
 
 The runtime is warmed by an explicit tool-call probe before evaluation; episode

@@ -119,8 +119,9 @@ fixed-subset F16 campaign is the Phase 1 baseline.
 
 See [the experiment protocol](docs/experiment-protocol.md) for outcome definitions
 and [architecture](docs/architecture.md) for extension points and artifact ownership.
-[Local validation](docs/local-validation.md) records the real development runs
-and their limitations.
+[F16 development validation](docs/f16-development-validation.md) records the
+pre-evaluation checks. [Historical local validation](docs/local-validation.md)
+preserves the earlier Q4 development runs and their limitations.
 
 Course milestones from the provided assignment: Phase 1 on October 28, 2026;
 final implementation and report on December 10, 2026.
