@@ -111,10 +111,12 @@ def review_gate(rows, base, annotations, base_audit):
             cell = row["suite"], row["injection_task_id"], row["attack_variant"]
             cell_keys.setdefault(cell, set()).add(selector.episode_key(row))
     exhausted = [list(cell) for cell, keys in sorted(cell_keys.items()) if keys <= base_keys]
+    combined_keys = base_keys | extra_keys
+    # Native base CSV rows omit attack_variant; selection has validated their identities.
     combined_cells = {
         (row["suite"], row["injection_task_id"], row["attack_variant"])
-        for row in [*base, *selected]
-        if row["condition"] == "attack"
+        for row in rows
+        if selector.episode_key(row) in combined_keys and row["condition"] == "attack"
     }
     helper.require(
         selection["selection_complete"]

@@ -20,6 +20,33 @@ def annotation(row):
 
 
 @pytest.fixture
+def native_base_projection():
+    """Match the compact native review-sample.csv projection, not episodes.csv."""
+    fields = (
+        "run_id",
+        "episode_id",
+        "identity",
+        "suite",
+        "condition",
+        "user_task_id",
+        "injection_task_id",
+        "status",
+        "utility",
+        "attack_success",
+        "refusal_candidate",
+        "review_selected",
+        "review_strata",
+        "error_type",
+        "trace_path",
+        "final_answer",
+    )
+    return lambda driver, base: [
+        {field: row.get(field, "") for field in (*fields, *driver.analysis.ANNOTATION_FIELDS)}
+        for row in base
+    ]
+
+
+@pytest.fixture
 def synthetic_review(monkeypatch):
     monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "scripts"))
     driver = importlib.import_module("export_phase1_evaluation")
@@ -87,6 +114,20 @@ def test_complete_review_counts_distinct_union_without_double_counting_clean(syn
     assert len(annotations) == len(clean_keys | base_keys | extra_keys) < 180
 
 
+def test_native_compact_base_sample_has_identical_review_coverage(
+    synthetic_review, native_base_projection
+):
+    driver, rows, base, base_audit, annotations = synthetic_review
+    compact_base = native_base_projection(driver, base)
+    assert not {"repeat_id", "attack_variant", "exposed"} & compact_base[0].keys()
+
+    expected_review, expected_extra = driver.review_gate(rows, base, annotations, base_audit)
+    review, extra = driver.review_gate(rows, compact_base, annotations, base_audit)
+
+    assert review == expected_review
+    assert extra == expected_extra
+
+
 @pytest.mark.parametrize("missing_obligation", ["clean", "base", "extra"])
 def test_each_review_obligation_is_required_even_with_native_base_gate_true(
     synthetic_review, missing_obligation
@@ -114,7 +155,9 @@ def test_each_review_obligation_is_required_even_with_native_base_gate_true(
         driver.review_gate(rows, base, remaining, base_audit)
 
 
-def test_base_exhausted_cell_is_allowed_when_combined_review_covers_all_cells(synthetic_review):
+def test_base_exhausted_cell_is_allowed_when_combined_review_covers_all_cells(
+    synthetic_review, native_base_projection
+):
     driver, rows, _, base_audit, _ = synthetic_review
     exhausted_cell = ("banking", "synthetic-goal-a", "direct_append")
 
@@ -143,6 +186,11 @@ def test_base_exhausted_cell_is_allowed_when_combined_review_covers_all_cells(sy
     combined = {cell(row) for row in [*base, *extra] if row["condition"] == "attack"}
     assert len(combined) == 16
     assert review["attack_cell_coverage"]["base_and_additional_cells"] == 16
+    compact_review, compact_extra = driver.review_gate(
+        rows, native_base_projection(driver, base), [annotation(row) for row in rows], base_audit
+    )
+    assert compact_review == review
+    assert compact_extra == extra
 
 
 def test_stale_native_base_selection_digest_is_rejected(synthetic_review):
