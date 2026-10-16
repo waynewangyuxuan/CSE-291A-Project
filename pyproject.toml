@@ -1,0 +1,40 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-tradeoffs"
+version = "0.1.0"
+description = "Reproducible local measurements of capability, injection resistance, and deployment cost."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "agentdojo",
+  "huggingface-hub>=0.30,<2",
+  "openai>=1.59.7,<3",
+  "psutil>=6,<8",
+  "pydantic>=2.7,<3",
+]
+
+[project.scripts]
+agent-tradeoffs = "agent_tradeoffs.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.uv.sources]
+agentdojo = { git = "https://github.com/ethz-spylab/agentdojo.git", rev = "089ed468cf3ed0322acc66b0211f26d9d90dbf60" }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_tradeoffs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+

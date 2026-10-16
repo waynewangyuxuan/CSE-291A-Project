@@ -1,0 +1,19 @@
+[runtime]
+binary_path = ".cache/runtime/llama-b11678/llama-server"
+host = "127.0.0.1"
+port = 8080
+context_size = 16384
+threads = 8
+gpu_layers = 99
+seed = 0
+cache_type_k = "f16"
+cache_type_v = "f16"
+model_alias = "qwen3-8b-q4_k_m"
+output_root = "artifacts/runtime"
+
+[model_artifact]
+repo_id = "Qwen/Qwen3-8B-GGUF"
+revision = "7c41481f57cb95916b40956ab2f0b139b296d974"
+filename = "Qwen3-8B-Q4_K_M.gguf"
+sha256 = "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
+local_dir = ".cache/models/qwen3-8b"
