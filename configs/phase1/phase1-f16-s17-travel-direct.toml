@@ -1,0 +1,29 @@
+# Frozen Phase 1 evaluation workload; see task-manifest.json and docs/phase1-plan.md.
+[experiment]
+suite = "travel"
+benchmark_version = "v1.2.2"
+task_ids = ["user_task_1", "user_task_2", "user_task_3", "user_task_4", "user_task_5", "user_task_6", "user_task_7", "user_task_9", "user_task_13", "user_task_14", "user_task_17", "user_task_18"]
+injection_task_ids = ["injection_task_0", "injection_task_3"]
+mode = "attack"
+attack = "direct_append"
+
+[model]
+model = "qwen3-8b-f16"
+base_url = "http://127.0.0.1:8080/v1"
+api_key_env = "LOCAL_LLM_API_KEY"
+temperature = 0.7
+max_tokens = 2048
+seed = 17
+extra_body = { chat_template_kwargs = { enable_thinking = false }, cache_prompt = false, top_p = 0.8, top_k = 20, min_p = 0.0 }
+
+[runner]
+max_tool_steps = 15
+request_timeout_seconds = 120
+episode_timeout_seconds = 600
+output_root = "artifacts/runs"
+runtime_metadata_path = "artifacts/runtime/server.json"
+compact_artifacts = true
+min_free_disk_bytes = 536870912
+
+[context]
+policy = "full"

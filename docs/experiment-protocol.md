@@ -8,13 +8,18 @@ Phase 1 establishes one reproducible baseline. Phase 2 varies weight
 quantization and context policy while fixing the checkpoint, harness, tools,
 workload and checkers.
 
-The initial deployment uses Qwen3-8B Q4_K_M, non-thinking mode, greedy decoding
-with seed 0, one llama.cpp server slot, 16,384 context tokens and f16 KV cache.
-The runtime is warmed by an explicit tool-call probe before the development
-smoke; these episode latencies are steady-service measurements, not cold-start
-latencies. Requests explicitly disable prompt-prefix reuse (`cache_prompt=false`)
-so earlier episodes do not silently accelerate later ones. Native server startup
-logs remain separate; raw usage retains any cache details returned by the service.
+The historical development deployment used Qwen3-8B Q4_K_M, non-thinking mode
+and greedy decoding with seed 0. The frozen Phase 1 evaluation uses **F16
+weights**, non-thinking mode, temperature 0.7, top-p 0.8, top-k 20, min-p 0,
+and seeds 17 and 29. Both use one llama.cpp server slot, 16,384 context tokens
+and f16 KV cache. The full held-out workload and controls are specified in
+[the Phase 1 plan](phase1-plan.md).
+
+The runtime is warmed by an explicit tool-call probe before evaluation; episode
+latencies are steady-service measurements, not cold-start latencies. Requests
+explicitly disable prompt-prefix reuse (`cache_prompt=false`) so earlier
+episodes do not silently accelerate later ones. Native server startup logs
+remain separate; raw usage retains any cache details returned by the service.
 
 ## Paired workload
 

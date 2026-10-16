@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "campaign_id": "phase1-f16-v1",
+  "task_manifest": "configs/phase1/task-manifest.json",
+  "unique_user_tasks": 60,
+  "expected_episodes": 600,
+  "description": "Clean evaluations first, then both attack styles for each suite and seed. No outcome-dependent task removal or retry.",
+  "runs": [
+    {
+      "run_id": "phase1-f16-s17-banking-clean",
+      "config": "configs/phase1/phase1-f16-s17-banking-clean.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "banking",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 8
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-clean",
+      "config": "configs/phase1/phase1-f16-s17-slack-clean.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "slack",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-clean",
+      "config": "configs/phase1/phase1-f16-s17-workspace-clean.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "workspace",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-clean",
+      "config": "configs/phase1/phase1-f16-s17-travel-clean.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "travel",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 12
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-clean",
+      "config": "configs/phase1/phase1-f16-s29-banking-clean.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "banking",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 8
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-clean",
+      "config": "configs/phase1/phase1-f16-s29-slack-clean.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "slack",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-clean",
+      "config": "configs/phase1/phase1-f16-s29-workspace-clean.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "workspace",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-clean",
+      "config": "configs/phase1/phase1-f16-s29-travel-clean.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "travel",
+      "condition": "clean",
+      "attack_style": null,
+      "expected_episodes": 12
+    },
+    {
+      "run_id": "phase1-f16-s17-banking-direct",
+      "config": "configs/phase1/phase1-f16-s17-banking-direct.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "banking",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-banking-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s17-banking-ignore-previous.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "banking",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-direct",
+      "config": "configs/phase1/phase1-f16-s17-slack-direct.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "slack",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s17-slack-ignore-previous.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "slack",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-direct",
+      "config": "configs/phase1/phase1-f16-s17-workspace-direct.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "workspace",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s17-workspace-ignore-previous.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "workspace",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-direct",
+      "config": "configs/phase1/phase1-f16-s17-travel-direct.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "travel",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s17-travel-ignore-previous.toml",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "suite": "travel",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-direct",
+      "config": "configs/phase1/phase1-f16-s29-banking-direct.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "banking",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s29-banking-ignore-previous.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "banking",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-direct",
+      "config": "configs/phase1/phase1-f16-s29-slack-direct.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "slack",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s29-slack-ignore-previous.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "slack",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-direct",
+      "config": "configs/phase1/phase1-f16-s29-workspace-direct.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "workspace",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s29-workspace-ignore-previous.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "workspace",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-direct",
+      "config": "configs/phase1/phase1-f16-s29-travel-direct.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "travel",
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "expected_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-ignore-previous",
+      "config": "configs/phase1/phase1-f16-s29-travel-ignore-previous.toml",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "suite": "travel",
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "expected_episodes": 24
+    }
+  ],
+  "runtime_config": "configs/runtime-qwen3-8b-f16.toml",
+  "required_weight_format": "F16"
+}

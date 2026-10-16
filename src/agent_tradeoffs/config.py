@@ -102,6 +102,8 @@ class RunnerSettings(Settings):
     output_root: Path = Path("artifacts/runs")
     runtime_metadata_path: Path = Path("artifacts/runtime/server.json")
     server_pid: int | None = Field(default=None, gt=0)
+    compact_artifacts: bool = False
+    min_free_disk_bytes: int = Field(default=128 * 1024**2, ge=0)
 
 
 class ContextSettings(Settings):
