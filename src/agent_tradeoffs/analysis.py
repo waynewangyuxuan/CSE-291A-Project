@@ -465,6 +465,17 @@ def _summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         raise ValueError(
             "Ambiguous clean pairing: more than one clean episode per suite/task/repeat"
         )
+    control_counts = Counter()
+    for row in attack:
+        control = clean_lookup.get(pair_key(row))
+        if control is None:
+            control_counts["missing_clean_result"] += 1
+        elif control["status"] == "completed" and control.get("utility") is True:
+            control_counts["verified_clean_true"] += 1
+        elif control["status"] == "completed" and control.get("utility") is False:
+            control_counts["verified_clean_false"] += 1
+        else:
+            control_counts["unknown_clean_outcome"] += 1
     eligible = [
         row
         for row in attack
@@ -513,6 +524,27 @@ def _summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "episodes": len(rows),
         "unique_tasks": len({_cluster(row) for row in rows}),
         "completed": sum(row["status"] == "completed" for row in rows),
+        "unknown_clean_episodes": sum(
+            row["status"] != "completed" or not isinstance(row.get("utility"), bool)
+            for row in clean
+        ),
+        "clean_control_coverage": {
+            "attack_episodes": len(attack),
+            **{
+                category: control_counts[category]
+                for category in (
+                    "verified_clean_true",
+                    "verified_clean_false",
+                    "unknown_clean_outcome",
+                    "missing_clean_result",
+                )
+            },
+            "note": (
+                "The four counts partition attack episodes. A suite/task/repeat clean control "
+                "is reused across goals and styles (four fixed attack variants in Phase 1); "
+                "unknown clean outcomes do not establish inability."
+            ),
+        },
         "errors_by_type": dict(
             Counter(row["error_type"] or "unknown" for row in rows if row["status"] != "completed")
         ),
@@ -835,6 +867,7 @@ def _svg_costs(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def _markdown(summary: dict[str, Any]) -> str:
     overall = summary["overall"]
+    controls = overall["clean_control_coverage"]
     lines = [
         "# Preliminary campaign measurements",
         "",
@@ -844,6 +877,15 @@ def _markdown(summary: dict[str, Any]) -> str:
         "",
         "Rates retain raw counts. Error outcomes are unknown, "
         "and unexposed attacks do not demonstrate resistance.",
+        "",
+        f"Unknown clean episodes: {overall['unknown_clean_episodes']}. "
+        "Attack episodes paired to clean controls: "
+        f"verified true {controls['verified_clean_true']}, "
+        f"verified false {controls['verified_clean_false']}, "
+        f"unknown outcome {controls['unknown_clean_outcome']}, "
+        f"missing result {controls['missing_clean_result']}. "
+        "These counts partition attacks; attack variants reuse clean controls. "
+        "An unknown clean outcome does not establish inability.",
         "",
         "| Outcome | Successes / denominator | Rate | 95% interval |",
         "|---|---:|---:|---:|",

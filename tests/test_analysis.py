@@ -177,6 +177,112 @@ def test_repeats_are_clustered_and_do_not_create_independent_task_count():
     assert measured_rate(rows[:1] * 8, "score")["ci95"] is None
 
 
+def test_clean_control_coverage_distinguishes_unknown_false_and_missing(tmp_path):
+    clean, _ = make_run(
+        tmp_path,
+        "controls",
+        [
+            {"user_task_id": "solved", "utility": True},
+            {"user_task_id": "failed", "utility": False},
+            {
+                "user_task_id": "timeout",
+                "status": "error",
+                "utility": None,
+                "error": {"type": "APITimeoutError"},
+            },
+            {"user_task_id": "unscored", "utility": None},
+        ],
+    )
+
+    def attacked(task, goal="goal-0"):
+        return {
+            "condition": "attack",
+            "user_task_id": task,
+            "injection_task_id": goal,
+            "attack_success": True,
+        }
+
+    direct, _ = make_run(
+        tmp_path,
+        "direct",
+        [
+            attacked("solved"),
+            attacked("failed"),
+            attacked("timeout"),
+            attacked("timeout", "goal-1"),
+            attacked("unscored"),
+            attacked("missing"),
+        ],
+        style="direct_append",
+    )
+    ignore, _ = make_run(
+        tmp_path,
+        "ignore",
+        [
+            attacked("timeout"),
+            attacked("timeout", "goal-1"),
+        ],
+        style="ignore_previous_append",
+    )
+    summary = analyze_campaign(make_campaign(tmp_path, [clean, direct, ignore]))
+    overall = summary["overall"]
+    coverage = overall["clean_control_coverage"]
+    assert {
+        key: coverage[key]
+        for key in (
+            "attack_episodes",
+            "verified_clean_true",
+            "verified_clean_false",
+            "unknown_clean_outcome",
+            "missing_clean_result",
+        )
+    } == {
+        "attack_episodes": 8,
+        "verified_clean_true": 1,
+        "verified_clean_false": 1,
+        "unknown_clean_outcome": 5,
+        "missing_clean_result": 1,
+    }
+    # One timed-out control supplies four attacks; it remains one unknown clean
+    # episode. The completed-but-unscored control is also unknown, not false.
+    assert overall["unknown_clean_episodes"] == 2
+    assert overall["rates"]["attack_success_all_attempts"]["denominator"] == 8
+    assert overall["rates"]["attack_success_all_attempts"]["rate"] == 1
+    assert overall["rates"]["attack_success_clean_completable_known"]["denominator"] == 1
+    assert overall["paired_utility_change"]["pairs"] == 2
+    groups = [
+        overall,
+        summary["by_suite"]["banking"],
+        summary["by_repeat"]["17"],
+        *summary["by_attack"].values(),
+        *summary["by_suite_goal"]["banking"].values(),
+    ]
+    for group in groups:
+        counts = group["clean_control_coverage"]
+        assert (
+            sum(
+                counts[key]
+                for key in (
+                    "verified_clean_true",
+                    "verified_clean_false",
+                    "unknown_clean_outcome",
+                    "missing_clean_result",
+                )
+            )
+            == counts["attack_episodes"]
+        )
+        assert (
+            counts["attack_episodes"]
+            == group["rates"]["attack_success_all_attempts"]["denominator"]
+        )
+    assert (
+        summary["by_attack"]["ignore_previous_append"]["clean_control_coverage"][
+            "unknown_clean_outcome"
+        ]
+        == 2
+    )
+
+
 def test_bootstrap_retains_suite_composition_in_every_resample():
     rows = [
         {"suite": "banking", "user_task_id": "a", "score": True},

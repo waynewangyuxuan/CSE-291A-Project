@@ -46,6 +46,16 @@ a task solved in seed 17 does not make seed 29's attack eligible. Paired utility
 change reports one observation per attack, so styles and goals give repeated
 weight to the same clean control; the report states that weighting.
 
+`clean_control_coverage` partitions each group's attack episodes into
+`verified_clean_true`, `verified_clean_false`, `unknown_clean_outcome` (an existing
+control with an error or nonboolean utility), and `missing_clean_result`. The
+four counts sum to `attack_episodes`. Four fixed attack variants reuse each
+task/seed clean control in Phase 1, so these are attack counts rather than
+distinct controls. `unknown_clean_episodes` separately counts clean result rows
+with an error or unknown utility, once per clean episode. Unknown controls are
+not evidence that the model cannot perform the legitimate task; all existing
+rates, eligibility rules and raw scores retain their original denominators.
+
 ## Uncertainty and repeatability
 
 The statistical unit is a distinct `(suite, user_task_id)`, not an episode or
