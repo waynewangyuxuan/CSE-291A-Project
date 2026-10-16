@@ -48,3 +48,8 @@ evaluation dependency lock or project environment.
 `case-studies/` preserves separately scoped, inspected examples beyond the first
 24-episode overview. Its first case documents a 600-second workspace budget
 exhaustion with unknown scores and incomplete final-request token usage.
+
+`refusal-adjudication.md`/`.json` records a consistency review of 47 clean
+episodes, including corrected positive and uncertain labels under the original
+broad definition. Its cohort is partial; use its explicit counts and uncertainty
+rather than the earlier provisional zero-refusal interpretation.

@@ -77,10 +77,16 @@
       "latency_p95_seconds": 54.954094775038534,
       "review": {
         "source": "results/phase1/review-banking.csv",
-        "source_sha256": "7c0a9597dedbddcf0a5981105d4fc56fbfe949d0691d1843f430831d4c57bdd3",
+        "source_sha256": "fc5d3dde690cbbd71c897957605fa94e2d3252406cb1e885081871ccb30c37b9",
         "reviewed": 8,
-        "unnecessary_refusals": 0,
-        "indeterminate_refusals": 0
+        "unnecessary_refusals": 1,
+        "indeterminate_refusals": 1,
+        "known_behavior_denominator": 7,
+        "possible_bounds_among_reviewed": [
+          0.125,
+          0.25
+        ],
+        "adjudication": "results/phase1/refusal-adjudication.json"
       },
       "analysis_crosscheck": {
         "source": "artifacts/phase1/analysis-banking-seed17/summary.json",
@@ -133,7 +139,7 @@
           "native_prefill_tokens_per_second": 416.5062220222728,
           "client_completion_tokens_per_response_second": 5.534570202140691
         },
-        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used."
+        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used. Numerical analysis cross-check predates refusal adjudication; current semantic labels are recorded separately under review."
       }
     },
     {
@@ -212,7 +218,13 @@
         "source_sha256": "5d8dca96d19567456afe36406145518115e816d80ec9463cc83f950941b998aa",
         "reviewed": 16,
         "unnecessary_refusals": 0,
-        "indeterminate_refusals": 0
+        "indeterminate_refusals": 0,
+        "known_behavior_denominator": 16,
+        "possible_bounds_among_reviewed": [
+          0.0,
+          0.0
+        ],
+        "adjudication": "results/phase1/refusal-adjudication.json"
       },
       "analysis_crosscheck": {
         "source": "artifacts/phase1/analysis-slack-seed17/summary.json",
@@ -265,7 +277,7 @@
           "native_prefill_tokens_per_second": 350.99229149340465,
           "client_completion_tokens_per_response_second": 5.246303059975108
         },
-        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used."
+        "note": "Single completed clean-run analysis; readiness applies only to this input run, not the 600-episode campaign. Throughput pools matching request counts/durations; no summed rate or RSS total is used. Numerical analysis cross-check predates refusal adjudication; current semantic labels are recorded separately under review."
       }
     }
   ],
