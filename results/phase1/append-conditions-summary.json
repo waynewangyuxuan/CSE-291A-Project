@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-16T10:52:15.039579+00:00",
+  "status": "passed",
+  "scope": {
+    "unique_append_conditions": 240,
+    "model_episodes": 0,
+    "formal_attack_episodes": 480,
+    "seeds": [
+      17,
+      29
+    ],
+    "seed_collapse_reason": "The two frozen model seeds receive identical deterministic payloads: make_injections has only suite, GroundTruthPipeline(None), style, user and goal inputs; neither this pipeline nor these two fixed templates uses a model seed.",
+    "evaluation": "Fresh simulated environments only; no formal episode reads or rescoring.",
+    "limitations": "Proves existence of an official ground-truth completion within 15 tool calls and no attack success before or after that legitimate completion. Does not prove semantic checker validity or a model's ability to discover that completion. No inference or networking.",
+    "timing": "Supplementary source validation during formal collection; no task selection, model-outcome changes, or final600 completion claim."
+  },
+  "conditions": [
+    "Selected attack goal is false in the freshly initialized injected state.",
+    "Official legitimate ground truth attains utility=true within the frozen 15-tool-call limit.",
+    "Selected attack goal remains false after that official legitimate completion."
+  ],
+  "summary": {
+    "checked": 240,
+    "passed": 240,
+    "noop_attack_success_true": 0,
+    "legal_ground_truth_attack_success_true": 0,
+    "by_suite": {
+      "banking": 32,
+      "slack": 64,
+      "workspace": 96,
+      "travel": 48
+    },
+    "official_ground_truth_utility_true": 240,
+    "ground_truth_tool_calls_min": 1,
+    "ground_truth_tool_calls_max": 9
+  },
+  "source_provenance": {
+    "frozen_campaign_identity": "b61d56e553d420327c917fb8c3ad7793bc1cce293e12fae07b90c0eefe99a2c1",
+    "pinned_agentdojo_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+    "implementation_identity": {
+      "harness_sha256": "18da26112191f019f0a46ddf199249c4ea717e6aa447ec58062df24bd7a9afbf",
+      "agentdojo_version": "0.1.35",
+      "agentdojo_source": {
+        "url": "https://github.com/ethz-spylab/agentdojo.git",
+        "vcs_info": {
+          "vcs": "git",
+          "commit_id": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+          "requested_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+        }
+      },
+      "uv_lock_sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+    },
+    "source_files": 81,
+    "method_references": 392,
+    "benchmark_resource_files": 11,
+    "source_inventory_sha256": "d0b59db0c6c889d679dd38c44e86eb60033f9c3ad7f2bfdfafa17b8ecc784c11",
+    "source_inventory_serialization": "agent_tradeoffs.config.stable_hash(full_report.source_provenance.files), including its recorded absolute paths.",
+    "audit_script": {
+      "path": "scripts/audit_phase1_append_conditions.py",
+      "sha256": "ad5ad7437570bd7f9f765801a3c80d98f525ff7e84fa5a778efed7f9f29cd40f",
+      "bytes": 15174
+    },
+    "full_report": {
+      "path": "artifacts/phase1/append-conditions-audit.json",
+      "sha256": "22c299cd0751ae95ccb771fa48c5b633b77332a708054d68bab84033793eeaf5",
+      "bytes": 263269
+    },
+    "reproduction_command": ".venv/bin/python scripts/audit_phase1_append_conditions.py"
+  },
+  "verification": {
+    "independent_fresh_process_reports_byte_identical": true,
+    "source_files_rehashed_by_root": 81,
+    "earlier_offline_case_projections_matched": 240,
+    "matched_fields": [
+      "tuple_key",
+      "utility",
+      "noop_attack_success",
+      "payloads_sha256",
+      "injections_sha256",
+      "injection_vectors",
+      "tool_count"
+    ],
+    "note": "This corroborates the supplementary source audit; no model episode was rerun or rescored."
+  }
+}

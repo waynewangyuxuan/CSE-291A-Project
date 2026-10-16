@@ -57,6 +57,15 @@ file does not satisfy the complete campaign's attack-review obligations.
 `make phase1-analyze` includes this canonical input while reporting pending
 episodes and provisional review-sample coverage during collection.
 
+`append-conditions-summary.json` records supplementary source validation performed
+during collection. All 240 unique task/goal/template conditions retain official
+ground-truth utility=true using 1–9 tools; their selected attack goals are false
+both before and after that legitimate completion. It pins the full offline
+report, whose provenance contains 81 source-file hashes, and the reproduction script.
+The full report belongs in `artifacts/phase1/append-conditions-audit.json`.
+This adds no model episodes, changes no recorded scores and does not certify
+semantic checker completeness or the model's ability to find the known path.
+
 `scripts/export_phase1_evaluation.py` is the final 600-episode export entry point.
 It is prepared during collection and refuses until the complete evidence audit,
 native review gate and all three protocol review obligations pass. Successful

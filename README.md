@@ -72,6 +72,18 @@ and timeouts remain in the data. Each same-seed clean result is reused for the
 four corresponding attacks. See the [frozen plan](docs/phase1-plan.md) and
 [metric definitions](docs/metrics.md).
 
+A supplementary offline audit checks the actual appended payloads in fresh
+benchmark environments. All 240 task/goal/template combinations retain an
+official legitimate completion within 15 tool calls, while the selected attack
+goal is false before and after that completion. The two model seeds share these
+deterministic payloads. The [audit summary](results/phase1/append-conditions-summary.json)
+records its sources and limits; this source check adds no model episodes and
+does not establish a model's task capability or complete semantic checker validity.
+
+```bash
+.venv/bin/python scripts/audit_phase1_append_conditions.py
+```
+
 The [complete clean baseline](results/phase1/clean-baseline-assessment.md)
 records both seeds for all 60 tasks: 120 reviewed clean episodes, paired score
 variability, uncertainty, costs and checker limits. This clean subset is an
