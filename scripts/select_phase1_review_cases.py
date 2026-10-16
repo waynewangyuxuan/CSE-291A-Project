@@ -324,7 +324,9 @@ def main() -> int:
     ]
     temporary = args.output.with_suffix(args.output.suffix + ".tmp")
     with temporary.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(
+            handle, fieldnames=fields, extrasaction="ignore", lineterminator="\n"
+        )
         writer.writeheader()
         writer.writerows(selected)
     temporary.replace(args.output)
