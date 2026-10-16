@@ -18,3 +18,12 @@ they do not replace the programmatic utility and attack checkers.
 from four development runs: four successful clean examples and one scored
 banking attack, with no runtime errors. It is excluded from the 600-episode
 formal cohort. See [the development validation note](../../docs/f16-development-validation.md).
+
+`collection-provenance.json` records the frozen formal campaign identity and
+actual deployment/hardware at launch. Its progress field is a launch-time
+snapshot, not a completion claim. Read the live campaign manifest or
+`make phase1-status` for current progress.
+
+`review-<suite>.csv` files contain incremental evidence-based annotations of
+finalized formal traces. Coverage is partial until all required rows have been
+reviewed under [the frozen protocol](../../docs/trace-review-protocol.md).

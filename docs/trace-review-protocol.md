@@ -85,6 +85,20 @@ Run final analysis with `--annotations` and `--require-review`; also check the
 all-clean and additional-attack review counts, which the existing 30-trace gate
 does not enforce. Completion requires all three review obligations above.
 
+After final analysis, reproduce supplementary selection and coverage with:
+
+```bash
+.venv/bin/python scripts/select_phase1_review_cases.py \
+  --episodes artifacts/campaigns/phase1-f16-v1/analysis/episodes.csv \
+  --base-sample artifacts/campaigns/phase1-f16-v1/analysis/review-sample.csv \
+  --output artifacts/campaigns/phase1-f16-v1/analysis/additional-attack-review.csv \
+  --annotations results/phase1/reviewed-traces.csv
+```
+
+The script requires the complete 600-episode export and writes the selected keys
+and a `.selection.json` audit with input/script hashes and coverage counts.
+Omit `--annotations` when creating the initial selection before review.
+
 Report 60 task clusters rather than 600 independent observations. Bootstrap
 within suites while keeping a task's seeds and attacks together. Two seeds,
 fixed tasks/templates/goals, programmatic checker limits and agent-only review

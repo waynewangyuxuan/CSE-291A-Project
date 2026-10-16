@@ -1,0 +1,333 @@
+{
+  "schema_version": 1,
+  "campaign_id": "phase1-f16-v1",
+  "campaign_identity": "b61d56e553d420327c917fb8c3ad7793bc1cce293e12fae07b90c0eefe99a2c1",
+  "collection_status_at_export": "running",
+  "finalized_episodes_at_export": 3,
+  "created_at": "2026-10-16T06:06:26.984052+00:00",
+  "planned_episodes": 600,
+  "planned_clean_episodes": 120,
+  "planned_attack_episodes": 480,
+  "planned_unique_tasks": 60,
+  "task_manifest_sha256": "497ef032726634c7d4e2c21ff6678915c5b10ea1346c95f171bbaa5febe5a226",
+  "environment_at_launch": {
+    "captured_at": "2026-10-16T06:06:33.025484+00:00",
+    "stage": "formal_campaign_launch",
+    "platform": "macOS-26.5.2-arm64-arm-64bit",
+    "python": "3.12.3",
+    "processor": "Apple M2 Max",
+    "ram_total_bytes": 68719476736,
+    "ram_available_bytes": 38714327040,
+    "swap_used_bytes": 1897529344,
+    "load_average": [
+      2.26611328125,
+      21.3828125,
+      22.9814453125
+    ],
+    "cpu_logical": 12,
+    "cpu_physical": 12,
+    "disk_free_bytes": 79697530880,
+    "power_plugged": true,
+    "battery_percent": 100,
+    "git_commit": "a7309c104d8c47199adfb7f25b52799f2216dd08",
+    "git_worktree_status": "",
+    "implementation": {
+      "harness_sha256": "18da26112191f019f0a46ddf199249c4ea717e6aa447ec58062df24bd7a9afbf",
+      "agentdojo_version": "0.1.35",
+      "agentdojo_source": {
+        "url": "https://github.com/ethz-spylab/agentdojo.git",
+        "vcs_info": {
+          "vcs": "git",
+          "commit_id": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+          "requested_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+        }
+      },
+      "uv_lock_sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+    },
+    "server_pid": 77930,
+    "server_rss_bytes": 19971932160,
+    "context_size": 32768,
+    "model_sha256": "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad"
+  },
+  "runtime": {
+    "model_alias": "qwen3-8b-f16",
+    "model_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "model_sha256": "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad",
+    "model_acquisition": "derived",
+    "llama_release": "b11678",
+    "llama_commit": "b6334e37e6ef286fc5091a41b6561b2113d915fb",
+    "runtime_version": "version: 0.7.0-dev (build 11678, commit b6334e37e)\nbuilt with AppleClang 21.0.0.21000101 for Darwin arm64",
+    "context_size": 32768,
+    "command": [
+      "/Users/waynewang/CSE-291A-Project/.cache/runtime/llama-b11678/llama-server",
+      "--model",
+      "/Users/waynewang/CSE-291A-Project/.cache/models/qwen3-8b-f16/Qwen3-8B-F16.gguf",
+      "--alias",
+      "qwen3-8b-f16",
+      "--host",
+      "127.0.0.1",
+      "--port",
+      "8080",
+      "--ctx-size",
+      "32768",
+      "--no-context-shift",
+      "--threads",
+      "8",
+      "--threads-batch",
+      "8",
+      "--gpu-layers",
+      "99",
+      "--parallel",
+      "1",
+      "--seed",
+      "0",
+      "--cache-type-k",
+      "f16",
+      "--cache-type-v",
+      "f16",
+      "--flash-attn",
+      "on",
+      "--cache-ram",
+      "0",
+      "--jinja",
+      "--chat-template-kwargs",
+      "{\"enable_thinking\":false}",
+      "--reasoning",
+      "off",
+      "--offline",
+      "--no-webui",
+      "--metrics"
+    ],
+    "startup_seconds": 58.000804,
+    "started_at": "2026-10-16T05:56:22.054430+00:00",
+    "ready_at": "2026-10-16T05:57:20.055234+00:00"
+  },
+  "model_weight_format": "F16",
+  "model_digest_verified": true,
+  "runs": [
+    {
+      "run_id": "phase1-f16-s17-banking-clean",
+      "suite": "banking",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 8
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-clean",
+      "suite": "slack",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-clean",
+      "suite": "workspace",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-clean",
+      "suite": "travel",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 12
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-clean",
+      "suite": "banking",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 8
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-clean",
+      "suite": "slack",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-clean",
+      "suite": "workspace",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-clean",
+      "suite": "travel",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "clean",
+      "attack_style": null,
+      "planned_episodes": 12
+    },
+    {
+      "run_id": "phase1-f16-s17-banking-direct",
+      "suite": "banking",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-banking-ignore-previous",
+      "suite": "banking",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-direct",
+      "suite": "slack",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s17-slack-ignore-previous",
+      "suite": "slack",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-direct",
+      "suite": "workspace",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "suite": "workspace",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-direct",
+      "suite": "travel",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s17-travel-ignore-previous",
+      "suite": "travel",
+      "repeat_id": "seed-17",
+      "seed": 17,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-direct",
+      "suite": "banking",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-banking-ignore-previous",
+      "suite": "banking",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 16
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-direct",
+      "suite": "slack",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s29-slack-ignore-previous",
+      "suite": "slack",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 32
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-direct",
+      "suite": "workspace",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "suite": "workspace",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 48
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-direct",
+      "suite": "travel",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "direct_append",
+      "planned_episodes": 24
+    },
+    {
+      "run_id": "phase1-f16-s29-travel-ignore-previous",
+      "suite": "travel",
+      "repeat_id": "seed-29",
+      "seed": 29,
+      "condition": "attack",
+      "attack_style": "ignore_previous_append",
+      "planned_episodes": 24
+    }
+  ],
+  "source_manifest": "artifacts/campaigns/phase1-f16-v1/manifest.json",
+  "limitations": [
+    "Collection was in progress at this export; this file is launch provenance, not a completed result.",
+    "Startup measurement has uncontrolled OS caches.",
+    "Memory measures server process RSS; total Metal/unified-memory use is unmeasured.",
+    "All-clean-first order confounds causal cost differences with time and host drift.",
+    "The 600 episodes are dependent repeats of 60 task clusters."
+  ]
+}
