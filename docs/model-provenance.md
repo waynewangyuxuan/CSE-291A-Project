@@ -41,3 +41,17 @@ Before promotion, every GGUF tensor's storage type, parameter count, and file
 bounds are audited. The derived `.provenance.json` records source hashes,
 conversion versions, adapter hash, tensor audit, and final artifact SHA256.
 The final SHA256 is pinned in `configs/runtime-qwen3-8b-f16.toml`.
+
+The completed artifact was verified on 2026-10-15:
+
+| Property | Verified value |
+| --- | --- |
+| SHA256 | `c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad` |
+| File size | 16,388,044,256 bytes |
+| Parameters | 8,190,735,360 |
+| Tensor storage | 254 F16 tensors; 145 F32 tensors; 0 quantized tensors |
+| Native context limit | 40,960 tokens |
+
+Preparation evidence is retained in
+`artifacts/model-preparation/qwen3-8b-f16.log`; the machine-readable provenance
+is beside the model in `.cache/models/qwen3-8b-f16/`.
