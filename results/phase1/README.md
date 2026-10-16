@@ -28,6 +28,25 @@ snapshot, not a completion claim. Read the live campaign manifest or
 finalized formal traces. Coverage is partial until all required rows have been
 reviewed under [the frozen protocol](../../docs/trace-review-protocol.md).
 
+`clean-baseline-assessment.md`, `clean-baseline-measurements.json`,
+`clean-baseline-episodes.csv` and `clean-baseline-repeat-overview` PNG/SVG cover
+the complete **120-clean / 60-task / two-seed** cohort, with all 120 traces
+reviewed. The 480 attacks and their final review obligations remain separate
+requirements of the parent campaign. The export preserves the native analyzer's
+statistics, exact source hashes, raw-evidence digests, historical parent snapshot
+and canonical annotations. Native readiness applies only to this clean subset.
+
+Reproduce the export and paired-outcome figure from the unchanged local evidence:
+
+```bash
+.venv/bin/python scripts/export_phase1_clean_checkpoint.py
+uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_clean.py
+```
+
+The exporter rejects unfinished clean collection/review and mismatched existing
+snapshots. `--check-only` validates without writing. Raw source snapshots and
+full native analysis remain at `artifacts/phase1/clean120-checkpoint/`.
+
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
 (banking and Slack, seed 17). Their frozen latency data is

@@ -1,0 +1,51 @@
+{
+  "scope": "120 clean episodes only; no attack estimate; parent campaign has 600 episodes",
+  "measurements_sha256": "c78c6d1bb979c3cfa292d67e1b97813c0aeb08023231fd64a395e3eae176e5e0",
+  "episodes_sha256": "df88026c467d8cb37f908c8d0d29c48450586e322c47dd6bdaced4a8eb2d3598",
+  "script_sha256": "d7894c94a6449abe7fbd9b10ceb9d21b06cb17ae4f69a25d344592ffb472ada0",
+  "analysis_sha256": "15136ff51b4e4d31eb49c52aea362a64e796d0482e670955d1aa98fe8f83a882",
+  "matplotlib_version": "3.11.2",
+  "paired_outcomes": {
+    "banking": {
+      "both_success": 3,
+      "both_failure": 5,
+      "false_to_true": 0,
+      "true_to_false": 0,
+      "unknown": 0
+    },
+    "slack": {
+      "both_success": 9,
+      "both_failure": 5,
+      "false_to_true": 2,
+      "true_to_false": 0,
+      "unknown": 0
+    },
+    "workspace": {
+      "both_success": 9,
+      "both_failure": 9,
+      "false_to_true": 3,
+      "true_to_false": 1,
+      "unknown": 2
+    },
+    "travel": {
+      "both_success": 4,
+      "both_failure": 7,
+      "false_to_true": 1,
+      "true_to_false": 0,
+      "unknown": 0
+    }
+  },
+  "known_repeat_comparison": {
+    "repeated_cells": 60,
+    "all_known_cells": 58,
+    "partial_unknown_cells": 1,
+    "all_unknown_cells": 1,
+    "comparable_cells": 58,
+    "noncomparable_cells": 2,
+    "known_agreement_cells": 51,
+    "known_disagreement_cells": 7,
+    "comparable_partial_unknown_cells": 0,
+    "partial_unknown_known_agreement_cells": 0,
+    "partial_unknown_known_disagreement_cells": 0
+  }
+}

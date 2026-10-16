@@ -72,9 +72,11 @@ and timeouts remain in the data. Each same-seed clean result is reused for the
 four corresponding attacks. See the [frozen plan](docs/phase1-plan.md) and
 [metric definitions](docs/metrics.md).
 
-The [first-seed clean assessment](results/phase1/seed17-clean-assessment.md)
-records all 60 tasks at seed 17, including reviewed traces, uncertainty, costs
-and checker limits. It is an interim checkpoint within the 600-episode campaign.
+The [complete clean baseline](results/phase1/clean-baseline-assessment.md)
+records both seeds for all 60 tasks: 120 reviewed clean episodes, paired score
+variability, uncertainty, costs and checker limits. This clean subset is an
+interim checkpoint within the 600-episode campaign. The earlier
+[first-seed assessment](results/phase1/seed17-clean-assessment.md) remains archived.
 
 Analysis reports coverage while collection is in progress. The final preliminary
 evaluation requires all 600 episodes and the [frozen trace-review coverage](docs/trace-review-protocol.md):
