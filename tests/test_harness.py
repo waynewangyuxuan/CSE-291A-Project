@@ -23,6 +23,12 @@ from agent_tradeoffs.context import exposed_vectors
 from agent_tradeoffs.reporting import aggregate_results
 
 
+@pytest.fixture(autouse=True)
+def isolated_harness_workspace(tmp_path, monkeypatch):
+    """Exercise real endpoint locks without sharing the live evaluator's directory."""
+    monkeypatch.chdir(tmp_path)
+
+
 def completion(content="Done", calls=None, finish_reason="stop", usage=None):
     value = {
         "id": "test-completion",
@@ -443,7 +449,6 @@ def test_runtime_drift_invalidates_episode_and_allows_compatible_resume(tmp_path
 
 
 def test_endpoint_lock_blocks_alias_and_output_root_bypass_before_capture(tmp_path, monkeypatch):
-    monkeypatch.chdir(tmp_path)
     config = settings(tmp_path / "different-output", model={"base_url": "http://localhost:8080/v1"})
     monkeypatch.setattr(
         runner, "capture_runtime", lambda config: pytest.fail("Lock must precede runtime capture")
