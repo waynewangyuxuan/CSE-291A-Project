@@ -73,7 +73,10 @@ four corresponding attacks. See the [frozen plan](docs/phase1-plan.md) and
 [metric definitions](docs/metrics.md).
 
 Analysis reports coverage while collection is in progress. The final preliminary
-evaluation additionally requires inspection of the deterministic 30-trace sample:
+evaluation requires all 600 episodes and the [frozen trace-review coverage](docs/trace-review-protocol.md):
+all 120 clean traces, the analyzer's deterministic 30-trace sample, and 30 additional
+attack traces. The following command enforces the analyzer sample gate; the
+protocol's supplementary selector checks the remaining review coverage.
 
 ```bash
 uv run --frozen agent-tradeoffs analyze artifacts/campaigns/phase1-f16-v1 \
