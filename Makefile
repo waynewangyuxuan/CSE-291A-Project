@@ -47,7 +47,8 @@ phase1-status:
 	$(UV) run --frozen agent-tradeoffs campaign status artifacts/campaigns/phase1-f16-v1
 
 phase1-analyze:
-	$(UV) run --frozen agent-tradeoffs analyze artifacts/campaigns/phase1-f16-v1
+	PYTHONHASHSEED=0 $(UV) run --frozen agent-tradeoffs analyze artifacts/campaigns/phase1-f16-v1 \
+		--annotations results/phase1/reviewed-traces.csv
 
 tasks:
 	$(UV) run --frozen agent-tradeoffs tasks --suite banking

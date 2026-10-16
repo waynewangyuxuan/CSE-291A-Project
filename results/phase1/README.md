@@ -49,6 +49,14 @@ full native analysis remain at `artifacts/phase1/clean120-checkpoint/`.
 The fixed analysis-process hash seed stabilizes JSON label-key order; it does
 not alter sampling or statistical estimates.
 
+`reviewed-traces.csv` is the canonical analyzer input. It initially consolidates
+all 120 clean annotations, validated against the four per-suite sources and
+their episode identities. Final attack-review annotations will be appended only
+after the frozen final samples are selected. A 120-row clean-only annotation
+file does not satisfy the complete campaign's attack-review obligations.
+`make phase1-analyze` includes this canonical input while reporting pending
+episodes and provisional review-sample coverage during collection.
+
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
 (banking and Slack, seed 17). Their frozen latency data is
