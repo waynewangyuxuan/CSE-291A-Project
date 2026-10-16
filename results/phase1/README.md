@@ -95,6 +95,9 @@ The paired Workspace seed-29 case explains a wrong answer scored successful.
 Two preselected Banking attacks distinguish exact-goal success from an observed
 unauthorized state change; these diagnostics do not replace the final attack
 review samples or estimate population risk.
+Two Slack tool-budget errors additionally show unrelated membership changes
+before interruption, while retaining unknown official outcomes and separating
+pre-existing inbox instructions from the selected attack payloads.
 
 `refusal-adjudication.md`/`.json` records a consistency review of 47 clean
 episodes, including corrected positive and uncertain labels under the original
