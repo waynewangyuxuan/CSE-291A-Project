@@ -110,9 +110,18 @@ initial variability check, not a precise variance estimate.
 Every condition exports count, total, mean, sample standard deviation, min, p25,
 median, p75, p90, p95 and max for available measurements. Quantiles use linear
 interpolation on sorted observations. Missing measurements have `n=0` and null
-statistics rather than invented zero values. Both all-attempt and completed-only
-cost groups are provided because timeout costs and successful task costs answer
-different questions.
+statistics rather than invented zero values. Native all-attempt and completed-only
+cost groups distinguish interrupted episodes from normal returns. Here
+`completed` means the episode returned without a runtime error; it includes
+official utility=false and must not be described as task success.
+
+The final export additionally provides `utility_success_costs`, selecting only
+completed episodes whose official utility is exactly true. It reports selected
+episode/task counts, the same native cost distributions and pooled request
+metrics by condition and suite/condition. These costs are conditional on observed
+task success. Their selected task mix can differ across conditions, so they do
+not establish a causal performance advantage. Keep all-attempt costs alongside
+them; utility success is also separate from an attack's security outcome.
 
 The generic distribution field `total` is additive for latency, token and call
 counts. Summed RSS peaks are not total memory consumption, and summed rates are

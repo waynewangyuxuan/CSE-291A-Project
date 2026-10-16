@@ -223,6 +223,69 @@ def unchanged(inputs: dict[str, Any]) -> None:
         )
 
 
+def utility_success_costs(
+    records: list[dict[str, Any]], request_rows: list[dict[str, str]]
+) -> dict[str, Any]:
+    """Describe costs conditional on observed official utility success.
+
+    Episode selection deliberately uses the native boolean scores, before CSV
+    serialization. The request join includes the run because episode IDs repeat
+    across seeds and attack templates.
+    """
+    conditions = ("clean", "attack")
+    selected = [
+        row
+        for row in records
+        if row["condition"] in conditions
+        and row["status"] == "completed"
+        and row.get("utility") is True
+    ]
+
+    def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
+        keys = {(row["run_id"], row["episode_id"]) for row in rows}
+        requests = [row for row in request_rows if (row["run_id"], row["episode_id"]) in keys]
+        return {
+            "selected_episodes": len(rows),
+            "selected_unique_tasks": len({(row["suite"], row["user_task_id"]) for row in rows}),
+            "costs": analysis._costs(rows),
+            "pooled_request_metrics": helper.pooled_metrics(requests),
+        }
+
+    return {
+        "selection": {
+            "source": "Native episode records before CSV serialization; official scores unchanged",
+            "conditions": list(conditions),
+            "status": "completed",
+            "utility_is_boolean_true": True,
+            "request_join": ["run_id", "episode_id"],
+        },
+        "interpretation": "Conditioned on observed official utility success. The selection differs "
+        "from status-completed and all-attempt estimates, and can select different tasks or paths "
+        "in each condition. These descriptive costs are neither a causal performance comparison "
+        "nor a security metric. Missing measurements remain absent; an empty subset has n=0 "
+        "and undefined throughput rates, not evidence of zero cost. Only returned responses "
+        "supply tokens/native timing; pooled rates retain the native numerator/time masks.",
+        "overall": summarize(selected),
+        "by_condition": {
+            condition: summarize([row for row in selected if row["condition"] == condition])
+            for condition in conditions
+        },
+        "by_suite_condition": {
+            suite: {
+                condition: summarize(
+                    [
+                        row
+                        for row in selected
+                        if row["suite"] == suite and row["condition"] == condition
+                    ]
+                )
+                for condition in conditions
+            }
+            for suite in sorted({row["suite"] for row in records})
+        },
+    }
+
+
 def export(inputs: dict[str, Any], output: Path, results: Path) -> dict[str, Any]:
     identity = inputs["identity"]
     owner = output / "export-manifest.json"
@@ -398,9 +461,10 @@ def export(inputs: dict[str, Any], output: Path, results: Path) -> dict[str, Any
             "unique_tasks": 60,
             "runs": 24,
             "seeds": [17, 29],
-            "full_phase1_complete": True,
+            "full_cohort_evaluation_export_complete": True,
             "note": "Complete collection plus all120 clean, final base30 and extra30 reviews; "
-            "official scores unchanged. Native readiness alone does not certify these obligations.",
+            "official scores unchanged. Native readiness alone does not certify these obligations. "
+            "This export does not certify final plots, visual QA, or the written assessment.",
         },
         "source_provenance": json.loads((output / "source-provenance.json").read_text()),
         "source_files": [file_info(owner), *json.loads(owner.read_text())["files"]],
@@ -408,6 +472,7 @@ def export(inputs: dict[str, Any], output: Path, results: Path) -> dict[str, Any
         "by_suite_style": by_suite_style,
         "by_suite_repeat": by_suite_repeat,
         "pooled_request_metrics": pooled,
+        "utility_success_costs": utility_success_costs(records, requests),
         "collection_audit": file_info(output / "collection-audit.json"),
         "review_coverage": review,
         "limitations": [

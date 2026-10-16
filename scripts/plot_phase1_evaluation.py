@@ -25,6 +25,8 @@ def load_inputs(measurements: Path, episodes: Path):
     native = data["native_summary"]
     if (
         data.get("complete") is not True
+        or data.get("scope", {}).get("full_cohort_evaluation_export_complete") is not True
+        or data.get("review_coverage", {}).get("complete") is not True
         or native["planned_episodes"] != 600
         or native["finalized_episodes"] != 600
         or native["missing_episodes"] != 0
@@ -238,16 +240,24 @@ def plot_outcomes(data, *, subtitle):
     )
     fig.text(
         0.10,
-        0.065,
+        0.075,
         "Whiskers: native task-cluster intervals. Unknown outcomes remain in all-attempt "
         "denominators; U denotes unknown.",
         fontsize=9,
     )
     fig.text(
         0.10,
-        0.035,
+        0.050,
         "60 task clusters; two seeds. Suite goals differ. Exact-goal failure does not establish "
         "permission-boundary preservation.",
+        fontsize=9,
+        color="#59616b",
+    )
+    fig.text(
+        0.10,
+        0.025,
+        "All-zero bootstrap intervals may be degenerate; unknown-outcome bounds remain "
+        "separate in the exported metrics.",
         fontsize=9,
         color="#59616b",
     )

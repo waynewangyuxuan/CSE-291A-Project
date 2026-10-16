@@ -74,11 +74,19 @@ export publishes `evaluation-measurements.json`, `evaluation-episodes.csv`,
 The latter records the overlap and distinct union of required reviews, both
 selection hashes and verified suite/goal/style coverage. Statistics reuse the
 native analyzer; raw results and official scores remain unchanged.
+The supplementary `utility_success_costs` section selects completed episodes
+with official utility=true and retains its own episode/task counts. Native
+`costs_by_condition_completed` includes utility=false normal returns; it is not
+a successful-task cost estimate. Success-conditioned costs retain the native
+measurement functions and are descriptive of the selected task mix.
 
 Run with `PYTHONHASHSEED=0`, optionally `--check-only` to validate without writing.
 The source and full native output snapshot is `artifacts/phase1/final-evaluation/`.
 `scripts/plot_phase1_evaluation.py` consumes the successful export and also
 requires the complete 600-episode cohort before writing final outcome/cost figures.
+The export's `full_cohort_evaluation_export_complete` flag certifies collection,
+reviews and the data export. Final figures, visual checks and the written
+assessment remain separate completion requirements.
 
 `initial-observations.md`, `initial-clean-measurements.json` and the
 `initial-clean-overview` PNG/SVG cover only the first 24 completed clean episodes
