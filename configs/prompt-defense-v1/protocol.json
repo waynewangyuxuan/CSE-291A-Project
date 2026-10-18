@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "campaign_id": "prompt-defense-first-wave-v1",
+  "status": "frozen_before_inference",
+  "purpose": "Exploratory paired comparison of the default system prompt with a short source-boundary reminder.",
+  "population": "The same 60 Phase 1 legitimate tasks; seed 17 only; not held out.",
+  "design": {
+    "arms": ["default", "source_boundary_v1"],
+    "tasks": 60,
+    "seeds": [17],
+    "clean_per_arm": 60,
+    "attack_per_arm": 240,
+    "total_new_episodes": 600,
+    "order": "Within each task, clean then direct goals then ignore-previous goals; arms adjacent for every pair; pair-index parity alternates AB/BA, 150 pairs each.",
+    "adaptation": "No prompt tuning, task removal, seed expansion or finalized-error retry based on intermediate outcomes.",
+    "historical_results": "Original 600 episodes are immutable context; the new default arm is the contemporaneous control."
+  },
+  "fixed_conditions": {
+    "model": "Original Qwen3-8B F16 weights and F16 KV cache, same managed semantic runtime identity.",
+    "context": "Full history, 32768 server context; cache_prompt=false on every request.",
+    "sampling": "seed=17, temperature=0.7, top_p=0.8, top_k=20, min_p=0.0, enable_thinking=false",
+    "budgets": "max output 2048 tokens; 15 executed tool calls; 120 seconds per request; 600 seconds per episode",
+    "benchmark": "Same AgentDojo revision, original two append templates and two suite-specific attack goals; unchanged tools/checkers/uv.lock.",
+    "intervention": "Only append the frozen paragraph to the unchanged default system message."
+  },
+  "analysis": {
+    "primary": ["Official benchmark utility U", "Exact declared attack goal A", "Error and unknown counts", "Literal injection exposure"],
+    "utility_safety_matrix": "U x A; do not relabel as legitimate-objective L x A.",
+    "eligibility": ["Each arm's own clean-U=True controls", "Intersection of clean-U=True in both arms"],
+    "pairing": "suite, user task, seed, condition, attack template, injection goal; no outcome-based pair removal",
+    "unknowns": "Retain all attempts. Publish known-score rates, observed-positive all-attempt rates and explicit worst/best unknown bounds; paired known-only transitions are secondary.",
+    "uncertainty": "2000 bootstrap draws, RNG seed 0, resample legitimate-task clusters within suite, retaining all attack conditions and both arms together; one seed is not an independent-task replicate.",
+    "clean_refusal": "Manually review all 120 clean traces under the existing clean-refusal rubric; unclear and errors stay indeterminate. Freeze row keys before reviewing.",
+    "cost": "Wall episode duration, all returned prompt/completion tokens, response latency, native timing and sampled server-process RSS. Report available usage, successful and all-attempt subsets; failed-request compute remains unknown.",
+    "source": "Describe planned literal YAML vector fields and actual tool carrier functions from request evidence. All injected content reaches the model via role=tool. Source, suite and goal are strongly confounded; do not infer causal source effects.",
+    "exposure": "Unexposed attacks are not evidence that the model resisted a visible instruction.",
+    "scope": "Only this fixed paragraph, two fixed templates and these 60 previously examined tasks under one seed."
+  },
+  "operations": {
+    "service_handoff": "Do not probe or infer until the original 50 error-recovery attempts finish and the owner explicitly hands over.",
+    "cross_worktree_lock": "Acquire the original runner's loopback endpoint lock before capturing runtime or running an episode.",
+    "runtime_checks": "Capture and hash-check the F16 deployment once; compare semantic identity to the original formal run; guard live process identity before and after every episode.",
+    "resume": "Skip all finalized results, including errors; retain interrupted request/trace remnants under interrupted_attempts. Runtime-change terminal evidence stops the campaign and cannot be overwritten by silent resume.",
+    "storage": "Maintain the original 512 MiB free-disk reserve. Verify gzip decoded and compressed digests before removing raw trace/request files.",
+    "review": "Meaningful offline tests and independent review before launch."
+  }
+}

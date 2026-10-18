@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import importlib.resources
 import json
 import os
 import time
@@ -18,6 +17,7 @@ from pydantic import BaseModel
 
 from agent_tradeoffs.config import ExperimentConfig
 from agent_tradeoffs.context import exposed_vectors, full_context
+from agent_tradeoffs.prompt_policy import PromptPolicy, prompt_identity, system_prompt
 
 
 class EpisodeTimeoutError(TimeoutError):
@@ -56,9 +56,8 @@ def tool_result_to_text(value: Any) -> str:
     return str(value)
 
 
-def load_system_message() -> str:
-    resource = importlib.resources.files("agentdojo") / "data" / "system_messages.yaml"
-    return yaml.safe_load(resource.read_text())["default"]
+def load_system_message(policy: PromptPolicy = "default") -> str:
+    return system_prompt(policy)
 
 
 class LocalAgent(BasePipelineElement):
@@ -108,6 +107,7 @@ class LocalAgent(BasePipelineElement):
     def trace(self) -> dict[str, Any]:
         return {
             "messages": self.messages,
+            "system_prompt": prompt_identity(self.config.prompt.policy),
             "initial_environment": self.initial_environment,
             "final_environment": self.environment.model_dump(mode="json")
             if self.environment is not None
@@ -129,7 +129,12 @@ class LocalAgent(BasePipelineElement):
         self.initial_environment = env.model_dump(mode="json")
         self.environment = env
         self.messages = [
-            {"role": "system", "content": [text_content_block_from_string(load_system_message())]},
+            {
+                "role": "system",
+                "content": [
+                    text_content_block_from_string(load_system_message(self.config.prompt.policy))
+                ],
+            },
             {"role": "user", "content": [text_content_block_from_string(query)]},
         ]
         tools = [
