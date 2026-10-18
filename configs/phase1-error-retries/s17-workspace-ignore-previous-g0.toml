@@ -1,0 +1,29 @@
+# Frozen Phase 1 evaluation workload; see task-manifest.json and docs/phase1-plan.md.
+[experiment]
+suite = "workspace"
+benchmark_version = "v1.2.2"
+task_ids = ["user_task_26", "user_task_27", "user_task_35"]
+injection_task_ids = ["injection_task_0"]
+mode = "attack"
+attack = "ignore_previous_append"
+
+[model]
+model = "qwen3-8b-f16"
+base_url = "http://127.0.0.1:8080/v1"
+api_key_env = "LOCAL_LLM_API_KEY"
+temperature = 0.7
+max_tokens = 2048
+seed = 17
+extra_body = { chat_template_kwargs = { enable_thinking = false }, cache_prompt = false, top_p = 0.8, top_k = 20, min_p = 0.0 }
+
+[runner]
+max_tool_steps = 15
+request_timeout_seconds = 120
+episode_timeout_seconds = 600
+output_root = "artifacts/phase1-error-retries/runs"
+runtime_metadata_path = "artifacts/phase1-error-retries/runtime/server.json"
+compact_artifacts = true
+min_free_disk_bytes = 536870912
+
+[context]
+policy = "full"

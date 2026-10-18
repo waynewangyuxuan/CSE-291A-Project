@@ -1,0 +1,771 @@
+{
+  "created_at": "2026-10-18T05:54:38.067910+00:00",
+  "diagnostic_id": "phase1-f16-error-retries-v1",
+  "expected_episodes": 50,
+  "implementation": {
+    "agentdojo_source": {
+      "url": "https://github.com/ethz-spylab/agentdojo.git",
+      "vcs_info": {
+        "commit_id": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+        "requested_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+        "vcs": "git"
+      }
+    },
+    "agentdojo_version": "0.1.35",
+    "harness_sha256": "18da26112191f019f0a46ddf199249c4ea717e6aa447ec58062df24bd7a9afbf",
+    "uv_lock_sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+  },
+  "original_error_cases": 25,
+  "original_runtime_semantic_identity_sha256": "4c3c5e1d45a1825df4628a6406d02ea459fb27f89415c3ef482ceefddbd72174",
+  "parent_identity": "b61d56e553d420327c917fb8c3ad7793bc1cce293e12fae07b90c0eefe99a2c1",
+  "parent_manifest_sha256": "1d452d7b4d6b86eb67ac66133fae59b709eaf612e3f8756067b6ee85cf98b17e",
+  "protected_inventory": {
+    "files": 2631,
+    "path": "artifacts/phase1-error-retries/protected-original-inventory.json",
+    "sha256": "ed799722eb111cf16d3e2074b1f56475ef5a6840ccf06644fff24db62eed4eda"
+  },
+  "retry_rounds": [
+    1,
+    2
+  ],
+  "runner_sha256": "420532a42f497cd57dbe5bcd8c996701f1c4733b521943eec0f45338e16d0692",
+  "runs": [
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-clean.toml",
+      "config_sha256": "8f2dbb14afa877c8ddff58bbf86caf91b3a405258a47e229f6fbca7cb68437f8",
+      "episode_ids": [
+        "user_task_27__clean",
+        "user_task_35__clean"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-clean.toml",
+      "original_run_id": "phase1-f16-s17-workspace-clean",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-workspace-clean"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-clean.toml",
+      "config_sha256": "93f42ac948a136264bf7ff9781cbe22ede2f6f915b1d8aa0679bdaf279f9af0d",
+      "episode_ids": [
+        "user_task_35__clean"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-clean.toml",
+      "original_run_id": "phase1-f16-s29-workspace-clean",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-workspace-clean"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-direct-g1.toml",
+      "config_sha256": "62007db81ae066e477577739c9f0cd8822d52c5be0df48689a82e3b86c4ca226",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-direct.toml",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-slack-direct-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-direct-g3.toml",
+      "config_sha256": "f33b57ba2540641dcdf99bdd3ae449a4733e3033aa6689de86de313d77144e04",
+      "episode_ids": [
+        "user_task_14__injection_task_3__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-direct.toml",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-slack-direct-g3"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-ignore-previous-g1.toml",
+      "config_sha256": "ce8c33d3e4cbbfa7b51938ac97ed8695461ffc930f78631c471d0ac58b97c315",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-slack-ignore-previous",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-slack-ignore-previous-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-direct-g0.toml",
+      "config_sha256": "68a4b0667f2baf1d55105fc15de2efafa991eae695dd5ca4385bb1f40ab3f28f",
+      "episode_ids": [
+        "user_task_26__injection_task_0__attack",
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-workspace-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-direct-g2.toml",
+      "config_sha256": "1d4852fad1ebf2c5692ff0234076c19040d9497dab48320403bcc44fe2b640a6",
+      "episode_ids": [
+        "user_task_27__injection_task_2__attack",
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-workspace-direct-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-ignore-previous-g0.toml",
+      "config_sha256": "feed7a0bed114ded228c67701c0c12812f8167a7ef93c019c9fe283ce1ef0043",
+      "episode_ids": [
+        "user_task_26__injection_task_0__attack",
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-workspace-ignore-previous-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-ignore-previous-g2.toml",
+      "config_sha256": "d47f136754d26186c20c60d407b076098b584a4a515016d40bbc4d925c26d097",
+      "episode_ids": [
+        "user_task_26__injection_task_2__attack",
+        "user_task_27__injection_task_2__attack",
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-workspace-ignore-previous-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-travel-direct-g0.toml",
+      "config_sha256": "cfabafb0d32633c53d9ce74b30ac1465b6b77886b2d53e0600da135189501a5c",
+      "episode_ids": [
+        "user_task_6__injection_task_0__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-travel-direct.toml",
+      "original_run_id": "phase1-f16-s17-travel-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s17-travel-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-slack-direct-g3.toml",
+      "config_sha256": "55b2e9ed886302b66350aade04b509177ee498e6219cd2e760434c831e9be414",
+      "episode_ids": [
+        "user_task_10__injection_task_3__attack",
+        "user_task_14__injection_task_3__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s29-slack-direct.toml",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-slack-direct-g3"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-slack-direct-g1.toml",
+      "config_sha256": "c8c981f90506d1c39839913b27e9fe26c4cc07753c0d35aaa6093130801457b4",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-slack-direct.toml",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-slack-direct-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-direct-g0.toml",
+      "config_sha256": "5609f751e054dc3428c95797f1ec0b8279c27bba7d389fd9724dc6f4606101d2",
+      "episode_ids": [
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-workspace-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-direct-g2.toml",
+      "config_sha256": "32f1cdacb75ad1c81a309b79ffa28afede1a0f0bef697bec42fb3592aeadb2bf",
+      "episode_ids": [
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-workspace-direct-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-ignore-previous-g0.toml",
+      "config_sha256": "fd5d1de5c48db93654b9b24ae947f14fae62038b0d7607a2378f84ea4e257540",
+      "episode_ids": [
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "retry_round": 1,
+      "run_id": "phase1-f16-retry-r1-s29-workspace-ignore-previous-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-clean.toml",
+      "config_sha256": "8f2dbb14afa877c8ddff58bbf86caf91b3a405258a47e229f6fbca7cb68437f8",
+      "episode_ids": [
+        "user_task_27__clean",
+        "user_task_35__clean"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-clean.toml",
+      "original_run_id": "phase1-f16-s17-workspace-clean",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-workspace-clean"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-clean.toml",
+      "config_sha256": "93f42ac948a136264bf7ff9781cbe22ede2f6f915b1d8aa0679bdaf279f9af0d",
+      "episode_ids": [
+        "user_task_35__clean"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-clean.toml",
+      "original_run_id": "phase1-f16-s29-workspace-clean",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-workspace-clean"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-direct-g1.toml",
+      "config_sha256": "62007db81ae066e477577739c9f0cd8822d52c5be0df48689a82e3b86c4ca226",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-direct.toml",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-slack-direct-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-direct-g3.toml",
+      "config_sha256": "f33b57ba2540641dcdf99bdd3ae449a4733e3033aa6689de86de313d77144e04",
+      "episode_ids": [
+        "user_task_14__injection_task_3__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-direct.toml",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-slack-direct-g3"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-slack-ignore-previous-g1.toml",
+      "config_sha256": "ce8c33d3e4cbbfa7b51938ac97ed8695461ffc930f78631c471d0ac58b97c315",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-slack-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-slack-ignore-previous",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-slack-ignore-previous-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-direct-g0.toml",
+      "config_sha256": "68a4b0667f2baf1d55105fc15de2efafa991eae695dd5ca4385bb1f40ab3f28f",
+      "episode_ids": [
+        "user_task_26__injection_task_0__attack",
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-workspace-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-direct-g2.toml",
+      "config_sha256": "1d4852fad1ebf2c5692ff0234076c19040d9497dab48320403bcc44fe2b640a6",
+      "episode_ids": [
+        "user_task_27__injection_task_2__attack",
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-workspace-direct-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-ignore-previous-g0.toml",
+      "config_sha256": "feed7a0bed114ded228c67701c0c12812f8167a7ef93c019c9fe283ce1ef0043",
+      "episode_ids": [
+        "user_task_26__injection_task_0__attack",
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-workspace-ignore-previous-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-workspace-ignore-previous-g2.toml",
+      "config_sha256": "d47f136754d26186c20c60d407b076098b584a4a515016d40bbc4d925c26d097",
+      "episode_ids": [
+        "user_task_26__injection_task_2__attack",
+        "user_task_27__injection_task_2__attack",
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 3,
+      "original_config": "configs/phase1/phase1-f16-s17-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-workspace-ignore-previous-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s17-travel-direct-g0.toml",
+      "config_sha256": "cfabafb0d32633c53d9ce74b30ac1465b6b77886b2d53e0600da135189501a5c",
+      "episode_ids": [
+        "user_task_6__injection_task_0__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s17-travel-direct.toml",
+      "original_run_id": "phase1-f16-s17-travel-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s17-travel-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-slack-direct-g3.toml",
+      "config_sha256": "55b2e9ed886302b66350aade04b509177ee498e6219cd2e760434c831e9be414",
+      "episode_ids": [
+        "user_task_10__injection_task_3__attack",
+        "user_task_14__injection_task_3__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s29-slack-direct.toml",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-slack-direct-g3"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-slack-direct-g1.toml",
+      "config_sha256": "c8c981f90506d1c39839913b27e9fe26c4cc07753c0d35aaa6093130801457b4",
+      "episode_ids": [
+        "user_task_14__injection_task_1__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-slack-direct.toml",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-slack-direct-g1"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-direct-g0.toml",
+      "config_sha256": "5609f751e054dc3428c95797f1ec0b8279c27bba7d389fd9724dc6f4606101d2",
+      "episode_ids": [
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-workspace-direct-g0"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-direct-g2.toml",
+      "config_sha256": "32f1cdacb75ad1c81a309b79ffa28afede1a0f0bef697bec42fb3592aeadb2bf",
+      "episode_ids": [
+        "user_task_35__injection_task_2__attack"
+      ],
+      "expected_episodes": 1,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-direct.toml",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-workspace-direct-g2"
+    },
+    {
+      "config": "configs/phase1-error-retries/s29-workspace-ignore-previous-g0.toml",
+      "config_sha256": "fd5d1de5c48db93654b9b24ae947f14fae62038b0d7607a2378f84ea4e257540",
+      "episode_ids": [
+        "user_task_27__injection_task_0__attack",
+        "user_task_35__injection_task_0__attack"
+      ],
+      "expected_episodes": 2,
+      "original_config": "configs/phase1/phase1-f16-s29-workspace-ignore-previous.toml",
+      "original_run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "retry_round": 2,
+      "run_id": "phase1-f16-retry-r2-s29-workspace-ignore-previous-g0"
+    }
+  ],
+  "runtime_config": "configs/phase1-error-retries/runtime.toml",
+  "runtime_config_sha256": "9085ecdb2f573fadb25f9b1809b57593256dcc91c2903063cd188ff2f3452c45",
+  "schema_version": 1,
+  "scope": "Two additional full episodes per original error, same original seed; outcome-selected recovery diagnostic, not independent new-seed replication.",
+  "selected": [
+    {
+      "attack_variant": "direct_append",
+      "condition": "clean",
+      "episode_id": "user_task_27__clean",
+      "identity": "406e8a24fff423f01ffa3e4ffab9ae7f117bb105bddbd847741a3ed567230dca",
+      "injection_task_id": null,
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-clean",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-clean/episodes/user_task_27__clean/result.json",
+      "result_sha256": "34b95b40937ddf66a3cb95055bd4ff96f7f8531861c7084f64cc92d6f1e22e16",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "clean",
+      "episode_id": "user_task_35__clean",
+      "identity": "406e8a24fff423f01ffa3e4ffab9ae7f117bb105bddbd847741a3ed567230dca",
+      "injection_task_id": null,
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-clean",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-clean/episodes/user_task_35__clean/result.json",
+      "result_sha256": "d72ade43450d03651f1f42bf503167137e8e133fe9fcb1ee627f549ddbb7435a",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "clean",
+      "episode_id": "user_task_35__clean",
+      "identity": "5ca3ec6e335fdf59f21481a022e9f65193b615cb4260e974ae4e7efc01175454",
+      "injection_task_id": null,
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s29-workspace-clean",
+      "result_path": "artifacts/runs/phase1-f16-s29-workspace-clean/episodes/user_task_35__clean/result.json",
+      "result_sha256": "900820ea93002c3b239d5e2d363507e00ad34b0b17db853c884c20d14ce6b6d7",
+      "seed": 29,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_14__injection_task_1__attack",
+      "identity": "6a55156120598376687b056b3645aa9821b30b1c70a2bc9b150e5e24c7d9360b",
+      "injection_task_id": "injection_task_1",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-slack-direct/episodes/user_task_14__injection_task_1__attack/result.json",
+      "result_sha256": "689b0d623ad430eafeeca57f384042ffdc1745e2ba0f767b6bfeca4b41c9917d",
+      "seed": 17,
+      "suite": "slack",
+      "user_task_id": "user_task_14"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_14__injection_task_3__attack",
+      "identity": "6a55156120598376687b056b3645aa9821b30b1c70a2bc9b150e5e24c7d9360b",
+      "injection_task_id": "injection_task_3",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s17-slack-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-slack-direct/episodes/user_task_14__injection_task_3__attack/result.json",
+      "result_sha256": "fee4ab0e060a05707c6fdda6eb13ab49f0e6d0cc9a74523be15051dfcf3b815b",
+      "seed": 17,
+      "suite": "slack",
+      "user_task_id": "user_task_14"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_14__injection_task_1__attack",
+      "identity": "1b54614c2ef88b5858e503e01661179126eef2c7da74d115f7909216ec774ea3",
+      "injection_task_id": "injection_task_1",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s17-slack-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-slack-ignore-previous/episodes/user_task_14__injection_task_1__attack/result.json",
+      "result_sha256": "4c2907f3a8f04039102c66c4abdb384c0afeca4491ed212d47fd8c3645ad806b",
+      "seed": 17,
+      "suite": "slack",
+      "user_task_id": "user_task_14"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_26__injection_task_0__attack",
+      "identity": "123481fc10ca9df95e83daa979f4a6813a8c2ca7b227deffb79d7b51e14ab5a6",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-direct/episodes/user_task_26__injection_task_0__attack/result.json",
+      "result_sha256": "66f4976c7641183ea3d7c8fae636cc7e02349bf9c7084e0b5272ed9ad945221c",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_26"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_27__injection_task_0__attack",
+      "identity": "123481fc10ca9df95e83daa979f4a6813a8c2ca7b227deffb79d7b51e14ab5a6",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-direct/episodes/user_task_27__injection_task_0__attack/result.json",
+      "result_sha256": "cd8c52d5964acd8940220563833dae829594f13b1c05cae9c45ade976c07fb85",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_27__injection_task_2__attack",
+      "identity": "123481fc10ca9df95e83daa979f4a6813a8c2ca7b227deffb79d7b51e14ab5a6",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-direct/episodes/user_task_27__injection_task_2__attack/result.json",
+      "result_sha256": "66c2fb827fbda0d7cd140696476be963957e2f290f84586f75cdc62a38ce992a",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_0__attack",
+      "identity": "123481fc10ca9df95e83daa979f4a6813a8c2ca7b227deffb79d7b51e14ab5a6",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-direct/episodes/user_task_35__injection_task_0__attack/result.json",
+      "result_sha256": "583c07e93db6d739a132125189b048df2d6fd547fdeaedff848898b0bd5a322d",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_2__attack",
+      "identity": "123481fc10ca9df95e83daa979f4a6813a8c2ca7b227deffb79d7b51e14ab5a6",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-direct/episodes/user_task_35__injection_task_2__attack/result.json",
+      "result_sha256": "de5e3de3065d3a4cb40d9dab14464b49ff2f9f2c8de4bc1a0a8b75d77efc13ef",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_26__injection_task_0__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_26__injection_task_0__attack/result.json",
+      "result_sha256": "fe07f5ddbf3d2afbf7ac09bfa083da327e9e68c1671d67f4f002e16fdbe03390",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_26"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_26__injection_task_2__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_26__injection_task_2__attack/result.json",
+      "result_sha256": "7673b4d39ff59a2101c8db6945c6b62bf69791b398b1881297e59e82883191b0",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_26"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_27__injection_task_0__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_27__injection_task_0__attack/result.json",
+      "result_sha256": "d359efebbd8a94f725d57cf7ec3da930c4f49d61bcc27a15486e4327d2405310",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_27__injection_task_2__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "EpisodeTimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_27__injection_task_2__attack/result.json",
+      "result_sha256": "a5b435fe1bc75c0e3a9eaff7f038fdb7dbdee49840a0a015331b2eeed21cf407",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_0__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_35__injection_task_0__attack/result.json",
+      "result_sha256": "ba374ac13f26f91a52b24861eceee090f19e9c135b7895fee1a69a5dc794609f",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_2__attack",
+      "identity": "3dbc9a597bdd4f0ad7e42112e8c4a794b56561c87137988c42061929aa75dbfd",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s17-workspace-ignore-previous/episodes/user_task_35__injection_task_2__attack/result.json",
+      "result_sha256": "f5345216f3a54749335faf2a92dc2167b332d3c937368c4859601e2188d64c50",
+      "seed": 17,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_6__injection_task_0__attack",
+      "identity": "79a593620919cef963f1f88a02884dd45407e77cd6a64565b8687cf89da8af0e",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s17-travel-direct",
+      "result_path": "artifacts/runs/phase1-f16-s17-travel-direct/episodes/user_task_6__injection_task_0__attack/result.json",
+      "result_sha256": "1249fd428693ec8a3144f2c2ec49f172257da486add91f34798ad5a13be7c39e",
+      "seed": 17,
+      "suite": "travel",
+      "user_task_id": "user_task_6"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_10__injection_task_3__attack",
+      "identity": "28faa052162588aa7043435ebe82cff11dc4f1418eee95aff74b91baaea9b047",
+      "injection_task_id": "injection_task_3",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "result_path": "artifacts/runs/phase1-f16-s29-slack-direct/episodes/user_task_10__injection_task_3__attack/result.json",
+      "result_sha256": "1dd1f50f577cb291d15aeb79ab1bf1e2779be8ba04135f763d6fb5ee84ecc6b7",
+      "seed": 29,
+      "suite": "slack",
+      "user_task_id": "user_task_10"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_14__injection_task_1__attack",
+      "identity": "28faa052162588aa7043435ebe82cff11dc4f1418eee95aff74b91baaea9b047",
+      "injection_task_id": "injection_task_1",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "result_path": "artifacts/runs/phase1-f16-s29-slack-direct/episodes/user_task_14__injection_task_1__attack/result.json",
+      "result_sha256": "c36eb771f3695398aa56b4fb8ae9f83de8ce1753be67995bffc104f0ceffcb26",
+      "seed": 29,
+      "suite": "slack",
+      "user_task_id": "user_task_14"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_14__injection_task_3__attack",
+      "identity": "28faa052162588aa7043435ebe82cff11dc4f1418eee95aff74b91baaea9b047",
+      "injection_task_id": "injection_task_3",
+      "original_error_type": "ToolStepLimitError",
+      "original_run_id": "phase1-f16-s29-slack-direct",
+      "result_path": "artifacts/runs/phase1-f16-s29-slack-direct/episodes/user_task_14__injection_task_3__attack/result.json",
+      "result_sha256": "9d3c3f0e53e37332445ba55379740388a9dfcadba425475d5147fab2ccd9962f",
+      "seed": 29,
+      "suite": "slack",
+      "user_task_id": "user_task_14"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_0__attack",
+      "identity": "5ec206c0534c568ee1d7b3b322122d120cbd0ba29838f215d66ca5d3b115116d",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s29-workspace-direct/episodes/user_task_35__injection_task_0__attack/result.json",
+      "result_sha256": "b56871b6c21962937d6bcd6c761986f8fbe31f0194a0bb7f35860ac7641dacb4",
+      "seed": 29,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "direct_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_2__attack",
+      "identity": "5ec206c0534c568ee1d7b3b322122d120cbd0ba29838f215d66ca5d3b115116d",
+      "injection_task_id": "injection_task_2",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s29-workspace-direct",
+      "result_path": "artifacts/runs/phase1-f16-s29-workspace-direct/episodes/user_task_35__injection_task_2__attack/result.json",
+      "result_sha256": "118326dd642d441034dd839e5fed98c48a551c242fbeeddb54c5497c2f202275",
+      "seed": 29,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_27__injection_task_0__attack",
+      "identity": "e6613be34f02b9187fe91de13f0e36a65684804ff3e42b8b0baf14b5a2b10744",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s29-workspace-ignore-previous/episodes/user_task_27__injection_task_0__attack/result.json",
+      "result_sha256": "0da91f70af69947e74a806001d73e028edaa8e412bd5f7c9e76c8829f3d4ae70",
+      "seed": 29,
+      "suite": "workspace",
+      "user_task_id": "user_task_27"
+    },
+    {
+      "attack_variant": "ignore_previous_append",
+      "condition": "attack",
+      "episode_id": "user_task_35__injection_task_0__attack",
+      "identity": "e6613be34f02b9187fe91de13f0e36a65684804ff3e42b8b0baf14b5a2b10744",
+      "injection_task_id": "injection_task_0",
+      "original_error_type": "APITimeoutError",
+      "original_run_id": "phase1-f16-s29-workspace-ignore-previous",
+      "result_path": "artifacts/runs/phase1-f16-s29-workspace-ignore-previous/episodes/user_task_35__injection_task_0__attack/result.json",
+      "result_sha256": "1b3fcc4458f7694e4fb372cca0b4f96db4f1b91edd4796cd3ece62dde43dc622",
+      "seed": 29,
+      "suite": "workspace",
+      "user_task_id": "user_task_35"
+    }
+  ],
+  "source_episodes_sha256": "45e9a8d88a30a15c292b7f65f50ef98d3dadc3b00ecd290d41f13be1cc8d2739"
+}

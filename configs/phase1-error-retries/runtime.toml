@@ -1,0 +1,22 @@
+# Phase 1: canonical BF16 checkpoint converted to unquantized F16 GGUF.
+# The 32K context allocation was fixed before the first formal run.
+[runtime]
+binary_path = ".cache/runtime/llama-b11678/llama-server"
+host = "127.0.0.1"
+port = 8080
+context_size = 32768
+threads = 8
+gpu_layers = 99
+seed = 0
+cache_type_k = "f16"
+cache_type_v = "f16"
+model_alias = "qwen3-8b-f16"
+output_root = "artifacts/phase1-error-retries/runtime"
+
+[model_artifact]
+acquisition = "derived"
+repo_id = "Qwen/Qwen3-8B"
+revision = "b968826d9c46dd6066d109eabc6255188de91218"
+filename = "Qwen3-8B-F16.gguf"
+sha256 = "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad"
+local_dir = ".cache/models/qwen3-8b-f16"
