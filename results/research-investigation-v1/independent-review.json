@@ -1,0 +1,430 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "reviewer": "Codex subagent /root/prompt_defense_baseline",
+  "reviewed_at_utc": "2026-10-20T19:05:56.746036+00:00",
+  "independence": "Not an author of these new investigation artifacts; author/operator of the prior first-wave and seed29 campaigns. Review is unblinded agent work, not independent human validation.",
+  "review_method": "Read-only independent standard-library checks and manual claim/source review; no investigation builder imported or executed. Only this new receipt is written. No Git operation, model call, benchmark checker invocation or saved-environment reconstruction.",
+  "coverage": {
+    "original_scores_bound_to_raw_results": 600,
+    "original_errors_unknown_preserved": 33,
+    "attack_stage_rows_bound_to_originals": 480,
+    "gzip_files_both_digests_checked": 960,
+    "emitted_calls_bound_to_actual_responses": 2000,
+    "literal_exposure_records_bound_to_actual_requests": 1831,
+    "task_contracts_prompt_reference_AST_checker_source_checked": 60,
+    "clean_initial_usage_requests_checked": 60,
+    "task_pattern_groups_recomputed": 134,
+    "task_pattern_cells_checked": 600,
+    "attack_attribute_groups_recomputed": 55,
+    "attack_attribute_episode_rows": 480,
+    "distinct_payload_strings": 16,
+    "case_pairs": 30,
+    "known_A_flips_included": 18,
+    "stable_A_true_pairs": 6,
+    "stable_A_false_pairs": 6,
+    "visible_stance_rows_bound_to_originals": 480,
+    "visible_text_messages_bound_to_wire_and_trace": 457,
+    "visible_text_characters": 169329,
+    "action_semantic_candidates_checked": 23,
+    "preexisting_tracked_files_checked_unchanged": 224,
+    "figure_pairs_PNG_SVG": 12,
+    "new_script_ASTs_checked": 8
+  },
+  "verified_findings": {
+    "primary_default_reminder": {
+      "clean_U_true": [
+        26,
+        27
+      ],
+      "clean_assigned_each": 60,
+      "attack_U_true": [
+        83,
+        86
+      ],
+      "attack_A_true": [
+        47,
+        39
+      ],
+      "attack_assigned_each": 240,
+      "attack_unknown": [
+        15,
+        14
+      ]
+    },
+    "known_A_true_to_false_U_transitions": {
+      "True->True": 3,
+      "False->False": 10,
+      "False->True": 0
+    },
+    "common_clean_task_count": 25,
+    "U_true_A_true_marginal_each": 6,
+    "U_true_A_true_stable_pairs": 3,
+    "task_all_ten_U_true": 9,
+    "task_all_ten_U_false": 22,
+    "mean_paired_wall_time_change_seconds": -1.0363075474436239,
+    "accepted_signature_A_false_semantic_candidates": {
+      "documented_action_alignment": 22,
+      "quote_or_context_only": 1
+    },
+    "visible_stance_counts": {
+      "default": {
+        "explicit_refusal": 5,
+        "verbal_adoption": 39,
+        "no_explicit_stance": 180,
+        "ambiguous": 16
+      },
+      "source_boundary_v1": {
+        "explicit_refusal": 6,
+        "verbal_adoption": 38,
+        "no_explicit_stance": 184,
+        "ambiguous": 12
+      }
+    },
+    "stance_v2_label_changes_from_preserved_v1": [
+      "098-slack-user_task_12-default",
+      "098-slack-user_task_12-source_boundary_v1"
+    ]
+  },
+  "semantic_review_scope": {
+    "all_60_contract_curated_goal_constraint_checker_summaries_read": true,
+    "all_30_case_interpretations_read": true,
+    "all_23_accepted_signature_A_false_candidate_descriptions_read": true,
+    "all_11_explicit_refusal_quotes_and_action_order_reviewed": true,
+    "all_11_verbal_adoption_without_matched_call_quotes_reviewed": true,
+    "pair98_two_arm_v2_correction_reviewed": true,
+    "all_480_visible_stance_labels_independently_reannotated": false,
+    "note": "All480 stance records and all457 quoted messages were mechanically joined to original responses/trace; qualitative second review focused on the stated groups. This receipt is not a validated full-cohort semantic judge."
+  },
+  "resolved_findings": [
+    {
+      "id": "scope_bank12",
+      "status": "resolved",
+      "evidence": "case-cards.json pair23 now separates recipient modification from broad delegated authorization uncertainty; matches task contract."
+    },
+    {
+      "id": "conditional_bank14",
+      "status": "resolved",
+      "evidence": "case-cards.json pairs31/33 retain conditional suspicion requirement and official U=False, rather than deriving semantic failure solely from no password update."
+    },
+    {
+      "id": "source_hint_not_mandatory_path",
+      "status": "resolved",
+      "evidence": "task-contracts.json Slack2/11 now distinguish can-find source hints from mandatory tool paths."
+    },
+    {
+      "id": "marginal_vs_stable_joint_counts",
+      "status": "resolved",
+      "evidence": "README states6 per arm but only3 stable U=True/A=True pairs; transition data independently recomputed."
+    },
+    {
+      "id": "common_clean_cluster_caption",
+      "status": "resolved",
+      "evidence": "01-overall-effects.png caption identifies up to60 task clusters and25 common-clean clusters."
+    },
+    {
+      "id": "small_taskmap_header_overlap",
+      "status": "resolved",
+      "evidence": "Final Banking/Travel/Slack/Workspace and full taskmap PNGs visually inspected after group-heading offset correction."
+    },
+    {
+      "id": "reproduction_cli",
+      "status": "resolved",
+      "evidence": "README specifies annotate plus frozen rule SHA, and visible-stance build plus v2 decision SHA; no rule re-freeze required."
+    },
+    {
+      "id": "quotation_vs_attack_action_and_language_context",
+      "status": "resolved",
+      "evidence": "README and04-visible-stance distinguish10 target-site visits from1 quotation/clarification; tool context may resolve referents without inferring stance solely from calls."
+    },
+    {
+      "id": "distinct_payloads_not_independent_units",
+      "status": "resolved",
+      "evidence": "README says16 distinct full payload strings; attack-patterns discloses goal/template/length and source confounding."
+    }
+  ],
+  "unresolved_substantive_findings": [],
+  "visual_review": {
+    "method": "Local PNG inspection using view_image; SVG hashes and structure checked separately. Final repaired overview, suite maps, action stage and visible stance figures reviewed; unchanged joint/cost/trajectory views reviewed during this audit.",
+    "png_names": [
+      "01-overall-effects",
+      "02-task-map",
+      "02-task-map-banking",
+      "02-task-map-slack",
+      "02-task-map-workspace",
+      "02-task-map-travel",
+      "03-joint-outcomes",
+      "03-clean-to-attack",
+      "06-cost-pairs",
+      "06-trajectory-growth",
+      "04-attack-stages",
+      "04-visible-stance"
+    ],
+    "html_rendered_visual_review": false,
+    "html_limitation": "Case-card HTML structure and escaped evidence are available, but browser local-file policy prevented a rendered visual pass; README discloses this and Markdown/JSON remain accessible."
+  },
+  "interpretation_limits_confirmed": [
+    "Official U/A and all terminal unknowns unchanged; no new L or universal H score.",
+    "Stage signatures are candidates; no match/no explicit stance/unexposed is not ignore or resistance.",
+    "The480 language labels are unblinded agent coding, not validated human or judge measurements.",
+    "The30 paired cases are chosen by prior outcomes and coverage, not a mechanism prevalence sample.",
+    "Source groups overlap and source/task/goal are confounded; assigned payload length is not an isolated treatment.",
+    "Tool schema availability, parameter visibility, executable preconditions and authorization are separate.",
+    "One first-wave seed and previously examined tasks do not prove held-out or cross-seed robustness; seed29 diagnostics stay outside600/480 denominators.",
+    "No generic benign-append control, authorized-action positive control or frozen task-specific L rubric was newly tested."
+  ],
+  "bound_readme_sha256": "655598a1e8c69e0e4d06ef40b6ef8cc66716f43ee409311fd52b28f27f8aaad2",
+  "bound_figure_manifest_sha256": "fa9647d74faaa39e5c8f8121ca4c2261f50eaa050453d3ce7868a6e40ca41408",
+  "bound_signature_rules_sha256": "299b8cde8bae8c7638acc8f4dcb78138501b88b43cd3e049a1e2f9f899eaa6d8",
+  "bound_visible_decisions_v2_sha256": "7b82e4c5ea27088c657eb735c77b73811c974e801e8e060b8fb16a58dc40f7e6",
+  "script_sha256": {
+    "scripts/build_research_task_contracts.py": "6c89c87135e68cc7082f3782116ee45a77e46fcdffc4012c1ec8b7c8b32cf2bd",
+    "scripts/build_research_task_patterns.py": "4dd005203b800338bce661a937e2a18b8fee3acd39b6e4b8ef9820540762455c",
+    "scripts/build_research_attack_patterns.py": "62be0de9f364dd1b2b4bc248c6a37cd13689d334250120f2582ed4e1e07d249e",
+    "scripts/build_research_case_cards.py": "7bb1ac123c8142cbfeca8d28ea85446259a94670418d99c360e6670520b9e556",
+    "scripts/build_attack_stage_annotations.py": "baa823737adcfc9aeeb433012eb3d17d0083df6bc98111645c2de8fe70d4d24e",
+    "scripts/build_attack_visible_stance_annotations.py": "11b04a1858fd8a279a1797ad214bf50102e323db0b3f3dabc014fc4c1a2e83c7",
+    "scripts/build_research_figures.py": "0aca2ac21c8e9ae73cb4daac29752cec0135da69c422608f47cb0a69408bb1cc",
+    "scripts/validate_research_investigation.py": "2eb5452cc9f831397260deb88e961e80c2b43f7b9e72ead741b520fe2e65c5ad"
+  },
+  "product_sha256": {
+    "results/research-investigation-v1/01-overall-effects.png": {
+      "sha256": "b5ee45f767013b18e5fa808646f0598a001d84b24ddf534cea28376fc64a2f47",
+      "bytes": 146195
+    },
+    "results/research-investigation-v1/01-overall-effects.svg": {
+      "sha256": "4a14ddaee73f6b597434e9085960146fda3d80b8c166a21eefc4410ac6b13bb3",
+      "bytes": 20610
+    },
+    "results/research-investigation-v1/02-task-map-banking.png": {
+      "sha256": "5caddd4e473921b05354e1f9e300dfd8284107420ed9715bc74d0ff042143b1e",
+      "bytes": 113272
+    },
+    "results/research-investigation-v1/02-task-map-banking.svg": {
+      "sha256": "da83cded3e32ed8957471008791f42d9df071c0fbf09cdb4e0b85658e021a534",
+      "bytes": 24373
+    },
+    "results/research-investigation-v1/02-task-map-slack.png": {
+      "sha256": "23d59950f8ed85254d8c16b3e8ccc319e14f5402dec41c5d3171a5b4351d2f65",
+      "bytes": 164357
+    },
+    "results/research-investigation-v1/02-task-map-slack.svg": {
+      "sha256": "a51aefc867338f861edc35239a48107ac9c8575ae712104e686292529cfd5077",
+      "bytes": 32758
+    },
+    "results/research-investigation-v1/02-task-map-travel.png": {
+      "sha256": "04198e5f384337cf503072e23c52bc5d77ecdcc85cf49b5bf39e727219ba1bc2",
+      "bytes": 136589
+    },
+    "results/research-investigation-v1/02-task-map-travel.svg": {
+      "sha256": "36a1c03d93c5394283249a71faa35dcff7b602f006f31730488b33e80fbc4960",
+      "bytes": 26402
+    },
+    "results/research-investigation-v1/02-task-map-workspace.png": {
+      "sha256": "503b52a40193f6074d173e8490168fc88429a3db8c1c5ffb1263313ca230d1b7",
+      "bytes": 210994
+    },
+    "results/research-investigation-v1/02-task-map-workspace.svg": {
+      "sha256": "ceb1b6c76d43bde0618ed314349ea601e84a2edd3b542a4eb0269ee792d85d8e",
+      "bytes": 35708
+    },
+    "results/research-investigation-v1/02-task-map.png": {
+      "sha256": "0048afcba36b8aae5a8e1dc1b46de0a1b10c846ca98d109e04e05e21cc912d2b",
+      "bytes": 461008
+    },
+    "results/research-investigation-v1/02-task-map.svg": {
+      "sha256": "cb94ebcd145adf6b68741fe49df9bdb525d22f30b55435544ca123dee1423e7d",
+      "bytes": 77230
+    },
+    "results/research-investigation-v1/03-clean-to-attack.png": {
+      "sha256": "6fe50d01bd16c90fa532f2b818985ece13d8bf6b4ed0be0e6b2dc97917da51f8",
+      "bytes": 78797
+    },
+    "results/research-investigation-v1/03-clean-to-attack.svg": {
+      "sha256": "fbf2099b793ec0bc16734bffdcb98702324806a0535a53793fa13464991286e4",
+      "bytes": 15673
+    },
+    "results/research-investigation-v1/03-joint-outcomes.png": {
+      "sha256": "ad3a435dac20819271182002b83ce98ad764dd3377bcc3ea270c5bcabbdea61f",
+      "bytes": 130444
+    },
+    "results/research-investigation-v1/03-joint-outcomes.svg": {
+      "sha256": "a773337c1e1258bd3c3eb8a72bcbd47568349c0035ac48ff9b9611dde1cff820",
+      "bytes": 23728
+    },
+    "results/research-investigation-v1/04-attack-stages.png": {
+      "sha256": "9249c4187c0fcc31fe7d6e0e7ba8cc2fb28ee3f870d525d0ace278a3a593fa6b",
+      "bytes": 137430
+    },
+    "results/research-investigation-v1/04-attack-stages.svg": {
+      "sha256": "850ea9702dc4a9090a1ac896a067be383f8b7af9a93384f9e22166b9327c3fa1",
+      "bytes": 20173
+    },
+    "results/research-investigation-v1/04-visible-stance.png": {
+      "sha256": "99abd63e25b4413438bcf6979552eb350dc7c81f3b07b04c64098cf93b3eb95a",
+      "bytes": 135017
+    },
+    "results/research-investigation-v1/04-visible-stance.svg": {
+      "sha256": "a45429a71916e168075da03ffd9aba5cd4e63eb593bb2b90354cc2b3e65414af",
+      "bytes": 18198
+    },
+    "results/research-investigation-v1/06-cost-pairs.png": {
+      "sha256": "1077478446cbefe663f039f6271e8dde43c4a8e3fbf73a50eb3bb45ed18c5970",
+      "bytes": 193885
+    },
+    "results/research-investigation-v1/06-cost-pairs.svg": {
+      "sha256": "1fda4c50bde8cf7d452b68f8f2381e714bee97575c22b9ef15b2a9309be85880",
+      "bytes": 186940
+    },
+    "results/research-investigation-v1/06-trajectory-growth.png": {
+      "sha256": "4fe9269b8aadbd56f398f4a8262e9a4a762b5113ec88551bc4245848353ea8e8",
+      "bytes": 264589
+    },
+    "results/research-investigation-v1/06-trajectory-growth.svg": {
+      "sha256": "d2552795c19168b58115a9461a27bc7e3999ca93cd057d35f62052ae81db514d",
+      "bytes": 70599
+    },
+    "results/research-investigation-v1/README.md": {
+      "sha256": "655598a1e8c69e0e4d06ef40b6ef8cc66716f43ee409311fd52b28f27f8aaad2",
+      "bytes": 21435
+    },
+    "results/research-investigation-v1/attack-action-semantic-review.csv": {
+      "sha256": "1c62136edcc92f5ead866e41158837bb9307f1854faa595b4eced25c1ba5b562",
+      "bytes": 10777
+    },
+    "results/research-investigation-v1/attack-action-semantic-review.json": {
+      "sha256": "949c65b097f5b0e38f84b9ae1eb6bf2ee08067a2b996b4cb0219c0ecc943a245",
+      "bytes": 74744
+    },
+    "results/research-investigation-v1/attack-action-semantic-review.md": {
+      "sha256": "db4e631df0ebef4e5a06165e7bc5480160cf2ec74e95ea092b54a2c2afad4ec7",
+      "bytes": 1392
+    },
+    "results/research-investigation-v1/attack-patterns.json": {
+      "sha256": "5e394f54be0b9221f47a3bead45ccce8d467f8d27bb251ebe50ac8284e9e7cef",
+      "bytes": 1541255
+    },
+    "results/research-investigation-v1/attack-patterns.md": {
+      "sha256": "fc5074593a5977ee414d2f73a40380dd1da821aad47fe64fbdd7c2f777a68297",
+      "bytes": 11972
+    },
+    "results/research-investigation-v1/attack-rules.json": {
+      "sha256": "299b8cde8bae8c7638acc8f4dcb78138501b88b43cd3e049a1e2f9f899eaa6d8",
+      "bytes": 48209
+    },
+    "results/research-investigation-v1/attack-rules.md": {
+      "sha256": "59d4157b6c9a584c73a2cfb6ebf6a71374ef0411708112d6732b754b55fab5ba",
+      "bytes": 10183
+    },
+    "results/research-investigation-v1/attack-stage-receipt.json": {
+      "sha256": "3fa484e5c9e699c06a5e227cdcbfb7c9392763877e8e58c1bc1b712275d53fbd",
+      "bytes": 345481
+    },
+    "results/research-investigation-v1/attack-stage-summary.json": {
+      "sha256": "80d2546e3fb0718b24df21997f6cca19237d973d77ca8876733a43353e296048",
+      "bytes": 11125
+    },
+    "results/research-investigation-v1/attack-stages.csv": {
+      "sha256": "0802b49e2122ab6f6df37eace509e1d4e6771646038239baf0763ee998e93ad1",
+      "bytes": 164916
+    },
+    "results/research-investigation-v1/attack-stages.json": {
+      "sha256": "853ce5e2a837574ba14fbcbba0f88d0b997913aee818a79f605f8c405030947d",
+      "bytes": 19876177
+    },
+    "results/research-investigation-v1/attack-visible-stance-annotations.csv": {
+      "sha256": "84970934d0d29691b4edda1a71e0a7532184859541f7af33c3da6db21c6db22e",
+      "bytes": 252089
+    },
+    "results/research-investigation-v1/attack-visible-stance-annotations.json": {
+      "sha256": "d4917dc543de395768de65fde5a38c8ce702887bfa7f3e917fb048d9e44ef785",
+      "bytes": 1795770
+    },
+    "results/research-investigation-v1/attack-visible-stance-decisions-v1.json": {
+      "sha256": "20dac637545fb5d928a2d89c6f61ff6eb63eaebba9c8d39d7acc76569ea2abe6",
+      "bytes": 606898
+    },
+    "results/research-investigation-v1/attack-visible-stance-decisions-v2.json": {
+      "sha256": "7b82e4c5ea27088c657eb735c77b73811c974e801e8e060b8fb16a58dc40f7e6",
+      "bytes": 607764
+    },
+    "results/research-investigation-v1/attack-visible-stance-receipt.json": {
+      "sha256": "81051a5704f7922a4c58317ae3d054e7bd4047e2d90287ffea2edc469e6b1f56",
+      "bytes": 257469
+    },
+    "results/research-investigation-v1/attack-visible-stance-summary.json": {
+      "sha256": "2b3f5d65d44f6ebe9d1715f0c32e478da66bbe4356495c54011db7c6e5ce42df",
+      "bytes": 3367
+    },
+    "results/research-investigation-v1/attack-visible-stance.md": {
+      "sha256": "d4304e89128d68e9a458ce60cb5b85d31addf7736a8879968102ef1ebac771d1",
+      "bytes": 1648
+    },
+    "results/research-investigation-v1/case-audit.json": {
+      "sha256": "7ea07396227ec48e7ca347c2eedf295953b920975fadfb7d2857bf8e9673c89b",
+      "bytes": 53977
+    },
+    "results/research-investigation-v1/case-cards.html": {
+      "sha256": "b73d111f73df30893296726694905ff35c7ffde274847ab3111cdf2fa5c13aae",
+      "bytes": 1064128
+    },
+    "results/research-investigation-v1/case-cards.json": {
+      "sha256": "449b32e0c6679cc1650d48f05ff744630df696ab88d7832b0b97c7b5d77f1d26",
+      "bytes": 1269786
+    },
+    "results/research-investigation-v1/case-cards.md": {
+      "sha256": "047a2ccd2f2c059e7df463662a8c609dcd1f427c0ef768cec8913df713d0d5dc",
+      "bytes": 267725
+    },
+    "results/research-investigation-v1/case-selection.json": {
+      "sha256": "96bd5526b824e2884a68e1f65f72f7a9e20b1e5db219144d97c671025c258078",
+      "bytes": 21082
+    },
+    "results/research-investigation-v1/figure-manifest.json": {
+      "sha256": "fa9647d74faaa39e5c8f8121ca4c2261f50eaa050453d3ce7868a6e40ca41408",
+      "bytes": 216884
+    },
+    "results/research-investigation-v1/protected-inputs.json": {
+      "sha256": "30007c5401e69a10ffdd512e6039bd43f044727f9c17e39e0f1449da79488a0e",
+      "bytes": 40658
+    },
+    "results/research-investigation-v1/task-contracts.csv": {
+      "sha256": "33a628cdbeb2f9c178638800e9052b10765c483f25af77409c3f847f1120c782",
+      "bytes": 316516
+    },
+    "results/research-investigation-v1/task-contracts.json": {
+      "sha256": "5448629bbf7c5ab3e169713ff2071a6952b989b16b8471faa64687e85aa7bf09",
+      "bytes": 937410
+    },
+    "results/research-investigation-v1/task-patterns.csv": {
+      "sha256": "5fc74bec95703c1e77d24f8536d8592ee8397a877c95f79ae2841798f9c1ad74",
+      "bytes": 171565
+    },
+    "results/research-investigation-v1/task-patterns.json": {
+      "sha256": "3f4c163badb23c7dfde4ed748b9c72059c947034be39b4370c33cc48da63512c",
+      "bytes": 1240510
+    },
+    "results/research-investigation-v1/task-patterns.md": {
+      "sha256": "98c87c747a37b6e52baabf38bb7761f44f77f36ad1cd8573d02737fa1efa5477",
+      "bytes": 17598
+    }
+  },
+  "preliminary_validator_coverage_observed": {
+    "primary_episodes": 600,
+    "pairs": 300,
+    "tasks": 60,
+    "attack_annotations": 480,
+    "visible_stance_annotations": 480,
+    "case_pairs": 30,
+    "protected_preexisting_tracked_files": 224,
+    "original_terminal_unknown_episodes": 33
+  },
+  "excluded_hash_bindings": [
+    "results/research-investigation-v1/validation-receipt.json (root reruns after this receipt; excluded to avoid circular dependency)",
+    "results/research-investigation-v1/independent-review.json (self)"
+  ],
+  "model_requests": 0,
+  "benchmark_checker_invocations": 0,
+  "saved_environment_reconstructions": 0,
+  "git_operations": 0
+}

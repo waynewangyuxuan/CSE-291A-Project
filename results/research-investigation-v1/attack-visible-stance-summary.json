@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "version": "visible-stance-agent-coding-v2",
+  "decisions_sha256": "7b82e4c5ea27088c657eb735c77b73811c974e801e8e060b8fb16a58dc40f7e6",
+  "coverage": {
+    "episodes_reviewed": 480,
+    "nonempty_visible_messages_reviewed": 457,
+    "visible_characters_reviewed": 169329,
+    "complete_review": true,
+    "independent_human_validation": false,
+    "keyword_classifier": false,
+    "new_model_requests": 0,
+    "review_batches": {
+      "banking": 64,
+      "slack": 128,
+      "workspace_121_159": 64,
+      "workspace_161_199": 64,
+      "workspace_201_239": 64,
+      "travel_241_259": 32,
+      "travel_261_279": 32,
+      "travel_281_299": 32
+    }
+  },
+  "labels": [
+    "explicit_refusal",
+    "verbal_adoption",
+    "no_explicit_stance",
+    "ambiguous"
+  ],
+  "arms": {
+    "default": {
+      "episodes": 240,
+      "stances": {
+        "explicit_refusal": 5,
+        "verbal_adoption": 39,
+        "no_explicit_stance": 180,
+        "ambiguous": 16
+      },
+      "subtypes": {
+        "only_task_or_source_content": 165,
+        "reported_action": 33,
+        "operational_failure_report": 11,
+        "prospective_plan": 5,
+        "conditional_offer": 3,
+        "security_or_policy_claim": 2,
+        "capability_claim": 3,
+        "no_visible_text": 15,
+        "factual_assimilation_without_action_commitment": 2,
+        "prospective_preparation": 1
+      },
+      "refusal_after_accepted_matched_action": 5,
+      "refusal_after_accepted_exact_signature_call": 5,
+      "refusal_with_official_A_true": 5,
+      "verbal_adoption_without_matched_call": 6,
+      "no_stance_with_official_A_true": 8,
+      "stances_by_official_A": {
+        "explicit_refusal": {
+          "true": 5
+        },
+        "verbal_adoption": {
+          "true": 26,
+          "false": 13
+        },
+        "no_explicit_stance": {
+          "false": 157,
+          "true": 8,
+          "unknown": 15
+        },
+        "ambiguous": {
+          "false": 8,
+          "true": 8
+        }
+      }
+    },
+    "source_boundary_v1": {
+      "episodes": 240,
+      "stances": {
+        "explicit_refusal": 6,
+        "verbal_adoption": 38,
+        "no_explicit_stance": 184,
+        "ambiguous": 12
+      },
+      "subtypes": {
+        "only_task_or_source_content": 170,
+        "operational_failure_report": 8,
+        "reported_action": 32,
+        "prospective_plan": 5,
+        "capability_claim": 4,
+        "security_or_policy_claim": 1,
+        "no_visible_text": 14,
+        "request_for_clarification": 1,
+        "mixed_plan_and_report": 1,
+        "factual_assimilation_without_action_commitment": 2,
+        "conditional_offer": 1,
+        "rationale_overlap_without_goal_commitment": 1
+      },
+      "refusal_after_accepted_matched_action": 6,
+      "refusal_after_accepted_exact_signature_call": 5,
+      "refusal_with_official_A_true": 5,
+      "verbal_adoption_without_matched_call": 5,
+      "no_stance_with_official_A_true": 5,
+      "stances_by_official_A": {
+        "explicit_refusal": {
+          "true": 5,
+          "false": 1
+        },
+        "verbal_adoption": {
+          "true": 26,
+          "false": 12
+        },
+        "no_explicit_stance": {
+          "false": 165,
+          "true": 5,
+          "unknown": 14
+        },
+        "ambiguous": {
+          "false": 9,
+          "true": 3
+        }
+      }
+    }
+  }
+}
