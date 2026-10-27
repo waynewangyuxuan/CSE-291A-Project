@@ -167,6 +167,12 @@ truncation, fixed-F16 long/short summaries and episode-local history search.
 Use `make phase2-prepare`, `make phase2-verify`, then `make phase2`; formal
 results remain separate from wiring checks and historical Phase 1 results.
 
+The completed [Phase 2 analysis](results/phase2-first-pass-v1/analysis/README.md)
+answers four research questions with eight figures, twelve task contracts,
+sixteen paired trace cards and audited outcome/cost tables. To regenerate it
+from retained local artifacts without inference, run `make phase2-analysis-setup`
+once, then `make phase2-analyze`. Unknown outcomes remain separate from resistance.
+
 See [the experiment protocol](docs/experiment-protocol.md) for outcome definitions
 and [architecture](docs/architecture.md) for extension points and artifact ownership.
 [F16 development validation](docs/f16-development-validation.md) records the
