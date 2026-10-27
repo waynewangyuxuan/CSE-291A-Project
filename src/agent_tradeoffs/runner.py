@@ -29,7 +29,7 @@ from agentdojo.task_suite.load_suites import get_suite
 
 from agent_tradeoffs.agent import EpisodeTimeoutError, LocalAgent
 from agent_tradeoffs.artifact_io import compact_episode_artifacts
-from agent_tradeoffs.config import ExperimentConfig, stable_hash
+from agent_tradeoffs.config import ExperimentConfig, SummaryContext, stable_hash
 from agent_tradeoffs.reporting import atomic_json, summarize_run
 from agent_tradeoffs.runtime import _process_identity, sha256_file
 
@@ -132,6 +132,7 @@ def implementation_identity() -> dict[str, Any]:
         "artifact_io.py",
         "config.py",
         "context.py",
+        "memory.py",
         "reporting.py",
         "runner.py",
         "runtime.py",
@@ -260,7 +261,7 @@ def episode_deadline(seconds: float):
 class ServerMemorySampler:
     """Sample RSS for the explicitly identified local inference server only."""
 
-    def __init__(self, pid: int | None):
+    def __init__(self, pid: int | list[int] | None):
         self.pid = pid
         self.stop_event = threading.Event()
         self.samples: list[int] = []
@@ -273,9 +274,10 @@ class ServerMemorySampler:
 
         def sample():
             try:
-                process = psutil.Process(self.pid)
+                pids = self.pid if isinstance(self.pid, list) else [self.pid]
+                processes = [psutil.Process(pid) for pid in set(pids)]
                 while not self.stop_event.is_set():
-                    self.samples.append(process.memory_info().rss)
+                    self.samples.append(sum(process.memory_info().rss for process in processes))
                     self.stop_event.wait(0.1)
             except (psutil.Error, OSError) as error:
                 self.error = str(error)
@@ -293,7 +295,9 @@ class ServerMemorySampler:
             "samples": len(self.samples),
             "interval_seconds": 0.1,
             "error": self.error,
-            "scope": "server_process_rss",
+            "scope": "sum_of_process_rss_not_physical_memory"
+            if isinstance(self.pid, list)
+            else "server_process_rss",
         }
 
 
@@ -336,6 +340,14 @@ def run_episode(
     started = time.monotonic()
     memory = ServerMemorySampler(config.runner.server_pid)
     memory.start()
+    summary_metadata = (
+        json.loads(config.context.runtime_metadata_path.read_text())
+        if isinstance(config.context, SummaryContext)
+        and config.context.runtime_metadata_path.is_file()
+        else None
+    )
+    summary_memory = ServerMemorySampler(summary_metadata["pid"] if summary_metadata else None)
+    summary_memory.start()
     result = {
         **episode,
         "identity": identity,
@@ -379,6 +391,8 @@ def run_episode(
         result.update(
             duration_seconds=time.monotonic() - started,
             server_memory=memory.stop(),
+            summarizer_memory=summary_memory.stop(),
+            context_memory=agent.memory.metrics(),
             requests=agent.requests,
             tool_calls=agent.tool_calls,
             tool_errors=agent.tool_errors,
@@ -410,10 +424,15 @@ def run_experiment(
     resume: bool = False,
     *,
     expected_runtime_identity: dict[str, Any] | None = None,
+    before_episode: Callable[[], None] | None = None,
 ) -> dict[str, Any]:
     with endpoint_evaluation_lock(config.model.base_url):
         return _run_experiment(
-            config, run_id, resume, expected_runtime_identity=expected_runtime_identity
+            config,
+            run_id,
+            resume,
+            expected_runtime_identity=expected_runtime_identity,
+            before_episode=before_episode,
         )
 
 
@@ -423,6 +442,7 @@ def _run_experiment(
     resume: bool,
     *,
     expected_runtime_identity: dict[str, Any] | None,
+    before_episode: Callable[[], None] | None = None,
 ) -> dict[str, Any]:
     if resume and not run_id:
         raise ValueError("--resume requires an explicit run ID")
@@ -432,6 +452,22 @@ def _run_experiment(
     episodes = plan_episodes(config)
     implementation = implementation_identity()
     runtime_snapshot, pid = capture_runtime(config)
+    summary_snapshot = None
+    if isinstance(config.context, SummaryContext):
+        summary_config = config.model_copy(
+            update={
+                "model": config.context.summarizer,
+                "runner": config.runner.model_copy(
+                    update={
+                        "runtime_metadata_path": config.context.runtime_metadata_path,
+                        "server_pid": None,
+                    }
+                ),
+            }
+        )
+        summary_snapshot, summary_pid = capture_runtime(summary_config)
+        if summary_snapshot["live_server_props"].get("model_ftype") != "F16":
+            raise ValueError("Context summaries require fixed F16 weights")
     if (
         expected_runtime_identity is not None
         and runtime_snapshot["semantic_identity"] != expected_runtime_identity
@@ -446,6 +482,9 @@ def _run_experiment(
             "episodes": episodes,
             "implementation": implementation,
             "runtime": runtime_snapshot["semantic_identity"],
+            "summarizer_runtime": summary_snapshot["semantic_identity"]
+            if summary_snapshot
+            else None,
         }
     )
     expected_process = runtime_snapshot.get("metadata_snapshot", {}).get("process_identity")
@@ -453,6 +492,10 @@ def _run_experiment(
     def runtime_guard():
         if expected_process is not None:
             guard_runtime_process(pid, expected_process)
+        if summary_snapshot is not None:
+            guard_runtime_process(
+                summary_pid, summary_snapshot["metadata_snapshot"]["process_identity"]
+            )
 
     root = config.runner.output_root.resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -485,6 +528,7 @@ def _run_experiment(
                 "config": config.model_dump(mode="json"),
                 "implementation": implementation,
                 "runtime": runtime_snapshot,
+                "summarizer_runtime": summary_snapshot,
                 "platform": {
                     "python": platform.python_version(),
                     "system": platform.platform(),
@@ -508,6 +552,8 @@ def _run_experiment(
                             compact_episode_artifacts(episode_dir)
                         continue
                 require_disk_reserve(root, config.runner.min_free_disk_bytes)
+                if before_episode is not None:
+                    before_episode()
                 # Retain interrupted attempt evidence before retrying it.
                 remnants = [path for path in episode_dir.iterdir() if path.is_file()]
                 if remnants:

@@ -161,9 +161,11 @@ retrieved content so the legitimate task remains possible. Finalized request and
 trace files are compressed losslessly as `.jsonl.gz` / `.json.gz`, with verified
 original digests; results and summaries stay plain JSON/CSV.
 
-The implementation currently supports full context. Truncation, summarization,
-and multiple precision configurations are subsequent Phase 2 work. The two-seed,
-fixed-subset F16 campaign is the Phase 1 baseline.
+The Phase 1 baseline remains the two-seed F16/full-history campaign.
+The [Phase 2 exploratory protocol](docs/phase2-first-pass.md) adds same-source Q4,
+truncation, fixed-F16 long/short summaries and episode-local history search.
+Use `make phase2-prepare`, `make phase2-verify`, then `make phase2`; formal
+results remain separate from wiring checks and historical Phase 1 results.
 
 See [the experiment protocol](docs/experiment-protocol.md) for outcome definitions
 and [architecture](docs/architecture.md) for extension points and artifact ownership.

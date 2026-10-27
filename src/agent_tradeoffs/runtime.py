@@ -40,8 +40,8 @@ class ModelArtifactConfig:
     acquisition: str = "download"
 
     def __post_init__(self) -> None:
-        if self.acquisition not in {"download", "derived"}:
-            raise ValueError("model_artifact.acquisition must be download or derived")
+        if self.acquisition not in {"download", "derived", "quantized"}:
+            raise ValueError("model_artifact.acquisition must be download, derived or quantized")
         if not re.fullmatch(r"[0-9a-f]{40}", self.revision):
             raise ValueError("model_artifact.revision must be an immutable 40-character commit")
         if not re.fullmatch(r"[0-9a-f]{64}", self.sha256):
@@ -150,6 +150,8 @@ def download_model(config: RuntimeConfig | str | Path) -> dict[str, Any]:
     provenance = None
     if artifact.acquisition == "derived":
         provenance = _derived_provenance(cfg)
+    elif artifact.acquisition == "quantized":
+        provenance = _quantized_provenance(cfg)
     if not cfg.model_path.is_file():
         from huggingface_hub import hf_hub_download
 
@@ -184,6 +186,32 @@ def download_model(config: RuntimeConfig | str | Path) -> dict[str, Any]:
         manifest["provenance"] = provenance
     _write_json(cfg.model_path.with_suffix(".manifest.json"), manifest)
     return manifest
+
+
+def _quantized_provenance(cfg: RuntimeConfig) -> dict[str, Any]:
+    from agent_tradeoffs.model_artifacts import inspect_gguf
+
+    provenance = json.loads(cfg.model_path.with_suffix(".provenance.json").read_text())
+    expected = {
+        "kind": "quantized_gguf",
+        "repo_id": cfg.model_artifact.repo_id,
+        "revision": cfg.model_artifact.revision,
+        "filename": cfg.model_artifact.filename,
+        "sha256": cfg.model_artifact.sha256,
+        "weight_quantization": "Q4_K_M",
+    }
+    if any(provenance.get(key) != value for key, value in expected.items()):
+        raise RuntimeError("Quantized model provenance differs from configuration")
+    source = provenance["source_provenance"]
+    if (
+        provenance["source_sha256"] != source["sha256"]
+        or source["revision"] != cfg.model_artifact.revision
+        or source["weight_quantization"] != "none"
+        or inspect_gguf(cfg.model_path) != provenance["gguf_audit"]
+        or provenance["gguf_audit"]["metadata"]["general.file_type"] != 15
+    ):
+        raise RuntimeError("Quantized model does not establish same-source Q4_K_M weights")
+    return provenance
 
 
 def _derived_provenance(cfg: RuntimeConfig) -> dict[str, Any]:
@@ -318,6 +346,12 @@ def doctor(config: RuntimeConfig | str | Path) -> dict[str, Any]:
         if cfg.model_artifact.acquisition == "derived":
             try:
                 report["model_provenance"] = _derived_provenance(cfg)
+            except (OSError, ValueError, RuntimeError) as error:
+                report["model_verified"] = False
+                report["provenance_error"] = str(error)
+        elif cfg.model_artifact.acquisition == "quantized":
+            try:
+                report["model_provenance"] = _quantized_provenance(cfg)
             except (OSError, ValueError, RuntimeError) as error:
                 report["model_verified"] = False
                 report["provenance_error"] = str(error)

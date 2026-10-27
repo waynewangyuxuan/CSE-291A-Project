@@ -61,3 +61,31 @@ lint:
 	$(UV) run --frozen ruff format --check src tests
 
 check: lint test
+
+.PHONY: phase2-model phase2-prepare phase2 phase2-report phase2-lint phase2-verify-up phase2-verify phase2-verify-down
+
+phase2-model:
+	$(UV) run --frozen python scripts/prepare-q4.py
+
+phase2-prepare:
+	$(UV) run --frozen python scripts/phase2_first_pass.py prepare
+
+phase2:
+	$(UV) run --frozen python scripts/phase2_first_pass.py run
+
+phase2-report:
+	$(UV) run --frozen python scripts/phase2_first_pass.py report
+
+phase2-lint:
+	$(UV) run --frozen ruff check scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py
+	$(UV) run --frozen ruff format --check scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py
+
+phase2-verify-up:
+	$(UV) run --frozen python scripts/verify_phase2.py up
+
+phase2-verify:
+	$(UV) run --frozen python scripts/verify_phase2.py doctor
+	$(UV) run --frozen python scripts/verify_phase2.py drive
+
+phase2-verify-down:
+	$(UV) run --frozen python scripts/verify_phase2.py down
