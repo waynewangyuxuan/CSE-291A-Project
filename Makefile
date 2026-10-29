@@ -61,3 +61,49 @@ lint:
 	$(UV) run --frozen ruff format --check src tests
 
 check: lint test
+
+.PHONY: phase2-model phase2-prepare phase2 phase2-report phase2-lint phase2-verify-up phase2-verify phase2-verify-down
+
+phase2-model:
+	$(UV) run --frozen python scripts/prepare-q4.py
+
+phase2-prepare:
+	$(UV) run --frozen python scripts/phase2_first_pass.py prepare
+
+phase2:
+	$(UV) run --frozen python scripts/phase2_first_pass.py run
+
+phase2-report:
+	$(UV) run --frozen python scripts/phase2_first_pass.py report
+
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py
+
+phase2-lint:
+	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
+	$(UV) run --frozen ruff format --check $(PHASE2_SCRIPTS)
+
+PLOT_PYTHON ?= .cache/phase2-analysis-env/bin/python
+
+.PHONY: phase2-analysis-setup phase2-analyze phase2-plot
+
+phase2-analysis-setup:
+	$(UV) venv --allow-existing .cache/phase2-analysis-env
+	$(UV) pip install --python $(PLOT_PYTHON) -r configs/phase2/analysis-requirements.txt
+
+phase2-analyze:
+	$(UV) run --frozen python scripts/analyze_phase2.py
+	$(UV) run --frozen python scripts/phase2_case_cards.py
+	$(MAKE) phase2-plot
+
+phase2-plot:
+	MPLCONFIGDIR=.cache/matplotlib $(PLOT_PYTHON) scripts/plot_phase2.py
+
+phase2-verify-up:
+	$(UV) run --frozen python scripts/verify_phase2.py up
+
+phase2-verify:
+	$(UV) run --frozen python scripts/verify_phase2.py doctor
+	$(UV) run --frozen python scripts/verify_phase2.py drive
+
+phase2-verify-down:
+	$(UV) run --frozen python scripts/verify_phase2.py down
