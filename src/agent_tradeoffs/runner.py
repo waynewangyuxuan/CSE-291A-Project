@@ -134,6 +134,7 @@ def implementation_identity() -> dict[str, Any]:
         "context.py",
         "memory.py",
         "reporting.py",
+        "prompt_policy.py",
         "runner.py",
         "runtime.py",
     ):

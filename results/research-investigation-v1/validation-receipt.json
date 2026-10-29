@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "scope": "Offline structural/numeric validation; independent raw audit is separate.",
+  "validator_sha256": "2eb5452cc9f831397260deb88e961e80c2b43f7b9e72ead741b520fe2e65c5ad",
+  "coverage": {
+    "primary_episodes": 600,
+    "pairs": 300,
+    "tasks": 60,
+    "attack_annotations": 480,
+    "visible_stance_annotations": 480,
+    "case_pairs": 30,
+    "protected_preexisting_tracked_files": 224,
+    "original_terminal_unknown_episodes": 33
+  },
+  "checks": {
+    "original_input_bytes_unchanged": true,
+    "stage_official_scores_equal_primary": true,
+    "no_L_labels": true,
+    "frozen_rule_sha_matches": true,
+    "all_18_A_flips_selected": true,
+    "A_true_to_false_U_transitions": {
+      "True->True": 3,
+      "False->False": 10
+    },
+    "guide_local_links_exist": true,
+    "figure_hashes_dimensions_svg_valid": true
+  },
+  "checked_guide_links": [
+    "01-overall-effects.png",
+    "figure-manifest.json",
+    "../prompt-defense-first-wave-v1/measurements.json",
+    "02-task-map.png",
+    "task-patterns.md",
+    "task-contracts.csv",
+    "task-patterns.csv",
+    "03-joint-outcomes.png",
+    "03-clean-to-attack.png",
+    "figure-manifest.json",
+    "04-attack-stages.png",
+    "attack-rules.md",
+    "attack-stages.csv",
+    "attack-action-semantic-review.md",
+    "attack-visible-stance-annotations.csv",
+    "case-cards.md",
+    "case-cards.html",
+    "case-cards.json",
+    "case-selection.json",
+    "06-cost-pairs.png",
+    "06-trajectory-growth.png",
+    "figure-manifest.json",
+    "../prompt-defense-first-wave-v1/supplementary-measurements.json",
+    "../../docs/prompt-defense-first-wave.md",
+    "task-contracts.json",
+    "01-overall-effects.png",
+    "02-task-map.png",
+    "02-task-map-banking.png",
+    "02-task-map-slack.png",
+    "02-task-map-workspace.png",
+    "02-task-map-travel.png",
+    "task-patterns.csv",
+    "task-patterns.md",
+    "03-joint-outcomes.png",
+    "03-clean-to-attack.png",
+    "04-attack-stages.png",
+    "attack-rules.md",
+    "attack-action-semantic-review.md",
+    "04-visible-stance.png",
+    "attack-visible-stance.md",
+    "attack-visible-stance-summary.json",
+    "attack-patterns.md",
+    "case-cards.md",
+    "case-cards.md#case-31",
+    "case-cards.md#case-49",
+    "case-cards.md#case-23",
+    "case-cards.md#case-273",
+    "case-cards.md#case-27",
+    "case-cards.md#case-51",
+    "06-cost-pairs.png",
+    "06-trajectory-growth.png",
+    "../prompt-defense-seed29-diagnostics-v1/README.md",
+    "task-contracts.json",
+    "attack-stages.json",
+    "case-cards.json",
+    "attack-stage-receipt.json",
+    "case-audit.json",
+    "figure-manifest.json",
+    "protected-inputs.json",
+    "independent-review.json",
+    "validation-receipt.json"
+  ],
+  "figures": [
+    {
+      "name": "01-overall-effects",
+      "width": 2380,
+      "height": 901
+    },
+    {
+      "name": "02-task-map",
+      "width": 2380,
+      "height": 3332
+    },
+    {
+      "name": "02-task-map-banking",
+      "width": 2380,
+      "height": 952
+    },
+    {
+      "name": "02-task-map-slack",
+      "width": 2380,
+      "height": 1162
+    },
+    {
+      "name": "02-task-map-workspace",
+      "width": 2380,
+      "height": 1557
+    },
+    {
+      "name": "02-task-map-travel",
+      "width": 2380,
+      "height": 965
+    },
+    {
+      "name": "03-joint-outcomes",
+      "width": 2720,
+      "height": 1020
+    },
+    {
+      "name": "03-clean-to-attack",
+      "width": 1785,
+      "height": 884
+    },
+    {
+      "name": "06-cost-pairs",
+      "width": 2550,
+      "height": 952
+    },
+    {
+      "name": "06-trajectory-growth",
+      "width": 2210,
+      "height": 1581
+    },
+    {
+      "name": "04-attack-stages",
+      "width": 3060,
+      "height": 1224
+    },
+    {
+      "name": "04-visible-stance",
+      "width": 2720,
+      "height": 1020
+    }
+  ],
+  "script_sha256": {
+    "scripts/build_research_attack_patterns.py": "62be0de9f364dd1b2b4bc248c6a37cd13689d334250120f2582ed4e1e07d249e",
+    "scripts/build_research_case_cards.py": "7bb1ac123c8142cbfeca8d28ea85446259a94670418d99c360e6670520b9e556",
+    "scripts/build_research_figures.py": "0aca2ac21c8e9ae73cb4daac29752cec0135da69c422608f47cb0a69408bb1cc",
+    "scripts/build_research_task_contracts.py": "6c89c87135e68cc7082f3782116ee45a77e46fcdffc4012c1ec8b7c8b32cf2bd",
+    "scripts/build_research_task_patterns.py": "4dd005203b800338bce661a937e2a18b8fee3acd39b6e4b8ef9820540762455c",
+    "scripts/build_attack_stage_annotations.py": "baa823737adcfc9aeeb433012eb3d17d0083df6bc98111645c2de8fe70d4d24e",
+    "scripts/build_attack_visible_stance_annotations.py": "11b04a1858fd8a279a1797ad214bf50102e323db0b3f3dabc014fc4c1a2e83c7",
+    "scripts/validate_research_investigation.py": "2eb5452cc9f831397260deb88e961e80c2b43f7b9e72ead741b520fe2e65c5ad"
+  },
+  "products": {
+    "01-overall-effects.png": {
+      "bytes": 146195,
+      "sha256": "b5ee45f767013b18e5fa808646f0598a001d84b24ddf534cea28376fc64a2f47"
+    },
+    "01-overall-effects.svg": {
+      "bytes": 20610,
+      "sha256": "4a14ddaee73f6b597434e9085960146fda3d80b8c166a21eefc4410ac6b13bb3"
+    },
+    "02-task-map-banking.png": {
+      "bytes": 113272,
+      "sha256": "5caddd4e473921b05354e1f9e300dfd8284107420ed9715bc74d0ff042143b1e"
+    },
+    "02-task-map-banking.svg": {
+      "bytes": 24373,
+      "sha256": "da83cded3e32ed8957471008791f42d9df071c0fbf09cdb4e0b85658e021a534"
+    },
+    "02-task-map-slack.png": {
+      "bytes": 164357,
+      "sha256": "23d59950f8ed85254d8c16b3e8ccc319e14f5402dec41c5d3171a5b4351d2f65"
+    },
+    "02-task-map-slack.svg": {
+      "bytes": 32758,
+      "sha256": "a51aefc867338f861edc35239a48107ac9c8575ae712104e686292529cfd5077"
+    },
+    "02-task-map-travel.png": {
+      "bytes": 136589,
+      "sha256": "04198e5f384337cf503072e23c52bc5d77ecdcc85cf49b5bf39e727219ba1bc2"
+    },
+    "02-task-map-travel.svg": {
+      "bytes": 26402,
+      "sha256": "36a1c03d93c5394283249a71faa35dcff7b602f006f31730488b33e80fbc4960"
+    },
+    "02-task-map-workspace.png": {
+      "bytes": 210994,
+      "sha256": "503b52a40193f6074d173e8490168fc88429a3db8c1c5ffb1263313ca230d1b7"
+    },
+    "02-task-map-workspace.svg": {
+      "bytes": 35708,
+      "sha256": "ceb1b6c76d43bde0618ed314349ea601e84a2edd3b542a4eb0269ee792d85d8e"
+    },
+    "02-task-map.png": {
+      "bytes": 461008,
+      "sha256": "0048afcba36b8aae5a8e1dc1b46de0a1b10c846ca98d109e04e05e21cc912d2b"
+    },
+    "02-task-map.svg": {
+      "bytes": 77230,
+      "sha256": "cb94ebcd145adf6b68741fe49df9bdb525d22f30b55435544ca123dee1423e7d"
+    },
+    "03-clean-to-attack.png": {
+      "bytes": 78797,
+      "sha256": "6fe50d01bd16c90fa532f2b818985ece13d8bf6b4ed0be0e6b2dc97917da51f8"
+    },
+    "03-clean-to-attack.svg": {
+      "bytes": 15673,
+      "sha256": "fbf2099b793ec0bc16734bffdcb98702324806a0535a53793fa13464991286e4"
+    },
+    "03-joint-outcomes.png": {
+      "bytes": 130444,
+      "sha256": "ad3a435dac20819271182002b83ce98ad764dd3377bcc3ea270c5bcabbdea61f"
+    },
+    "03-joint-outcomes.svg": {
+      "bytes": 23728,
+      "sha256": "a773337c1e1258bd3c3eb8a72bcbd47568349c0035ac48ff9b9611dde1cff820"
+    },
+    "04-attack-stages.png": {
+      "bytes": 137430,
+      "sha256": "9249c4187c0fcc31fe7d6e0e7ba8cc2fb28ee3f870d525d0ace278a3a593fa6b"
+    },
+    "04-attack-stages.svg": {
+      "bytes": 20173,
+      "sha256": "850ea9702dc4a9090a1ac896a067be383f8b7af9a93384f9e22166b9327c3fa1"
+    },
+    "04-visible-stance.png": {
+      "bytes": 135017,
+      "sha256": "99abd63e25b4413438bcf6979552eb350dc7c81f3b07b04c64098cf93b3eb95a"
+    },
+    "04-visible-stance.svg": {
+      "bytes": 18198,
+      "sha256": "a45429a71916e168075da03ffd9aba5cd4e63eb593bb2b90354cc2b3e65414af"
+    },
+    "06-cost-pairs.png": {
+      "bytes": 193885,
+      "sha256": "1077478446cbefe663f039f6271e8dde43c4a8e3fbf73a50eb3bb45ed18c5970"
+    },
+    "06-cost-pairs.svg": {
+      "bytes": 186940,
+      "sha256": "1fda4c50bde8cf7d452b68f8f2381e714bee97575c22b9ef15b2a9309be85880"
+    },
+    "06-trajectory-growth.png": {
+      "bytes": 264589,
+      "sha256": "4fe9269b8aadbd56f398f4a8262e9a4a762b5113ec88551bc4245848353ea8e8"
+    },
+    "06-trajectory-growth.svg": {
+      "bytes": 70599,
+      "sha256": "d2552795c19168b58115a9461a27bc7e3999ca93cd057d35f62052ae81db514d"
+    },
+    "README.md": {
+      "bytes": 21435,
+      "sha256": "655598a1e8c69e0e4d06ef40b6ef8cc66716f43ee409311fd52b28f27f8aaad2"
+    },
+    "attack-action-semantic-review.csv": {
+      "bytes": 10777,
+      "sha256": "1c62136edcc92f5ead866e41158837bb9307f1854faa595b4eced25c1ba5b562"
+    },
+    "attack-action-semantic-review.json": {
+      "bytes": 74744,
+      "sha256": "949c65b097f5b0e38f84b9ae1eb6bf2ee08067a2b996b4cb0219c0ecc943a245"
+    },
+    "attack-action-semantic-review.md": {
+      "bytes": 1392,
+      "sha256": "db4e631df0ebef4e5a06165e7bc5480160cf2ec74e95ea092b54a2c2afad4ec7"
+    },
+    "attack-patterns.json": {
+      "bytes": 1541255,
+      "sha256": "5e394f54be0b9221f47a3bead45ccce8d467f8d27bb251ebe50ac8284e9e7cef"
+    },
+    "attack-patterns.md": {
+      "bytes": 11972,
+      "sha256": "fc5074593a5977ee414d2f73a40380dd1da821aad47fe64fbdd7c2f777a68297"
+    },
+    "attack-rules.json": {
+      "bytes": 48209,
+      "sha256": "299b8cde8bae8c7638acc8f4dcb78138501b88b43cd3e049a1e2f9f899eaa6d8"
+    },
+    "attack-rules.md": {
+      "bytes": 10183,
+      "sha256": "59d4157b6c9a584c73a2cfb6ebf6a71374ef0411708112d6732b754b55fab5ba"
+    },
+    "attack-stage-receipt.json": {
+      "bytes": 345481,
+      "sha256": "3fa484e5c9e699c06a5e227cdcbfb7c9392763877e8e58c1bc1b712275d53fbd"
+    },
+    "attack-stage-summary.json": {
+      "bytes": 11125,
+      "sha256": "80d2546e3fb0718b24df21997f6cca19237d973d77ca8876733a43353e296048"
+    },
+    "attack-stages.csv": {
+      "bytes": 164916,
+      "sha256": "0802b49e2122ab6f6df37eace509e1d4e6771646038239baf0763ee998e93ad1"
+    },
+    "attack-stages.json": {
+      "bytes": 19876177,
+      "sha256": "853ce5e2a837574ba14fbcbba0f88d0b997913aee818a79f605f8c405030947d"
+    },
+    "attack-visible-stance-annotations.csv": {
+      "bytes": 252089,
+      "sha256": "84970934d0d29691b4edda1a71e0a7532184859541f7af33c3da6db21c6db22e"
+    },
+    "attack-visible-stance-annotations.json": {
+      "bytes": 1795770,
+      "sha256": "d4917dc543de395768de65fde5a38c8ce702887bfa7f3e917fb048d9e44ef785"
+    },
+    "attack-visible-stance-decisions-v1.json": {
+      "bytes": 606898,
+      "sha256": "20dac637545fb5d928a2d89c6f61ff6eb63eaebba9c8d39d7acc76569ea2abe6"
+    },
+    "attack-visible-stance-decisions-v2.json": {
+      "bytes": 607764,
+      "sha256": "7b82e4c5ea27088c657eb735c77b73811c974e801e8e060b8fb16a58dc40f7e6"
+    },
+    "attack-visible-stance-receipt.json": {
+      "bytes": 257469,
+      "sha256": "81051a5704f7922a4c58317ae3d054e7bd4047e2d90287ffea2edc469e6b1f56"
+    },
+    "attack-visible-stance-summary.json": {
+      "bytes": 3367,
+      "sha256": "2b3f5d65d44f6ebe9d1715f0c32e478da66bbe4356495c54011db7c6e5ce42df"
+    },
+    "attack-visible-stance.md": {
+      "bytes": 1648,
+      "sha256": "d4304e89128d68e9a458ce60cb5b85d31addf7736a8879968102ef1ebac771d1"
+    },
+    "case-audit.json": {
+      "bytes": 53977,
+      "sha256": "7ea07396227ec48e7ca347c2eedf295953b920975fadfb7d2857bf8e9673c89b"
+    },
+    "case-cards.html": {
+      "bytes": 1064128,
+      "sha256": "b73d111f73df30893296726694905ff35c7ffde274847ab3111cdf2fa5c13aae"
+    },
+    "case-cards.json": {
+      "bytes": 1269786,
+      "sha256": "449b32e0c6679cc1650d48f05ff744630df696ab88d7832b0b97c7b5d77f1d26"
+    },
+    "case-cards.md": {
+      "bytes": 267725,
+      "sha256": "047a2ccd2f2c059e7df463662a8c609dcd1f427c0ef768cec8913df713d0d5dc"
+    },
+    "case-selection.json": {
+      "bytes": 21082,
+      "sha256": "96bd5526b824e2884a68e1f65f72f7a9e20b1e5db219144d97c671025c258078"
+    },
+    "figure-manifest.json": {
+      "bytes": 216884,
+      "sha256": "fa9647d74faaa39e5c8f8121ca4c2261f50eaa050453d3ce7868a6e40ca41408"
+    },
+    "independent-review.json": {
+      "bytes": 19656,
+      "sha256": "5135fa2dbb09787b82d7950ebfff61d7ddb017682579f0fbca5d2d4b6a243064"
+    },
+    "protected-inputs.json": {
+      "bytes": 40658,
+      "sha256": "30007c5401e69a10ffdd512e6039bd43f044727f9c17e39e0f1449da79488a0e"
+    },
+    "task-contracts.csv": {
+      "bytes": 316516,
+      "sha256": "33a628cdbeb2f9c178638800e9052b10765c483f25af77409c3f847f1120c782"
+    },
+    "task-contracts.json": {
+      "bytes": 937410,
+      "sha256": "5448629bbf7c5ab3e169713ff2071a6952b989b16b8471faa64687e85aa7bf09"
+    },
+    "task-patterns.csv": {
+      "bytes": 171565,
+      "sha256": "5fc74bec95703c1e77d24f8536d8592ee8397a877c95f79ae2841798f9c1ad74"
+    },
+    "task-patterns.json": {
+      "bytes": 1240510,
+      "sha256": "3f4c163badb23c7dfde4ed748b9c72059c947034be39b4370c33cc48da63512c"
+    },
+    "task-patterns.md": {
+      "bytes": 17598,
+      "sha256": "98c87c747a37b6e52baabf38bb7761f44f77f36ad1cd8573d02737fa1efa5477"
+    }
+  },
+  "limits": "PNG dimensions/SVG parsing are structural checks; visual QA and qualitative coding require separate records. No inference/checker/environment reconstruction."
+}

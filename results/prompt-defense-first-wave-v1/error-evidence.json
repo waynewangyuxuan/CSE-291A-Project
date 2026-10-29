@@ -1,0 +1,16 @@
+{
+  "campaign_identity": "4424e31e36c5175611e672ed4d2f582c844df9855d977ba4749b417de33b4ec2",
+  "support_sha256": "ebf19a297324467814f0d3d25425836f5299dc97a15eebf625f734e42a7ee3c9",
+  "inputs": {
+    "manifest.json": "2f48a919a96bf7a7e2ead5a254b9cf38202e7244d64b25787b2f3700d03f73d9",
+    "episodes.json": "d7c9091f8dda7b1586836e02d187299c095740c94d6974fd60b158c027237fd0"
+  },
+  "output_sha256": "f40b4182a657b816a6cee70a461fe78363646cdb171d291f4b7055051c879423",
+  "terminal_errors": 33,
+  "error_types": {
+    "ToolStepLimitError": 7,
+    "BadRequestError": 7,
+    "APITimeoutError": 19
+  },
+  "scope": "Descriptive raw error and timeout observations; no new causal classifier, scoring, retry or inference. Missing failed-request compute remains unknown."
+}

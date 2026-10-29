@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "campaign_identity": "03665bd7e73e92cc99edae1757e0fa9d5a716c3b31d34c8bf329189bdec19d6c",
+  "prepared_inputs_sha256": "9e2949ebe560eae4e3298af4c6623030903f320cc604ab813bb6868166e0d68a",
+  "preparation_commit": "1f330d908661da40843810965e1ba4f6c6889650",
+  "branch": "codex/prompt-defense-baseline",
+  "collection_created_at": "2026-10-20T05:12:56.797041+00:00",
+  "collection_finalized_at": "2026-10-20T05:31:03.773326+00:00",
+  "finalized_episodes": 20,
+  "counts": {
+    "completed": 18,
+    "error": 2
+  },
+  "resumes": 0,
+  "collection_pty_session": 18178,
+  "collection_exit_code": 0,
+  "semantic_runtime_sha256": "4c3c5e1d45a1825df4628a6406d02ea459fb27f89415c3ef482ceefddbd72174",
+  "first_wave_identity": "4424e31e36c5175611e672ed4d2f582c844df9855d977ba4749b417de33b4ec2",
+  "raw_campaign_root": "/Users/waynewang/.codex/worktrees/prompt-defense-baseline/CSE-291A-Project/artifacts/prompt-defense-seed29-diagnostics-v1",
+  "source_raw_campaign_root": "/Users/waynewang/.codex/worktrees/prompt-defense-baseline/CSE-291A-Project/artifacts/prompt-defense-first-wave-v1",
+  "raw_evidence_in_git": false,
+  "python": "/Users/waynewang/CSE-291A-Project/.venv/bin/python",
+  "pythonpath": "/Users/waynewang/.codex/worktrees/prompt-defense-baseline/CSE-291A-Project/src",
+  "analysis_source": "scripts/analyze_prompt_defense_seed29_diagnostics.py",
+  "analysis_source_sha256": "18020460570f33c51ec6b5ee4ec0a32f3b78466bbb38aa589357afcf0673b721",
+  "analysis_note": "Prepared after launch, separately versioned offline evidence processing; no assignment/prompt/checker/budget changes or new scoring. Selected-case diagnostics, no population effect estimate.",
+  "canonical_frozen_inputs": "/Users/waynewang/.codex/worktrees/prompt-defense-baseline/CSE-291A-Project/configs/prompt-defense-seed29-diagnostics-v1"
+}

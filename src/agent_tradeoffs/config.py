@@ -11,6 +11,8 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
+from agent_tradeoffs.prompt_policy import PromptPolicy, prompt_identity
+
 
 class Settings(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
@@ -138,14 +140,20 @@ ContextSettings = Annotated[
 ]
 
 
+class PromptSettings(Settings):
+    policy: PromptPolicy = "default"
+
+
 class ExperimentConfig(Settings):
     experiment: ExperimentSettings = Field(default_factory=ExperimentSettings)
     model: ModelSettings = Field(default_factory=ModelSettings)
     runner: RunnerSettings = Field(default_factory=RunnerSettings)
     context: ContextSettings = Field(default_factory=FullContext)
+    prompt: PromptSettings = Field(default_factory=PromptSettings)
 
     def identity_config(self) -> dict[str, Any]:
         value = self.model_dump(mode="json")
+        value["resolved_system_prompt"] = prompt_identity(self.prompt.policy)
         value["runner"].pop("output_root")
         value["runner"].pop("server_pid")
         value["runner"].pop("runtime_metadata_path")

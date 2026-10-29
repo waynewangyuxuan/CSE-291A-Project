@@ -1,0 +1,13 @@
+{
+  "campaign_identity": "4424e31e36c5175611e672ed4d2f582c844df9855d977ba4749b417de33b4ec2",
+  "source_field": "manifest.runtime.live_server_props.chat_template",
+  "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "semantic_runtime_sha256": "4c3c5e1d45a1825df4628a6406d02ea459fb27f89415c3ef482ceefddbd72174",
+  "template_line_numbers_1based": [
+    72,
+    81
+  ],
+  "template_excerpt": "    {%- elif message.role == \"tool\" %}\n        {%- if loop.first or (messages[loop.index0 - 1].role != \"tool\") %}\n            {{- '<|im_start|>user' }}\n        {%- endif %}\n        {{- '\\n<tool_response>\\n' }}\n        {{- content }}\n        {{- '\\n</tool_response>' }}\n        {%- if loop.last or (messages[loop.index0 + 1].role != \"tool\") %}\n            {{- '<|im_end|>\\n' }}\n        {%- endif %}",
+  "observed_api_role": "tool",
+  "interpretation": "The fixed server template maps API tool messages to <tool_response> tags inside a user segment. This is a source-code deduction from the captured live template, not a separate capture of each rendered token stream. Both arms use the same template; the retrieved content remains semantically task data, not a new human authorization."
+}
