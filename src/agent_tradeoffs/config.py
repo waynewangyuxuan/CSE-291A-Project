@@ -6,7 +6,7 @@ import hashlib
 import json
 import tomllib
 from pathlib import Path
-from typing import Any, Literal
+from typing import Annotated, Any, Literal
 from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -108,9 +108,36 @@ class RunnerSettings(Settings):
     min_free_disk_bytes: int = Field(default=128 * 1024**2, ge=0)
 
 
-class ContextSettings(Settings):
-    # A rejected policy is preferable to silently claiming truncation/summarization.
+class FullContext(Settings):
     policy: Literal["full"] = "full"
+
+
+class TruncateContext(Settings):
+    policy: Literal["truncate"]
+    trigger_rounds: int = Field(ge=2)
+    keep_rounds: int = Field(default=1, ge=1)
+
+    @model_validator(mode="after")
+    def archive_exists(self):
+        if self.keep_rounds >= self.trigger_rounds:
+            raise ValueError("keep_rounds must be smaller than trigger_rounds")
+        return self
+
+
+class SummaryContext(TruncateContext):
+    policy: Literal["long_summary", "short_summary", "short_summary_rag"]
+    summary_max_tokens: int = Field(gt=0)
+    summary_fraction: float = Field(gt=0, lt=1)
+    summarizer: ModelSettings
+    runtime_metadata_path: Path
+    search_max_calls: int = Field(default=4, ge=1)
+    search_max_tokens: int = Field(default=512, ge=32)
+    search_top_k: int = Field(default=3, ge=1, le=10)
+
+
+ContextSettings = Annotated[
+    FullContext | TruncateContext | SummaryContext, Field(discriminator="policy")
+]
 
 
 class PromptSettings(Settings):
@@ -121,7 +148,7 @@ class ExperimentConfig(Settings):
     experiment: ExperimentSettings = Field(default_factory=ExperimentSettings)
     model: ModelSettings = Field(default_factory=ModelSettings)
     runner: RunnerSettings = Field(default_factory=RunnerSettings)
-    context: ContextSettings = Field(default_factory=ContextSettings)
+    context: ContextSettings = Field(default_factory=FullContext)
     prompt: PromptSettings = Field(default_factory=PromptSettings)
 
     def identity_config(self) -> dict[str, Any]:

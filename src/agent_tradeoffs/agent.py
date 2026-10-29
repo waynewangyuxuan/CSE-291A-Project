@@ -15,8 +15,9 @@ from agentdojo.functions_runtime import FunctionCall
 from agentdojo.types import text_content_block_from_string
 from pydantic import BaseModel
 
-from agent_tradeoffs.config import ExperimentConfig
-from agent_tradeoffs.context import exposed_vectors, full_context
+from agent_tradeoffs.config import ExperimentConfig, SummaryContext
+from agent_tradeoffs.context import exposed_vectors
+from agent_tradeoffs.memory import EpisodeMemory, MemoryServices
 from agent_tradeoffs.prompt_policy import PromptPolicy, prompt_identity, system_prompt
 
 
@@ -97,6 +98,12 @@ class LocalAgent(BasePipelineElement):
         self.environment: Any = None
         self.started_at = time.monotonic()
         self.deadline = self.started_at + config.runner.episode_timeout_seconds
+        self.memory = EpisodeMemory(
+            config.context,
+            MemoryServices(config.context, episode_dir, self.remaining)
+            if isinstance(config.context, SummaryContext)
+            else None,
+        )
 
     def remaining(self) -> float:
         remaining = self.deadline - time.monotonic()
@@ -107,6 +114,7 @@ class LocalAgent(BasePipelineElement):
     def trace(self) -> dict[str, Any]:
         return {
             "messages": self.messages,
+            "context_memory": self.memory.metrics(),
             "system_prompt": prompt_identity(self.config.prompt.policy),
             "initial_environment": self.initial_environment,
             "final_environment": self.environment.model_dump(mode="json")
@@ -148,8 +156,11 @@ class LocalAgent(BasePipelineElement):
             }
             for function in runtime.functions.values()
         ]
+        if any(tool["function"]["name"] == "search_history" for tool in tools):
+            raise ValueError("Benchmark tool collides with reserved history search tool")
+        tools.extend(self.memory.tools)
         while True:
-            request_messages = full_context(
+            request_messages = self.memory.prepare(
                 [to_openai_message(message) for message in self.messages]
             )
             self.observed_vectors.update(exposed_vectors(request_messages, self.injections))
@@ -251,7 +262,10 @@ class LocalAgent(BasePipelineElement):
                         f"Exceeded {self.config.runner.max_tool_steps} simulated tool calls"
                     )
                 self.tool_calls += 1
-                result, error = runtime.run_function(env, call.function, call.args)
+                if call.function == "search_history" and self.memory.tools:
+                    result, error = self.memory.search(call.args)
+                else:
+                    result, error = runtime.run_function(env, call.function, call.args)
                 self.tool_errors += int(error is not None)
                 self.messages.append(
                     {

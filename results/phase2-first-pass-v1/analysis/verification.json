@@ -1,0 +1,27 @@
+{
+  "generated_files_byte_identical": 64,
+  "unchanged_source_files": 1680,
+  "resolved_local_markdown_links": 200,
+  "tests_passed": 117,
+  "mutation_checks": [
+    "unknown bound detection",
+    "wrong destination detection"
+  ],
+  "visual_review": "all eight PNG figures inspected",
+  "inference_runs_added": 0,
+  "date": "2026-10-27",
+  "commands": [
+    "make check",
+    "make phase2-lint",
+    "make phase2-analyze"
+  ],
+  "determinism_scope": "64 analysis files identical on consecutive complete offline runs in this environment before updating this receipt; CSV/SVG/Markdown whitespace normalized by generators",
+  "source_artifacts": "artifacts/phase2-first-pass-v1",
+  "analysis_python": "3.12.3",
+  "plot_python": "3.12.4",
+  "limits": [
+    "Raw artifacts are local and ignored; clone alone cannot recompute traces",
+    "No across-seed stability or new-task confidence estimate"
+  ],
+  "independent_review": "Four gpt-6-luna read-only lanes; root reconciled corrections. Final review found a token-mean header ambiguity, corrected to mean tokens per episode."
+}

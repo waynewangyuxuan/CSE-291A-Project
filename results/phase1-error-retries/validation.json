@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "status": "passed_complete",
+  "scope": "Actual completed 50-attempt same-seed recovery diagnostic; all original 600 results remain unchanged.",
+  "primary_analysis": {
+    "status": "passed_complete",
+    "captured_at": "2026-10-18T11:13:36.069998+00:00",
+    "episodes": 50,
+    "runs": 30,
+    "request_events": 1096,
+    "protected_original_files": 2631,
+    "analyzer_sha256": "e19b991c2e88c75694206304f4859ca56645f34276801de41ff72039146e0358",
+    "summary_sha256": "6bf51d3696c911554e0cc973495961edaecfbfc5d46df3112125a8e7b6659969",
+    "episodes_sha256": "ceab93646a5b4f9712f890e0e45b4e2a14fbc4b960537ad49f4f71a381cb49e5"
+  },
+  "independent_audit": {
+    "path": "independent-audit.json",
+    "sha256": "7bdf12ed5261a167a90747f498cefa36b78df2305b0c11702cc9f86f51b04822",
+    "status": "passed_complete",
+    "helper_archived_path": "artifacts/phase1-error-retries/helpers/phase1-retries-full50-independent.py",
+    "helper_sha256": "7dae8bcb2f58ec03e31a2d4135249d5951df81d75122b9dc69384ec647e2f68a",
+    "source_files": 422,
+    "source_inventory_sha256": "a718a014e6a3716014106a679bef0067816f7d48edef15de46e41403da58c4be",
+    "checks": {
+      "exact_two_attempts_per_original_case": true,
+      "all30_run_config_seed_implementation_semantic_identity_matches": true,
+      "all100_new_gzip_compressed_and_decompressed_digests": true,
+      "first_payloads_and_initial_inputs_match_original": true,
+      "unknown_error_scores_retained": true,
+      "request_order_terminal_usage_and_tools_reconcile": true,
+      "payload_exposure_recomputed_with_frozen_matcher": true,
+      "original_clean_controls_preserved": true,
+      "summary_overall_round_type_cost_distributions_and50csv_rows_match_raw": true,
+      "scoped_sources_unchanged_during_audit": true
+    }
+  },
+  "protected_original_evidence": {
+    "status": "passed_complete",
+    "captured_at": "2026-10-18T11:16:49.424837+00:00",
+    "protected_original_files": 2631,
+    "protected_inventory_path": "/Users/waynewang/CSE-291A-Project/artifacts/phase1-error-retries/protected-original-inventory.json",
+    "protected_inventory_sha256": "ed799722eb111cf16d3e2074b1f56475ef5a6840ccf06644fff24db62eed4eda",
+    "plan_sha256": "67c2787d4a2506082a066b0ac7566c824e21ad8141fc86c319f86fb36cf3449d",
+    "manifest_sha256": "2bab78e6e84876b4882108ee6ce864d5fd651aab4f49ff8019c8b3276cfb6ed3",
+    "driver_exited": true,
+    "driver_exit_code": 0,
+    "driver_pty": 60549,
+    "finalized_episodes": 50,
+    "runs": 30,
+    "primary_audit_sha256": "e0afa41443621af1103c2e31773fa0e8d5129e2ef3ea960cfaca0a3b8884949b",
+    "independent_audit_sha256": "7bdf12ed5261a167a90747f498cefa36b78df2305b0c11702cc9f86f51b04822",
+    "runtime_idle_verification_sha256": "e21b75efe5f169eb804946a9f0a643733c142eebe9819a56b329b0699feae6e0",
+    "runtime_snapshot_sha256": "c0d6f03bd65be813ffcc5a2a4fd693f1cf1c4b9dc98cbeedefec1c848dc49d78",
+    "semantic_runtime_sha256": "4c3c5e1d45a1825df4628a6406d02ea459fb27f89415c3ef482ceefddbd72174"
+  },
+  "runtime_handoff": {
+    "path": "artifacts/phase1-error-retries/handoff-to-prompt-defense.json",
+    "sha256": "10d6187d9050c553d7628ef7cca9e9cde3e9562730271fe0c76e9b32ec600b35",
+    "status": "released",
+    "released_at": "2026-10-18T11:16:49.425806+00:00",
+    "pid": 68607,
+    "semantic_runtime_sha256": "4c3c5e1d45a1825df4628a6406d02ea459fb27f89415c3ef482ceefddbd72174",
+    "server_idle_verified": true,
+    "idle_check_at": "2026-10-18T11:14:23.041594+00:00",
+    "idle_evidence_sha256": "e21b75efe5f169eb804946a9f0a643733c142eebe9819a56b329b0699feae6e0",
+    "slots_is_processing": [
+      false
+    ],
+    "processing_queue_metrics": {
+      "llamacpp:requests_processing": 0.0,
+      "llamacpp:requests_deferred": 0.0
+    }
+  },
+  "interpretation": "Audit checks evidence consistency, not independent human scoring. U/A remain unknown for runtime errors; L was not separately evaluated. Runtime evidence describes the handoff instant, not later service state."
+}
