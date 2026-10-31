@@ -1,126 +1,138 @@
 # Security–Performance Tradeoffs in Resource-Constrained Agents
 
-CSE 291A, Fall 2026. Controlled measurements of small local tool-using agents:
-weight quantization × context management, with capability and security reported separately.
+CSE 291A, Fall 2026 · Wayne Wang
 
-The formal Phase 1 baseline uses AgentDojo and **unquantized Qwen3-8B F16**,
-served by pinned llama.cpp with Metal, full 32K context and non-thinking tool use.
-The canonical BF16 checkpoint is converted to F16; normalization weights remain
-F32. The earlier Q4 pilot is development evidence only. Tools operate on the
-benchmark's simulated resources. No paid inference API or cloud account is required.
+How do **weight quantization** and **context management** change a small local
+tool-using agent's legitimate task completion, its resistance to prompt
+injection, and its latency / token / memory cost? Phase 1 builds the harness,
+freezes an audited paired clean/adversarial workload, and measures one fully
+specified baseline. Capability and security are always reported separately.
 
-The [complete Phase 1 assessment](results/phase1/evaluation-assessment.md) covers
-all **600 episodes / 60 tasks / two seeds**: 575 normal returns, 25 retained
-errors and 168 distinct reviewed traces. It reports capability, attack success,
-refusal, latency, tokens, memory and a justified Phase 2 direction. The
-[results guide](results/phase1/README.md) links the audited tables and figures.
+Phase 1 report: [`reports/phase1-report.tex`](reports/phase1-report.tex)
+(ACL two-column; long-form Markdown companion in
+[`reports/phase1-report.md`](reports/phase1-report.md)).
 
-## Quick start
+## Start here (for graders)
 
-Prerequisites: Apple Silicon macOS, Python 3.12, and [uv](https://docs.astral.sh/uv/).
-Run commands from the repository root. The first setup downloads dependencies,
-an official runtime archive, and **16.4 GB of original model weights** streamed
-through RAM into the F16 GGUF. Reserve approximately 17.3 GB free disk space
-plus dependency installation space; a second full model copy is not stored.
-See [model provenance](docs/model-provenance.md) for exact source hashes and conversion.
+| Question | Where to look |
+| --- | --- |
+| What is the baseline and what did it measure? | [`results/phase1/evaluation-assessment.md`](results/phase1/evaluation-assessment.md) |
+| The 600 per-episode rows and 2,965 per-request rows | [`results/phase1/evaluation-episodes.csv`](results/phase1/evaluation-episodes.csv), [`evaluation-requests.csv`](results/phase1/evaluation-requests.csv) |
+| Every metric with denominators, unknown counts and 95% CIs | [`results/phase1/evaluation-measurements.json`](results/phase1/evaluation-measurements.json) |
+| Which 60 tasks, which attacks, and why | [`configs/phase1/task-manifest.json`](configs/phase1/task-manifest.json), [`docs/phase1-plan.md`](docs/phase1-plan.md) |
+| How metrics are defined | [`docs/metrics.md`](docs/metrics.md), [`docs/experiment-protocol.md`](docs/experiment-protocol.md) |
+| 168 manually reviewed traces | [`results/phase1/reviewed-traces.csv`](results/phase1/reviewed-traces.csv), protocol in [`docs/trace-review-protocol.md`](docs/trace-review-protocol.md) |
+| Why tasks fail (task features, checker semantics) | [`results/phase1/behavior-understanding/README.md`](results/phase1/behavior-understanding/README.md) |
+| Exploratory follow-ups (prompt reminder, Q4 × context) | [`results/prompt-defense-first-wave-v1/README.md`](results/prompt-defense-first-wave-v1/README.md), [`results/phase2-first-pass-v1/analysis/README.md`](results/phase2-first-pass-v1/analysis/README.md) |
+| Model provenance (BF16 → F16, hashes) | [`docs/model-provenance.md`](docs/model-provenance.md) |
+
+Raw requests, traces and simulated-state snapshots are large and live in the
+git-ignored `artifacts/` tree on the collection machine. They are shared
+separately with the course staff; every curated file in `results/` records the
+run IDs and hashes that tie it back to that raw evidence.
+
+## What Phase 1 did
+
+**Setup.** Qwen3-8B, converted from the verified BF16 checkpoint to F16 GGUF
+(0 quantized tensors), served by pinned llama.cpp with Metal on an M2 Max
+(64 GiB). One slot, 32,768-token context, F16 KV cache, no prompt caching,
+non-thinking tool calling, temperature 0.7, seeds 17 and 29. AgentDojo v1.2.2 at
+a pinned commit supplies simulated tools and deterministic checkers. No defense
+prompt, detector or approval gate is added: this is an undefended baseline.
+
+**Workload.** 60 legitimate tasks (Banking 8, Slack 16, Workspace 24,
+Travel 12), selected by source inspection before any F16 result was seen.
+Each task × seed has one clean episode and four attacked episodes: two
+suite-specific attack goals × two fixed templates (`direct_append`,
+`ignore_previous_append`). Our `_append` variant keeps the benign tool content
+and appends the payload, so the legitimate task stays solvable. Total
+60 × 2 × 5 = **600 episodes** in 24 runs. A source-level audit found and
+excluded several upstream checker defects; an offline audit confirmed all 240
+task/goal/template conditions remain legitimately completable with the payload
+present and that completing them never satisfies the attack goal.
+
+**Baseline results (600 episodes).** Clean utility 58/120 (48.3%). Attack
+success 92/480 (19.2%) over all attacks, 55/232 (23.7%) on attacks whose
+same-task same-seed clean control succeeded. `ignore_previous_append` 32.9% vs
+`direct_append` 5.4% at identical exposure. 25 episodes ended in errors and are
+kept as unknown scores. Median episode latency ≈50 s; 11.35 M prompt vs 0.15 M
+completion tokens; prefill is 78% of model time; peak server RSS 18.8 GiB.
+
+**Failure analysis.** All 120 clean traces plus 48 attack traces were reviewed
+under a protocol frozen before collection. Primary clean failure labels:
+planning 45, tool use 15, task understanding 2, unnecessary refusal 2,
+other/unclear 16, no failure 40. Zero malformed tool JSON, but 149/600 episodes
+had a tool execution error. The 25 errors were rerun twice with identical seeds
+and budgets: 0/50 recovered.
+
+**Exploratory follow-ups (single seed, not conclusions).**
+- *Source-boundary prompt reminder*, 600 paired episodes: exact-goal attack
+  success 47/240 → 39/240 (paired 95% interval touches zero), clean utility
+  26/60 → 27/60. Not evidence of a stable defense.
+- *Quantization × context first pass*, 12 tasks, F16/Q4 × {full, truncate,
+  long summary, short summary, short summary + search}, 360 episodes: no
+  uniform Q4 degradation; forced truncation is the most damaging policy; lower
+  observed ASR under compaction coincides with many unknown scores; retrieval
+  rarely recovered the missing facts.
+
+## What Phase 1 did not do
+
+- No precision or context-policy **comparison claim**. The two-seed baseline
+  is a single configuration; the explorations above are one seed on previously
+  seen tasks and were used to exercise the Phase 2 harness.
+- No new defense is claimed. The prompt reminder is a measured variant, not a
+  recommendation.
+- No independent human annotation or LLM judge. Trace labels are qualitative
+  agent-assisted inspection; official checker scores are never modified.
+- No held-out task split yet, no Q8 artifact yet, no fixed context-budget
+  definition yet. These are the first Phase 2 milestones (see the report's
+  appendix).
+
+## Repository layout
+
+| Location | Contents | Git |
+| --- | --- | --- |
+| `src/agent_tradeoffs/` | CLI, runtime management, agent loop, context/memory policies, prompt policies, analysis and reporting | tracked |
+| `configs/` | Runtime TOMLs, frozen Phase 1 campaign, error-retry plan, prompt-defense plan, Phase 2 first pass | tracked |
+| `scripts/` | Bootstrap, model preparation, audits, exporters, plotting, analysis entry points | tracked |
+| `tests/` | Offline tests of scoring, artifacts, limits, exports and analysis (`make check`) | tracked |
+| `docs/` | Plans and protocols frozen before each collection; metric definitions; provenance | tracked |
+| `results/` | Curated tables, figures and assessments with run IDs and hashes | tracked |
+| `reports/` | Course reports | tracked |
+| `artifacts/` | Raw manifests, requests, traces, states, campaign snapshots | ignored |
+| `.cache/`, `.venv/` | Model weights, runtime binaries, Python environment | ignored |
+
+Every experiment has its own run directory; a completed run ID is never
+overwritten. Each `results/*` directory has a README describing its scope.
+
+## Running it
+
+Prerequisites: Apple Silicon macOS, Python 3.12, [uv](https://docs.astral.sh/uv/).
+The first setup downloads the pinned llama.cpp archive and 16.4 GB of original
+model weights, streamed through RAM into the F16 GGUF (reserve ≈17.3 GB disk).
 
 ```bash
-make setup
-make runtime
-make model
-make doctor
+make setup      # locked Python environment
+make runtime    # pinned llama.cpp release
+make model      # verified BF16 -> F16 conversion
+make doctor     # environment checks
+make serve      # start the local inference service (one terminal)
+make probe      # verify native tool calls
+make smoke      # one clean/adversarial development pair
+make check      # ruff + offline tests
 ```
 
-Start the server in one terminal:
+Frozen Phase 1 campaign, run against the warm service in a second terminal:
 
 ```bash
-make serve
+make phase1-audit     # offline: 60 tasks, checkers, 600 planned episodes
+make phase1           # collect (resumable with make phase1-resume)
+make phase1-status    # progress
+make phase1-analyze   # cohort metrics, tables, review coverage
 ```
 
-In another terminal, verify native tool calls and run one clean/adversarial pair:
-
-```bash
-make probe
-make smoke
-```
-
-For a background service, use
-`uv run --frozen agent-tradeoffs serve --background`. Stop it with `make stop`.
-The default endpoint is `http://127.0.0.1:8080/v1`.
-
-```bash
-make pilot                                      # three F16 development task pairs
-make tasks                                      # inspect the pinned banking tasks
-uv run --frozen agent-tradeoffs run --config configs/phase1/dev-pilot.toml --run-id pilot-01
-uv run --frozen agent-tradeoffs run --config configs/phase1/dev-pilot.toml --run-id pilot-01 --resume
-uv run --frozen agent-tradeoffs summarize artifacts/runs/pilot-01
-make check
-```
-
-An endpoint lock prevents concurrent evaluators in this project from sharing the
-same local service. A single server slot and serial episodes make per-episode
-timing and memory easier to interpret.
-
-## Frozen Phase 1 campaign
-
-```bash
-make phase1-audit       # offline checks: 60 distinct tasks, source/checkers and 600 episodes
-make phase1            # run the frozen campaign against the ready F16 service
-make phase1-status     # inspect authoritative progress in another terminal
-make phase1-resume     # resume an interrupted campaign with the same code/config/deployment
-make phase1-analyze    # regenerate cohort metrics, tables, review coverage and latency plot
-```
-
-The campaign contains **60 distinct tasks across four suites**, two attack styles,
-two suite-specific goals and two stochastic seeds: 120 clean and 480 adversarial
-episodes in 24 runs. Tasks are frozen before evaluating model behavior; errors
-and timeouts remain in the data. Each same-seed clean result is reused for the
-four corresponding attacks. See the [frozen plan](docs/phase1-plan.md) and
-[metric definitions](docs/metrics.md).
-
-A supplementary offline audit checks the actual appended payloads in fresh
-benchmark environments. All 240 task/goal/template combinations retain an
-official legitimate completion within 15 tool calls, while the selected attack
-goal is false before and after that completion. The two model seeds share these
-deterministic payloads. The [audit summary](results/phase1/append-conditions-summary.json)
-records its sources and limits; this source check adds no model episodes and
-does not establish a model's task capability or complete semantic checker validity.
-
-```bash
-.venv/bin/python scripts/audit_phase1_append_conditions.py
-```
-
-The [complete clean baseline](results/phase1/clean-baseline-assessment.md)
-records both seeds for all 60 tasks: 120 reviewed clean episodes, paired score
-variability, uncertainty, costs and checker limits. This clean subset is an
-archived interim checkpoint within the completed 600-episode campaign. The earlier
-[first-seed assessment](results/phase1/seed17-clean-assessment.md) remains archived.
-
-Analysis reports coverage while collection is in progress. The final preliminary
-evaluation requires all 600 episodes and the [frozen trace-review coverage](docs/trace-review-protocol.md):
-all 120 clean traces, the analyzer's deterministic 30-trace sample, and 30 additional
-attack traces. The following command enforces the analyzer sample gate; the
-protocol's supplementary selector checks the remaining review coverage.
-
-```bash
-uv run --frozen agent-tradeoffs analyze artifacts/campaigns/phase1-f16-v1 \
-  --annotations results/phase1/reviewed-traces.csv --require-review
-```
-
-Keep the inference service unchanged during the campaign. Compatible restarts
-can resume; a different checkpoint, precision, context budget or runtime flags
-cannot silently join the same campaign.
-
-`make phase1-analyze` reads the canonical reviewed annotations and prints a
-compact progress summary. Full statistics, provenance, tables and figures remain
-under `artifacts/campaigns/phase1-f16-v1/analysis/`. Direct CLI analysis retains
-its full JSON output by default; add `--compact` for the same concise display.
-
-After all 600 episodes finalize, select and review both final trace samples under
-the [review protocol](docs/trace-review-protocol.md), update the canonical
-annotations and regenerate analysis. The final exporter then enforces complete
-collection, all 120 clean reviews, the final base 30 and the additional 30 reviews
-before publishing results. It records sample overlap and distinct review counts.
+Regenerate the published Phase 1 export and figures from unchanged local
+evidence (no inference):
 
 ```bash
 PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py --check-only
@@ -128,56 +140,31 @@ PYTHONHASHSEED=0 .venv/bin/python scripts/export_phase1_evaluation.py
 uv run --no-project --isolated --with matplotlib==3.11.2 python scripts/plot_phase1_evaluation.py
 ```
 
-During collection the export commands refuse incomplete evidence. Final tables
-and audit records belong in `results/phase1/`; the immutable full native analysis
-and source snapshots belong in `artifacts/phase1/final-evaluation/`.
+Other reproducible entry points: `scripts/audit_phase1_append_conditions.py`
+(payload solvability audit), `scripts/analyze_phase1_error_retries.py`,
+`results/phase1/behavior-understanding/analyze_task_features.py`,
+`make phase2-prepare` / `make phase2` / `make phase2-analyze` (Phase 2 first
+pass; see [`docs/phase2-first-pass.md`](docs/phase2-first-pass.md)), and the
+prompt-defense driver described in
+[`docs/prompt-defense-first-wave.md`](docs/prompt-defense-first-wave.md).
 
-## Where things belong
+A few tests read git-ignored `artifacts/` and therefore only pass on the
+collection machine; `make check` on a fresh clone reports them as failures.
 
-| Location | Contents | Git |
-| --- | --- | --- |
-| `src/agent_tradeoffs/` | Reusable CLI, runtime, agent, evaluation and reporting code | tracked |
-| `configs/` | Reviewed TOML workload and deployment configurations | tracked |
-| `tests/` | Offline tests of scoring, artifacts, limits and service lifecycle | tracked |
-| `scripts/` | Small environment bootstrap entry points | tracked |
-| `docs/` | Experiment protocol and architecture | tracked |
-| `results/` | Deliberately selected report tables and figures | tracked |
-| `artifacts/runs/<run-id>/` | Raw manifests, requests, traces, outcomes and summaries | ignored |
-| `artifacts/runtime/` | Local service logs and process metadata | ignored |
-| `artifacts/campaigns/<campaign-id>/` | Frozen campaign snapshot, progress and generated analysis | ignored |
-| `.cache/` | Model weights, runtime binaries, downloads and dependency caches | ignored |
-| `.venv/` | Locked project Python environment | ignored |
-| `.vibehub/` | Local VibeHub metadata and instructions | ignored |
+## Design principles
 
-Each experiment has its own run directory; rerunning a completed ID requires
-explicit resume and the same experiment identity. Never scatter ad hoc scripts,
-weight files or result CSVs in the root directory.
+- **Freeze before measuring.** Task manifests, attack templates, review
+  protocols and analysis plans are committed before inference.
+- **Keep errors.** Timeouts and tool-cap failures stay in the denominator as
+  unknown outcomes; an unknown outcome is never counted as resistance.
+- **Separate capability from security.** ASR is reported both over all attacks
+  and over attacks the agent could otherwise complete, with exposure recorded.
+- **Deterministic checks over model judgments.** Official AgentDojo checkers are
+  preserved; disagreements with visible behavior are documented, not rescored.
+- **Pin everything.** Model hashes, runtime commit, benchmark commit and
+  dependency lock are recorded in each run manifest; a changed deployment cannot
+  silently resume a campaign.
 
-## Experiment boundaries
-
-The smoke/pilot workloads are development checks, separate from the frozen
-Phase 1 evaluation workload. The attack appends malicious text to the original
-retrieved content so the legitimate task remains possible. Finalized request and
-trace files are compressed losslessly as `.jsonl.gz` / `.json.gz`, with verified
-original digests; results and summaries stay plain JSON/CSV.
-
-The Phase 1 baseline remains the two-seed F16/full-history campaign.
-The [Phase 2 exploratory protocol](docs/phase2-first-pass.md) adds same-source Q4,
-truncation, fixed-F16 long/short summaries and episode-local history search.
-Use `make phase2-prepare`, `make phase2-verify`, then `make phase2`; formal
-results remain separate from wiring checks and historical Phase 1 results.
-
-The completed [Phase 2 analysis](results/phase2-first-pass-v1/analysis/README.md)
-answers four research questions with eight figures, twelve task contracts,
-sixteen paired trace cards and audited outcome/cost tables. To regenerate it
-from retained local artifacts without inference, run `make phase2-analysis-setup`
-once, then `make phase2-analyze`. Unknown outcomes remain separate from resistance.
-
-See [the experiment protocol](docs/experiment-protocol.md) for outcome definitions
-and [architecture](docs/architecture.md) for extension points and artifact ownership.
-[F16 development validation](docs/f16-development-validation.md) records the
-pre-evaluation checks. [Historical local validation](docs/local-validation.md)
-preserves the earlier Q4 development runs and their limitations.
-
-Course milestones from the provided assignment: Phase 1 on October 28, 2026;
-final implementation and report on December 10, 2026.
+See [`docs/architecture.md`](docs/architecture.md) for module ownership and
+extension points. Course milestones: Phase 1 on October 28, 2026; final
+implementation and report on December 10, 2026.

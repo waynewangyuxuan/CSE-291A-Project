@@ -2,7 +2,7 @@
 
 CSE 291A, Fall 2026 · Project: *Security–Performance Tradeoffs in Resource-Constrained Agents*
 
-Team: _<names>_ · Repository branch: `codex/phase1-baseline`
+Author: Wayne Wang
 
 ## 1. Summary
 
