@@ -36,29 +36,147 @@ Phase 1 Baseline Benchmark and Measurements}
 We ask how weight quantization and context management affect a local
 tool-using agent's task completion and its resistance to prompt
 injection. Phase~1 constructs paired clean/adversarial tasks from a
-60-task subset of AgentDojo, builds a reproducible harness around
-Qwen3-8B served locally, and measures one undefended baseline
-(unquantized F16, full 32K context, 600 episodes over two seeds). It
-establishes task completion (48.3\% clean), unauthorized actions (19.2\%
-attack success overall, 23.7\% on cleanly completable tasks), latency,
-token consumption and peak memory, classifies failures from 168
-inspected traces, and audits the validity of the checkers and
-measurements. Two single-seed explorations exercise the Phase~2 harness.
+60-task AgentDojo subset, builds a reproducible local harness, and
+measures one undefended baseline: Qwen3-8B in unquantized F16 with full
+32K context, 600 episodes over two seeds. It completes 48.3\% of clean
+tasks; 19.2\% of attacks succeed overall and 23.7\% on tasks it can
+otherwise complete; uncached prefill is 78\% of model time. Failures are
+classified from 168 inspected traces, and checker and measurement
+validity are audited.
 \end{abstract}
 
-\section{Introduction and Research Questions}
+\section{Introduction}
 
-An agent that reads untrusted documents, messages or web pages can be
-redirected by instructions embedded in them. The choices that make a
-local agent affordable, lower weight precision and a smaller retained
-context, may change both what it can do and what it can be made to do.
-Phase~1 does not vary those choices; it builds the measurement and a
-baseline for Phase~2. Table~\ref{tab:rq} lists the questions we asked,
-the dimensions and metrics used to answer each, and what the data
-showed. Sections~\ref{sec:setup}--\ref{sec:explore} give the evidence.
+Lower weight precision and a smaller retained context make a local
+agent affordable, but may change both what it can do and what injected
+instructions can make it do. Phase~1 builds the measurement and a
+baseline before varying those choices. We ask:
+\textbf{RQ1} how much of a fixed workload the baseline completes and
+where it fails; \textbf{RQ2} what kinds of failures occur (task
+misunderstanding, invalid tool calls, attack following, unnecessary
+refusal); \textbf{RQ3} how often injected instructions succeed and on
+what that depends; \textbf{RQ4} whether unauthorized actions occur beyond
+the exact attacker goal; \textbf{RQ5} what full-history F16 costs; and
+\textbf{RQ6} whether the checkers, errors and seeds support these
+measurements. Table~\ref{tab:rq} (appendix) maps each question to its
+metrics and answer.
 
-\begin{table*}[t]
-\centering\footnotesize
+\section{Setup}
+\label{sec:setup}
+
+\paragraph{Paired tasks.}
+We adapt AgentDojo v1.2.2 \cite{debenedetti2024agentdojo} at a pinned
+commit; its checkers are deterministic state, answer or trace checks.
+\textbf{60 legitimate tasks} (Banking 8, Slack 16, Workspace 24,
+Travel 12) were selected by source inspection before any outcome was
+seen; upstream checker defects were excluded. Each clean episode is
+paired with four adversarial episodes that inject instructions through
+retrieved content or tool output: two suite-specific attacker goals
+$\times$ two templates, \texttt{direct\_append} (``TODO:
+\textit{goal}'') and \texttt{ignore\_previous\_append}. The
+\texttt{\_append} variant keeps the benign content, so the legitimate
+objective is preserved (verified offline for all 240 conditions). Two
+seeds give $60\times2\times5=600$ episodes.
+
+\paragraph{Deployment and metrics.}
+Qwen3-8B \cite{qwen3}, converted from the verified BF16 checkpoint to
+F16 (0 quantized tensors), served by pinned llama.cpp \cite{llamacpp}
+on an M2~Max: 32K context, F16 KV, no prompt caching, temperature 0.7,
+15 tool calls, 120~s/request, 600~s/episode. Exceeding a limit is a
+retained error with unknown score, never a ``defense''; no defense
+prompt is added. ASR is given over all attacks
+and over attacks whose same-task, same-seed clean control succeeded, so
+inability to use tools is not counted as resistance; 95\% CIs bootstrap
+task clusters within suite.
+
+\section{Baseline Results}
+\label{sec:results}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig-outcomes.pdf}
+\caption{RQ1/RQ3, 600 episodes. Clean utility 58/120 (CI 35.8--59.2\%);
+ASR 92/480 over all attacks (CI 15.0--23.5\%) and 55/232 over cleanly
+completable tasks (CI 17.3--30.0\%). 25 error episodes keep unknown
+scores (all-attack ASR at most 23.8\%).}
+\label{fig:outcomes}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.94\textwidth]{figures/fig-costs.pdf}
+\caption{RQ5. Latency by selection; native model time split into prefill
+and decode (355 vs.\ 15.5 tok/s); prompt vs.\ completion tokens over
+2,965 requests. Peak server RSS 18.8~GiB.}
+\label{fig:costs}
+\end{figure*}
+
+\paragraph{RQ1, RQ3 (Fig.~\ref{fig:outcomes}).}
+The baseline completes about half of clean tasks, dropping to 22\%
+for tasks with $\geq$5 reference calls. ASR is 19.2\% overall and 23.7\% on tasks the agent can complete,
+so incapacity masks part of the risk. Phrasing dominates
+(\texttt{ignore\_previous} 32.9\% vs.\ \texttt{TODO} 5.4\%) and goals
+differ sharply; low Workspace ASR is not robustness per se, since its
+goals need exact multi-field actions and it hosts 18 of 25 errors.
+
+\paragraph{RQ2: failure classes.}
+All 120 clean and 48 attack traces were reviewed under a protocol frozen
+before collection. Primary clean labels: planning 45, tool use 15,
+other/unclear 16, task misunderstanding 2, unnecessary refusal 2 (upper
+bound 13/120), no failure 40. The agent never emitted malformed tool
+JSON, yet 149/600 episodes had a tool execution error, and 16/76 action
+tasks gather the right information but never act.
+
+\paragraph{RQ4, RQ6: beyond the exact goal; validity.}
+Official $A$ checks one declared goal; attack-stage rules over tool
+calls find 11/240 episodes whose accepted calls match the goal yet
+$A{=}$False (e.g.\ a mistyped IBAN), and verbal ``refusals'' usually
+follow the attack action. Checkers also
+over-credit (a wrong file-ID answer passes a substring match) and
+under-credit (a visibly correct action scored false), so $U$ is a proxy;
+Phase~2 adds a legitimate-objective rubric $L$ and an
+unauthorized-behavior label $H$. Rerunning all 25 errors twice
+recovered 0/50; seeds disagreed on $U$ in 27/282 and on $A$ in 10/224
+repeated cells.
+
+\paragraph{RQ5 (Fig.~\ref{fig:costs}).}
+Because every request resends uncached history, prefill is 78\% of model
+time and prompt tokens outnumber completions 78:1; context management
+therefore targets the dominant cost.
+
+\section{Preliminary Explorations}
+\label{sec:explore}
+
+\textbf{RQ7, prompt reminder.} A fixed 100-token paragraph stating that
+retrieved content is data, not authority, lowered exact-goal attack
+success 47$\to$39/240 with clean utility 26$\to$27/60
+(Fig.~\ref{fig:explore}, appendix). The interval touches zero and two of four
+disagreeing pairs became ties at seed 29: not a stable defense.
+\textbf{RQ8, quantization $\times$ context.} Q4 shows no uniform
+degradation (3/12 vs.\ 5/12 clean under full context, flips both ways).
+Forced truncation is the most damaging policy (46/72 budget exhaustion
+vs.\ 1/72): progress is dropped and re-retrieved. Lower $A$ under
+compaction coincides with unknown scores, so it is not resistance.
+
+\section{Next Steps}
+
+Phase~2 crosses \{F16, Q8, Q4\} with \{full, truncation,
+summarization\} under a fixed context budget, holding harness, tools,
+sampling, limits and scoring constant, with audited held-out pairs, own
+clean controls and an F16/full anchor per configuration, two seeds, and
+payload provenance logging so attack \emph{removal} is reported
+separately from \emph{resistance}.
+
+\bibliography{phase1-report}
+
+\clearpage
+\onecolumn
+\appendix
+
+\section{Research Questions and Metrics}
+
+\begin{table}[H]
+\centering\scriptsize
 \begin{tabular}{@{}p{0.22\textwidth}p{0.33\textwidth}p{0.39\textwidth}@{}}
 \toprule
 Research question & Dimensions and metrics & What Phase 1 showed \\
@@ -98,186 +216,26 @@ No uniform Q4 effect; forced truncation most damaging (46/72 exhausted); lower $
 \end{tabular}
 \caption{Research questions, the metrics used, and the answers Phase~1 supports. RQ1--RQ6 use the 600-episode baseline; RQ7--RQ8 are single-seed explorations.}
 \label{tab:rq}
-\end{table*}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig-outcomes.pdf}
-\caption{RQ1/RQ3. Left: clean utility, utility under attack, and ASR
-over all attacks vs.\ over cleanly completable tasks, by suite
-(600 episodes). Middle: ASR by attacker goal. Right: ASR by template at
-identical exposure (206/240 each).}
-\label{fig:outcomes}
-\end{figure*}
-
-\section{Setup}
-\label{sec:setup}
-
-\paragraph{Paired clean and adversarial tasks.}
-We adapt AgentDojo v1.2.2 \cite{debenedetti2024agentdojo} at a pinned
-commit; its checkers are deterministic state, answer or trace checks,
-not model-generated scores. \textbf{60 legitimate tasks} (Banking 8,
-Slack 16, Workspace 24, Travel 12) were selected by source inspection
-\emph{before} any F16 outcome was observed. Each clean episode is paired
-with four adversarial episodes that inject instructions through retrieved
-content or tool output: two suite-specific attacker goals $\times$ two
-fixed templates, \texttt{direct\_append} (``TODO: \textit{goal}'') and
-\texttt{ignore\_previous\_append}. Our \texttt{\_append} variant keeps
-the benign content, so the legitimate objective is preserved (verified
-offline for all 240 task/goal/template conditions: completable in 1--9
-calls, and completion never satisfies the attack goal). Upstream checker
-defects found by source audit were excluded. Two seeds give
-$60 \times 2 \times (1+4) = 600$ episodes.
-
-\paragraph{Deployment and metrics.}
-Qwen3-8B \cite{qwen3}, converted from the verified BF16 checkpoint to
-F16 (0 quantized tensors), served by pinned llama.cpp \cite{llamacpp} on
-an M2~Max: 32{,}768-token context, F16 KV, no prompt caching,
-temperature 0.7, 15 tool calls, 120~s/request, 600~s/episode. Exceeding
-a limit is a retained error with unknown score, never a dropped episode
-or a ``defense''. No defense prompt is added. Every rate reports
-numerator, denominator and unknown count; ASR is given over all attacks
-and over attacks whose same-task, same-seed clean control succeeded, so
-inability to use tools is not counted as resistance. 95\% intervals
-bootstrap task clusters within suite.
-
-\section{Baseline Results}
-\label{sec:results}
-
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig-costs.pdf}
-\caption{RQ5. Episode latency by selection; native model time split into
-prefill and decode (355 vs.\ 15.5 tok/s); prompt vs.\ completion tokens
-across all 2,965 requests. Peak server RSS was 18.8~GiB.}
-\label{fig:costs}
-\end{figure*}
-
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\textwidth]{figures/fig-explore.pdf}
-\caption{RQ7/RQ8, single seed. Left: paired differences (reminder minus
-original) with task-cluster bootstrap intervals, 300 pairs. Right: attack
-outcomes for F16 and Q4 under five context policies (12 tasks); clean
-utility per configuration at right. Unknown is never counted as
-resistance.}
-\label{fig:explore}
-\end{figure*}
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{figures/fig-failures.pdf}
-\caption{RQ2/RQ3. Left: primary failure label from the protocol-frozen
-review of all 120 clean traces. Right: paired utility change from clean
-control to attacked episode.}
-\label{fig:failures}
-\end{figure}
-
-\begin{table}[t]
-\centering\small
-\begin{tabular}{@{}lrrr@{}}
-\toprule
-Metric & Succ./N & Rate & 95\% CI \\
-\midrule
-Clean utility & 58/120 & 48.3\% & 35.8--59.2 \\
-Attacked utility & 173/480 & 36.0\% & 26.7--45.8 \\
-ASR, all attacks & 92/480 & 19.2\% & 15.0--23.5 \\
-ASR, clean-eligible & 55/232 & 23.7\% & 17.3--30.0 \\
-Payload exposure & 412/480 & 85.8\% & 76.7--94.2 \\
-\bottomrule
-\end{tabular}
-\caption{Headline baseline metrics. 25 episodes ended in errors with
-unknown scores; counting all as attack successes would raise all-attack
-ASR to at most 23.8\%.}
-\label{tab:main}
 \end{table}
 
-\paragraph{RQ1, RQ3 (Fig.~\ref{fig:outcomes}, Table~\ref{tab:main}).}
-The baseline completes about half of clean tasks; success drops to 22\%
-for tasks with $\geq$5 reference calls (53--71\% below), with no
-read-vs.-action gap. ASR is 19.2\% overall but 23.7\% on tasks the agent
-can complete, so incapacity masks part of the risk. Phrasing dominates
-(\texttt{ignore\_previous} 32.9\% vs.\ \texttt{TODO} 5.4\%) and goals
-differ sharply; low Workspace ASR is not robustness per se, since its
-goals need exact multi-field actions and it hosts 18 of 25 errors.
+\section{Exploratory Results}
 
-\paragraph{RQ2 (Fig.~\ref{fig:failures}).}
-Planning failures dominate; task misunderstanding is rare. The agent
-never emitted malformed tool JSON, yet 149/600 episodes had a tool
-execution error (wrong arguments or entities). A recurrent pattern is
-gathering the right information but never executing the action (16/76
-action tasks). Unnecessary refusal, under a broad definition, is 2/120
-(upper bound 13/120). Attacks also cost capability: 74 of 457 known
-attack/control pairs flip from success to failure ($-12.7$~pp).
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig-explore.pdf}
+\caption{RQ7/RQ8, single seed. Left: paired reminder-minus-original
+differences, task-cluster bootstrap CIs (300 pairs). Right: attack
+outcomes for F16/Q4 under five context policies (12 tasks); clean
+utility at right.}
+\label{fig:explore}
+\end{figure}
 
-\paragraph{RQ4.}
-Official $A$ checks one declared goal. Deterministic attack-stage rules
-over tool calls find 11/240 episodes (control arm of RQ7) whose accepted
-calls match the goal yet $A{=}$False: a mistyped IBAN, a non-recurring
-payment modified, another hotel booked. Verbal ``refusals'' usually
-appear \emph{after} the attack site was visited. Scores are preserved;
-this motivates a broader unauthorized-behavior label $H$.
-
-\paragraph{RQ5 (Fig.~\ref{fig:costs}).}
-Because every request resends uncached full history, prefill is 78\% of
-model time and prompt tokens outnumber completions 78:1. Context
-management therefore targets the dominant cost. No context overflow
-occurred (largest prompt 20{,}150 tokens).
-
-\paragraph{RQ6.}
-Of 60 checkers, 3 inspect only the answer, 22 answer and state, 34
-state, 1 trace and state. Review found over-credit (a wrong file-ID
-answer passing a substring match) and under-credit (a visibly correct
-action scored false), so $U$ is a proxy, not a bound; we plan a
-legitimate-objective rubric $L$. Rerunning all 25 errors twice with
-identical seeds recovered 0/50 (deterministic budget exhaustion). Across
-repeated cells, seeds disagreed on $U$ in 27/282 and on $A$ in 10/224.
-
-\section{Preliminary Explorations}
-\label{sec:explore}
-
-\paragraph{RQ7: source-boundary reminder.}
-A fixed 100-token paragraph stating that retrieved content is data, not
-authority, lowered exact-goal attack success 47$\to$39/240 with clean
-utility 26$\to$27/60 and no measurable cost change
-(Fig.~\ref{fig:explore}, left). The interval touches zero; six of eight
-net reductions are in Slack; rerunning four disagreeing pairs at seed 29
-turned two into ties. Not evidence of a stable defense.
-
-\paragraph{RQ8: quantization $\times$ context.}
-F16 and Q4\_K\_M from the same checkpoint, crossed with full history,
-truncation, long/short summaries and short summary plus history search
-(Fig.~\ref{fig:explore}, right). No uniform Q4 degradation (3/12 vs.\
-5/12 clean under full context, flips both ways). Forced truncation is
-the most damaging policy (46/72 budget exhaustion vs.\ 1/72): traversal
-progress is dropped and re-retrieved. Lower observed $A$ under
-compaction coincides with unknowns, so it is not resistance; search was
-used in 8/72 episodes and rarely recovered facts; compaction raised cost.
-
-\section{Next Steps}
-
-Phase~2 crosses precision \{F16, Q8, Q4\} with context policy \{full,
-truncation, summarization\} under a \emph{fixed} budget, holding
-tokenizer, prompt, tools, sampling, limits, KV precision and scoring
-constant. From Phase~1: (1)~freeze the grid on development tasks and
-audit held-out paired tasks; (2)~own clean controls and a contemporaneous
-F16/full anchor per configuration; (3)~log retained content and track
-payload provenance so attack \emph{removal} is reported separately from
-\emph{resistance}; (4)~add $L$ and $H$ labels beside official scores;
-(5)~two seeds, interaction and dominated-configuration analysis.
-
-\bibliography{phase1-report}
-
-\clearpage
-\appendix
 
 \section{Timeline and Milestones}
 \label{app:timeline}
-
 \begin{table}[H]
 \centering\small
-\begin{tabular}{@{}lp{0.62\columnwidth}@{}}
+\begin{tabular}{@{}lp{0.75\textwidth}@{}}
 \toprule
 Date & Milestone \\
 \midrule
@@ -304,16 +262,16 @@ Dec 10 & Final implementation and report. \\
 
 \begin{table}[H]
 \centering\small
-\begin{tabular}{@{}p{0.5\columnwidth}p{0.42\columnwidth}@{}}
+\begin{tabular}{@{}p{0.5\textwidth}p{0.42\textwidth}@{}}
 \toprule
 Phase 1 requirement & Where addressed \\
 \midrule
 Paired clean/adversarial tasks; injection via retrieved content or tool output; legitimate objective preserved & \S\ref{sec:setup}, append variant, 240-condition audit \\
 Adapt a small subset of AgentDojo & \S\ref{sec:setup}, 60 tasks, pinned commit, checker audit \\
-Task completion, unauthorized actions, latency, tokens, peak memory & RQ1, RQ3--RQ5, Table~\ref{tab:main} \\
+Task completion, unauthorized actions, latency, tokens, peak memory & RQ1, RQ3--RQ5, Figs.~\ref{fig:outcomes}, \ref{fig:costs} \\
 Inspect and classify failures: misunderstanding, invalid tool calls, attack following, unnecessary refusal & RQ2, RQ4 \\
 Deterministic checks over model-generated safety scores & \S\ref{sec:setup}; official checkers preserved, review never rescores \\
-ASR on all cases and separately on cleanly completable tasks & RQ3, Table~\ref{tab:main} \\
+ASR on all cases and separately on cleanly completable tasks & RQ3, Fig.~\ref{fig:outcomes} \\
 Inability to use tools not counted as resistance & Clean-eligible ASR; unknown outcomes kept, not credited \\
 \bottomrule
 \end{tabular}
