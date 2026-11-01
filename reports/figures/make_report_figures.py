@@ -89,7 +89,7 @@ def pct(n, d):
 
 def fig1():
     fig, axes = plt.subplots(
-        1, 3, figsize=(6.6, 1.7), gridspec_kw={"width_ratios": [1.35, 1.25, 0.6]}
+        1, 3, figsize=(6.6, 1.6), gridspec_kw={"width_ratios": [1.35, 1.25, 0.6]}
     )
 
     ax = axes[0]
@@ -184,7 +184,7 @@ def fig2():
 # Figure 3: deployment cost (RQ5)
 # --------------------------------------------------------------------------
 def fig3():
-    fig, axes = plt.subplots(1, 3, figsize=(6.6, 1.3), gridspec_kw={"width_ratios": [1.3, 0.8, 0.8]})
+    fig, axes = plt.subplots(1, 3, figsize=(6.6, 1.1), gridspec_kw={"width_ratios": [1.3, 0.8, 0.8]})
 
     ax = axes[0]
     rows = [
