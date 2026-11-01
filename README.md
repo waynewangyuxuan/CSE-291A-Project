@@ -8,9 +8,8 @@ injection, and its latency / token / memory cost? Phase 1 builds the harness,
 freezes an audited paired clean/adversarial workload, and measures one fully
 specified baseline. Capability and security are always reported separately.
 
-Phase 1 report: [`reports/phase1-report.tex`](reports/phase1-report.tex)
-(ACL two-column; long-form Markdown companion in
-[`reports/phase1-report.md`](reports/phase1-report.md)).
+Phase 1 report: [`reports/phase1-report.pdf`](reports/phase1-report.pdf)
+(ACL two-column; source in [`reports/phase1-report.tex`](reports/phase1-report.tex)).
 
 ## Start here (for graders)
 
@@ -26,10 +25,12 @@ Phase 1 report: [`reports/phase1-report.tex`](reports/phase1-report.tex)
 | Exploratory follow-ups (prompt reminder, Q4 × context) | [`results/prompt-defense-first-wave-v1/README.md`](results/prompt-defense-first-wave-v1/README.md), [`results/phase2-first-pass-v1/analysis/README.md`](results/phase2-first-pass-v1/analysis/README.md) |
 | Model provenance (BF16 → F16, hashes) | [`docs/model-provenance.md`](docs/model-provenance.md) |
 
-Raw requests, traces and simulated-state snapshots are large and live in the
-git-ignored `artifacts/` tree on the collection machine. They are shared
-separately with the course staff; every curated file in `results/` records the
-run IDs and hashes that tie it back to that raw evidence.
+Raw per-episode requests, action traces and simulated-state snapshots are
+large (gzip-compressed JSONL) and live in the git-ignored `artifacts/` tree on
+the collection machine, so they are not in this repository. Every curated file
+in `results/` records the run IDs and SHA256 digests that identify that raw
+evidence, and `results/phase1/evaluation-episodes.csv` /
+`evaluation-requests.csv` carry the per-episode and per-request measurements.
 
 ## What Phase 1 did
 
