@@ -24,13 +24,12 @@ Phase 1 report: [`reports/phase1-report.pdf`](reports/phase1-report.pdf)
 | Why tasks fail (task features, checker semantics) | [`results/phase1/behavior-understanding/README.md`](results/phase1/behavior-understanding/README.md) |
 | Exploratory follow-ups (prompt reminder, Q4 × context) | [`results/prompt-defense-first-wave-v1/README.md`](results/prompt-defense-first-wave-v1/README.md), [`results/phase2-first-pass-v1/analysis/README.md`](results/phase2-first-pass-v1/analysis/README.md) |
 | Model provenance (BF16 → F16, hashes) | [`docs/model-provenance.md`](docs/model-provenance.md) |
+| Raw action traces for every episode | `artifacts/runs/<run_id>/episodes/<episode_id>/` ([layout](#action-traces)) |
 
-Raw per-episode requests, action traces and simulated-state snapshots are
-large (gzip-compressed JSONL) and live in the git-ignored `artifacts/` tree on
-the collection machine, so they are not in this repository. Every curated file
-in `results/` records the run IDs and SHA256 digests that identify that raw
-evidence, and `results/phase1/evaluation-episodes.csv` /
-`evaluation-requests.csv` carry the per-episode and per-request measurements.
+Raw per-episode action traces, request logs and simulated-state snapshots are
+committed under `artifacts/` (see [Action traces](#action-traces) below). Every
+curated file in `results/` records the run IDs and SHA256 digests that tie it
+to that raw evidence.
 
 ## What Phase 1 did
 
@@ -89,6 +88,45 @@ and budgets: 0/50 recovered.
   definition yet. These are the first Phase 2 milestones (see the report's
   appendix).
 
+## Action traces
+
+Every episode's raw evidence is committed so that any number in `results/` can
+be traced back to the model's actual requests and actions. Nothing in these
+files is edited after collection; the exporters only read them.
+
+| Experiment | Raw root | Runs / episodes |
+| --- | --- | --- |
+| Phase 1 baseline (600 episodes) | `artifacts/runs/phase1-f16-s{17,29}-<suite>-<condition>/` | 24 runs |
+| Same-seed error reruns | `artifacts/phase1-error-retries/` | 30 runs, 50 episodes |
+| Prompt-reminder first wave | `artifacts/prompt-defense-v1/` | 600 episodes |
+| Seed-29 prompt diagnostics | `artifacts/prompt-defense-seed29-diagnostics-v1/` | 20 episodes |
+| Quantization × context first pass | `artifacts/phase2-first-pass-v1/runs/<precision>-<policy>-<suite>/` | 20 runs, 360 episodes |
+
+Each run directory holds a `manifest.json` (frozen configuration, model digest,
+runtime identity, dependency-lock hash, episode list) and one
+`episodes/<episode_id>/` directory per episode:
+
+| File | Contents |
+| --- | --- |
+| `result.json` | Official utility and attack scores, status/error, duration, tool-call count, token usage, sampled server RSS, exposure flag |
+| `trace.json.gz` | The full message transcript (system, user, assistant, every tool call and tool result), the initial and final simulated environment, and the injected payloads |
+| `requests.jsonl.gz` | Every HTTP request sent to the model exactly as sent (after any context policy) and every raw response, with timings |
+| `compression.json` | SHA256 and byte length of each `.gz` file and of its original plain file |
+
+Join a curated row to its trace with `run_id` + `episode_id`
+(`results/phase1/evaluation-episodes.csv`, `results/phase1/reviewed-traces.csv`
+and the other per-episode tables all carry both). The gzip files are plain
+JSON/JSONL once decompressed:
+
+```bash
+gunzip -c artifacts/runs/phase1-f16-s17-banking-clean/episodes/user_task_1__clean/trace.json.gz | python -m json.tool | less
+```
+
+Review annotations in `results/phase1/reviewed-traces.csv` cite zero-based
+`messages[i]` indices into `trace.json` and request indices into
+`requests.jsonl`. Service logs, model-preparation logs, evaluator locks and
+interrupted-attempt archives stay out of Git.
+
 ## Repository layout
 
 | Location | Contents | Git |
@@ -100,7 +138,7 @@ and budgets: 0/50 recovered.
 | `docs/` | Plans and protocols frozen before each collection; metric definitions; provenance | tracked |
 | `results/` | Curated tables, figures and assessments with run IDs and hashes | tracked |
 | `reports/` | Course reports | tracked |
-| `artifacts/` | Raw manifests, requests, traces, states, campaign snapshots | ignored |
+| `artifacts/` | Raw run manifests and per-episode results, traces and request logs (tracked); service logs, locks and campaign scratch state (ignored) | mixed |
 | `.cache/`, `.venv/` | Model weights, runtime binaries, Python environment | ignored |
 
 Every experiment has its own run directory; a completed run ID is never

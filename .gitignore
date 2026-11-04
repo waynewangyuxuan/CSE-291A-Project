@@ -13,8 +13,18 @@ build/
 .env
 .env.*
 !.env.example
+# Raw evidence: keep the per-run manifests and per-episode results, traces and
+# request logs for the experiments reported in results/; ignore service logs,
+# model preparation, locks and campaign scratch state.
 artifacts/*
 !artifacts/README.md
+!artifacts/runs/
+!artifacts/phase1-error-retries/
+!artifacts/phase2-first-pass-v1/
+!artifacts/prompt-defense-v1/
+!artifacts/prompt-defense-seed29-diagnostics-v1/
+artifacts/**/.run.lock
+artifacts/**/interrupted_attempts/
 
 reports/*.aux
 reports/*.bbl
