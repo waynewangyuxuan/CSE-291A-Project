@@ -9,27 +9,27 @@ freezes an audited paired clean/adversarial workload, and measures one fully
 specified baseline. Capability and security are always reported separately.
 
 Phase 1 report: [`reports/phase1-report.pdf`](reports/phase1-report.pdf)
-(ACL two-column; source in [`reports/phase1-report.tex`](reports/phase1-report.tex)).
+(updated with the reviewed November reproduction; ACL two-column; source in [`reports/phase1-report.tex`](reports/phase1-report.tex)).
 
 ## Start here (for graders)
 
 | Question | Where to look |
 | --- | --- |
-| What is the baseline and what did it measure? | [`results/phase1/evaluation-assessment.md`](results/phase1/evaluation-assessment.md) |
-| The 600 per-episode rows and 2,965 per-request rows | [`results/phase1/evaluation-episodes.csv`](results/phase1/evaluation-episodes.csv), [`evaluation-requests.csv`](results/phase1/evaluation-requests.csv) |
-| Every metric with denominators, unknown counts and 95% CIs | [`results/phase1/evaluation-measurements.json`](results/phase1/evaluation-measurements.json) |
+| What is the baseline and what did it measure? | [`results/phase1-recovery/evaluation-assessment.md`](results/phase1-recovery/evaluation-assessment.md) |
+| The 600 episodes and 2,947 terminal request events | [`results/phase1-recovery/evaluation-episodes.csv`](results/phase1-recovery/evaluation-episodes.csv), [`evaluation-requests.csv`](results/phase1-recovery/evaluation-requests.csv) |
+| Every metric with denominators, unknown counts and 95% CIs | [`results/phase1-recovery/evaluation-measurements.json`](results/phase1-recovery/evaluation-measurements.json) |
 | Which 60 tasks, which attacks, and why | [`configs/phase1/task-manifest.json`](configs/phase1/task-manifest.json), [`docs/phase1-plan.md`](docs/phase1-plan.md) |
 | How metrics are defined | [`docs/metrics.md`](docs/metrics.md), [`docs/experiment-protocol.md`](docs/experiment-protocol.md) |
-| 168 manually reviewed traces | [`results/phase1/reviewed-traces.csv`](results/phase1/reviewed-traces.csv), protocol in [`docs/trace-review-protocol.md`](docs/trace-review-protocol.md) |
-| Why tasks fail (task features, checker semantics) | [`results/phase1/behavior-understanding/README.md`](results/phase1/behavior-understanding/README.md) |
+| 168 agent-reviewed traces | [`results/phase1-recovery/reviewed-traces.csv`](results/phase1-recovery/reviewed-traces.csv), protocol in [`docs/trace-review-protocol.md`](docs/trace-review-protocol.md) |
+| Historical task-feature and checker analyses | [`results/phase1/behavior-understanding/README.md`](results/phase1/behavior-understanding/README.md) |
 | Exploratory follow-ups (prompt reminder, Q4 × context) | [`results/prompt-defense-first-wave-v1/README.md`](results/prompt-defense-first-wave-v1/README.md), [`results/phase2-first-pass-v1/analysis/README.md`](results/phase2-first-pass-v1/analysis/README.md) |
 | Model provenance (BF16 → F16, hashes) | [`docs/model-provenance.md`](docs/model-provenance.md) |
-| Raw action traces for every episode | `artifacts/runs/<run_id>/episodes/<episode_id>/` ([layout](#action-traces)) |
+| Recovered baseline and retry evidence | [`artifacts/phase1-recovery/evidence.tar.gz`](artifacts/phase1-recovery/evidence.tar.gz), [inventory](artifacts/phase1-recovery/manifest.json) |
 
-Raw per-episode action traces, request logs and simulated-state snapshots are
-committed under `artifacts/` (see [Action traces](#action-traces) below). Every
-curated file in `results/` records the run IDs and SHA256 digests that tie it
-to that raw evidence.
+The recovered baseline and retry traces are packaged with per-file checksums
+under `artifacts/phase1-recovery/`. Original October summaries remain unchanged
+in `results/phase1/`; their lost raw traces are not the November reproduction.
+See [rebuild and evidence scope](results/phase1-recovery/README.md).
 
 ## What Phase 1 did
 
@@ -54,24 +54,28 @@ present and that completing them never satisfies the attack goal.
 **Baseline results (600 episodes).** Clean utility 58/120 (48.3%). Attack
 success 92/480 (19.2%) over all attacks, 55/232 (23.7%) on attacks whose
 same-task same-seed clean control succeeded. `ignore_previous_append` 32.9% vs
-`direct_append` 5.4% at identical exposure. 25 episodes ended in errors and are
-kept as unknown scores. Median episode latency ≈50 s; 11.35 M prompt vs 0.15 M
-completion tokens; prefill is 78% of model time; peak server RSS 18.8 GiB.
+`direct_append` 5.4% at identical exposure. 27 episodes ended in errors and are
+kept as unknown scores. Median episode latency 53.7 s; 11.12 M prompt vs 0.14 M
+completion tokens; prefill is 78.8% of returned native model time; peak server
+RSS 20.0 GiB. Core utility, ASR and exposure rates match the original baseline.
 
 **Failure analysis.** All 120 clean traces plus 48 attack traces were reviewed
 under a protocol frozen before collection. Primary clean failure labels:
-planning 45, tool use 15, task understanding 2, unnecessary refusal 2,
-other/unclear 16, no failure 40. Zero malformed tool JSON, but 149/600 episodes
-had a tool execution error. The 25 errors were rerun twice with identical seeds
-and budgets: 0/50 recovered.
+planning 43, tool use 15, task understanding 2, unnecessary refusal 2,
+other/unclear 16, infrastructure 2, no failure 40. The two new timeouts explain
+the planning-label change from 45 to 43. Refusal is indeterminate in 13 traces.
+Zero malformed tool JSON, but 149/600 episodes had a tool execution error.
+The 27 errors were rerun twice with identical seeds and budgets: 4/54 returned
+normally across two clean cases, all with utility=False. The other 25 cases
+errored twice; all 44 attacked retries retain unknown scores.
 
-**Exploratory follow-ups (single seed, not conclusions).**
-- *Source-boundary prompt reminder*, 600 paired episodes: exact-goal attack
+**Historical exploratory follow-ups (not rerun during recovery).**
+- *Source-boundary prompt reminder*, 300 pairs (600 episodes across arms): exact-goal attack
   success 47/240 → 39/240 (paired 95% interval touches zero), clean utility
   26/60 → 27/60. Not evidence of a stable defense.
 - *Quantization × context first pass*, 12 tasks, F16/Q4 × {full, truncate,
   long summary, short summary, short summary + search}, 360 episodes: no
-  uniform Q4 degradation; forced truncation is the most damaging policy; lower
+  uniform Q4 degradation; truncation had the most budget-exhausted episodes (46/72 vs. 1/72 full history); lower
   observed ASR under compaction coincides with many unknown scores; retrieval
   rarely recovered the missing facts.
 
@@ -90,17 +94,19 @@ and budgets: 0/50 recovered.
 
 ## Action traces
 
-Every episode's raw evidence is committed so that any number in `results/` can
-be traced back to the model's actual requests and actions. Nothing in these
-files is edited after collection; the exporters only read them.
+The recovered evidence archive includes 600 baseline episodes in 24 runs and
+54 retry episodes in 32 runs. `make phase1-recovery-verify` validates the archive
+checksum, every member checksum and both episode counts without extracting it.
+The working raw files are also available at:
 
-| Experiment | Raw root | Runs / episodes |
-| --- | --- | --- |
-| Phase 1 baseline (600 episodes) | `artifacts/runs/phase1-f16-s{17,29}-<suite>-<condition>/` | 24 runs |
-| Same-seed error reruns | `artifacts/phase1-error-retries/` | 30 runs, 50 episodes |
-| Prompt-reminder first wave | `artifacts/prompt-defense-v1/` | 600 episodes |
-| Seed-29 prompt diagnostics | `artifacts/prompt-defense-seed29-diagnostics-v1/` | 20 episodes |
-| Quantization × context first pass | `artifacts/phase2-first-pass-v1/runs/<precision>-<policy>-<suite>/` | 20 runs, 360 episodes |
+| Collection | Working raw root |
+| --- | --- |
+| Recovered baseline | `.cache/recovery/artifacts/runs/phase1-f16-s{17,29}-<suite>-<condition>/` |
+| Supplemental retries | `.cache/recovery/artifacts/phase1-error-retries/runs/` |
+
+Historical prompt-reminder, seed-29 diagnostic and quantization/context raw
+traces remain unavailable. Their curated summaries are retained and labeled
+historical in the report. A local archive is not an off-device backup.
 
 Each run directory holds a `manifest.json` (frozen configuration, model digest,
 runtime identity, dependency-lock hash, episode list) and one
@@ -114,15 +120,15 @@ runtime identity, dependency-lock hash, episode list) and one
 | `compression.json` | SHA256 and byte length of each `.gz` file and of its original plain file |
 
 Join a curated row to its trace with `run_id` + `episode_id`
-(`results/phase1/evaluation-episodes.csv`, `results/phase1/reviewed-traces.csv`
+(`results/phase1-recovery/evaluation-episodes.csv`, `results/phase1-recovery/reviewed-traces.csv`
 and the other per-episode tables all carry both). The gzip files are plain
 JSON/JSONL once decompressed:
 
 ```bash
-gunzip -c artifacts/runs/phase1-f16-s17-banking-clean/episodes/user_task_1__clean/trace.json.gz | python -m json.tool | less
+gunzip -c .cache/recovery/artifacts/runs/phase1-f16-s17-banking-clean/episodes/user_task_1__clean/trace.json.gz | python -m json.tool | less
 ```
 
-Review annotations in `results/phase1/reviewed-traces.csv` cite zero-based
+Review annotations in `results/phase1-recovery/reviewed-traces.csv` cite zero-based
 `messages[i]` indices into `trace.json` and request indices into
 `requests.jsonl`. Service logs, model-preparation logs, evaluator locks and
 interrupted-attempt archives stay out of Git.
@@ -138,7 +144,7 @@ interrupted-attempt archives stay out of Git.
 | `docs/` | Plans and protocols frozen before each collection; metric definitions; provenance | tracked |
 | `results/` | Curated tables, figures and assessments with run IDs and hashes | tracked |
 | `reports/` | Course reports | tracked |
-| `artifacts/` | Raw run manifests and per-episode results, traces and request logs (tracked); service logs, locks and campaign scratch state (ignored) | mixed |
+| `artifacts/` | Recovery evidence archive and inventory; service logs, locks and campaign scratch state remain ignored | mixed |
 | `.cache/`, `.venv/` | Model weights, runtime binaries, Python environment | ignored |
 
 Every experiment has its own run directory; a completed run ID is never

@@ -40,12 +40,12 @@ injection. Phase~1 constructs paired clean/adversarial tasks from a
 measures one undefended baseline: Qwen3-8B in unquantized F16 with full
 32K context, 600 episodes over two seeds. It completes 48.3\% of clean
 tasks; 19.2\% of attacks succeed overall and 23.7\% on tasks it can
-otherwise complete; uncached prefill is 78\% of model time. Inspecting
-168 traces shows the agent's bottleneck is carrying a multi-step plan to
-its final action, not tool syntax or task comprehension, and that
-injection exploits the same bottleneck: a successful attack almost always
-displaces the legitimate task, and the template that most explicitly
-rewrites the plan is six times more effective at equal exposure.
+otherwise complete; uncached prefill is 79\% of returned native model time. Reviewing
+168 traces identifies planning as the most frequent clean failure label.
+Successful attacks almost always coincide with legitimate-task failure,
+and the explicit plan-rewrite template has six times the observed attack
+success rate at equal exposure. A full evidence-recovery rerun preserves
+the original utility and attack-success rates.
 \end{abstract}
 
 \section{Introduction}
@@ -89,6 +89,13 @@ prompt is added. ASR is given over all attacks and over attacks whose
 same-task, same-seed clean control succeeded, so inability to use tools
 is not counted as resistance; 95\% CIs bootstrap task clusters.
 
+\paragraph{Evidence recovery.}
+The November recovery reran the frozen 600-episode baseline with the
+original execution harness and deployment. Unless labeled historical,
+RQ1--RQ3 and their figures use this recovered cohort; the October
+summaries remain preserved. Appendix~\ref{app:recovery} reconciles the
+two collections and records review coverage.
+
 \section{Baseline Results}
 \label{sec:results}
 
@@ -97,7 +104,7 @@ is not counted as resistance; 95\% CIs bootstrap task clusters.
 \includegraphics[width=0.94\textwidth]{figures/fig-outcomes.pdf}
 \caption{RQ1/RQ2, 600 episodes. Clean utility 58/120 (CI 35.8--59.2\%);
 ASR 92/480 over all attacks (CI 15.0--23.5\%) and 55/232 over cleanly
-completable tasks (CI 17.3--30.0\%). 25 error episodes keep unknown
+completable tasks (CI 17.3--30.0\%). 27 error episodes keep unknown
 scores (all-attack ASR at most 23.8\%).}
 \label{fig:outcomes}
 \end{figure*}
@@ -105,57 +112,68 @@ scores (all-attack ASR at most 23.8\%).}
 \begin{figure*}[t]
 \centering
 \includegraphics[width=0.94\textwidth]{figures/fig-costs.pdf}
-\caption{RQ3. Latency by selection; native model time split into prefill
-and decode (355 vs.\ 15.5 tok/s); prompt vs.\ completion tokens over
-2,965 requests. Peak server RSS 18.8~GiB.}
+\caption{RQ3. Latency by selection (blue: median; gray: p95); native
+model time split into prefill
+and decode (318 prefill tokens/s, 15.0 decode steps/s); token totals
+cover 2,927 returned responses. Peak server RSS 20.0~GiB.}
 \label{fig:costs}
 \end{figure*}
 
 \paragraph{RQ1: capability (Fig.~\ref{fig:outcomes}, left).}
-The baseline completes about half of clean tasks, dropping to 22\% for
-tasks with $\geq$5 reference calls. All 120 clean and 48 attack traces
+The baseline completes about half of clean tasks. Historical task-feature
+analysis found 22\% utility for tasks with $\geq$5 reference calls. All 120 clean and 48 attack traces
 were reviewed under a pre-frozen protocol. Primary clean labels:
-planning 45, tool use 15, other/unclear 16, task misunderstanding 2,
-unnecessary refusal 2 (upper bound 13/120), no failure 40. ``Planning''
+planning 43, tool use 15, other/unclear 16, infrastructure 2, task
+misunderstanding 2, unnecessary refusal 2 (possible upper bound 15/120),
+no failure 40. ``Planning''
 means the agent understood the task and retrieved what it needed but did
-not carry the plan through: 16/76 action tasks end with a promise instead
-of the action; others act on the wrong retrieved entity or repeat a step.
-Tool syntax was never the problem (0 malformed calls; 149/600 episodes
-had an execution error).
+not carry the plan through: examples stop after retrieving facts, act on
+the wrong entity or repeat a step. Review is qualitative agent inspection,
+not independent human annotation.
+No malformed calls were observed, while 149/600 episodes had a tool
+execution error.
 
 \paragraph{RQ2: security (Fig.~\ref{fig:outcomes}).}
 ASR is 19.2\% overall and 23.7\% on tasks the agent can complete.
-\emph{Attacks exploit the planning weakness.} An injected instruction is
-a plan rewrite: when it succeeds the legitimate task almost always fails
-(83 of 92 successes), 74 of 457 pairs flip from clean success to attacked
-failure, and the template that most explicitly rewrites the plan is six
-times more effective at equal exposure (\texttt{ignore\_previous}
+\emph{Results are consistent with plan displacement.} When an attack
+succeeds the legitimate task almost always fails (83 of 92 successes);
+74 of 449 known pairs flip from clean success to attacked failure. The
+explicit plan-rewrite template has six
+times the observed ASR at equal exposure (\texttt{ignore\_previous}
 32.9\% vs.\ \texttt{TODO} 5.4\%). Goals differ sharply; low Workspace
-ASR reflects its exact multi-field goals and 18 of the 25 errors, not
-robustness. Official $A$ checks one declared goal: 11/240 episodes
-executed a goal-matching call yet score $A{=}$False (e.g.\ a mistyped
-IBAN), so Phase~2 adds an unauthorized-behavior label $H$.
+ASR must be read alongside exact multi-field goals and 18 of the
+27 errors; it alone does not establish robustness. Official $A$ checks one declared goal. Historical attack-stage analysis
+found parameter-matched actions with $A{=}$False in 11/240 default-prompt
+attack episodes; recovered
+review again finds unauthorized actions beyond that goal (e.g.\ a phishing
+URL visit). Phase~2 therefore adds an unauthorized-behavior label $H$.
 
 \paragraph{RQ3: cost and validity (Fig.~\ref{fig:costs}).}
-Every request resends uncached history, so prefill is 78\% of model
-time and prompt tokens outnumber completions 78:1: context management
+Every request resends uncached history; prefill is 79\% of returned
+native prefill-plus-decode time and prompt tokens outnumber completions 77:1: context management
 targets the dominant cost. Checkers both over- and under-credit visible
 behavior, so $U$ is a proxy and Phase~2 adds a legitimate-objective
-rubric $L$. Rerunning all 25 errors twice recovered 0/50 (deterministic
-budget exhaustion); seeds disagreed on $U$ in 27/282 and on $A$ in
-10/224 repeated cells.
+rubric $L$. Repeating all 27 errors twice gave four normal returns across
+two clean cases, all with $U{=}$False; the other 25 cases errored twice.
+All 44 attacked retries retain unknown scores. These selected retries
+do not replace baseline outcomes or prove deterministic failure. Seeds
+disagreed on $U$ in 26/280 and on $A$ in 10/224 fully known repeated cells.
 
+\clearpage
 \section{Preliminary Explorations}
 \label{sec:explore}
 
+These historical exploratory studies were not rerun during evidence
+recovery; their archived results are retained separately.
+
 \textbf{Prompt reminder.} A 100-token reminder that retrieved
-content is data, not authority, lowered attack success 47$\to$39/240 at
-unchanged utility (Fig.~\ref{fig:explore}, appendix); the interval
-touches zero and two of four flips vanished at seed 29: not a stable
-defense. \textbf{Quantization $\times$ context.} Q4 shows no
-uniform degradation (3/12 vs.\ 5/12 clean). Forced
-truncation is the most damaging policy (46/72 budget exhaustion vs.\
-1/72): plan progress is dropped and re-retrieved. Lower $A$ under
+content is data, not authority, had observed attack success 47$\to$39/240, with
+clean utility 26$\to$27/60 (Fig.~\ref{fig:explore}, appendix); the interval
+touches zero and two of four selected flips vanished at seed 29, so this
+does not establish a stable defense. \textbf{Quantization $\times$ context.} Q4 shows no
+uniform degradation (F16 full-history 3/12 vs.\ Q4 full-history 5/12 clean). Truncation
+had the most budget-exhausted episodes (46/72 vs.\ 1/72 for full history);
+reviewed cases lost and re-retrieved plan progress. Lower $A$ under
 compaction coincides with unknown scores, so it is not resistance.
 
 \section{Next Steps}
@@ -183,26 +201,26 @@ Research question & Dimensions and metrics & What Phase 1 showed \\
 \midrule
 \textbf{RQ1 (capability)} How much of a fixed workload does the undefended baseline complete, and why does it fail? &
 Official utility $U$ by suite, seed, reference path length, read vs.\ action tasks, prompt length; protocol-frozen review of all 120 clean + 48 attack traces (misunderstanding, invalid tool calls, refusal, planning); tool-error counts &
-48.3\% clean; no read/write gap; long reference paths hurt (22\% at $\geq$5 calls); planning dominates (45/120), 16/76 action tasks stop after gathering info; 0 malformed calls but 149/600 tool errors; refusal 2/120 (bound 13/120); 51/60 tasks stable across seeds \\
+48.3\% clean; historical task-feature analysis: 22\% at $\geq$5 reference calls; planning dominates (43/120); 0 malformed calls but 149/600 tool errors; observed refusal 2/120, 13 indeterminate (possible bound 15/120) \\
 \addlinespace
 \textbf{RQ2 (security)} How often do injected instructions succeed, on what does it depend, and what unauthorized behavior occurs beyond the exact goal? &
 ASR over all attacks and over cleanly completable tasks; payload exposure; template, goal, suite; paired utility change; $U\times A$ table; attack-stage rules over tool calls; verbal stance; case cards &
-19.2\% all / 23.7\% eligible; \texttt{ignore\_previous} 32.9\% vs.\ \texttt{TODO} 5.4\% at equal exposure; successful attacks displace the task (83/92); $-12.7$~pp utility under attack; 11/240 goal-matching actions with $A{=}$False; verbal refusal often follows the action \\
+19.2\% all / 23.7\% eligible; \texttt{ignore\_previous} 32.9\% vs.\ \texttt{TODO} 5.4\% at equal exposure; attack success coincides with task failure (83/92); $-13.4$~pp over 449 known utility pairs; historical default-prompt arm: 11/240 parameter-matched actions with $A{=}$False \\
 \addlinespace
 \textbf{RQ3 (cost and validity)} What does full-history F16 cost, and which measurements can Phase~2 rely on? &
-Latency, prompt/completion tokens, native prefill/decode, peak RSS; checker-type audit of 60 tasks; same-seed reruns of all 25 errors; seed disagreement on repeated cells; refusal re-adjudication &
-Median ${\sim}50$~s; prefill 78\% of model time; 18.8~GiB RSS; checkers over- and under-credit (documented, not rescored); 0/50 error reruns recovered; $U$ disagrees in 27/282 cells, $A$ in 10/224 \\
+Latency, prompt/completion tokens, native prefill/decode, peak RSS; checker-type audit of 60 tasks; same-seed reruns of all 27 errors; seed disagreement on repeated cells; refusal re-adjudication &
+Median 53.7~s; returned native prefill share 78.8\%; 20.0~GiB server RSS; 4/54 retries return normally, all $U{=}$False; $U$ disagrees in 26/280 known cells, $A$ in 10/224 \\
 \addlinespace
 \textit{Exploratory: prompt reminder} Does a source-boundary reminder reduce $A$ while keeping $U$? &
-600 paired episodes, one seed; paired cluster bootstrap; seed-29 rerun of four disagreeing pairs &
-$A$ 47$\to$39/240, interval touches 0; $U$ unchanged; 2 of 4 flips became ties at seed 29 \\
+Historical pilot: 300 pairs (600 episodes across arms), one seed; paired cluster bootstrap; seed-29 rerun of four selected disagreeing pairs &
+$A$ 47$\to$39/240, interval touches 0; $U$ changes small; 2 of 4 flips became ties at seed 29 \\
 \addlinespace
 \textit{Exploratory: quantization $\times$ context} How do Q4 and five context policies change $U$, $A$, behavior and cost? &
 360 episodes, 12 tasks, one seed; budget exhaustion; repeated calls; retrieval use; cost by role &
-No uniform Q4 effect; forced truncation most damaging (46/72 exhausted); lower $A$ coincides with unknowns; compaction raised cost \\
+No uniform Q4 effect; truncation had most budget exhaustion (46/72 vs.\ 1/72 full-history); lower $A$ coincides with unknowns; compaction raised cost \\
 \bottomrule
 \end{tabular}
-\caption{Research questions, the metrics used, and the answers Phase~1 supports. RQ1--RQ3 use the 600-episode baseline; the explorations are single-seed.}
+\caption{Research questions, the metrics used, and the answers Phase~1 supports. RQ1--RQ3 use the 600-episode baseline; the explorations are historical single-seed pilots.}
 \label{tab:rq}
 \end{table}
 
@@ -211,8 +229,9 @@ No uniform Q4 effect; forced truncation most damaging (46/72 exhausted); lower $
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig-explore.pdf}
-\caption{Explorations, single seed. Left: paired reminder-minus-original
-differences, task-cluster bootstrap CIs (300 pairs). Right: attack
+\caption{Historical explorations, single seed; not rerun in recovery. Left: paired reminder-minus-original
+differences, task-cluster bootstrap CIs (300 pairs, 600 episodes across
+both arms). Right: attack
 outcomes for F16/Q4 under five context policies (12 tasks); clean
 utility at right.}
 \label{fig:explore}
@@ -233,10 +252,11 @@ Oct 16 & Frozen 60-task workload, checker audit; 600-episode F16 baseline collec
 Oct 17--18 & 25 errors rerun twice (50 episodes); 600-episode prompt-reminder study. \\
 Oct 19--20 & Seed-29 diagnostics; task-contract, attack-stage and stance analysis. \\
 Oct 27 & Quantization $\times$ context first pass (360 episodes) analyzed. \\
-Oct 28 & Phase~1 code, data and report. \\
+Oct 28 & Original Phase~1 code, data and report. \\
+Nov 5--8 & Baseline evidence recovered (600 episodes); 54 error retries; 168 trace reviews; final export and report reconciled. \\
 \midrule
 \multicolumn{2}{@{}l}{\textit{Planned}} \\
-Nov 7 & Freeze Phase~2 grid, context budget, held-out task audit, $L$/$H$ rubrics. Q8 artifact verified. \\
+Next & Freeze Phase~2 grid, context budget, held-out task audit, $L$/$H$ rubrics. Q8 artifact verified. \\
 Nov 21 & Phase~2 collection complete (two seeds), with provenance-aware exposure logging. \\
 Nov 28 & Analysis: interactions, dominated configurations, trace review of representative failures. \\
 Dec 5 & Final report draft; deployment recommendations. \\
@@ -245,6 +265,69 @@ Dec 10 & Final implementation and report. \\
 \end{tabular}
 \caption{Project timeline. Completed dates follow the repository's audited collection records.}
 \end{table}
+
+
+\section{Baseline Recovery and Evidence}
+\label{app:recovery}
+
+\begin{table}[H]
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Measure & Historical October & Recovered November \\
+\midrule
+Clean utility, all attempts & 58/120 & 58/120 \\
+Clean utility, known outcomes & 58/117 & 58/115 \\
+Attacked utility & 173/480 & 173/480 \\
+Exact-goal ASR & 92/480 & 92/480 \\
+ASR on successful clean controls & 55/232 & 55/232 \\
+Payload exposure & 412/480 & 412/480 \\
+Episode execution errors & 25/600 & 27/600 \\
+Primary clean planning label & 45/120 & 43/120 \\
+Observed unnecessary refusal & 2/120 & 2/120 \\
+Indeterminate refusal labels & 11/120 & 13/120 \\
+Known utility pairs: lost / gained & 74 / 16 (457 pairs) & 74 / 14 (449 pairs) \\
+Sum of episode durations & 11.89 h & 12.72 h \\
+Median episode duration & 49.93 s & 53.73 s \\
+Native prefill throughput & 355.39 tokens/s & 318.02 tokens/s \\
+Native decode throughput & 15.50 steps/s & 15.02 steps/s \\
+Native prefill share & 77.6\% & 78.8\% \\
+\bottomrule
+\end{tabular}
+\caption{Matched baseline comparison. Historical outputs are preserved; retry outcomes never replace original scores. Timing differences are descriptive because host conditions differ.}
+\end{table}
+
+Every attack outcome and exposure flag matched, including unknowns. The
+only official utility changes were seed-17 Travel clean tasks 1 and 2:
+previously completed with $U{=}$False, they now time out on request 1.
+No Boolean utility score flipped. Those two traces now receive primary
+infrastructure labels, and their refusal status is indeterminate. Thus
+planning remains the most frequent clean failure label, and the same
+two unnecessary refusals remain observed. The latter are fact-error-driven
+declines under the protocol, not evidence of a safety-policy mechanism.
+
+The full collection audit and exporter passed all frozen review obligations:
+120/120 clean, 30/30 native sample and 30/30 supplementary attacks. The
+native sample overlaps 12 clean traces, leaving 168 distinct episodes
+(120 clean and 48 attacked), covering all 16 suite/goal/template cells.
+Historical annotations were comparison references; recovered action
+sequences and state changes supplied the updated evidence. This review
+is not independent human annotation, and attack cases were purposively
+selected rather than sampled to estimate prevalence.
+
+The recovery has 2,948 logged requests: 2,927 returned responses, 20
+request-error terminals and one unanswered request at the episode deadline.
+Native timing and token totals cover returned responses only. Server RSS
+measures the inference process, not total unified-device memory. The
+60 fixed task clusters and two seeds limit generalization; no causal
+precision, context-policy or throughput improvement is established here.
+
+The recovered tables, annotations, retry summaries and export provenance
+are under \texttt{results/phase1-recovery/}; historical baseline tables
+remain under \texttt{results/phase1/}. A checksummed raw-evidence archive
+is provided under \texttt{artifacts/phase1-recovery/}. Exploratory
+prompt-reminder and quantization/context results remain historical;
+their original raw traces were not recovered by this baseline rerun.
 
 \section{Phase 1 Requirement Coverage}
 

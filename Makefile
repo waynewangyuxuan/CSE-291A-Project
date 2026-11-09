@@ -107,3 +107,24 @@ phase2-verify:
 
 phase2-verify-down:
 	$(UV) run --frozen python scripts/verify_phase2.py down
+
+REPORT_PYTHON ?= .cache/report-env/bin/python
+
+.PHONY: phase1-recovery-export phase1-report-figures phase1-report phase1-recovery-package phase1-recovery-verify
+
+phase1-recovery-export:
+	cp src/agent_tradeoffs/analysis.py .cache/recovery/src/agent_tradeoffs/analysis.py
+	cd .cache/recovery && PYTHONHASHSEED=0 PYTHONPATH=src ../../.venv/bin/python ../../scripts/export_phase1_evaluation.py --annotations ../../artifacts/recovery/analysis/reviewed-traces.csv --snapshot ../../artifacts/recovery/final-evaluation --results ../../results/phase1-recovery
+
+phase1-report-figures:
+	MPLCONFIGDIR=.cache/matplotlib $(REPORT_PYTHON) scripts/plot_phase1_evaluation.py --measurements results/phase1-recovery/evaluation-measurements.json --episodes results/phase1-recovery/evaluation-episodes.csv --output-prefix results/phase1-recovery/evaluation
+	MPLCONFIGDIR=.cache/matplotlib $(REPORT_PYTHON) reports/figures/make_report_figures.py
+
+phase1-report: phase1-report-figures
+	tectonic --keep-logs reports/phase1-report.tex
+
+phase1-recovery-package:
+	.venv/bin/python scripts/package_phase1_recovery.py
+
+phase1-recovery-verify:
+	.venv/bin/python scripts/package_phase1_recovery.py --check-only
