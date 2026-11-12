@@ -19,40 +19,14 @@ clean traces plus 48 attacks, including the final base30 and additional30
 obligations and all 16 attack cells. Annotations are agent inspection with
 historical labels as references, not independent human annotation.
 
-## Rebuild and verify
+## Rebuild, inspect and verify
 
-From the repository root, with the existing evaluation environment:
+Follow the repository's [run guide](../../docs/running.md) for offline checks,
+report generation and collection-machine re-export. The [evidence guide](../../artifacts/README.md)
+explains the archive layout, checksums and restoration limits.
 
-```sh
-uv venv .cache/report-env --python .venv/bin/python
-uv pip install --python .cache/report-env/bin/python matplotlib==3.11.2
-make phase1-report
-make phase1-recovery-verify
-```
-
-The plotter requires the complete export gate and reads the recovered tables
-directly. The original prompt-reminder and quantization/context figures use
-historical summaries; those studies were not rerun. The report's PDF is built
-with Tectonic; its first build may download LaTeX resources.
-
-`make phase1-recovery-export` reruns the immutable exporter on this machine.
-It updates only the recovery directory's offline analyzer to the repository
-version; the seven execution-harness files and frozen campaign are unchanged.
-The analyzer is not part of the execution-harness identity. Existing snapshots
-reject changed inputs rather than overwriting evidence.
-
-`make phase1-recovery-package` rebuilds the deterministic archive. Its external
-manifest records every member's size and SHA256; `make phase1-recovery-verify`
-checks all members and requires 600 baseline plus 54 retry results. Neither
-command launches inference. The archive excludes model weights and runtime
-binaries. It contains the pinned execution source, configuration, dependency
-lock, raw results/traces/request logs, review annotations and export snapshot.
-
-For recovery, extract into an **empty directory**, preserving member paths.
-Original absolute provenance paths are intentionally retained; another host
-must relocate those references before re-exporting. Archive verification and
-rebuilding report figures from curated files do not need those absolute paths.
-
-This is a local evidence archive, not an off-device backup. Historical exploratory
-raw traces are still unavailable; the archive covers the reproduced baseline
-and supplemental retries only.
+The final export is immutable and rejects changed inputs. The report plotter
+requires the completed audit/review gate and reads these tables directly.
+Historical exploratory figures are explicitly labeled; those studies were not
+rerun during recovery. The local archive covers baseline and retry evidence,
+not historical exploratory traces or model weights.

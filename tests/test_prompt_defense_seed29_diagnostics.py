@@ -11,6 +11,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from agent_tradeoffs.config import stable_hash
+from agent_tradeoffs.prompt_defense import build_plan as first_wave_plan
 from agent_tradeoffs.prompt_defense import selected_config
 from agent_tradeoffs.reporting import atomic_json
 from agent_tradeoffs.runner import RuntimeDeploymentChangedError, run_episode
@@ -19,6 +21,51 @@ PATH = Path(__file__).resolve().parents[1] / "scripts/run_prompt_defense_seed29_
 spec = importlib.util.spec_from_file_location("seed29_diagnostics", PATH)
 d = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(d)
+
+
+@pytest.fixture(autouse=True)
+def synthetic_first_wave(tmp_path, monkeypatch):
+    """Exercise the real diagnostic planner against temporary, non-benchmark inputs."""
+    first = tmp_path / "first-wave"
+    first.mkdir()
+    directory = tmp_path / "diagnostics-config"
+    directory.mkdir()
+    runtime = {
+        "semantic_identity": {"synthetic_test_only": True},
+        "metadata_snapshot": {"process_identity": {"synthetic_test_only": True}},
+    }
+    monkeypatch.setattr(d, "FIRST", first)
+    monkeypatch.setattr(d, "FIRST_IDENTITY", "synthetic-first-wave")
+    monkeypatch.setattr(d, "DIRECTORY", directory)
+    monkeypatch.setattr(d, "CAMPAIGN", tmp_path / "diagnostics-campaign")
+    monkeypatch.setattr(d, "ORIGINAL", tmp_path / "baseline")
+    monkeypatch.setattr(d, "DEPLOYMENT_SHA256", stable_hash(runtime["semantic_identity"]))
+    plan = first_wave_plan()
+    atomic_json(
+        first / "manifest.json",
+        {
+            "identity": "synthetic-first-wave",
+            "finalized_episodes": len(plan["schedule"]),
+            "episodes": plan["schedule"],
+            "identity_inputs": {
+                "plan": plan,
+                "frozen_files": {str(d.ROOT / "uv.lock"): d.digest(d.ROOT / "uv.lock")},
+            },
+            "runtime": runtime,
+        },
+    )
+    for entry in plan["schedule"]:
+        folder = first / "episodes" / entry["episode_id"]
+        folder.mkdir(parents=True)
+        atomic_json(
+            folder / "result.json",
+            {**entry, "identity": "synthetic-first-wave", "synthetic_test_only": True},
+        )
+    for name in ("plan.json", "protocol.json", "protected-inventory.json"):
+        atomic_json(directory / name, {"synthetic_test_only": True})
+    metadata = d.ORIGINAL / "artifacts/phase1-error-retries/runtime/server.json"
+    metadata.parent.mkdir(parents=True)
+    atomic_json(metadata, runtime)
 
 
 def test_exact_mapping_and_only_operational_paths_plus_seed_change():

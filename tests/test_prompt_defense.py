@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import copy
-import importlib.util
 import json
+import tarfile
 from contextlib import nullcontext
 from pathlib import Path
-from types import SimpleNamespace
+from types import ModuleType, SimpleNamespace
 
 import pytest
+from agentdojo.task_suite.load_suites import get_suite
 from pydantic import ValidationError
 
 from agent_tradeoffs import prompt_defense as experiment
@@ -56,25 +57,30 @@ def payloads(directory):
     ]
 
 
-def test_default_request_payload_bytes_match_unchanged_original_agent(tmp_path, monkeypatch):
-    original = experiment.ORIGINAL / "src/agent_tradeoffs/agent.py"
-    spec = importlib.util.spec_from_file_location("original_baseline_agent", original)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+def test_default_request_payload_bytes_match_unchanged_original_agent(tmp_path):
+    archive = Path(__file__).resolve().parents[1] / "artifacts/phase1-recovery/evidence.tar.gz"
+    original = ".cache/recovery/src/agent_tradeoffs/agent.py"
+    with tarfile.open(archive, "r:gz") as evidence:
+        source = evidence.extractfile(original).read()
+    module = ModuleType("original_baseline_agent")
+    exec(compile(source, original, "exec"), module.__dict__)
     config = ExperimentConfig.model_validate({"experiment": {"mode": "clean"}})
     episode = runner.plan_episodes(config)[0]
     old, new, defense = (tmp_path / name for name in ("old", "new", "defense"))
     for directory in (old, new, defense):
         directory.mkdir()
-    current = runner.LocalAgent
-    monkeypatch.setattr(runner, "LocalAgent", module.LocalAgent)
-    runner.run_episode(config, episode, old, "fixture", client=ScriptedClient())
-    monkeypatch.setattr(runner, "LocalAgent", current)
-    runner.run_episode(config, episode, new, "fixture", client=ScriptedClient())
     protected = config.model_copy(
         update={"prompt": config.prompt.model_copy(update={"policy": "source_boundary_v1"})}
     )
-    runner.run_episode(protected, episode, defense, "fixture", client=ScriptedClient())
+    suite = get_suite(config.experiment.benchmark_version, config.experiment.suite)
+    task = suite.get_user_task_by_id(episode["user_task_id"])
+    for agent_type, settings, directory in (
+        (module.LocalAgent, config, old),
+        (runner.LocalAgent, config, new),
+        (runner.LocalAgent, protected, defense),
+    ):
+        agent = agent_type(settings, directory, client=ScriptedClient())
+        suite.run_task_with_pipeline(agent, task, None, {})
     assert json.dumps(payloads(old)) == json.dumps(payloads(new))
     expected = copy.deepcopy(payloads(new))
     for payload in expected:
