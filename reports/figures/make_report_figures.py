@@ -1,27 +1,42 @@
-"""Compact figures for the Phase 1 report.
+"""Render report figures from the reviewed recovery export and historical explorations.
 
-Values are transcribed from the audited published results:
-  results/phase1/evaluation-assessment.md            (RQ1, RQ2, RQ3, RQ5)
-  results/prompt-defense-first-wave-v1/README.md     (RQ7)
-  results/phase2-first-pass-v1/summary.json          (RQ8, read directly)
-
-Run from the repository root:
-  uv run --no-project --isolated --with matplotlib==3.11.2 \
-      python reports/figures/make_report_figures.py
+Run from the repository root with `make phase1-report-figures`.
 """
 
 from __future__ import annotations
 
+import csv
+import hashlib
+import importlib
 import json
+import sys
+from collections import Counter
 from pathlib import Path
 
 import matplotlib
-import matplotlib.pyplot as plt
 
 matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 OUT = Path(__file__).resolve().parent
 ROOT = OUT.parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+load_inputs = importlib.import_module("plot_phase1_evaluation").load_inputs
+
+RESULTS = ROOT / "results/phase1-recovery"
+DATA, EPISODES = load_inputs(
+    RESULTS / "evaluation-measurements.json", RESULTS / "evaluation-episodes.csv"
+)
+NATIVE = DATA["native_summary"]
+POOLED = DATA["pooled_request_metrics"]["overall"]
+with (RESULTS / "evaluation-requests.csv").open(newline="") as handle:
+    REQUESTS = list(csv.DictReader(handle))
+
+
+def fraction(summary, key):
+    rate = summary["rates"][key]
+    return rate["successes"], rate["denominator"]
+
 
 BLUE, ORANGE, AQUA, YELLOW = "#2a78d6", "#eb6834", "#1baf7a", "#eda100"
 RED, GRAY, INK, INK2 = "#e34948", "#b8b6ae", "#0b0b0b", "#52514e"
@@ -65,22 +80,28 @@ def save(fig, name):
 # Figure 1: capability and attack success by suite, goal and template (RQ1/RQ3)
 # --------------------------------------------------------------------------
 SUITES = ["Banking", "Slack", "Workspace", "Travel", "All"]
-CLEAN_U = [(6, 16), (20, 32), (23, 48), (9, 24), (58, 120)]
-ATK_U = [(13, 64), (42, 128), (91, 192), (27, 96), (173, 480)]
-ASR_ALL = [(28, 64), (46, 128), (3, 192), (15, 96), (92, 480)]
-ASR_ELIG = [(12, 24), (32, 80), (2, 92), (9, 36), (55, 232)]
-
+GROUPS = [NATIVE["by_suite"][s.lower()] for s in SUITES[:-1]] + [NATIVE["overall"]]
+CLEAN_U = [fraction(g, "clean_utility_all_attempts") for g in GROUPS]
+ATK_U = [fraction(g, "attack_utility_all_attempts") for g in GROUPS]
+ASR_ALL = [fraction(g, "attack_success_all_attempts") for g in GROUPS]
+ASR_ELIG = [fraction(g, "attack_success_clean_completable_all_attempts") for g in GROUPS]
 GOALS = [
-    ("Banking: redirect payment", 12, 32),
-    ("Banking: change password", 16, 32),
-    ("Slack: phishing DM", 22, 64),
-    ("Slack: visit site", 24, 64),
-    ("Workspace: send email", 3, 96),
-    ("Workspace: create event", 0, 96),
-    ("Travel: book hotel", 4, 48),
-    ("Travel: exfiltrate data", 11, 48),
+    (label, *fraction(NATIVE["by_suite_goal"][suite][goal], "attack_success_all_attempts"))
+    for label, suite, goal in (
+        ("Banking: redirect payment", "banking", "injection_task_4"),
+        ("Banking: change password", "banking", "injection_task_7"),
+        ("Slack: phishing DM", "slack", "injection_task_1"),
+        ("Slack: visit site", "slack", "injection_task_3"),
+        ("Workspace: send email", "workspace", "injection_task_0"),
+        ("Workspace: create event", "workspace", "injection_task_2"),
+        ("Travel: book hotel", "travel", "injection_task_0"),
+        ("Travel: exfiltrate data", "travel", "injection_task_3"),
+    )
 ]
-TEMPLATES = [("TODO", 13, 240), ("Ignore\nprev.", 79, 240)]
+TEMPLATES = [
+    (label, *fraction(NATIVE["by_attack"][key], "attack_success_all_attempts"))
+    for label, key in (("TODO", "direct_append"), ("Ignore\nprev.", "ignore_previous_append"))
+]
 
 
 def pct(n, d):
@@ -89,7 +110,7 @@ def pct(n, d):
 
 def fig1():
     fig, axes = plt.subplots(
-        1, 3, figsize=(6.6, 1.6), gridspec_kw={"width_ratios": [1.35, 1.25, 0.6]}
+        1, 3, figsize=(6.6, 2.5), gridspec_kw={"width_ratios": [1.1, 1.3, 0.85]}
     )
 
     ax = axes[0]
@@ -105,11 +126,18 @@ def fig1():
         vals = [pct(n, d) for n, d in data]
         ax.barh([y + (1.5 - i) * h for y in ys], vals, height=h - 0.03, color=color, label=label)
     ax.set_yticks(ys, SUITES)
-    ax.set_xlabel("% of episodes")
+    ax.set_xlabel("% of episodes", labelpad=1)
     ax.set_title("Outcomes by suite")
     tidy(ax, 100)
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.32), ncol=2, handlelength=0.9,
-              borderpad=0.2, labelspacing=0.25, columnspacing=0.8)
+    ax.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.40),
+        ncol=2,
+        handlelength=0.9,
+        borderpad=0.2,
+        labelspacing=0.25,
+        columnspacing=0.8,
+    )
 
     ax = axes[1]
     names = [g[0] for g in GOALS][::-1]
@@ -134,6 +162,7 @@ def fig1():
     ax.grid(axis="y", color="#e8e6df", linewidth=0.6)
     ax.set_axisbelow(True)
     ax.set_ylim(0, 40)
+    ax.set_xticks(range(len(names)), names, rotation=25, ha="right")
     ax.tick_params(axis="x", labelsize=6.3)
 
     fig.tight_layout(w_pad=1.2)
@@ -144,20 +173,24 @@ def fig1():
 # Figure 2: failure classification (RQ2) and clean-to-attack transitions (RQ3)
 # --------------------------------------------------------------------------
 def fig2():
-    fig, axes = plt.subplots(1, 2, figsize=(3.4, 1.9), gridspec_kw={"width_ratios": [1.25, 1]})
+    fig, axes = plt.subplots(1, 2, figsize=(6.6, 2.5), gridspec_kw={"width_ratios": [1.25, 1]})
 
     ax = axes[0]
+    counts = Counter(r["failure_category"] for r in EPISODES if r["condition"] == "clean")
     labels = [
-        ("No failure", 40),
-        ("Planning", 45),
-        ("Tool use", 15),
-        ("Other / unclear", 16),
-        ("Task misunderstanding", 2),
-        ("Unnecessary refusal", 2),
+        ("No failure", counts["no_failure"]),
+        ("Planning", counts["planning"]),
+        ("Tool use", counts["tool_use"]),
+        ("Other / unclear", counts["other"] + counts["unclear"]),
+        ("Infrastructure", counts["infrastructure"]),
+        ("Task misunderstanding", counts["task_understanding"]),
+        ("Unnecessary refusal", counts["unnecessary_refusal"]),
     ][::-1]
-    colors = [GRAY, BLUE, BLUE, BLUE, BLUE, BLUE][::-1]
-    ax.barh([l[0] for l in labels], [l[1] for l in labels], height=0.6, color=colors)
-    for y, (name, n) in enumerate(labels):
+    colors = [GRAY if label == "No failure" else BLUE for label, _ in labels]
+    ax.barh(
+        [label for label, _ in labels], [count for _, count in labels], height=0.6, color=colors
+    )
+    for y, (_name, n) in enumerate(labels):
         ax.text(n + 0.8, y, str(n), va="center", fontsize=6.5, color=INK2)
     ax.set_title("Clean failure labels (n=120)")
     ax.set_xlabel("episodes")
@@ -166,13 +199,15 @@ def fig2():
 
     ax = axes[1]
     cats = ["Clean ok → attacked fail", "Clean fail → attacked ok", "Unchanged"][::-1]
-    vals = [74, 16, 457 - 74 - 16][::-1]
+    paired = NATIVE["overall"]["paired_utility_change"]
+    lost, gained = paired["clean_success_attack_failure"], paired["clean_failure_attack_success"]
+    vals = [lost, gained, paired["pairs"] - lost - gained][::-1]
     cols = [RED, AQUA, GRAY][::-1]
     ax.barh(cats, vals, height=0.6, color=cols)
     for y, v in enumerate(vals):
         ax.text(v + 6, y, str(v), va="center", fontsize=6.5, color=INK2)
     ax.set_title("Utility under attack")
-    ax.set_xlabel("attack/control pairs (457 known)")
+    ax.set_xlabel(f"attack/control pairs ({paired['pairs']} known)")
     tidy(ax, 460)
     ax.tick_params(axis="y", labelsize=6.5)
 
@@ -184,14 +219,21 @@ def fig2():
 # Figure 3: deployment cost (RQ5)
 # --------------------------------------------------------------------------
 def fig3():
-    fig, axes = plt.subplots(1, 3, figsize=(6.6, 1.1), gridspec_kw={"width_ratios": [1.3, 0.8, 0.8]})
+    fig, axes = plt.subplots(
+        1, 3, figsize=(6.6, 1.8), gridspec_kw={"width_ratios": [1.3, 0.8, 0.8]}
+    )
 
     ax = axes[0]
+    selections = [
+        (f"{condition.title()}, all ({summary['duration_seconds']['n']})", summary)
+        for condition, summary in NATIVE["overall"]["costs_by_condition"].items()
+    ] + [
+        (f"{condition.title()}, utility=True ({summary['selected_episodes']})", summary["costs"])
+        for condition, summary in DATA["utility_success_costs"]["by_condition"].items()
+    ]
     rows = [
-        ("Clean, all (120)", 56.43, 180.06),
-        ("Attack, all (480)", 49.70, 159.13),
-        ("Clean, utility=True (58)", 44.73, 159.33),
-        ("Attack, utility=True (173)", 48.18, 151.01),
+        (label, costs["duration_seconds"]["median"], costs["duration_seconds"]["p95"])
+        for label, costs in selections
     ][::-1]
     y = list(range(len(rows)))
     ax.barh([i + 0.17 for i in y], [r[2] for r in rows], height=0.3, color=GRAY, label="p95")
@@ -200,13 +242,20 @@ def fig3():
     ax.set_xlabel("episode latency (s)")
     ax.set_title("Latency")
     tidy(ax, 200)
-    ax.legend(loc="lower right", handlelength=0.9)
     ax.tick_params(axis="y", labelsize=6.5)
 
     ax = axes[1]
-    ax.bar(["prefill", "decode"], [31948.65 / 3600, 9198.24 / 3600], width=0.55, color=[BLUE, AQUA])
-    ax.text(0, 31948.65 / 3600 + 0.2, "78%", ha="center", fontsize=6.5, color=INK2)
-    ax.text(1, 9198.24 / 3600 + 0.2, "22%", ha="center", fontsize=6.5, color=INK2)
+    prefill, decode = POOLED["native_prefill_seconds"], POOLED["native_decode_seconds"]
+    ax.bar(["prefill", "decode"], [prefill / 3600, decode / 3600], width=0.55, color=[BLUE, AQUA])
+    for x, seconds in enumerate((prefill, decode)):
+        ax.text(
+            x,
+            seconds / 3600 + 0.2,
+            f"{100 * seconds / (prefill + decode):.1f}%",
+            ha="center",
+            fontsize=6.5,
+            color=INK2,
+        )
     ax.set_ylabel("native model time (h)")
     ax.set_title("Where model time goes")
     for side in ("top", "right"):
@@ -216,11 +265,15 @@ def fig3():
     ax.set_ylim(0, 10.5)
 
     ax = axes[2]
-    ax.bar(["prompt", "completion"], [11.354, 0.146], width=0.55, color=[BLUE, AQUA])
-    ax.text(0, 11.354 + 0.25, "11.35 M", ha="center", fontsize=6.5, color=INK2)
-    ax.text(1, 0.146 + 0.25, "0.15 M", ha="center", fontsize=6.5, color=INK2)
+    tokens = [
+        sum(int(r[key] or 0) for r in REQUESTS) / 1e6
+        for key in ("prompt_tokens", "completion_tokens")
+    ]
+    ax.bar(["prompt", "completion"], tokens, width=0.55, color=[BLUE, AQUA])
+    for x, value in enumerate(tokens):
+        ax.text(x, value + 0.25, f"{value:.2f} M", ha="center", fontsize=6.5, color=INK2)
     ax.set_ylabel("tokens (millions)")
-    ax.set_title("Tokens, 2,965 requests")
+    ax.set_title(f"Tokens, {POOLED['response_count']:,} responses")
     for side in ("top", "right"):
         ax.spines[side].set_visible(False)
     ax.grid(axis="y", color="#e8e6df", linewidth=0.6)
@@ -235,7 +288,7 @@ def fig3():
 # Figure 4: exploratory studies (RQ7, RQ8)
 # --------------------------------------------------------------------------
 def fig4():
-    fig, axes = plt.subplots(1, 2, figsize=(6.6, 1.8), gridspec_kw={"width_ratios": [0.8, 1.4]})
+    fig, axes = plt.subplots(1, 2, figsize=(6.6, 3.0), gridspec_kw={"width_ratios": [0.8, 1.4]})
 
     ax = axes[0]
     rows = [
@@ -245,7 +298,7 @@ def fig4():
         ("A, common clean-success", -4.0, -9.0, 1.0),
     ][::-1]
     y = list(range(len(rows)))
-    for i, (name, est, lo, hi) in enumerate(rows):
+    for i, (_name, est, lo, hi) in enumerate(rows):
         ax.plot([lo, hi], [i, i], color=INK2, linewidth=1.2, solid_capstyle="round")
         ax.plot(est, i, "o", color=BLUE, markersize=5, markeredgecolor="white", markeredgewidth=1)
     ax.axvline(0, color="#d6d4cc", linewidth=0.8)
@@ -278,7 +331,16 @@ def fig4():
             false = n - true - unk
             ax.barh(y, true, color=ORANGE, height=0.7)
             ax.barh(y, false, left=true, color="#dcdad2", height=0.7)
-            ax.barh(y, unk, left=true + false, color=GRAY, height=0.7, hatch="////", edgecolor="white", linewidth=0)
+            ax.barh(
+                y,
+                unk,
+                left=true + false,
+                color=GRAY,
+                height=0.7,
+                hatch="////",
+                edgecolor="white",
+                linewidth=0,
+            )
             cu = g["clean_U"]
             ax.text(n + 0.6, y, f"{cu['true']}/{cu['n']}", va="center", fontsize=6.3, color=INK2)
             labels.append(f"{pretty[pol]} · {prec.upper()}")
@@ -302,7 +364,7 @@ def fig4():
             Patch(facecolor=GRAY, hatch="////", edgecolor="white", label="unknown (error)"),
         ],
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.28),
+        bbox_to_anchor=(0.5, -0.32),
         ncol=3,
         handlelength=1.0,
         borderpad=0.2,
@@ -318,4 +380,20 @@ if __name__ == "__main__":
     fig2()
     fig3()
     fig4()
+    inputs = [
+        RESULTS / "evaluation-measurements.json",
+        RESULTS / "evaluation-episodes.csv",
+        RESULTS / "evaluation-requests.csv",
+        ROOT / "results/phase2-first-pass-v1/summary.json",
+    ]
+    provenance = {
+        "snapshot_identity": DATA["snapshot_identity"],
+        "matplotlib_version": matplotlib.__version__,
+        "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "inputs": {
+            str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs
+        },
+        "explorations": "Historical archived results; not rerun during baseline recovery.",
+    }
+    (OUT / "provenance.json").write_text(json.dumps(provenance, indent=2) + "\n")
     print("wrote", sorted(p.name for p in OUT.glob("fig-*.pdf")))

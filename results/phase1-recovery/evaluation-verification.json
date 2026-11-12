@@ -1,0 +1,39 @@
+{
+  "complete": true,
+  "snapshot_identity": "d64661967faddb2529041938d38e9ecf60323108d3141029140e935668833f99",
+  "collection_audit": "passed_complete",
+  "review_gate": {
+    "clean": 120,
+    "native_sample": 30,
+    "additional_attack": 30,
+    "distinct": 168,
+    "attack_cells": 16
+  },
+  "export_rerun_identical": true,
+  "tests": {
+    "pinned_harness_offline": 50,
+    "export_plot_and_success_cost": 13
+  },
+  "lint_and_format": "passed for src, tests and changed scripts",
+  "historical_outputs": "results/phase1 and results/phase1-error-retries unchanged",
+  "pdf": {
+    "path": "reports/phase1-report.pdf",
+    "sha256": "e579486464ab5b625c3acf6d3a4163d830aef3ab4652b5e110aabc464b496905",
+    "pages": 6,
+    "visual_review": "All six rendered pages inspected; graph-label overlap corrected. No overfull boxes or unresolved references."
+  },
+  "archive": {
+    "path": "artifacts/phase1-recovery/evidence.tar.gz",
+    "sha256": "5890c0a8f7ff3e6529a213c4ca833246692db0bd54e2c1bf3ec06cd0e7d82b87",
+    "members": 2967,
+    "baseline_episodes": 600,
+    "retry_episodes": 54,
+    "all_members_verified": true,
+    "deterministic_rebuild_verified": true
+  },
+  "limitations": [
+    "Agent trace review is not independent human annotation.",
+    "Historical exploratory raw traces were not restored.",
+    "The evidence archive is local; no remote backup or publication is claimed."
+  ]
+}
