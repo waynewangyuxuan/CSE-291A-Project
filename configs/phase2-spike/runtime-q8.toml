@@ -1,0 +1,22 @@
+# Phase 2: same-source weight quantization; F16 KV cache.
+# The 32K context allocation was fixed before the first formal run.
+[runtime]
+binary_path = ".cache/runtime/llama-b11678/llama-server"
+host = "127.0.0.1"
+port = 8085
+context_size = 32768
+threads = 8
+gpu_layers = 99
+seed = 0
+cache_type_k = "f16"
+cache_type_v = "f16"
+model_alias = "qwen3-8b-q8"
+output_root = "artifacts/phase2-spike/runtime/agent"
+
+[model_artifact]
+acquisition = "quantized"
+repo_id = "Qwen/Qwen3-8B"
+revision = "b968826d9c46dd6066d109eabc6255188de91218"
+filename = "Qwen3-8B-Q8_0.gguf"
+sha256 = "b87e0ec0181c70bd6ff13f8ab55dd4b3fda4544b5d0ad6a7af8cc570db6f4e15"
+local_dir = ".cache/models/qwen3-8b-derived-q8"

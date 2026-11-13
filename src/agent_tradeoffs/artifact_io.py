@@ -38,7 +38,13 @@ def compact_episode_artifacts(directory: Path) -> dict[str, Any]:
         atomic_json(evidence, report)
         return report
 
-    for filename in ("requests.jsonl", "trace.json"):
+    for filename in (
+        "requests.jsonl",
+        "trace.json",
+        "memory-requests.jsonl",
+        "context-requests.jsonl",
+        "summary-context.jsonl",
+    ):
         source = directory / filename
         target = directory / (filename + ".gz")
         if not source.is_file():

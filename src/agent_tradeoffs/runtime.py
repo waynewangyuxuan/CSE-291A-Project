@@ -23,6 +23,8 @@ from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+WEIGHT_QUANTIZATIONS = {"Q4_K_M": 15, "Q8_0": 7}
+
 LLAMA_RELEASE = "b11678"
 LLAMA_COMMIT = "b6334e37e6ef286fc5091a41b6561b2113d915fb"
 LLAMA_ARCHIVE_SHA256 = "81c98d485d430272895ed216ffd5537b400a36519e9da1fa412c5dbb3d1e0f4c"
@@ -192,13 +194,16 @@ def _quantized_provenance(cfg: RuntimeConfig) -> dict[str, Any]:
     from agent_tradeoffs.model_artifacts import inspect_gguf
 
     provenance = json.loads(cfg.model_path.with_suffix(".provenance.json").read_text())
+    quantization = provenance.get("weight_quantization")
+    if quantization not in WEIGHT_QUANTIZATIONS:
+        raise RuntimeError("Unsupported same-source weight quantization")
     expected = {
         "kind": "quantized_gguf",
         "repo_id": cfg.model_artifact.repo_id,
         "revision": cfg.model_artifact.revision,
         "filename": cfg.model_artifact.filename,
         "sha256": cfg.model_artifact.sha256,
-        "weight_quantization": "Q4_K_M",
+        "weight_quantization": quantization,
     }
     if any(provenance.get(key) != value for key, value in expected.items()):
         raise RuntimeError("Quantized model provenance differs from configuration")
@@ -208,9 +213,10 @@ def _quantized_provenance(cfg: RuntimeConfig) -> dict[str, Any]:
         or source["revision"] != cfg.model_artifact.revision
         or source["weight_quantization"] != "none"
         or inspect_gguf(cfg.model_path) != provenance["gguf_audit"]
-        or provenance["gguf_audit"]["metadata"]["general.file_type"] != 15
+        or provenance["gguf_audit"]["metadata"]["general.file_type"]
+        != WEIGHT_QUANTIZATIONS[quantization]
     ):
-        raise RuntimeError("Quantized model does not establish same-source Q4_K_M weights")
+        raise RuntimeError(f"Quantized model does not establish same-source {quantization} weights")
     return provenance
 
 

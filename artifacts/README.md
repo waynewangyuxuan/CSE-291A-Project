@@ -59,3 +59,12 @@ ignored. Do not commit the entire artifact tree. Put reviewed tables in
 `results/`, source in `src/` or `scripts/`, and weights/builds in `.cache/`.
 Historical exploratory raw traces were not recreated by the baseline recovery;
 see the [results index](../results/README.md) for collection scope.
+
+## Phase 2 development spike evidence
+
+[phase2-spike/evidence.tar.gz](phase2-spike/evidence.tar.gz) preserves the
+18-episode development spike, 18 trace reviews, frozen source/configuration,
+rendered context requests, raw summaries, runtime snapshots and verification
+proofs. Its [inventory](phase2-spike/manifest.json) records every member hash.
+Weights and runtime binaries are excluded. This is readiness evidence, not the
+formal Phase 2 comparison; see the [reviewed checkpoint](../results/phase2-spike/README.md).

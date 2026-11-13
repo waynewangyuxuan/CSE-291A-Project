@@ -20,11 +20,16 @@ curated results remain preserved and must be labeled as such when cited.
 
 Each collection's README is the entry point for its tables and methodology.
 Current measurements retain run IDs, denominators, unknown outcomes and source
-hashes. Development smoke results belong in `artifacts/`, not in these published
-benchmark tables. New experiments get new result directories; do not overwrite
+hashes. Development raw output belongs in `artifacts/`; clearly labeled readiness
+checkpoints can retain reviewed verification evidence here, without becoming
+published benchmark estimates. New experiments get new result directories; do not overwrite
 a historical export to update the current report.
 
 Some historical `support/` and `behavior-understanding/` directories contain
 source snapshots used to derive their publications. They remain attached to
 those results for provenance; reusable implementation belongs in `src/`, and
 active operational scripts are listed in [scripts](../scripts/README.md).
+
+Development checkpoints: [Phase 2 preparation](phase2-preparation/README.md) and
+[Phase 2 budget spike](phase2-spike/README.md). These do not replace the formal
+baseline or the historical pilot.
