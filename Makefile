@@ -68,7 +68,10 @@ lint: ## Check Python style
 
 check: lint test check-docs ## Run lint, offline tests and repository navigation checks
 
-.PHONY: phase2-model phase2-prepare phase2 phase2-report phase2-lint phase2-verify-up phase2-verify phase2-verify-down
+.PHONY: phase2-model phase2-prepare phase2 phase2-report phase2-lint phase2-verify-up phase2-verify phase2-verify-down phase2-qualification
+
+phase2-qualification: ## Audit new Phase 2 candidate pairs offline; no model calls
+	$(UV) run --frozen python scripts/audit_phase2_candidates.py --output artifacts/phase2-preparation/qualification.json
 
 phase2-model:
 	$(UV) run --frozen python scripts/prepare-q4.py
@@ -82,7 +85,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)

@@ -4,6 +4,10 @@ Run commands from the repository root. `make` or `make help` lists the supported
 entry points. Ordinary development, report generation, and live inference have
 separate requirements.
 
+For the new Phase 2 study, follow the [preparation plan](phase2-preparation.md).
+`make phase2-qualification` audits candidates without model calls. The existing
+`phase2-prepare` and `phase2` commands continue to run the historical pilot.
+
 ## Development checks: no model required
 
 Install Python 3.12 and uv, then:

@@ -76,6 +76,13 @@ new model evaluations.
 
 ## Phase 2 first-pass pilot
 
+For the new study, start with [the preparation plan](../docs/phase2-preparation.md)
+and `make phase2-qualification`.
+
+| Script | Purpose |
+| --- | --- |
+| [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
+
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task
 exploratory grid, not the planned full Phase 2 evaluation.
 

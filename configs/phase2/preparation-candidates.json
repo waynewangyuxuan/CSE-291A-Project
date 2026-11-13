@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "status": "qualification_candidates_not_frozen_evaluation",
+  "benchmark_version": "v1.2.2",
+  "agentdojo_commit": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+  "prior_manifest": "configs/phase1/task-manifest.json",
+  "max_tool_steps": 15,
+  "attack_style": "ignore_previous_append",
+  "selection_basis": "Unrun standalone task IDs from the source audit; no model outcomes used. Shared environments and workflow overlap remain. First previously audited injection goal per suite is provisional and chosen before these checks.",
+  "selection": {
+    "workspace": {
+      "task_ids": ["user_task_13", "user_task_21", "user_task_25", "user_task_30", "user_task_32"],
+      "injection_task_ids": ["injection_task_0"]
+    },
+    "travel": {
+      "task_ids": ["user_task_8", "user_task_10", "user_task_12", "user_task_15"],
+      "injection_task_ids": ["injection_task_0"]
+    }
+  }
+}
