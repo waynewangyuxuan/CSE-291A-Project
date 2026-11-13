@@ -2,6 +2,9 @@
 
 This is offline preparation evidence dated 2026-11-12, not Phase 2 model results.
 The [execution order and gates](../../docs/phase2-preparation.md) govern next steps.
+The nine candidates are the proposed confirmation pool. They are not the entire
+study or a smoke batch; the roadmap separately budgets development, a broad
+known-task comparison, untouched confirmation, targeted diagnostics and delivery.
 
 - [Qualification evidence](qualification.json): 9/9 candidate clean/attack pairs
   pass mechanical checks using the installed pinned benchmark. Reference tool-call
