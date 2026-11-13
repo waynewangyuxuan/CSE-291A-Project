@@ -1,0 +1,28 @@
+{
+  "observed_date": "2026-11-12",
+  "scope": "Local asset inspection; no service start and no inference smoke",
+  "f16": {
+    "binary_exists": true,
+    "runtime_version": "version: 0.7.0-dev (build 11678, commit b6334e37e)\nbuilt with AppleClang 21.0.0.21000101 for Darwin arm64",
+    "runtime_version_ok": true,
+    "model_exists": true,
+    "model_verified": true,
+    "model_size_bytes": 16388044256
+  },
+  "f16_verification": "Existing runtime doctor with its model verification cache; not a fresh full-file hash pass",
+  "derived_q4_exists": false,
+  "derived_q4_provenance_exists": false,
+  "quantizer_advertises": {
+    "Q4_K_M": true,
+    "Q8_0": true
+  },
+  "q8_inference_verified": false,
+  "model_episodes": 0,
+  "formal_campaign_ready": false,
+  "open_gates": [
+    "semantic task qualification",
+    "derived Q4 asset and inference smoke",
+    "token-budget policies and request-level retention",
+    "development calibration and manifest freeze"
+  ]
+}
