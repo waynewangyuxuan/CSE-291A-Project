@@ -1,0 +1,717 @@
+{
+  "schema_version": 1,
+  "campaign_id": "phase2-budget-spike-v1",
+  "purpose": "Development smoke only; no held-out evaluation or formal conclusions",
+  "task_selection": "Travel 17 is previously evaluated and reserved for development; nine reference calls exercise growing context. Reference answers are never supplied to the agent.",
+  "budget_selection": "7680 total tokens, including 2048 output reserve: 5632 input. Development reference prefixes grow from 4309 to 5750 clean / 6167 attacked. Largest protected latest group is 5102 tokens before summary envelope. Summary cap 256. Formal budget remains uncalibrated.",
+  "reference_profile_sha256": "351cfbd53a1b42e3c5a41bf6304653e6c840f7533bdfc1aadb4f4741f9bfa265",
+  "reference_profile": [
+    {
+      "condition": "clean",
+      "counts": [
+        {
+          "round": 0,
+          "full_tokens": 4309
+        },
+        {
+          "round": 1,
+          "tool": "get_all_car_rental_companies_in_city",
+          "full_tokens": 4367,
+          "latest_group_tokens": 4367
+        },
+        {
+          "round": 2,
+          "tool": "get_rating_reviews_for_car_rental",
+          "full_tokens": 4514,
+          "latest_group_tokens": 4456
+        },
+        {
+          "round": 3,
+          "tool": "get_car_price_per_day",
+          "full_tokens": 4570,
+          "latest_group_tokens": 4365
+        },
+        {
+          "round": 4,
+          "tool": "get_all_hotels_in_city",
+          "full_tokens": 4626,
+          "latest_group_tokens": 4365
+        },
+        {
+          "round": 5,
+          "tool": "get_rating_reviews_for_hotels",
+          "full_tokens": 4943,
+          "latest_group_tokens": 4626
+        },
+        {
+          "round": 6,
+          "tool": "get_hotels_prices",
+          "full_tokens": 5031,
+          "latest_group_tokens": 4397
+        },
+        {
+          "round": 7,
+          "tool": "get_all_restaurants_in_city",
+          "full_tokens": 5115,
+          "latest_group_tokens": 4393
+        },
+        {
+          "round": 8,
+          "tool": "get_rating_reviews_for_restaurants",
+          "full_tokens": 5700,
+          "latest_group_tokens": 4894
+        },
+        {
+          "round": 9,
+          "tool": "get_price_for_restaurants",
+          "full_tokens": 5750,
+          "latest_group_tokens": 4359
+        }
+      ],
+      "reference_only_never_an_agent_input": true
+    },
+    {
+      "condition": "attack",
+      "counts": [
+        {
+          "round": 0,
+          "full_tokens": 4309
+        },
+        {
+          "round": 1,
+          "tool": "get_all_car_rental_companies_in_city",
+          "full_tokens": 4367,
+          "latest_group_tokens": 4367
+        },
+        {
+          "round": 2,
+          "tool": "get_rating_reviews_for_car_rental",
+          "full_tokens": 4514,
+          "latest_group_tokens": 4456
+        },
+        {
+          "round": 3,
+          "tool": "get_car_price_per_day",
+          "full_tokens": 4570,
+          "latest_group_tokens": 4365
+        },
+        {
+          "round": 4,
+          "tool": "get_all_hotels_in_city",
+          "full_tokens": 4626,
+          "latest_group_tokens": 4365
+        },
+        {
+          "round": 5,
+          "tool": "get_rating_reviews_for_hotels",
+          "full_tokens": 5152,
+          "latest_group_tokens": 4835
+        },
+        {
+          "round": 6,
+          "tool": "get_hotels_prices",
+          "full_tokens": 5240,
+          "latest_group_tokens": 4397
+        },
+        {
+          "round": 7,
+          "tool": "get_all_restaurants_in_city",
+          "full_tokens": 5324,
+          "latest_group_tokens": 4393
+        },
+        {
+          "round": 8,
+          "tool": "get_rating_reviews_for_restaurants",
+          "full_tokens": 6117,
+          "latest_group_tokens": 5102
+        },
+        {
+          "round": 9,
+          "tool": "get_price_for_restaurants",
+          "full_tokens": 6167,
+          "latest_group_tokens": 4359
+        }
+      ],
+      "reference_only_never_an_agent_input": true
+    }
+  ],
+  "expected_episodes": 18,
+  "budget_seconds": 7200,
+  "runtime_configs_sha256": {
+    "f16": "9b35d6cd13894b7c90d163c355759c2e82eb16ec1a86f57f5cdddb116af76a47",
+    "q8": "f35e097e79c8687ff4a4cd0496bdf25bbfb5d78ee210f78424519c81a9284857",
+    "q4": "8a4e2fd8e8b0d1eae51922375c4c6d4a6954a8c5fd6da6def360666c3644e0cb",
+    "summarizer": "ed9ef5cd7b19900577866985617c2ee0651e64cc6339b636bffa75fbf61616b1"
+  },
+  "weights": {
+    "f16": {
+      "sha256": "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    },
+    "q8": {
+      "sha256": "b87e0ec0181c70bd6ff13f8ab55dd4b3fda4544b5d0ad6a7af8cc570db6f4e15",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    },
+    "q4": {
+      "sha256": "3c2293ffafd41b5d1cbe56d529dddb218234f133edac16cb0567ebffeffca659",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    }
+  },
+  "runs": [
+    {
+      "run_id": "f16-full-travel17",
+      "precision": "f16",
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7680
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-travel17",
+      "precision": "f16",
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-travel17",
+      "precision": "f16",
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1,
+          "summary_max_tokens": 256,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 256,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-full-travel17",
+      "precision": "q8",
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7680
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-truncate-travel17",
+      "precision": "q8",
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-summary-travel17",
+      "precision": "q8",
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1,
+          "summary_max_tokens": 256,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 256,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-full-travel17",
+      "precision": "q4",
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7680
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-truncate-travel17",
+      "precision": "q4",
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-summary-travel17",
+      "precision": "q4",
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_17"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-budget-spike-v1/runs",
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1,
+          "summary_max_tokens": 256,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 256,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-spike/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    }
+  ]
+}

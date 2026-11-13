@@ -1,6 +1,11 @@
 # Phase 2 preparation and execution order
 
-Status: preparation checkpoint, 2026-11-12. No model episodes collected and no
+Historical preparation checkpoint, 2026-11-12. The subsequent
+[batch execution plan](phase2-batches.md) adopts Q8 and starts the 18-episode
+development spike. Asset and implementation observations below describe this
+earlier checkpoint.
+
+Status at preparation: No model episodes collected and no
 formal evaluation manifest frozen. This plan implements the course's controlled
 quantization/context study; Phase 1 supplies background and development evidence.
 The roadmap now separates the broad known-task comparison from untouched-task

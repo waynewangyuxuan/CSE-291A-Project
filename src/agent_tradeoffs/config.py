@@ -110,29 +110,47 @@ class RunnerSettings(Settings):
 
 class FullContext(Settings):
     policy: Literal["full"] = "full"
+    max_context_tokens: int | None = Field(default=None, gt=0)
 
 
 class TruncateContext(Settings):
     policy: Literal["truncate"]
-    trigger_rounds: int = Field(ge=2)
+    trigger_rounds: int | None = Field(default=None, ge=2)
+    max_context_tokens: int | None = Field(default=None, gt=0)
     keep_rounds: int = Field(default=1, ge=1)
 
     @model_validator(mode="after")
     def archive_exists(self):
-        if self.keep_rounds >= self.trigger_rounds:
+        if (self.trigger_rounds is None) == (self.max_context_tokens is None):
+            raise ValueError("Choose exactly one of trigger_rounds and max_context_tokens")
+        if self.trigger_rounds is not None and self.keep_rounds >= self.trigger_rounds:
             raise ValueError("keep_rounds must be smaller than trigger_rounds")
         return self
 
 
 class SummaryContext(TruncateContext):
-    policy: Literal["long_summary", "short_summary", "short_summary_rag"]
+    policy: Literal["summary", "long_summary", "short_summary", "short_summary_rag"]
     summary_max_tokens: int = Field(gt=0)
-    summary_fraction: float = Field(gt=0, lt=1)
+    summary_fraction: float | None = Field(default=None, gt=0, lt=1)
+    summarizer_context_tokens: int | None = Field(default=None, gt=0)
     summarizer: ModelSettings
     runtime_metadata_path: Path
     search_max_calls: int = Field(default=4, ge=1)
     search_max_tokens: int = Field(default=512, ge=32)
     search_top_k: int = Field(default=3, ge=1, le=10)
+
+    @model_validator(mode="after")
+    def summary_contract(self):
+        if self.max_context_tokens is not None:
+            if self.policy != "summary" or self.summary_fraction is not None:
+                raise ValueError("Token-budget summaries use policy summary and a fixed output cap")
+            if self.summarizer_context_tokens is None:
+                raise ValueError("Token-budget summaries require a summarizer context limit")
+            if self.summarizer_context_tokens <= self.summary_max_tokens:
+                raise ValueError("Summarizer context must exceed its output cap")
+        elif self.policy == "summary" or self.summary_fraction is None:
+            raise ValueError("Historical summary policies require a fractional round-based budget")
+        return self
 
 
 ContextSettings = Annotated[
@@ -150,6 +168,13 @@ class ExperimentConfig(Settings):
     runner: RunnerSettings = Field(default_factory=RunnerSettings)
     context: ContextSettings = Field(default_factory=FullContext)
     prompt: PromptSettings = Field(default_factory=PromptSettings)
+
+    @model_validator(mode="after")
+    def completion_fits_context(self):
+        budget = self.context.max_context_tokens
+        if budget is not None and budget <= self.model.max_tokens:
+            raise ValueError("Context limit must exceed the completion token reserve")
+        return self
 
     def identity_config(self) -> dict[str, Any]:
         value = self.model_dump(mode="json")

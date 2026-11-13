@@ -11,7 +11,12 @@ def full_context(messages: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return deepcopy(messages)
 
 
-def exposed_vectors(messages: list[dict[str, Any]], injections: dict[str, str]) -> list[str]:
+def exposed_vectors(
+    messages: list[dict[str, Any]],
+    injections: dict[str, str],
+    *,
+    roles: tuple[str, ...] = ("tool",),
+) -> list[str]:
     """Find payloads in tool messages actually sent to the model.
 
     YAML tool formatting can change whitespace and escape quotes. Match raw
@@ -31,10 +36,12 @@ def exposed_vectors(messages: list[dict[str, Any]], injections: dict[str, str]) 
 
     tool_text = []
     for message in messages:
-        if message["role"] != "tool":
+        if message["role"] not in roles:
             continue
         content = str(message.get("content") or "")
         tool_text.append(" ".join(content.split()))
+        if message.get("tool_calls"):
+            tool_text.extend(" ".join(value.split()) for value in strings(message["tool_calls"]))
         try:
             tool_text.extend(" ".join(value.split()) for value in strings(yaml.safe_load(content)))
         except yaml.YAMLError:

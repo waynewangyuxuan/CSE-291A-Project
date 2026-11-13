@@ -76,6 +76,10 @@ phase2-qualification: ## Audit new Phase 2 candidate pairs offline; no model cal
 phase2-model:
 	$(UV) run --frozen python scripts/prepare-q4.py
 
+.PHONY: phase2-model-q8
+phase2-model-q8: ## Derive verified Q8_0 from the same F16 source
+	$(UV) run --frozen python scripts/prepare-q4.py --quantization Q8_0
+
 phase2-prepare: ## Freeze the historical Phase 2 pilot configuration
 	$(UV) run --frozen python scripts/phase2_first_pass.py prepare
 
@@ -85,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -144,3 +148,14 @@ phase1-recovery-package: ## Rebuild the archive from restored working raw files
 
 phase1-recovery-verify: ## Verify the committed 600+54-episode archive without extracting it
 	$(UV) run --frozen python scripts/package_phase1_recovery.py --check-only
+
+.PHONY: phase2-spike-prepare phase2-spike phase2-spike-status
+
+phase2-spike-prepare: ## Freeze the development-only 18-episode token-budget spike
+	$(UV) run --frozen python scripts/phase2_budget_spike.py prepare
+
+phase2-spike: ## Run or compatibly resume the frozen development spike
+	$(UV) run --frozen python scripts/phase2_budget_spike.py run
+
+phase2-spike-status: ## Show finalized spike episodes and errors
+	$(UV) run --frozen python scripts/phase2_budget_spike.py status

@@ -135,6 +135,7 @@ def implementation_identity() -> dict[str, Any]:
         "memory.py",
         "reporting.py",
         "prompt_policy.py",
+        "request_tokens.py",
         "runner.py",
         "runtime.py",
     ):
@@ -398,6 +399,7 @@ def run_episode(
             tool_calls=agent.tool_calls,
             tool_errors=agent.tool_errors,
             usage=agent.usage,
+            context_tokenizer_seconds=agent.counter.seconds if agent.counter else 0,
             finish_reason=agent.finish_reason,
             observed_injection_vectors=sorted(agent.observed_vectors),
         )

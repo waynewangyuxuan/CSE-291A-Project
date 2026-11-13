@@ -142,3 +142,7 @@ and research-analysis tools. Their original plans and input identities remain
 frozen. Read each linked protocol before running a historical driver: some
 require original raw evidence and collection-machine paths that are unavailable.
 This limitation does not affect offline development checks or report rebuilding.
+
+For the current controlled study, use the [Phase 2 batch plan](phase2-batches.md)
+and `make phase2-spike-status`. The historical `make phase2` target is a different
+pilot; it does not launch the new study.

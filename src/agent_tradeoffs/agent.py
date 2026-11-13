@@ -19,6 +19,7 @@ from agent_tradeoffs.config import ExperimentConfig, SummaryContext
 from agent_tradeoffs.context import exposed_vectors
 from agent_tradeoffs.memory import EpisodeMemory, MemoryServices
 from agent_tradeoffs.prompt_policy import PromptPolicy, prompt_identity, system_prompt
+from agent_tradeoffs.request_tokens import RequestTokenCounter
 
 
 class EpisodeTimeoutError(TimeoutError):
@@ -104,6 +105,14 @@ class LocalAgent(BasePipelineElement):
             if isinstance(config.context, SummaryContext)
             else None,
         )
+        self.counter = (
+            RequestTokenCounter(
+                config.model.base_url, episode_dir / "context-requests.jsonl", self.remaining
+            )
+            if config.context.max_context_tokens is not None
+            else None
+        )
+        self.literal_exposure_history: set[str] = set()
 
     def remaining(self) -> float:
         remaining = self.deadline - time.monotonic()
@@ -127,7 +136,22 @@ class LocalAgent(BasePipelineElement):
             "finish_reason": self.finish_reason,
             "observed_injection_vectors": sorted(self.observed_vectors),
             "exposure_match_method": "normalized_whitespace_match_raw_or_yaml_decoded_tool_strings",
+            "context_tokenizer_seconds": self.counter.seconds if self.counter else 0,
         }
+
+    def request_payload(self, messages, tools):
+        payload = {
+            "model": self.config.model.model,
+            "messages": messages,
+            "temperature": self.config.model.temperature,
+            "max_tokens": self.config.model.max_tokens,
+            "seed": self.config.model.seed,
+            "stream": False,
+            **self.config.model.extra_body,
+        }
+        if tools:
+            payload.update(tools=tools, tool_choice="auto")
+        return payload
 
     def query(
         self, query: str, runtime: Any, env: Any, messages: Any = (), extra_args: Any = None
@@ -160,23 +184,28 @@ class LocalAgent(BasePipelineElement):
             raise ValueError("Benchmark tool collides with reserved history search tool")
         tools.extend(self.memory.tools)
         while True:
+            transcript = [to_openai_message(message) for message in self.messages]
             request_messages = self.memory.prepare(
-                [to_openai_message(message) for message in self.messages]
+                transcript,
+                measure=(
+                    (lambda view: self.counter.count(self.request_payload(view, tools)))
+                    if self.counter is not None
+                    else None
+                ),
+                output_tokens=self.config.model.max_tokens,
             )
             self.observed_vectors.update(exposed_vectors(request_messages, self.injections))
-            # extra_body is flattened into the HTTP JSON payload by the SDK. Save
-            # that exact merged payload (excluding authentication headers).
-            payload = {
-                "model": self.config.model.model,
-                "messages": request_messages,
-                "temperature": self.config.model.temperature,
-                "max_tokens": self.config.model.max_tokens,
-                "seed": self.config.model.seed,
-                "stream": False,
-                **self.config.model.extra_body,
-            }
-            if tools:
-                payload.update(tools=tools, tool_choice="auto")
+            payload = self.request_payload(request_messages, tools)
+            if self.counter is not None:
+                visible = exposed_vectors(
+                    request_messages, self.injections, roles=("system", "user", "assistant", "tool")
+                )
+                self.memory.events[-1].update(
+                    literal_payload_visible_vectors=visible,
+                    previously_visible_vectors=sorted(self.literal_exposure_history),
+                    literal_match_is_not_semantic_retention=True,
+                )
+                self.literal_exposure_history.update(visible)
             request_index = self.requests
             self.requests += 1
             timeout = min(self.config.runner.request_timeout_seconds, self.remaining())
@@ -226,6 +255,14 @@ class LocalAgent(BasePipelineElement):
             for key in ("prompt_tokens", "completion_tokens", "total_tokens"):
                 if isinstance(usage.get(key), int):
                     self.usage[key] = self.usage.get(key, 0) + usage[key]
+            if self.counter is not None:
+                decision = self.memory.events[-1]
+                decision["reported_prompt_tokens"] = usage.get("prompt_tokens")
+                decision["token_count_matches"] = (
+                    usage.get("prompt_tokens") == decision["after_tokens"]
+                )
+                if not decision["token_count_matches"]:
+                    raise RuntimeError("Rendered prompt token count differs from inference usage")
             if not response_data.get("choices"):
                 raise InvalidModelOutputError("Completion contains no choices")
             choice = response_data["choices"][0]

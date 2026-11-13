@@ -10,7 +10,7 @@ because frozen export/provenance records and imports refer to them.
 | --- | --- |
 | [bootstrap-runtime.sh](bootstrap-runtime.sh) | Build the pinned llama.cpp runtime |
 | [prepare-f16.py](prepare-f16.py) | Prepare the verified BF16-to-F16 model artifact |
-| [prepare-q4.py](prepare-q4.py) | Derive the Q4 artifact used by the context pilot |
+| [prepare-q4.py](prepare-q4.py) | Derive same-source Q4_K_M or Q8_0 artifacts; defaults to the historical Q4 path |
 | [check_repository.py](check_repository.py) | Check navigation links and coverage of this script index |
 | [package_phase1_recovery.py](package_phase1_recovery.py) | Package restored recovery evidence or verify the committed archive |
 
@@ -81,6 +81,7 @@ and `make phase2-qualification`.
 
 | Script | Purpose |
 | --- | --- |
+| [phase2_budget_spike.py](phase2_budget_spike.py) | Freeze, run and inspect the development-only 18-episode budget spike |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
 
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task
