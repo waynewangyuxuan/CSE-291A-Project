@@ -81,6 +81,7 @@ and `make phase2-qualification`.
 
 | Script | Purpose |
 | --- | --- |
+| [audit_phase2_spike.py](audit_phase2_spike.py) | Verify exact sent context views, costs and raw evidence for the development spike |
 | [phase2_budget_spike.py](phase2_budget_spike.py) | Freeze, run and inspect the development-only 18-episode budget spike |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
 

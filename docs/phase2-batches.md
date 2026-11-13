@@ -23,13 +23,23 @@ main/confirmation matrix: 1,188 before retries and targeted diagnostics. This is
 a planning envelope, not a promise that all nine candidates qualify. Development
 membership and the 54-task main set still require the task-contract checkpoint.
 Travel 17 is now committed to development and must not enter confirmation/main.
+A [source-only scorer follow-up](../results/phase2-preparation/semantic-followup.md)
+flags Workspace 13/25: both accept incomplete legitimate behavior. If excluded,
+confirmation would be at most seven currently reviewed candidates (126 episodes);
+no revised cohort is frozen yet.
 There are more tasks in upstream AgentDojo; 60 was our selected Phase 1 workload,
 not the entire benchmark. Phase 1 ran 600 episodes on those 60 tasks.
 
 ## Current executable batch
 
+The [reviewed B1 checkpoint](../results/phase2-spike/README.md) contains all 18
+finalized episodes and explains why development calibration is still required.
+
 [The frozen spike plan](../configs/phase2-spike/plan.json) contains all 18 episode
 configurations. Run `make phase2-spike`; inspect `make phase2-spike-status`.
+The run target first verifies all three local artifacts and registers their
+runtime verification manifests. Quantization provenance alone does not satisfy
+the existing service launch gate.
 Only this development batch is executable. Later stages proceed after their
 technical checkpoints, without changing main results in response to observations.
 
@@ -58,7 +68,8 @@ not establish semantic removal: trace review must identify paraphrased malicious
 instructions and distinguish removal before first exposure from later removal.
 Both summary and agent tokens/time are counted. Each run also samples aggregate
 RSS of the two resident inference services plus the orchestrator; this is sampled
-process RSS, not GPU allocated memory. The fixed summarizer remains resident for
+process RSS, not GPU allocated memory or unique physical RAM; summing RSS can
+double-count shared pages. The fixed summarizer remains resident for
 Full and Truncate too. Report component memory as well as this controlled shared
 resident setup; it is not the minimum possible deployment footprint per policy.
 

@@ -4,9 +4,12 @@ Run commands from the repository root. `make` or `make help` lists the supported
 entry points. Ordinary development, report generation, and live inference have
 separate requirements.
 
-For the new Phase 2 study, follow the [preparation plan](phase2-preparation.md).
-`make phase2-qualification` audits candidates without model calls. The existing
-`phase2-prepare` and `phase2` commands continue to run the historical pilot.
+For the new Phase 2 study, follow the [batch plan](phase2-batches.md) and the
+[reviewed development spike](../results/phase2-spike/README.md).
+`make phase2-spike-status` shows the 18-episode development collection; the formal
+protocol is still pending calibration. `make phase2-qualification` audits
+candidates without model calls. `phase2-prepare` and `phase2` remain historical
+pilot commands.
 
 ## Development checks: no model required
 
@@ -142,7 +145,3 @@ and research-analysis tools. Their original plans and input identities remain
 frozen. Read each linked protocol before running a historical driver: some
 require original raw evidence and collection-machine paths that are unavailable.
 This limitation does not affect offline development checks or report rebuilding.
-
-For the current controlled study, use the [Phase 2 batch plan](phase2-batches.md)
-and `make phase2-spike-status`. The historical `make phase2` target is a different
-pilot; it does not launch the new study.

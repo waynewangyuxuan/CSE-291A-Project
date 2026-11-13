@@ -30,3 +30,7 @@ Regenerate with `make phase2-qualification`; the default output is a separate lo
 artifact. Identical reruns are allowed, but changed evidence requires a new path.
 The committed JSON is the snapshot from this preparation checkpoint. It is not an
 estimate of task utility, attack success, false refusals, latency, tokens or memory.
+
+A later [source-only semantic follow-up](semantic-followup.md) records accepted
+counterexamples for Workspace 13/25. It leaves this mechanical checkpoint intact
+and flags the candidates before any model-based confirmation.
