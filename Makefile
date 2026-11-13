@@ -149,12 +149,17 @@ phase1-recovery-package: ## Rebuild the archive from restored working raw files
 phase1-recovery-verify: ## Verify the committed 600+54-episode archive without extracting it
 	$(UV) run --frozen python scripts/package_phase1_recovery.py --check-only
 
-.PHONY: phase2-spike-prepare phase2-spike phase2-spike-status
+.PHONY: phase2-spike-prepare phase2-spike-assets phase2-spike phase2-spike-status
 
 phase2-spike-prepare: ## Freeze the development-only 18-episode token-budget spike
 	$(UV) run --frozen python scripts/phase2_budget_spike.py prepare
 
-phase2-spike: ## Run or compatibly resume the frozen development spike
+phase2-spike-assets: ## Verify local weight hashes and register runtime manifests
+	$(UV) run --frozen agent-tradeoffs model download --config configs/phase2-spike/runtime-f16.toml > /dev/null
+	$(UV) run --frozen agent-tradeoffs model download --config configs/phase2-spike/runtime-q8.toml > /dev/null
+	$(UV) run --frozen agent-tradeoffs model download --config configs/phase2-spike/runtime-q4.toml > /dev/null
+
+phase2-spike: phase2-spike-assets ## Run or compatibly resume the frozen development spike
 	$(UV) run --frozen python scripts/phase2_budget_spike.py run
 
 phase2-spike-status: ## Show finalized spike episodes and errors
