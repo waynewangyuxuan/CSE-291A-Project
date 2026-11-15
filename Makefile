@@ -89,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -164,3 +164,15 @@ phase2-spike: phase2-spike-assets ## Run or compatibly resume the frozen develop
 
 phase2-spike-status: ## Show finalized spike episodes and errors
 	$(UV) run --frozen python scripts/phase2_budget_spike.py status
+
+.PHONY: phase2-calibration-prepare phase2-calibration phase2-calibration-status
+
+phase2-calibration-prepare: ## Freeze 12 development episodes after profile and summary replay
+	$(UV) run --frozen python scripts/phase2_calibration.py prepare
+
+phase2-calibration: ## Run or compatibly resume the frozen development calibration
+	$(UV) run --frozen agent-tradeoffs model download --config configs/phase2-calibration/runtime-f16.toml > /dev/null
+	$(UV) run --frozen python scripts/phase2_calibration.py run
+
+phase2-calibration-status: ## Show finalized calibration episodes
+	$(UV) run --frozen python scripts/phase2_calibration.py status

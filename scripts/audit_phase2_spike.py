@@ -14,7 +14,7 @@ from agentdojo.functions_runtime import FunctionCall
 from agent_tradeoffs.agent import to_openai_message
 from agent_tradeoffs.config import ExperimentConfig, stable_hash
 from agent_tradeoffs.context import exposed_vectors
-from agent_tradeoffs.memory import EpisodeMemory
+from agent_tradeoffs.memory import EpisodeMemory, canonical_summary_source
 from agent_tradeoffs.reporting import atomic_json
 from agent_tradeoffs.runner import plan_episodes
 
@@ -169,9 +169,10 @@ def verify_episode(directory, config, manifest):
                         "memory": previous_summary,
                     }
                 ] + delta
-            require(
-                json.loads(encoded) == delta, "Summary reread original prefix or changed source"
-            )
+            if "call_id_mapping" in item:
+                delta, mapping = canonical_summary_source(delta)
+                require(item["call_id_mapping"] == mapping, "Summary call-ID mapping differs")
+            require(json.loads(encoded) == delta, "Summary reread prefix or changed source")
             boundary, previous_summary = compact["archive_boundary"], compact["summary"]
     agent_usage = {
         key: sum(item["response"]["usage"][key] for item in responses.values())
