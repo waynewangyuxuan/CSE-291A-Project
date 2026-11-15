@@ -14,7 +14,7 @@ from agentdojo.functions_runtime import FunctionCall
 from agent_tradeoffs.agent import to_openai_message
 from agent_tradeoffs.config import ExperimentConfig, stable_hash
 from agent_tradeoffs.context import exposed_vectors
-from agent_tradeoffs.memory import EpisodeMemory
+from agent_tradeoffs.memory import EpisodeMemory, canonical_summary_source
 from agent_tradeoffs.reporting import atomic_json
 from agent_tradeoffs.runner import plan_episodes
 
@@ -169,9 +169,10 @@ def verify_episode(directory, config, manifest):
                         "memory": previous_summary,
                     }
                 ] + delta
-            require(
-                json.loads(encoded) == delta, "Summary reread original prefix or changed source"
-            )
+            if "call_id_mapping" in item:
+                delta, mapping = canonical_summary_source(delta)
+                require(item["call_id_mapping"] == mapping, "Summary call-ID mapping differs")
+            require(json.loads(encoded) == delta, "Summary reread prefix or changed source")
             boundary, previous_summary = compact["archive_boundary"], compact["summary"]
     agent_usage = {
         key: sum(item["response"]["usage"][key] for item in responses.values())
@@ -221,8 +222,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--partial", action="store_true")
+    parser.add_argument("--plan", type=Path, default=Path("configs/phase2-spike/plan.json"))
+    parser.add_argument(
+        "--annotations", type=Path, default=Path("results/phase2-spike/trace-review.csv")
+    )
     args = parser.parse_args()
-    plan_path = Path("configs/phase2-spike/plan.json")
+    plan_path = args.plan
     plan = json.loads(plan_path.read_text())
     rows = []
     for entry in plan["runs"]:
@@ -252,18 +257,40 @@ def main():
             episode_dir = directory / "episodes" / episode["episode_id"]
             if not (episode_dir / "compression.json").exists() and args.partial:
                 continue
-            rows.append({"run": entry["run_id"], **verify_episode(episode_dir, config, manifest)})
+            rows.append(
+                {
+                    "run": entry["run_id"],
+                    "suite": config.experiment.suite,
+                    "user_task_id": episode["user_task_id"],
+                    **verify_episode(episode_dir, config, manifest),
+                }
+            )
     if not args.partial:
         require(len(rows) == plan["expected_episodes"], "Incomplete spike")
-    require(
-        len({digest for row in rows for digest in row["tool_schema_hashes"]}) <= 1,
-        "Tool schemas differ across experiment arms",
-    )
-    for condition in ("clean", "attack"):
-        selected = [row for row in rows if row["condition"] == condition]
+    for suite in {row["suite"] for row in rows}:
+        require(
+            len(
+                {
+                    digest
+                    for row in rows
+                    if row["suite"] == suite
+                    for digest in row["tool_schema_hashes"]
+                }
+            )
+            <= 1,
+            "Tool schemas differ across experiment arms",
+        )
+    for suite, task, condition in {
+        (row["suite"], row["user_task_id"], row["condition"]) for row in rows
+    }:
+        selected = [
+            row
+            for row in rows
+            if (row["suite"], row["user_task_id"], row["condition"]) == (suite, task, condition)
+        ]
         for field in ("attack_payload_sha256", "initial_environment_sha256"):
             require(len({row[field] for row in selected}) <= 1, f"Uncontrolled {field}")
-    annotations = Path("results/phase2-spike/trace-review.csv")
+    annotations = args.annotations
     reviews = list(csv.DictReader(annotations.open())) if annotations.exists() else []
     indexed = {(row["run_id"], row["episode_id"]): row for row in reviews}
     require(len(indexed) == len(reviews), "Duplicate trace review")

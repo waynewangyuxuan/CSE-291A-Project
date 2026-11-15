@@ -7,7 +7,11 @@ from types import SimpleNamespace
 import pytest
 
 from agent_tradeoffs.config import ExperimentConfig
-from agent_tradeoffs.memory import ContextBudgetExceededError, EpisodeMemory
+from agent_tradeoffs.memory import (
+    ContextBudgetExceededError,
+    EpisodeMemory,
+    canonical_summary_source,
+)
 
 
 def transcript(rounds=6):
@@ -131,6 +135,39 @@ def test_configuration_rejects_mixed_budget_and_round_triggers():
         ExperimentConfig.model_validate(
             {"context": {"policy": "truncate", "max_context_tokens": 8000, "trigger_rounds": 2}}
         )
+
+
+def test_summary_inputs_ignore_random_ids_without_changing_content_or_source():
+    original = [{"message_id": i, **m} for i, m in enumerate(transcript(2)[2:], 2)]
+    original[1]["content"] = "Identifier c0 is part of the source text."
+    renamed = deepcopy(original)
+    for message in renamed:
+        for call in message.get("tool_calls") or []:
+            call["id"] = "random-" + call["id"]
+        if "tool_call_id" in message:
+            message["tool_call_id"] = "random-" + message["tool_call_id"]
+    source, mapping = canonical_summary_source(original)
+    assert source == canonical_summary_source(renamed)[0]
+    assert mapping == [
+        {"original": "c0", "canonical": "message_2_call_0"},
+        {"original": "c1", "canonical": "message_4_call_0"},
+    ]
+    assert source[1]["content"] == original[1]["content"]
+    assert original[0]["tool_calls"][0]["id"] == "c0"
+    assert source[0]["tool_calls"][0]["id"] == source[1]["tool_call_id"]
+
+
+def test_summary_id_mapping_preserves_parallel_results_and_previous_memory():
+    previous = {"kind": "previous_summary", "role": "tool", "memory": "source c0: old fact"}
+    source = [{"message_id": i, **m} for i, m in enumerate(transcript(1)[2:], 2)]
+    source[0]["tool_calls"].append(
+        {"id": "other", "type": "function", "function": {"name": "read", "arguments": "{}"}}
+    )
+    source.append({"message_id": 4, "role": "tool", "tool_call_id": "other", "content": "new"})
+    canonical, _ = canonical_summary_source([previous] + source)
+    assert canonical[0] == previous
+    assert canonical[1]["tool_calls"][1]["id"] == "message_2_call_1"
+    assert canonical[3]["tool_call_id"] == "message_2_call_1"
 
 
 def test_inference_token_mismatch_remains_an_unknown_execution_error(tmp_path, monkeypatch):

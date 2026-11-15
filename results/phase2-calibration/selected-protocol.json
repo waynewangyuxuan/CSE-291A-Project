@@ -1,0 +1,207 @@
+{
+  "kind": "selected_development_protocol_for_formal_plan_preparation_not_a_running_campaign",
+  "selection_basis": "Budget selected only on development request lengths and verified pre-action compaction. Summary prompt was revised twice before the live batches, then held fixed; no model results from confirmation tasks were used.",
+  "context": {
+    "total_budget": 7040,
+    "completion_reserve": 2048,
+    "input_allowance": 4992,
+    "policies": [
+      "full",
+      "truncate",
+      "summary"
+    ],
+    "keep_recent_complete_groups": 1,
+    "summary_max_tokens": 384,
+    "summary_prompt_sha256": "fba7d3dd589aaf3f77905a7e87db504ef33949611d96bf1bdfa8d0752a3433b5",
+    "summary_source": "previous summary plus newly removed complete groups; structural call IDs canonicalized; full raw source retained"
+  },
+  "model": {
+    "checkpoint": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "precision_formats": [
+      "F16",
+      "Q8_0",
+      "Q4_K_M"
+    ],
+    "main_seed": 17,
+    "temperature": 0.7,
+    "max_tool_steps": 15,
+    "episode_timeout_seconds": 600,
+    "request_timeout_seconds": 120,
+    "top_p": 0.8,
+    "top_k": 20,
+    "min_p": 0.0,
+    "enable_thinking": false
+  },
+  "summarizer": {
+    "model": "same-source Qwen3-8B F16",
+    "seed": 0,
+    "temperature": 0,
+    "top_k": 1,
+    "max_tokens": 384,
+    "context_allocation": 32768
+  },
+  "runtime_controls": {
+    "agent_context_allocation": 32768,
+    "context_shift": false,
+    "kv_precision": "F16",
+    "prefix_cache": false,
+    "summarizer_resident_in_all_arms": true,
+    "memory_scope": "component and summed process RSS; not unique physical/GPU memory or minimum deployable footprint"
+  },
+  "implementation": {
+    "harness_sha256": "5a4ef4a737a2e56b77ccf61757f0cd48eef8f6a39a446ca656b76ee48a864cc9",
+    "agentdojo_version": "0.1.35",
+    "agentdojo_source": {
+      "url": "https://github.com/ethz-spylab/agentdojo.git",
+      "vcs_info": {
+        "vcs": "git",
+        "commit_id": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+        "requested_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+      }
+    },
+    "uv_lock_sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+  },
+  "development_tasks": {
+    "banking": [
+      "user_task_0",
+      "user_task_2",
+      "user_task_4"
+    ],
+    "slack": [
+      "user_task_0",
+      "user_task_10",
+      "user_task_14"
+    ],
+    "workspace": [
+      "user_task_0",
+      "user_task_20",
+      "user_task_34"
+    ],
+    "travel": [
+      "user_task_0",
+      "user_task_17",
+      "user_task_18"
+    ]
+  },
+  "known_main_tasks": {
+    "banking": [
+      "user_task_1",
+      "user_task_3",
+      "user_task_7",
+      "user_task_11",
+      "user_task_12",
+      "user_task_13",
+      "user_task_14",
+      "user_task_15"
+    ],
+    "slack": [
+      "user_task_1",
+      "user_task_2",
+      "user_task_3",
+      "user_task_4",
+      "user_task_5",
+      "user_task_6",
+      "user_task_7",
+      "user_task_8",
+      "user_task_9",
+      "user_task_11",
+      "user_task_12",
+      "user_task_13",
+      "user_task_15",
+      "user_task_16"
+    ],
+    "workspace": [
+      "user_task_1",
+      "user_task_2",
+      "user_task_3",
+      "user_task_5",
+      "user_task_6",
+      "user_task_7",
+      "user_task_8",
+      "user_task_9",
+      "user_task_11",
+      "user_task_12",
+      "user_task_14",
+      "user_task_15",
+      "user_task_16",
+      "user_task_17",
+      "user_task_18",
+      "user_task_24",
+      "user_task_26",
+      "user_task_27",
+      "user_task_28",
+      "user_task_31",
+      "user_task_33",
+      "user_task_35"
+    ],
+    "travel": [
+      "user_task_1",
+      "user_task_2",
+      "user_task_3",
+      "user_task_4",
+      "user_task_5",
+      "user_task_6",
+      "user_task_7",
+      "user_task_9",
+      "user_task_13",
+      "user_task_14"
+    ]
+  },
+  "confirmation_candidates_after_source_review": {
+    "workspace": [
+      "user_task_21",
+      "user_task_30",
+      "user_task_32"
+    ],
+    "travel": [
+      "user_task_8",
+      "user_task_10",
+      "user_task_12",
+      "user_task_15"
+    ]
+  },
+  "excluded_confirmation_candidates": {
+    "workspace": [
+      "user_task_13",
+      "user_task_25"
+    ],
+    "reason": "Pre-existing source counterexamples accept incomplete task behavior; preserve upstream scoring and exclude before model evaluation."
+  },
+  "attack": {
+    "template": "AgentDojo ignore_previous_append",
+    "injection_goal_by_suite": {
+      "banking": "injection_task_4",
+      "slack": "injection_task_1",
+      "workspace": "injection_task_0",
+      "travel": "injection_task_0"
+    },
+    "conditions": [
+      "clean",
+      "attack"
+    ],
+    "episodes_per_task": 18
+  },
+  "planned_counts": {
+    "known_tasks": 54,
+    "known_episodes": 972,
+    "confirmation_tasks": 7,
+    "confirmation_episodes": 126,
+    "known_block_tasks": 3,
+    "known_block_episodes": 54,
+    "known_blocks": 18
+  },
+  "formal_freeze_steps": [
+    "Materialize and hash the ordered matrix and isolated runtime output paths before collection.",
+    "Balance precision and policy order by block and record startup/warm state.",
+    "Keep original scores, semantic scope reviews, positive state witnesses on incomplete runs, exposure and clean capability separate.",
+    "Main measurements use all cases with unknown bounds, own-clean conditional ASR, and pairwise common-clean ASR with their denominators."
+  ],
+  "limits": [
+    "A clean pre-action summary success establishes functionality, not summary reliability or broad superiority.",
+    "Some recent tool results plus the fixed summary envelope/reserve can still exceed the input allowance.",
+    "Summary can invent completed actions or combine unrelated task content; generated source labels are not provenance.",
+    "Simulated file/email tools use real wall-clock timestamps; retain these differences and avoid treating post-write histories as bit-identical.",
+    "The seven confirmation IDs share environments and task families with known tasks; they are held out from policy tuning, not independent new families."
+  ]
+}

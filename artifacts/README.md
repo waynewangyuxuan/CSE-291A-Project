@@ -68,3 +68,13 @@ rendered context requests, raw summaries, runtime snapshots and verification
 proofs. Its [inventory](phase2-spike/manifest.json) records every member hash.
 Weights and runtime binaries are excluded. This is readiness evidence, not the
 formal Phase 2 comparison; see the [reviewed checkpoint](../results/phase2-spike/README.md).
+
+## Phase 2 calibration evidence
+
+[phase2-calibration/evidence.tar.gz](phase2-calibration/evidence.tar.gz) contains
+24 reviewed episodes across three development budgets, 16 summary replay calls,
+exact input/retention records, frozen source/configurations and offline audits.
+The [inventory](phase2-calibration/manifest.json) hashes every member;
+`make phase2-calibration-verify` checks it without inference. Weights and runtime
+binaries are excluded. See the [calibration report](../results/phase2-calibration/README.md)
+for the selected protocol, scorer limitations and scope of the next batches.

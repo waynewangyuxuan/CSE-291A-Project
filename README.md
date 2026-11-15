@@ -14,9 +14,10 @@ success is 92/480, or 55/232 when the paired clean control succeeds.
 Errors retain unknown scores. The [assessment](results/phase1-recovery/evaluation-assessment.md)
 explains the denominators and comparison with the original October baseline.
 
-**Phase 2:** the [18-episode development spike](results/phase2-spike/README.md)
-is collected, reviewed and archived. It identifies summary-quality and scorer
-limitations to resolve before the formal matrix. Follow the [batch plan](docs/phase2-batches.md).
+**Phase 2:** the [development calibration](results/phase2-calibration/README.md)
+adds 24 reviewed episodes and 16 summary replays after the 18-episode spike.
+It selects a 7,040-token context budget and records summary/scorer limitations.
+The formal matrix has not started. Follow the [batch plan](docs/phase2-batches.md).
 
 ## Run a first check
 
