@@ -53,15 +53,19 @@ limitations, not reasons to keep tuning against observed scores. At the larger
 7,168-token check, two Full errors occur after a correct file write; state-goal
 witnesses and official unknown outcomes must remain separate.
 
-Next, materialize/hash the ordered formal matrix and isolated runtime paths,
-balance precision/policy order by block, record startup/warm state, then run the
-first three-task block (54 episodes). No formal episodes have started. Budget,
+The [formal matrix](../configs/phase2-main-v1/README.md) materializes and hashes
+the ordered blocks and isolated runtime paths, balances precision/policy order,
+and records startup/warm state. Start the first three-task block (54 episodes)
+with `make phase2-matrix-launch`; inspect `make phase2-matrix-status`. Budget,
 summary instructions, model checkpoint, tool permissions, task set and scoring
 stay fixed through main and confirmation collection. Both services remain
 resident in all arms; this measures the controlled shared deployment, not each
 policy's minimum footprint. Existing tool-generated wall-clock timestamps are
 retained as source variation. Main/confirmation runtime remains the pinned
 llama.cpp setup used by the spike; inference-engine optimization is separate.
+The launch target starts only the selected block. At completion, automatic
+collection-integrity auditing precedes the separate complete trace-review gate;
+subsequent blocks advance explicitly after their checkpoints.
 
 ## Historical B1 protocol
 

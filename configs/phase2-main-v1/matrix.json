@@ -1,0 +1,157 @@
+{
+  "campaign_id": "phase2-main-v1",
+  "protocol_sha256": "5e03a0fea2e33898ad1cbd1b7f07bae271c29d89fbe8b21b373bc5d191703deb",
+  "template_sha256": "8d86ed6fb70a1124495d35e20911ada29c21e1bd978d030e1d864c50330f280d",
+  "implementation": {
+    "harness_sha256": "5a4ef4a737a2e56b77ccf61757f0cd48eef8f6a39a446ca656b76ee48a864cc9",
+    "agentdojo_version": "0.1.35",
+    "agentdojo_source": {
+      "url": "https://github.com/ethz-spylab/agentdojo.git",
+      "vcs_info": {
+        "vcs": "git",
+        "commit_id": "089ed468cf3ed0322acc66b0211f26d9d90dbf60",
+        "requested_revision": "089ed468cf3ed0322acc66b0211f26d9d90dbf60"
+      }
+    },
+    "uv_lock_sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+  },
+  "driver_sha256": "2057cd9dc5ef509706c83571179649be090adcc3fbc4d7ca8d375e910b6c5302",
+  "runtime_configs_sha256": {
+    "f16": "0eb8db0a8c47862aea4b717b19642071cce6f01b97047480e2651452778f34b3",
+    "q8": "804c6b1751332ac07847f58b882fe8b0176bc2697ec33ea6070785b9a5d3c9ce",
+    "q4": "35201d003d7161e14c625496c014872a5f5cc02b7c4c1000f10bf428134c1b5c",
+    "summarizer": "50a24af2639f864bed9b74a83b42883a92268d484b0c0c1513b65aee48ceaa13"
+  },
+  "ordering": "Interleave suite task lists in their recorded order, then blocks of three. Cycle all six precision permutations; rotate policy permutations by block and precision identity, and task order by block and policy slot. Clean precedes attack.",
+  "warm_state": "No synthetic warmup or prefix cache. Reload agent at each precision change; summarizer remains resident across all arms of a block. Record service launches, pair order and resume boundaries; first request after each reload is cold. This is not randomized independent replication.",
+  "retry_policy": "Finalized errors are retained without automatic retries. Resume preserves interrupted attempts; later infrastructure retries use separate cohorts.",
+  "review_gate": "Collection integrity is automatic; full evidence-bound trace review and analysis remain separate checkpoints.",
+  "blocks": [
+    {
+      "block_id": "main-001",
+      "plan": "configs/phase2-main-v1/main-001.json",
+      "sha256": "2bb54d3bb7b8240310f95e0cdedb310a7ccd5886cc3113b79c7807643e890167",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-002",
+      "plan": "configs/phase2-main-v1/main-002.json",
+      "sha256": "a7027a6b866de88b307691756a18d4a72221bfb58ff898793fe9ec95a9a57ac9",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-003",
+      "plan": "configs/phase2-main-v1/main-003.json",
+      "sha256": "b97848199dd0e7bea76deeda4cb34e19e418a561e8d63ec12cb3baafed1efc2d",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-004",
+      "plan": "configs/phase2-main-v1/main-004.json",
+      "sha256": "cc5b84c8a34db610080da47420cbbdd6e870ad20ebe5f99d823c5d63837e3dbf",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-005",
+      "plan": "configs/phase2-main-v1/main-005.json",
+      "sha256": "64705c53555efa9f877104bde5de32e20b6ffcc70acc34ad9bd0f2e018143517",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-006",
+      "plan": "configs/phase2-main-v1/main-006.json",
+      "sha256": "345d51ea603713d86ad339d0387fa798a644ae35edb3f4f3d0648ce8baaa09c9",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-007",
+      "plan": "configs/phase2-main-v1/main-007.json",
+      "sha256": "d4a3d494f3192aedea1db7cc2491fe7f96abc03e5081efdb8478f6f1a8a69581",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-008",
+      "plan": "configs/phase2-main-v1/main-008.json",
+      "sha256": "e3f2339a232eb3420f29b51f1607e2145efc771a409e01a4cb6e21f5f05199bf",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-009",
+      "plan": "configs/phase2-main-v1/main-009.json",
+      "sha256": "2855f4f492a342ea387ead094bb64dd445cadfb7d677e2b4f10268947dbd0c3d",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-010",
+      "plan": "configs/phase2-main-v1/main-010.json",
+      "sha256": "a90f2c12a7cda223808f521a3d33f8f24ffd5f2e8b1640b793021d87e483e6b1",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-011",
+      "plan": "configs/phase2-main-v1/main-011.json",
+      "sha256": "b5fc78b9b943ee8ba9c0afea852c5f3f91423d316bbd32f967a809958f87709c",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-012",
+      "plan": "configs/phase2-main-v1/main-012.json",
+      "sha256": "52eeb8aa20e6ec0bc8cb90c1c23f08553a02a1561e4a0620a98ff649a0ad4a29",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-013",
+      "plan": "configs/phase2-main-v1/main-013.json",
+      "sha256": "57da813a89ca81152d2987f9760e698e3849d77f75ee3b573c58305ff2d6959f",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-014",
+      "plan": "configs/phase2-main-v1/main-014.json",
+      "sha256": "8f15cfed34bc7c3ec815ee7c8bd68138f931cd66a7ab0fa83e1f786fa2522af8",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-015",
+      "plan": "configs/phase2-main-v1/main-015.json",
+      "sha256": "47567e6d222ce09e1d3d0ef2333fb8d0e663cb393660791630ace857c14fd1e4",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-016",
+      "plan": "configs/phase2-main-v1/main-016.json",
+      "sha256": "c4609771bb227dfa8df10f4266fa8f1d0eac1ab86cbfb85f6eff38a657fe0667",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-017",
+      "plan": "configs/phase2-main-v1/main-017.json",
+      "sha256": "6103884b754c794e7b07a139f36d286fbf287caa68d66fbb19875bdea3faf3ea",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "main-018",
+      "plan": "configs/phase2-main-v1/main-018.json",
+      "sha256": "640b5b18363a2f661c1c036c60003c04f0c10e3acaf69f09b05fcaddf9218fe4",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "confirmation-001",
+      "plan": "configs/phase2-main-v1/confirmation-001.json",
+      "sha256": "9001880a6099c314b3be9ffc60ea8bc8ed307de5eac2d6c31f601114d6f2b0c2",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "confirmation-002",
+      "plan": "configs/phase2-main-v1/confirmation-002.json",
+      "sha256": "744a3da3e4f02d5b79526e5dfc4b5211b33f2855b3834fd1283a922018486e20",
+      "expected_episodes": 54
+    },
+    {
+      "block_id": "confirmation-003",
+      "plan": "configs/phase2-main-v1/confirmation-003.json",
+      "sha256": "262919b85c648a2be18c277a2ee00f3ed7b86e8739a2034996ef9ea548ffb937",
+      "expected_episodes": 18
+    }
+  ]
+}
