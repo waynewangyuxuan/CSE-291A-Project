@@ -353,6 +353,7 @@ def run():
         "implementation": implementation_identity(),
         "driver_sha256": sha256_file(Path(__file__)),
     }
+    ROOT.mkdir(parents=True, exist_ok=True)
     with (ROOT / ".lock").open("a") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         manifest = ROOT / "campaign.json"
@@ -365,11 +366,13 @@ def run():
                 "elapsed_seconds": 0,
             }
         )
-        if state["identity"] != identity:
-            raise ValueError("Resume refused: code or plan changed")
         if state["status"] == "completed":
+            if state["identity"]["plan_sha256"] != identity["plan_sha256"]:
+                raise ValueError("Completed campaign belongs to a different plan")
             print(json.dumps(status()))
             return
+        if state["identity"] != identity:
+            raise ValueError("Resume refused: code or plan changed")
         elapsed = state["elapsed_seconds"] + state.get("reserved_seconds", 0)
         started = time.monotonic()
         owned = []
@@ -438,7 +441,12 @@ def run():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("profile", "replay", "prepare", "run", "status"))
+    parser.add_argument("--plan", type=Path, default=PLAN)
+    parser.add_argument("--output-root", type=Path, default=ROOT)
     args = parser.parse_args()
+    if args.action not in {"run", "status"} and (args.plan != PLAN or args.output_root != ROOT):
+        parser.error("Alternate frozen plans/output roots apply only to run or status")
+    PLAN, ROOT = args.plan, args.output_root
     if args.action == "status":
         print(json.dumps(status(), indent=2))
     else:

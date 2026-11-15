@@ -176,3 +176,11 @@ phase2-calibration: ## Run or compatibly resume the frozen development calibrati
 
 phase2-calibration-status: ## Show finalized calibration episodes
 	$(UV) run --frozen python scripts/phase2_calibration.py status
+
+.PHONY: phase2-calibration-tight phase2-calibration-tight-status
+
+phase2-calibration-tight: ## Run the predeclared six-episode smaller-budget check
+	$(UV) run --frozen python scripts/phase2_calibration.py run --plan configs/phase2-calibration/plan-tight.json --output-root artifacts/phase2-calibration-tight
+
+phase2-calibration-tight-status: ## Show smaller-budget development progress
+	$(UV) run --frozen python scripts/phase2_calibration.py status --plan configs/phase2-calibration/plan-tight.json --output-root artifacts/phase2-calibration-tight
