@@ -1,0 +1,413 @@
+{
+  "kind": "development_calibration_not_formal_evaluation",
+  "development_pool": {
+    "banking": [
+      0,
+      2,
+      4
+    ],
+    "slack": [
+      0,
+      10,
+      14
+    ],
+    "workspace": [
+      0,
+      20,
+      34
+    ],
+    "travel": [
+      0,
+      17,
+      18
+    ]
+  },
+  "selection_basis": "Travel18: eight reference calls and 5565 clean input tokens, to check whether agent-generated history triggers compaction. Workspace34: 5287 tokens over three reference calls, a cross-suite retention/control check. Selection uses workflow and exact reference lengths before new agent outcomes.",
+  "budget_basis": "Keep the spike total budget 7680 (5632 input + 2048 output) while validating 384-token summaries. Largest declared reference latest group is 5102 tokens. Clean compaction is a measured gate, not assumed from reference length.",
+  "profile_sha256": "a029dadfaac2567bdcc87796869e7ab0ec7677ec6b1bb3ce5bbc1d82c2fd73f3",
+  "summary_replay_sha256": "ae377395ec3609fff3d52ed3c82d03d0a4f9469dd2410d48120b1e1c33206608",
+  "runtime_configs_sha256": {
+    "f16": "6fb7f4418f804841f73fb7fd96b45e3e39caf10793b31e43049e860737c2e1ba",
+    "summarizer": "2b3ca7e2e573dbedcd665da56821a8d62964c1d8fc5e6bc93aaa1e0bb235af9b"
+  },
+  "budget_seconds": 5400,
+  "expected_episodes": 12,
+  "runs": [
+    {
+      "run_id": "f16-full-travel18",
+      "suite": "travel",
+      "task_id": 18,
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_18"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7680
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-travel18",
+      "suite": "travel",
+      "task_id": 18,
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_18"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-travel18",
+      "suite": "travel",
+      "task_id": 18,
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_18"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7680,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-full-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7680
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    }
+  ]
+}
