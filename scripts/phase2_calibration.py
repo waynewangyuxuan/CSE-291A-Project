@@ -324,10 +324,10 @@ def status():
                         "status",
                         "utility",
                         "attack_success",
-                        "error",
                         "duration_seconds",
                     )
                 },
+                "error": result.get("error"),
                 "compactions": result["context_memory"]["compactions"],
             }
         )
