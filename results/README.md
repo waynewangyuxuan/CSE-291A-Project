@@ -30,6 +30,7 @@ source snapshots used to derive their publications. They remain attached to
 those results for provenance; reusable implementation belongs in `src/`, and
 active operational scripts are listed in [scripts](../scripts/README.md).
 
-Development checkpoints: [Phase 2 preparation](phase2-preparation/README.md) and
-[Phase 2 budget spike](phase2-spike/README.md). These do not replace the formal
+Development checkpoints: [Phase 2 preparation](phase2-preparation/README.md),
+[Phase 2 budget spike](phase2-spike/README.md), and
+[Phase 2 calibration](phase2-calibration/README.md). These do not replace the formal
 baseline or the historical pilot.

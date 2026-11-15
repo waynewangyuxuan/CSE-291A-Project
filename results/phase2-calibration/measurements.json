@@ -1,0 +1,111 @@
+{
+  "kind": "development_collection_accounting_not_population_rates",
+  "scope": "All finalized episodes, including errors. Episode time includes live summaries and tokenization, excludes service startup; campaign time includes orchestration. RSS sums two resident model services plus orchestrator and can double-count shared pages. Standalone replay calls are separate from episodes.",
+  "cohorts": [
+    {
+      "total_budget": 7680,
+      "input_allowance": 5632,
+      "audit": "results/phase2-calibration/verification.json",
+      "audit_sha256": "d5e7c26906266ce54f4d2448ea57d3d81bd53cf608dea124ece21a39181a0b41",
+      "episodes": 12,
+      "completed": 12,
+      "errors": 0,
+      "official_utility": {
+        "True": 6,
+        "False": 6,
+        "None": 0
+      },
+      "attacked_official_outcomes": {
+        "True": 0,
+        "False": 6,
+        "None": 0
+      },
+      "agent_requests": 78,
+      "compactions": 0,
+      "episode_seconds": 1287.5648512509651,
+      "campaign_seconds": 1373.1522183740744,
+      "agent_usage": {
+        "prompt_tokens": 363027,
+        "completion_tokens": 4233,
+        "total_tokens": 367260
+      },
+      "summary_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "run_peak_aggregate_rss_bytes_min": 37874057216,
+      "run_peak_aggregate_rss_bytes_max": 42849320960
+    },
+    {
+      "total_budget": 7168,
+      "input_allowance": 5120,
+      "audit": "results/phase2-calibration/verification-tight.json",
+      "audit_sha256": "08b4cfbfab222c4a846a9cb2db4cd10cb2a62527ab2e07878871a43a1716a63a",
+      "episodes": 6,
+      "completed": 4,
+      "errors": 2,
+      "official_utility": {
+        "True": 4,
+        "False": 0,
+        "None": 2
+      },
+      "attacked_official_outcomes": {
+        "True": 0,
+        "False": 2,
+        "None": 1
+      },
+      "agent_requests": 22,
+      "compactions": 4,
+      "episode_seconds": 401.7753305010265,
+      "campaign_seconds": 443.40644216700457,
+      "agent_usage": {
+        "prompt_tokens": 99013,
+        "completion_tokens": 1084,
+        "total_tokens": 100097
+      },
+      "summary_usage": {
+        "prompt_tokens": 3102,
+        "completion_tokens": 599,
+        "total_tokens": 3701
+      },
+      "run_peak_aggregate_rss_bytes_min": 42281975808,
+      "run_peak_aggregate_rss_bytes_max": 42431709184
+    },
+    {
+      "total_budget": 7040,
+      "input_allowance": 4992,
+      "audit": "results/phase2-calibration/verification-before-action.json",
+      "audit_sha256": "4047990f67587d54414b088834ddc7b4fd7e2a03facc8249247011f31715d051",
+      "episodes": 6,
+      "completed": 2,
+      "errors": 4,
+      "official_utility": {
+        "True": 2,
+        "False": 0,
+        "None": 4
+      },
+      "attacked_official_outcomes": {
+        "True": 0,
+        "False": 1,
+        "None": 2
+      },
+      "agent_requests": 44,
+      "compactions": 30,
+      "episode_seconds": 688.6406895428663,
+      "campaign_seconds": 733.7336342919152,
+      "agent_usage": {
+        "prompt_tokens": 190958,
+        "completion_tokens": 1369,
+        "total_tokens": 192327
+      },
+      "summary_usage": {
+        "prompt_tokens": 3102,
+        "completion_tokens": 599,
+        "total_tokens": 3701
+      },
+      "run_peak_aggregate_rss_bytes_min": 38759071744,
+      "run_peak_aggregate_rss_bytes_max": 42640211968
+    }
+  ]
+}
