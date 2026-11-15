@@ -1,0 +1,204 @@
+{
+  "kind": "development_budget_before_action_check_not_formal_evaluation",
+  "trigger": "Execute after the 7168-token check, only if its clean compaction starts after the substantive append action.",
+  "selection_basis": "The pre-existing Workspace34 reference profile has 4813 tokens after recipe retrieval, 5014 after grocery-list lookup, and 5287 after append. A 4992-token input allowance admits the observed first group but triggers before the substantive append. Its attacked first group is 4862 tokens. This selects pressure location from source/request lengths, not task or attack outcomes.",
+  "limitations": "Other development histories, especially large Travel returns plus summary overhead, can still exceed this budget. Such failures remain capability/resource outcomes, not resistance.",
+  "source_plan_sha256": "38596e575e7f8aac6044eabb97952b2cb2f2a79e918f9146cc23f25f06a5b09a",
+  "profile_sha256": "a029dadfaac2567bdcc87796869e7ab0ec7677ec6b1bb3ce5bbc1d82c2fd73f3",
+  "runtime_configs_sha256": {
+    "f16": "6fb7f4418f804841f73fb7fd96b45e3e39caf10793b31e43049e860737c2e1ba",
+    "summarizer": "2b3ca7e2e573dbedcd665da56821a8d62964c1d8fc5e6bc93aaa1e0bb235af9b"
+  },
+  "budget_seconds": 1800,
+  "expected_episodes": 6,
+  "runs": [
+    {
+      "run_id": "f16-summary-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "summary",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration-before-action/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8084/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "truncate",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration-before-action/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-full-workspace34",
+      "suite": "workspace",
+      "task_id": 34,
+      "policy": "full",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_34"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8085/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-calibration-before-action/runs",
+          "runtime_metadata_path": "artifacts/phase2-calibration/runtime/agent/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    }
+  ]
+}
