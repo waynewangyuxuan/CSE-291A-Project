@@ -17,7 +17,9 @@ explains the denominators and comparison with the original October baseline.
 **Phase 2:** the [development calibration](results/phase2-calibration/README.md)
 adds 24 reviewed episodes and 16 summary replays after the 18-episode spike.
 It selects a 7,040-token context budget and records summary/scorer limitations.
-The formal matrix has not started. Follow the [batch plan](docs/phase2-batches.md).
+The [formal matrix](configs/phase2-main-v1/README.md) runs in balanced blocks of
+54 episodes. Follow the [batch plan](docs/phase2-batches.md) and inspect the active
+block with `make phase2-matrix-status`.
 
 ## Run a first check
 

@@ -85,6 +85,7 @@ and `make phase2-qualification`.
 | [phase2_budget_spike.py](phase2_budget_spike.py) | Freeze, run and inspect the development-only 18-episode budget spike |
 | [phase2_calibration.py](phase2_calibration.py) | Profile declared development tasks and validate rolling summaries before broad collection |
 | [package_phase2_calibration.py](package_phase2_calibration.py) | Preserve and verify the 24 reviewed calibration episodes and summary replays |
+| [phase2_matrix.py](phase2_matrix.py) | Freeze balanced formal task blocks; launch, resume and inspect one block |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
 
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task

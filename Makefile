@@ -89,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -200,3 +200,18 @@ phase2-calibration-package: ## Archive all three reviewed development calibratio
 
 phase2-calibration-verify: ## Verify the calibration archive and every member
 	$(UV) run --frozen python scripts/package_phase2_calibration.py --check-only
+
+PHASE2_BLOCK ?= main-001
+.PHONY: phase2-matrix-prepare phase2-matrix-launch phase2-matrix-run phase2-matrix-status
+
+phase2-matrix-prepare: ## Freeze the ordered main and confirmation blocks
+	$(UV) run --frozen python scripts/phase2_matrix.py prepare
+
+phase2-matrix-launch: ## Start one block in the background with idle-sleep prevention
+	$(UV) run --frozen python scripts/phase2_matrix.py launch --block $(PHASE2_BLOCK)
+
+phase2-matrix-run: ## Run or compatibly resume one frozen block in the foreground
+	$(UV) run --frozen python scripts/phase2_matrix.py run --block $(PHASE2_BLOCK)
+
+phase2-matrix-status: ## Show finalized pairs and the current run for one block
+	$(UV) run --frozen python scripts/phase2_matrix.py status --block $(PHASE2_BLOCK)

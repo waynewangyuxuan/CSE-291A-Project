@@ -1,0 +1,1746 @@
+{
+  "block_id": "main-012",
+  "cohort": "main",
+  "task_order": [
+    [
+      "workspace",
+      "user_task_11"
+    ],
+    [
+      "travel",
+      "user_task_13"
+    ],
+    [
+      "slack",
+      "user_task_11"
+    ]
+  ],
+  "precision_order": [
+    "q4",
+    "q8",
+    "f16"
+  ],
+  "budget_seconds": 36000,
+  "expected_episodes": 54,
+  "runs": [
+    {
+      "run_id": "q4-full-slack11",
+      "precision": "q4",
+      "policy": "full",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-full-workspace11",
+      "precision": "q4",
+      "policy": "full",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-full-travel13",
+      "precision": "q4",
+      "policy": "full",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-summary-workspace11",
+      "precision": "q4",
+      "policy": "summary",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-summary-travel13",
+      "precision": "q4",
+      "policy": "summary",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-summary-slack11",
+      "precision": "q4",
+      "policy": "summary",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-truncate-travel13",
+      "precision": "q4",
+      "policy": "truncate",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-truncate-slack11",
+      "precision": "q4",
+      "policy": "truncate",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q4-truncate-workspace11",
+      "precision": "q4",
+      "policy": "truncate",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q4",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q4/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-full-slack11",
+      "precision": "q8",
+      "policy": "full",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-full-workspace11",
+      "precision": "q8",
+      "policy": "full",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-full-travel13",
+      "precision": "q8",
+      "policy": "full",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-truncate-workspace11",
+      "precision": "q8",
+      "policy": "truncate",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-truncate-travel13",
+      "precision": "q8",
+      "policy": "truncate",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-truncate-slack11",
+      "precision": "q8",
+      "policy": "truncate",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-summary-travel13",
+      "precision": "q8",
+      "policy": "summary",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-summary-slack11",
+      "precision": "q8",
+      "policy": "summary",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "q8-summary-workspace11",
+      "precision": "q8",
+      "policy": "summary",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-q8",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-q8/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-slack11",
+      "precision": "f16",
+      "policy": "summary",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-workspace11",
+      "precision": "f16",
+      "policy": "summary",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-summary-travel13",
+      "precision": "f16",
+      "policy": "summary",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "summary",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1,
+          "summary_max_tokens": 384,
+          "summary_fraction": null,
+          "summarizer_context_tokens": 32768,
+          "summarizer": {
+            "model": "qwen3-8b-f16",
+            "base_url": "http://127.0.0.1:8086/v1",
+            "api_key_env": "LOCAL_LLM_API_KEY",
+            "temperature": 0.0,
+            "max_tokens": 384,
+            "seed": 0,
+            "extra_body": {
+              "chat_template_kwargs": {
+                "enable_thinking": false
+              },
+              "cache_prompt": false,
+              "top_k": 1
+            }
+          },
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/summarizer/server.json",
+          "search_max_calls": 4,
+          "search_max_tokens": 512,
+          "search_top_k": 3
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-workspace11",
+      "precision": "f16",
+      "policy": "truncate",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-travel13",
+      "precision": "f16",
+      "policy": "truncate",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-truncate-slack11",
+      "precision": "f16",
+      "policy": "truncate",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "truncate",
+          "trigger_rounds": null,
+          "max_context_tokens": 7040,
+          "keep_rounds": 1
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-full-travel13",
+      "precision": "f16",
+      "policy": "full",
+      "suite": "travel",
+      "user_task_id": "user_task_13",
+      "config": {
+        "experiment": {
+          "suite": "travel",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_13"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-full-slack11",
+      "precision": "f16",
+      "policy": "full",
+      "suite": "slack",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "slack",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_1"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    },
+    {
+      "run_id": "f16-full-workspace11",
+      "precision": "f16",
+      "policy": "full",
+      "suite": "workspace",
+      "user_task_id": "user_task_11",
+      "config": {
+        "experiment": {
+          "suite": "workspace",
+          "benchmark_version": "v1.2.2",
+          "task_ids": [
+            "user_task_11"
+          ],
+          "injection_task_ids": [
+            "injection_task_0"
+          ],
+          "mode": "paired",
+          "attack": "ignore_previous_append"
+        },
+        "model": {
+          "model": "qwen3-8b-f16",
+          "base_url": "http://127.0.0.1:8087/v1",
+          "api_key_env": "LOCAL_LLM_API_KEY",
+          "temperature": 0.7,
+          "max_tokens": 2048,
+          "seed": 17,
+          "extra_body": {
+            "chat_template_kwargs": {
+              "enable_thinking": false
+            },
+            "cache_prompt": false,
+            "top_p": 0.8,
+            "top_k": 20,
+            "min_p": 0.0
+          }
+        },
+        "runner": {
+          "max_tool_steps": 15,
+          "request_timeout_seconds": 120.0,
+          "episode_timeout_seconds": 600.0,
+          "output_root": "artifacts/phase2-main-v1/main-012/runs",
+          "runtime_metadata_path": "artifacts/phase2-main-v1/runtime/agent-f16/server.json",
+          "server_pid": null,
+          "compact_artifacts": true,
+          "min_free_disk_bytes": 1073741824
+        },
+        "context": {
+          "policy": "full",
+          "max_context_tokens": 7040
+        },
+        "prompt": {
+          "policy": "default"
+        }
+      }
+    }
+  ]
+}
