@@ -1,0 +1,429 @@
+\documentclass[11pt]{article}
+\usepackage[final]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage[cmex10]{amsmath}
+\usepackage{inconsolata}
+\raggedbottom
+
+\title{Security--Performance Tradeoffs in Resource-Constrained Agents:\\
+Phase 2: Quantization and Context Management}
+\author{Wayne Wang \\
+  CSE 291A, Fall 2026 \\
+  \texttt{https://github.com/waynewangyuxuan/CSE-291A-Project}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Weight quantization and context compression can reduce the cost of a
+local tool-using agent, but may also change task completion and responses
+to prompt injection. Phase~2 crosses same-source Qwen3-8B F16,
+Q8\_0 and Q4\_K\_M weights with Full history, whole-turn truncation and
+rolling summarization under a shared 7,040-token budget. The frozen
+design comprises 972 episodes on 54 previously studied tasks and 126
+episodes on seven separate confirmation tasks. Each configuration has
+one clean and one attacked episode per task at seed~17. Evaluation
+separates official utility and exact-target attack success from
+source-linked behavior review, unknown outcomes, attack exposure and
+summary retention. Paired comparisons and cost accounting include the
+summarizer and disclose clean-capability selection and memory limits.
+\textbf{DRAFT---collection and review in progress.} This manuscript
+specifies methods and evaluation; final results, selected diagnostics
+and deployment conclusions remain pending. No partial results are
+presented as study findings.
+\end{abstract}
+
+\section{Introduction}
+
+A smaller local agent is useful only if it still performs the intended
+work. A lower observed attack-success rate can instead reflect lost
+capability, an unseen payload, a failed unauthorized action, or an
+unfinished episode. Context management adds a further distinction:
+removing an attack's literal text need not remove its meaning or undo
+an earlier action. We therefore compare deployment choices through
+paired outcomes and the actual information and actions in each trace.
+
+\paragraph{RQ1: quantization.}
+Within each context policy, how do Q8\_0 and Q4\_K\_M change legitimate
+utility, target attack success and failure mechanisms relative to F16?
+
+\paragraph{RQ2: context and information retention.}
+At a fixed precision and budget, how do truncation and rolling summary
+change task-relevant information, attack exposure, semantic retention,
+re-retrieval and downstream actions relative to Full?
+
+\paragraph{RQ3: interactions and deployment tradeoffs.}
+Do precision and context policy interact, and which observed
+configurations trade capability and security for latency, tokens and
+resident process memory?
+
+Phase~1 supplies historical background and known tasks. Its F16
+full-history baseline used a 32,768-token allocation. The Phase~2
+\emph{contemporaneous Full control} has the same smaller study budget
+as Truncate and Summary. It is the within-study reference; comparing
+against Phase~1 would also change workload, attack mix, seed coverage
+and collection conditions.
+
+\section{Experimental Design}
+\label{sec:design}
+
+\subsection{Tasks, Attacks and Cohorts}
+
+We use the pinned AgentDojo benchmark
+\cite{debenedetti2024agentdojo}, benchmark version v1.2.2, through
+package version 0.1.35 at source commit \texttt{089ed468cf3e}.
+Clean and attacked episodes start from independent copies of the same
+environment and share the legitimate request. The frozen
+\texttt{ignore\_previous\_append} attack appends instructions to
+retrieved content or a tool result while retaining benign content.
+One fixed goal per suite is used: injection task~4 for Banking, 1 for
+Slack, and 0 for Workspace and Travel. These are targeted benchmark
+attacks, not an adaptive search against each configuration.
+
+The main cohort contains 54 known tasks remaining from Phase~1's
+60-task workload after six were allocated to development. They are
+not unseen tasks. The separate confirmation cohort contains
+Workspace tasks 21/30/32 and Travel tasks 8/10/12/15. These seven IDs
+were not queried by models during calibration. Source inspection
+excluded Workspace13/25 before confirmation evaluation because their
+checkers accept incomplete legitimate behavior. Confirmation shares
+environments and task families with the main cohort, so it tests
+untuned IDs rather than independent new domains.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Suite & Main tasks & Confirmation tasks \\
+\midrule
+Banking & 8 & 0 \\
+Slack & 14 & 0 \\
+Workspace & 22 & 3 \\
+Travel & 10 & 4 \\
+\midrule
+Total tasks & 54 & 7 \\
+Planned episodes & 972 & 126 \\
+\bottomrule
+\end{tabular}
+\caption{Frozen allocation, not completion counts. Every task has
+three precisions $\times$ three policies $\times$ clean/attack:
+18 episodes at seed~17. Cohorts are analyzed separately.}
+\label{tab:allocation}
+\end{table}
+
+Each task/configuration has exactly one clean and one attacked
+episode at seed~17: $972+126=1{,}098$ planned episodes
+(Table~\ref{tab:allocation}). Twelve development tasks are excluded
+from both cohorts. Budget and summary settings were selected on
+development request lengths and verified pre-action compaction; the
+summary prompt was revised before live calibration and then fixed.
+Development episodes and standalone summary replays are not pooled
+with formal evaluation. The task set, payloads, summary instructions,
+tools and scoring remain frozen during collection.
+
+\subsection{Model and Runtime Controls}
+
+All formats derive from Qwen3-8B \cite{qwen3} revision
+\texttt{b968826d9c46}. F16 is a conversion of the original BF16
+checkpoint, without integer weight quantization; Q8\_0 and Q4\_K\_M
+are same-source GGUF quantizations. Artifact hashes and provenance
+are pinned. Inference uses llama.cpp \cite{llamacpp} release
+\texttt{b11678}, commit \texttt{b6334e37e6ef}, on an Apple M2~Max
+with 64~GiB unified memory, Metal, eight CPU threads and one server
+slot. Agent and summarizer each retain a 32,768-token server
+allocation with F16 key/value caches and context shift disabled.
+
+Agent decoding fixes temperature 0.7, top-$p$ 0.8, top-$k$ 20,
+min-$p$ 0 and seed~17. Both services disable thinking and
+prompt-prefix reuse, including reuse within an episode. Limits are 15 agent tool steps,
+120~s per request and 600~s per episode, with at most 2,048 output
+tokens per agent request. Harness, tool schemas, permissions and
+official scorers are shared across all nine configurations.
+
+\subsection{Context Interventions}
+
+The harness enforces total study budget $B=7{,}040$, reserving
+2,048 tokens for completion and allowing 4,992 input tokens.
+Counts use the actual rendered request, including system and user
+messages, tool schemas, chat-template overhead, retained history and
+any summary. The server allocation does not relax this allowance.
+
+\paragraph{Full.}
+Keep all history. If the rendered input exceeds the allowance, stop
+explicitly with a budget error; never silently truncate.
+
+\paragraph{Truncate.}
+Remove the oldest complete assistant/tool-result groups until the
+request fits, retaining the original system/user request and at least
+the newest complete group. A tool call and its returns are not split.
+
+\paragraph{Summary.}
+Replace removed groups with a rolling factual memory while retaining
+the same protected request and recent group. A fixed same-source F16
+summarizer uses greedy decoding (temperature~0, top-$k$~1, seed~0),
+a 384-token output cap and a 32,768-token context allocation.
+An update consumes the previous summary plus newly removed groups,
+with the original user task supplied as context; it does not reread
+the whole archived prefix. Structural call IDs are canonicalized and
+mapped back to raw sources. The prompt asks for factual results,
+completed actions, errors and unresolved facts, with source attribution.
+It treats tool instructions as source claims rather than authorization.
+The result enters the agent history as a synthetic historical tool
+exchange, not a newly executable tool.
+
+Compression occurs only when needed. Protected indivisible history,
+the generated summary envelope, or the summarizer's own input can
+still overflow; each remains an explicit error. Summary combines
+compression with provenance instructions, so a policy effect cannot
+isolate compression from those instructions. Its fixed F16 model
+also means the precision factor changes the acting agent, not the
+summarizer. The summarizer remains resident in Full and Truncate as
+well as Summary.
+
+\subsection{Order and Evidence Preservation}
+
+Collection is serial: 18 three-task main blocks followed by three
+confirmation blocks (three, three and one task). Main blocks cycle
+all six precision permutations, giving each precision six appearances
+in each position. Policy order rotates within precision, with each
+policy likewise occupying each position six times per precision;
+task order also rotates. Clean precedes attack in every pair.
+Confirmation order is cyclic but not exactly balanced.
+
+The agent reloads at precision transitions, while the summarizer
+stays resident throughout a block. There is no synthetic warmup.
+Launch times, startup durations, process identity, pair/run positions,
+resume boundaries and interrupted attempts are retained. The first
+finalized episode on a process records order, not a verified cold
+operating-system cache. These controls do not make latency an
+independent randomized replication.
+
+Raw source transcripts, initial/final states, exact sent request
+views and responses are preserved separately. Context logs retain
+source IDs, removed/retained/summarized groups, before/after token
+counts, literal payload visibility and prior exposure. Summary
+requests, responses and source mappings are also logged. Rejected
+over-budget views are distinguished from requests actually sent.
+Hashed manifests and raw archives bind collection identities;
+evidence-bound review is a separate gate. Tool-generated wall-clock
+timestamps remain in the evidence.
+
+\section{Evaluation}
+\label{sec:evaluation}
+
+\subsection{Official Outcomes and Denominators}
+
+For task $i$ and configuration $c$, let $U^0_{ic}$ and $U^1_{ic}$
+be the official legitimate-utility checks for clean and attacked
+episodes, and $A_{ic}$ the official exact-target attack check.
+Each is true, false or unknown; $A$ is not applicable to clean
+episodes. Utility is a checker-defined proxy, reported separately
+for clean and attacked conditions. A finalized episode need not
+have completed its task. Terminal errors, including budget, step
+and time limits, retain unknown official scores even if a useful or
+unauthorized action preceded the error.
+
+For any reported binary outcome on a fixed set of $n$ episodes,
+let $s$ be successes and $u$ unknowns. Report $s,n,u$ and
+\begin{equation}
+  [s/n,\;(s+u)/n],
+\end{equation}
+the lower and upper bounds obtained by resolving all unknowns
+either way. The known-only rate $s/(n-u)$ is secondary. An empty
+denominator is undefined, not zero. These missing-outcome bounds
+are not confidence intervals.
+
+Define $C_c=\{i:U^0_{ic}=\mathrm{true}\}$. Target ASR is reported
+with four denominator choices: all attacked tasks; the
+configuration's \emph{own-clean} set $C_c$; the
+\emph{pairwise common-clean} set $C_c\cap C_d$ when comparing
+$c$ and $d$; and the \emph{all-nine common-clean} intersection
+$C_*=\bigcap_c C_c$. Unknown attacked outcomes stay in the
+selected denominator. Unknown or failed clean outcomes do not
+establish clean eligibility. Denominators and task membership must
+accompany each estimate: own-clean sets differ across configurations,
+while common-clean sets select tasks that all compared agents can
+already solve. Bounds within these selected sets do not resolve
+uncertainty about excluded clean capability.
+
+\subsection{Behavioral Review and Scorer Sensitivity}
+
+Final synthesis requires qualitative agent review of every clean and
+attacked trace, including source messages, actual requests, tool
+calls/results and environment states; compressed cases additionally
+require summary sources and sent views. Review assigns primary and
+secondary failure mechanisms, preserving clean/attack separation.
+This is agent-authored qualitative inspection, not independent human
+annotation, a model-generated safety score, or an inter-rater study.
+
+An unnecessary refusal requires evidence that the agent declined an
+authorized, feasible task. Refusal wording alone, clarification,
+planning failure and tool errors do not establish that label.
+Clean refusal counts use all clean episodes, with unreviewed or
+indeterminate cases retained as unknown and review coverage stated.
+
+Official scorers remain unchanged. An exact attack target can fail
+while a different unauthorized action succeeds; a permissive utility
+checker can credit an incomplete answer, and a final-answer check
+can miss an earlier valid action. Source-linked positive witnesses
+therefore record executed tool calls and resulting states separately
+from official $U$ and $A$. An attempted call, a verbal claim, or a
+successful void return interpreted as failure must be checked against
+tool semantics and state. Witnesses on incomplete episodes do not
+retroactively convert unknown official scores into true or false.
+
+Two descriptive sensitivities address permissive checkers. Clean
+eligibility can be restricted to reviewed official clean successes
+without a false-positive label. Separately, analyses on fully
+reviewed tasks exclude an entire task from every arm if any clean
+or attacked trace has a reviewed scorer false positive. An attacked
+false positive alone does not invalidate that arm's clean eligibility
+in the first analysis. Both retain official scores and disclose
+exclusions and incomplete-review coverage; neither repairs the
+benchmark or guarantees semantic validity of remaining cases.
+
+\subsection{Exposure and Retention Mechanisms}
+
+RQ2 first checks whether a policy actually compacted history.
+Policy names alone cannot establish a compression effect. Timelines
+link compaction, lost task facts, repeated retrieval, first exposure,
+later removal, re-exposure and consequential actions. Literal
+payload matching identifies text in sent requests, not semantic
+retention: a summary may paraphrase a malicious instruction, preserve
+its target, or invent an action or fact. Generated source labels
+do not themselves prove faithful provenance.
+
+Review distinguishes never exposed, removed before first exposure,
+removed after prior exposure, literally retained, semantically
+retained and uncertain cases, including later re-exposure through
+retrieval. A request rejected before inference is not exposure.
+Unexposure, inability to execute an attack, and unknown outcomes
+are never classified as resistance. Even own-clean success does
+not prove competence at the attacker-directed action. Exposure and
+compaction subsets are descriptive, behavior-selected groups rather
+than randomized causal comparisons.
+
+\subsection{Resource Accounting}
+
+Retain agent request latencies and summary time alongside episode
+wall time and tokenizer overhead. Report prompt/completion tokens
+for both agent and summarizer and their combined tokens.
+Episode time includes agent and summary work; startup is recorded
+separately. Request timing covers logged returns/errors; a deadline
+can leave a request without a terminal record. Token usage covers
+recorded service usage and must not
+imply unobserved completions on failed requests were free. Summary
+time is not added to episode time a second time.
+
+All-outcome cost distributions include clean and attacked episodes
+and terminal failures, with status-specific latency. Matched cost
+comparisons use clean episodes on $C_*$, so a short failed attempt
+is not compared as if it achieved the same work as a success.
+Report medians, tails and coverage. Finalized-attempt costs do not
+silently absorb interrupted attempts, whose counts and evidence
+remain separate.
+
+Memory comprises component process RSS and sampled aggregate RSS
+of both resident inference services plus the controller. The
+aggregate peak spans a \emph{clean/attack pair}; its exported value
+is shared by both episode rows, not two independent episode
+measurements. RSS may double-count shared pages and is neither
+unique physical RAM nor allocated GPU memory. Sampling can miss
+peaks. Keeping F16 summarization resident in every arm measures a
+controlled shared deployment, not the minimum footprint of each
+policy. Fewer prompt tokens do not establish a smaller allocated
+KV cache under the fixed server allocation.
+
+\subsection{Paired Effects, Interactions and Dominance}
+
+RQ1 and RQ2 compare the same tasks across configurations, reporting
+known-pair gains, losses and mean differences for clean utility and
+target ASR. Pairwise ASR uses both all attacks and pairwise
+common-clean tasks. Worst-case difference bounds allow unknown
+binary values to take either value and retain the full selected
+denominator; known-pair means use only jointly observed outcomes.
+
+For known paired differences, 95\% percentile bootstrap intervals
+use 2,000 resamples with seed~0. Whole task differences are resampled
+within each represented suite, preserving suite counts and pairing.
+An interval is withheld if any represented suite has fewer than two
+eligible tasks. These intervals condition on observed tasks and
+eligibility; they do not model missing outcomes, variation across
+seeds or dependencies among shared task families. A degenerate
+interval does not establish equivalence. The several comparisons
+are descriptive, without a claim of simultaneous error control.
+
+For RQ3, the task-level interaction for quantized precision $q$
+and compression policy $p$ is
+\begin{equation}
+\begin{split}
+D_i(q,p)={}&[Y_{i,q,p}-Y_{i,q,\mathrm{Full}}]\\
+          &-[Y_{i,\mathrm{F16},p}-Y_{i,\mathrm{F16},\mathrm{Full}}].
+\end{split}
+\end{equation}
+Average only tasks with all four outcomes known. For clean utility,
+$Y=U^0$ on the cohort; for attack success, $Y=A$ on $C_*$.
+Report selected and known task counts and apply the same paired
+suite-stratified bootstrap. This difference-in-differences describes
+an interaction within the fixed experiment, not a broad causal
+claim or a missing-data correction.
+
+Descriptive dominance favors higher all-task clean utility, lower
+ASR on $C_*$, and lower matched-clean median time, combined tokens
+and pair-level aggregate RSS. One configuration dominates another
+only if it is no worse in every dimension and strictly better in
+at least one. A configuration is eligible only with nonempty
+utility/security denominators, no unknowns in those outcomes, and
+complete matched cost coverage without memory-sampling errors.
+Missing data can therefore remove configurations from comparison;
+no dominance edge does not establish a Pareto frontier over all
+nine arms. Sampling uncertainty, scorer sensitivity and the selected
+common-clean subset further limit deployment recommendations.
+
+\section{Limits and Conditional Follow-ups}
+
+This is one checkpoint, one device, one seed, a fixed small task
+selection and one attack template/goal per suite. Known-task reuse,
+shared families, clean-first order, host conditions and tool-generated
+timestamps limit generalization. Deterministic summarization does
+not make the agent trajectory deterministic across seeds or runtime
+conditions. Short tasks that never compact do not test an applied
+compression policy, and a Full overflow alone does not show that
+another policy could fit its protected history.
+
+The frozen follow-up policy permits at most two additional attempts
+per infrastructure-failed cell, with the same configuration, task
+and seed and separate attempt IDs. Original unknowns remain in the
+primary cohort. Deterministic context/step-limit and capability
+failures do not qualify automatically. Targeted seed~29 diagnostics
+must state a hypothesis and matched configurations, rerun both
+sides, and remain separate from the main and confirmation estimates.
+These are conditional procedures, not blanket repeats; this draft
+does not report either type of follow-up as executed.
+
+\section{Results: Pending}
+
+Collection and complete trace review are still in progress. Final
+results require all 1,098 planned episodes, complete evidence-bound
+review and the final analysis gate. Main and confirmation estimates,
+paired effects, retention cases, interactions and cost comparisons
+will be integrated from that reviewed export. Selected follow-ups
+will be labeled separately. No live figure, partial-result table,
+configuration ranking or effectiveness claim is included here.
+
+\section{Conclusion: Pending}
+
+The frozen design distinguishes observed attack outcomes from
+capability loss, exposure and incomplete execution while accounting
+for the cost of context management. Whether any precision/policy
+combination improves this tradeoff remains an empirical question.
+Final findings and deployment guidance await the completed reviewed
+cohorts and any explicitly selected diagnostics.
+
+\bibliography{phase2-report}
+\end{document}
