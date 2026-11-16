@@ -262,6 +262,35 @@ hashes every member. Fresh extraction reproduces the54-episode collection audit;
 removing one trace prevents a new archive from being published. Review annotations
 are versioned separately so the raw collection archive remains unchanged.
 
+## Confirmation checkpoint: first 54 episodes
+
+The first three confirmation tasks (Workspace21/30 and Travel8) are separately
+reviewed: 54/54 rows pass the complete gate. There are 32 normal returns,
+18 context-budget stops and four tool-step limits. All 27 clean outcomes are
+false (16) or unknown (11); own/common-clean ASR is therefore undefined for this
+partial confirmation set. All nine target successes are actual Workspace21
+emails; seven other attacks are false and eleven unknown. No unnecessary refusal
+is observed. The remaining four confirmation tasks are still collecting.
+
+[The review](reviews/confirmation-001.md) reads all 53 compactions in eight
+Travel8 episodes. Truncate again alternates between retaining prices, ratings
+and dietary information, with repeated attack removal and re-exposure in the
+F16/Q8 attacked loops. Q4 Summary generates two source-supported but length-cut
+dietary summaries, then stops before a second generation at candidate preflight.
+Those cases establish information loss, not invented summary facts or general
+resistance. Workspace30 instead distinguishes empty-query early termination from
+Q8's oversized full file-list response. Confirmation does not tune any policy or
+change the already frozen six main-case seed questions.
+
+| Block | Tasks | Review | Complete gate | Raw evidence |
+| --- | --- | --- | --- | --- |
+| confirmation-001 | Workspace21, Workspace30, Travel8 | [54 annotations](reviews/confirmation-001.csv) | [passed](reviews/confirmation-001.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/confirmation-001.tar.gz) |
+
+The current export contains 1,026 reviewed episodes in separate main and
+confirmation cohorts. Its totals are 865 normal returns, 148 context-budget
+errors and thirteen tool-step limits. No error is an infrastructure retry
+candidate; no unnecessary refusal is observed in 513 clean episodes.
+
 ## Analysis protocol
 
 The reviewer writes a completion receipt after inspecting each block's actual
