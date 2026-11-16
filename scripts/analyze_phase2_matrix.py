@@ -134,9 +134,10 @@ def load_rows():
             return json.loads(gzip.decompress(data) if compressed else data)
 
         _, plan, _ = load_block(block_id)
+        campaign = verified(OUTPUT / block_id / "campaign.json")
         annotations, review_sha = annotation_index(block_id)
         seen = set()
-        for entry in plan["runs"]:
+        for run_index, entry in enumerate(plan["runs"]):
             directory = Path(entry["config"]["runner"]["output_root"]) / entry["run_id"]
             manifest = verified(directory / "manifest.json")
             samples = [verified(p) for p in sorted(directory.glob("deployment-memory-*.json"))]
@@ -145,7 +146,7 @@ def load_rows():
                 for s in samples
                 if s["error"] is None and s["peak_rss_bytes"] is not None
             ]
-            for episode in manifest["episodes"]:
+            for episode_index, episode in enumerate(manifest["episodes"]):
                 path = directory / "episodes" / episode["episode_id"]
                 result = verified(path / "result.json")
                 trace = verified(path / "trace.json.gz", True)
@@ -178,6 +179,16 @@ def load_rows():
                     if not v["literal_payload_visible_vectors"] and v["previously_visible_vectors"]
                 ]
                 calls = [m["tool_call"] for m in trace["messages"] if m["role"] == "tool"]
+                launches = [
+                    launch["metadata"]
+                    for launch in campaign["launches"]
+                    if launch["role"] == entry["precision"]
+                    and launch["metadata"]["pid"] == result["server_memory"]["pid"]
+                    and launch["metadata"]["started_at"] <= result["started_at"]
+                ]
+                if not launches:
+                    raise ValueError("Episode has no matching agent process launch")
+                launch = max(launches, key=lambda x: x["started_at"])
                 row = {
                     "block": block_id,
                     "cohort": plan["cohort"],
@@ -193,6 +204,14 @@ def load_rows():
                     "utility": result["utility"],
                     "attack_success": result["attack_success"],
                     "status": result["status"],
+                    "started_at": result["started_at"],
+                    "planned_run_position": run_index + 1,
+                    "precision_position": plan["precision_order"].index(entry["precision"]) + 1,
+                    "episode_position_in_pair": episode_index + 1,
+                    "agent_process_started_at": launch["started_at"],
+                    "agent_startup_seconds": launch["startup_seconds"],
+                    "resume_observations": len(manifest.get("resume_runtime_observations", [])),
+                    "interrupted_attempts": len(list((path / "interrupted_attempts").glob("*"))),
                     "error_type": (result.get("error") or {}).get("type"),
                     "seconds": result["duration_seconds"],
                     "requests": result["requests"],
@@ -241,11 +260,27 @@ def load_rows():
                 "review_sha256": review_sha,
                 "reviewed": len(annotations),
                 "episodes": len(seen),
+                "collection_elapsed_seconds": campaign["elapsed_seconds"],
+                "runtime_launches": [
+                    {
+                        "role": launch["role"],
+                        **{
+                            k: launch["metadata"][k]
+                            for k in ("started_at", "startup_seconds", "model_sha256")
+                        },
+                    }
+                    for launch in campaign["launches"]
+                ],
             }
         )
     keys = [(r["cohort"], configuration(r), task_key(r), r["condition"]) for r in rows]
     if len(keys) != len(set(keys)):
         raise ValueError("Duplicate experimental cell")
+    seen_launches = set()
+    for row in sorted(rows, key=lambda r: r["started_at"]):
+        key = row["block"], row["agent_process_started_at"]
+        row["first_finalized_episode_on_process"] = key not in seen_launches
+        seen_launches.add(key)
     return rows, blocks
 
 
@@ -368,11 +403,16 @@ def aggregates(rows):
                     for k in (
                         "seconds",
                         "agent_tokens",
+                        "agent_prompt_tokens",
+                        "agent_completion_tokens",
                         "summary_tokens",
+                        "summary_prompt_tokens",
+                        "summary_completion_tokens",
                         "all_model_tokens",
                         "summary_seconds",
                         "tokenizer_seconds",
                         "agent_peak_rss_bytes",
+                        "summary_peak_rss_bytes",
                         "run_aggregate_peak_rss_bytes",
                     )
                 },
@@ -398,6 +438,14 @@ def aggregates(rows):
                 "latency_by_status": {
                     status: distribution(r["seconds"] for r in subset if r["status"] == status)
                     for status in ("completed", "error")
+                },
+                "latency_by_process_position": {
+                    position: distribution(
+                        r["seconds"]
+                        for r in subset
+                        if r["first_finalized_episode_on_process"] == first
+                    )
+                    for position, first in (("first_finalized", True), ("later_finalized", False))
                 },
             }
         )
@@ -615,6 +663,8 @@ def export(final=False):
             "Literal exposure/removal is not semantic retention or causal evidence of resistance.",
             "Run aggregate RSS spans a clean/attack pair and both resident services; "
             "it may double-count shared pages.",
+            "Costs describe finalized attempts; interrupted attempts are separately counted. "
+            "First-finalized process position records ordering, not a verified cold-cache state.",
             "Tasks share environments/families; paired differences and single-seed patterns "
             "do not establish broad population effects.",
             "Paired bootstrap intervals resample known tasks within suites; singleton suites "

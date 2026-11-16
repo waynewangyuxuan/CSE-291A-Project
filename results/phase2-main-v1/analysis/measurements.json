@@ -4,14 +4,41 @@
   "included_episodes": 54,
   "reviewed_episodes": 54,
   "matrix_sha256": "226271ee67cc12f45d00a65b021f2d290ba9c81b0b8f0aeb3b64da49bc006c76",
-  "analysis_sha256": "d558bcec3a737b7f8d9eeba07b6556c9de40caefb5a9519ff89fad0efc57b004",
+  "analysis_sha256": "ef11f5d3e9df02d0d0f29459ad4cc4b50ed7a6bbeadfe49679f0b27ff8506e1a",
   "blocks": [
     {
       "block": "main-001",
       "archive_sha256": "edd113f5b782095328d3e1ac16c4c003143c92fcf21f8b9c80912941653383b0",
       "review_sha256": "9112857653a8796d9b4f8bcf07197dc01bafa90ae31d6af5efb37fed8334076c",
       "reviewed": 54,
-      "episodes": 54
+      "episodes": 54,
+      "collection_elapsed_seconds": 2115.7512225420214,
+      "runtime_launches": [
+        {
+          "role": "summarizer",
+          "started_at": "2026-11-15T21:38:03.800633+00:00",
+          "startup_seconds": 10.095332,
+          "model_sha256": "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad"
+        },
+        {
+          "role": "f16",
+          "started_at": "2026-11-15T21:38:13.948448+00:00",
+          "startup_seconds": 3.032545,
+          "model_sha256": "c09c8f49a6a56b0165f2d12517835e29dafdbc904d5940ce5983f1ada2485bad"
+        },
+        {
+          "role": "q8",
+          "started_at": "2026-11-15T21:50:42.970100+00:00",
+          "startup_seconds": 5.547628,
+          "model_sha256": "b87e0ec0181c70bd6ff13f8ab55dd4b3fda4544b5d0ad6a7af8cc570db6f4e15"
+        },
+        {
+          "role": "q4",
+          "started_at": "2026-11-15T22:01:38.255441+00:00",
+          "startup_seconds": 3.556066,
+          "model_sha256": "3c2293ffafd41b5d1cbe56d529dddb218234f133edac16cb0567ebffeffca659"
+        }
+      ]
     }
   ],
   "limits": [
@@ -19,6 +46,7 @@
     "Unknown bounds describe incomplete outcomes, not statistical confidence intervals.",
     "Literal exposure/removal is not semantic retention or causal evidence of resistance.",
     "Run aggregate RSS spans a clean/attack pair and both resident services; it may double-count shared pages.",
+    "Costs describe finalized attempts; interrupted attempts are separately counted. First-finalized process position records ordering, not a verified cold-cache state.",
     "Tasks share environments/families; paired differences and single-seed patterns do not establish broad population effects.",
     "Paired bootstrap intervals resample known tasks within suites; singleton suites have no interval. A degenerate interval does not establish equivalence."
   ],
@@ -209,7 +237,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -273,6 +353,19 @@
               "p95": 21377687552.0,
               "max": 21377826816.0,
               "total": 128239353856.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -359,6 +452,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "n": 1,
+              "mean": 22.950470042065717,
+              "sd": null,
+              "min": 22.950470042065717,
+              "p25": 22.950470042065717,
+              "median": 22.950470042065717,
+              "p75": 22.950470042065717,
+              "p90": 22.950470042065717,
+              "p95": 22.950470042065717,
+              "max": 22.950470042065717,
+              "total": 22.950470042065717
+            },
+            "later_finalized": {
+              "n": 5,
+              "mean": 40.59208888341673,
+              "sd": 16.675029507115784,
+              "min": 23.276729250093922,
+              "p25": 23.69521537492983,
+              "median": 42.463790167006664,
+              "p75": 56.292165208025835,
+              "p90": 56.856392733426766,
+              "p95": 57.04446857522707,
+              "max": 57.232544417027384,
+              "total": 202.96044441708364
             }
           }
         },
@@ -544,7 +665,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -608,6 +781,19 @@
               "p95": 21377884160.0,
               "max": 21377892352.0,
               "total": 128266616832.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -694,6 +880,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 34.4397081528247,
+              "sd": 14.153422791088575,
+              "min": 21.537323584081605,
+              "p25": 21.96794814572786,
+              "median": 31.380666916433256,
+              "p75": 47.26797199976863,
+              "p90": 50.31195462500909,
+              "p95": 50.628715270984685,
+              "max": 50.94547591696028,
+              "total": 206.6382489169482
             }
           }
         },
@@ -879,7 +1093,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -943,6 +1209,19 @@
               "p95": 21377810432.0,
               "max": 21377810432.0,
               "total": 128266780672.0
+            },
+            "summary_peak_rss_bytes": {
+              "n": 6,
+              "mean": 19890662058.666668,
+              "sd": 483901864.27708954,
+              "min": 19311083520.0,
+              "p25": 19503390720.0,
+              "median": 19930890240.0,
+              "p75": 20208451584.0,
+              "p90": 20405108736.0,
+              "p95": 20457177088.0,
+              "max": 20509245440.0,
+              "total": 119343972352.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -1029,6 +1308,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 34.58013754867716,
+              "sd": 14.405570208911334,
+              "min": 21.479573542019352,
+              "p25": 21.854948604275705,
+              "median": 31.643459749990143,
+              "p75": 47.32342817701283,
+              "p90": 50.51285293750698,
+              "p95": 51.04249465625617,
+              "max": 51.57213637500536,
+              "total": 207.48082529206295
             }
           }
         },
@@ -1214,7 +1521,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -1278,6 +1637,19 @@
               "p95": 13567623168.0,
               "max": 13567721472.0,
               "total": 81366581248.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -1364,6 +1736,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "n": 1,
+              "mean": 21.05754045897629,
+              "sd": null,
+              "min": 21.05754045897629,
+              "p25": 21.05754045897629,
+              "median": 21.05754045897629,
+              "p75": 21.05754045897629,
+              "p90": 21.05754045897629,
+              "p95": 21.05754045897629,
+              "max": 21.05754045897629,
+              "total": 21.05754045897629
+            },
+            "later_finalized": {
+              "n": 5,
+              "mean": 34.59400619997177,
+              "sd": 13.4698676429199,
+              "min": 20.31664066691883,
+              "p25": 20.45772562501952,
+              "median": 38.1737415419193,
+              "p75": 46.34175491600763,
+              "p90": 47.1448029163992,
+              "p95": 47.41248558319639,
+              "max": 47.680168249993585,
+              "total": 172.97003099985886
             }
           }
         },
@@ -1549,7 +1949,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -1613,6 +2065,19 @@
               "p95": 13530738688.0,
               "max": 13530742784.0,
               "total": 81184047104.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -1699,6 +2164,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 32.15765954866462,
+              "sd": 13.13855633669196,
+              "min": 20.32938812498469,
+              "p25": 20.55289717722917,
+              "median": 29.283622292045038,
+              "p75": 43.904514218476834,
+              "p90": 46.82414022897137,
+              "p95": 47.22633223948651,
+              "max": 47.62852425000165,
+              "total": 192.94595729198772
             }
           }
         },
@@ -1884,7 +2377,59 @@
               "max": 11878.0,
               "total": 52396.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8549.5,
+              "sd": 2979.431741121115,
+              "min": 5642.0,
+              "p25": 5948.0,
+              "median": 8284.0,
+              "p75": 11310.75,
+              "p90": 11573.5,
+              "p95": 11585.75,
+              "max": 11598.0,
+              "total": 51297.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 183.16666666666666,
+              "sd": 79.63772138042792,
+              "min": 96.0,
+              "p25": 122.75,
+              "median": 165.5,
+              "p75": 254.0,
+              "p90": 277.5,
+              "p95": 278.75,
+              "max": 280.0,
+              "total": 1099.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -1948,6 +2493,19 @@
               "p95": 13540143104.0,
               "max": 13540163584.0,
               "total": 81219567616.0
+            },
+            "summary_peak_rss_bytes": {
+              "n": 6,
+              "mean": 9642150570.666666,
+              "sd": 5979107748.754664,
+              "min": 2118336512.0,
+              "p25": 4566519808.0,
+              "median": 11911069696.0,
+              "p75": 14099513344.0,
+              "p90": 14897045504.0,
+              "p95": 14931070976.0,
+              "max": 14965096448.0,
+              "total": 57852903424.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -2034,6 +2592,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 31.96471430566938,
+              "sd": 13.274574526732515,
+              "min": 19.908600291935727,
+              "p25": 20.405869739770424,
+              "median": 29.001534583512694,
+              "p75": 43.55762258352479,
+              "p90": 46.758457500021905,
+              "p95": 47.34238691651262,
+              "max": 47.92631633300334,
+              "total": 191.78828583401628
             }
           }
         },
@@ -2221,7 +2807,59 @@
               "max": 11249.0,
               "total": 55305.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8989.5,
+              "sd": 2231.2078119260877,
+              "min": 5642.0,
+              "p25": 7804.25,
+              "median": 9218.5,
+              "p75": 10923.75,
+              "p90": 11033.0,
+              "p95": 11033.0,
+              "max": 11033.0,
+              "total": 53937.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 228.0,
+              "sd": 33.62142174269256,
+              "min": 191.0,
+              "p25": 213.75,
+              "median": 216.0,
+              "p75": 237.75,
+              "p90": 266.0,
+              "p95": 276.5,
+              "max": 287.0,
+              "total": 1368.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -2285,6 +2923,19 @@
               "p95": 9999056896.0,
               "max": 9999056896.0,
               "total": 59994275840.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -2371,6 +3022,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 35.69903152767802,
+              "sd": 6.091309155872413,
+              "min": 24.249935000087135,
+              "p25": 34.74971094771172,
+              "median": 37.651136061991565,
+              "p75": 39.50810236451798,
+              "p90": 40.21924027102068,
+              "p95": 40.47578096901998,
+              "max": 40.73232166701928,
+              "total": 214.1941891660681
             }
           }
         },
@@ -2558,7 +3237,59 @@
               "max": 11249.0,
               "total": 55305.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8989.5,
+              "sd": 2231.2078119260877,
+              "min": 5642.0,
+              "p25": 7804.25,
+              "median": 9218.5,
+              "p75": 10923.75,
+              "p90": 11033.0,
+              "p95": 11033.0,
+              "max": 11033.0,
+              "total": 53937.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 228.0,
+              "sd": 33.62142174269256,
+              "min": 191.0,
+              "p25": 213.75,
+              "median": 216.0,
+              "p75": 237.75,
+              "p90": 266.0,
+              "p95": 276.5,
+              "max": 287.0,
+              "total": 1368.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -2622,6 +3353,19 @@
               "p95": 9998979072.0,
               "max": 9998991360.0,
               "total": 59972550656.0
+            },
+            "summary_peak_rss_bytes": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -2708,6 +3452,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "n": 1,
+              "mean": 24.311990667018108,
+              "sd": null,
+              "min": 24.311990667018108,
+              "p25": 24.311990667018108,
+              "median": 24.311990667018108,
+              "p75": 24.311990667018108,
+              "p90": 24.311990667018108,
+              "p95": 24.311990667018108,
+              "max": 24.311990667018108,
+              "total": 24.311990667018108
+            },
+            "later_finalized": {
+              "n": 5,
+              "mean": 38.25088190841488,
+              "sd": 2.60101591109331,
+              "min": 34.606065707979724,
+              "p25": 36.657967292005196,
+              "median": 38.8382033330854,
+              "p75": 40.374874333967455,
+              "p90": 40.61632905860897,
+              "p95": 40.69681396682281,
+              "max": 40.77729887503665,
+              "total": 191.25440954207443
             }
           }
         },
@@ -2895,7 +3667,59 @@
               "max": 11249.0,
               "total": 55305.0
             },
+            "agent_prompt_tokens": {
+              "n": 6,
+              "mean": 8989.5,
+              "sd": 2231.2078119260877,
+              "min": 5642.0,
+              "p25": 7804.25,
+              "median": 9218.5,
+              "p75": 10923.75,
+              "p90": 11033.0,
+              "p95": 11033.0,
+              "max": 11033.0,
+              "total": 53937.0
+            },
+            "agent_completion_tokens": {
+              "n": 6,
+              "mean": 228.0,
+              "sd": 33.62142174269256,
+              "min": 191.0,
+              "p25": 213.75,
+              "median": 216.0,
+              "p75": 237.75,
+              "p90": 266.0,
+              "p95": 276.5,
+              "max": 287.0,
+              "total": 1368.0
+            },
             "summary_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_prompt_tokens": {
+              "n": 6,
+              "mean": 0.0,
+              "sd": 0.0,
+              "min": 0.0,
+              "p25": 0.0,
+              "median": 0.0,
+              "p75": 0.0,
+              "p90": 0.0,
+              "p95": 0.0,
+              "max": 0.0,
+              "total": 0.0
+            },
+            "summary_completion_tokens": {
               "n": 6,
               "mean": 0.0,
               "sd": 0.0,
@@ -2959,6 +3783,19 @@
               "p95": 9952964608.0,
               "max": 9952968704.0,
               "total": 59717222400.0
+            },
+            "summary_peak_rss_bytes": {
+              "n": 6,
+              "mean": 1226593621.3333333,
+              "sd": 310609778.5923409,
+              "min": 829341696.0,
+              "p25": 966475776.0,
+              "median": 1377878016.0,
+              "p75": 1448890368.0,
+              "p90": 1472561152.0,
+              "p95": 1472561152.0,
+              "max": 1472561152.0,
+              "total": 7359561728.0
             },
             "run_aggregate_peak_rss_bytes": {
               "n": 6,
@@ -3045,6 +3882,34 @@
               "max": null,
               "n": 0,
               "total": 0.0
+            }
+          },
+          "latency_by_process_position": {
+            "first_finalized": {
+              "mean": null,
+              "sd": null,
+              "min": null,
+              "p25": null,
+              "median": null,
+              "p75": null,
+              "p90": null,
+              "p95": null,
+              "max": null,
+              "n": 0,
+              "total": 0.0
+            },
+            "later_finalized": {
+              "n": 6,
+              "mean": 35.62345592367152,
+              "sd": 6.217201211648209,
+              "min": 24.006476041977294,
+              "p25": 34.421011937753065,
+              "median": 37.92209018749418,
+              "p75": 39.44582253124099,
+              "p90": 40.13042085402412,
+              "p95": 40.40639040604583,
+              "max": 40.682359958067536,
+              "total": 213.74073554202914
             }
           }
         }
@@ -6897,7 +7762,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -6961,6 +7878,19 @@
                 "p95": 21377743257.6,
                 "max": 21377826816.0,
                 "total": 85496856576.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -7047,6 +7977,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "n": 1,
+                "mean": 22.950470042065717,
+                "sd": null,
+                "min": 22.950470042065717,
+                "p25": 22.950470042065717,
+                "median": 22.950470042065717,
+                "p75": 22.950470042065717,
+                "p90": 22.950470042065717,
+                "p95": 22.950470042065717,
+                "max": 22.950470042065717,
+                "total": 22.950470042065717
+              },
+              "later_finalized": {
+                "n": 3,
+                "mean": 51.996166597353294,
+                "sd": 8.268659418040604,
+                "min": 42.463790167006664,
+                "p25": 49.37797768751625,
+                "median": 56.292165208025835,
+                "p75": 56.76235481252661,
+                "p90": 57.04446857522707,
+                "p95": 57.13850649612723,
+                "max": 57.232544417027384,
+                "total": 155.98849979205988
               }
             }
           },
@@ -7219,7 +8177,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -7283,6 +8293,19 @@
                 "p95": 21377865318.4,
                 "max": 21377892352.0,
                 "total": 85510914048.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -7369,6 +8392,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 40.846310770721175,
+                "sd": 13.026208099648205,
+                "min": 22.72474583296571,
+                "p25": 35.70862745816703,
+                "median": 44.85751066647936,
+                "p75": 49.9951939790335,
+                "p90": 50.56536314178957,
+                "p95": 50.75541952937492,
+                "max": 50.94547591696028,
+                "total": 163.3852430828847
               }
             }
           },
@@ -7541,7 +8592,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -7605,6 +8708,19 @@
                 "p95": 21377810432.0,
                 "max": 21377810432.0,
                 "total": 85511159808.0
+              },
+              "summary_peak_rss_bytes": {
+                "n": 4,
+                "mean": 20167999488.0,
+                "sd": 286689197.673758,
+                "min": 19930890240.0,
+                "p25": 19930890240.0,
+                "median": 20115931136.0,
+                "p75": 20353040384.0,
+                "p90": 20446763417.6,
+                "p95": 20478004428.8,
+                "max": 20509245440.0,
+                "total": 80671997952.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -7691,6 +8807,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 41.07815634374856,
+                "sd": 13.302749522093233,
+                "min": 22.353915291954763,
+                "p25": 36.28823197900783,
+                "median": 45.19328685401706,
+                "p75": 49.98321121875779,
+                "p90": 50.93656631250633,
+                "p95": 51.25435134375584,
+                "max": 51.57213637500536,
+                "total": 164.31262537499424
               }
             }
           },
@@ -7863,7 +9007,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -7927,6 +9123,19 @@
                 "p95": 13567662489.6,
                 "max": 13567721472.0,
                 "total": 54247735296.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -8013,6 +9222,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "n": 1,
+                "mean": 21.05754045897629,
+                "sd": null,
+                "min": 21.05754045897629,
+                "p25": 21.05754045897629,
+                "median": 21.05754045897629,
+                "p75": 21.05754045897629,
+                "p90": 21.05754045897629,
+                "p95": 21.05754045897629,
+                "max": 21.05754045897629,
+                "total": 21.05754045897629
+              },
+              "later_finalized": {
+                "n": 3,
+                "mean": 44.065221569306836,
+                "sd": 5.145871184549567,
+                "min": 38.1737415419193,
+                "p25": 42.257748228963464,
+                "median": 46.34175491600763,
+                "p75": 47.01096158300061,
+                "p90": 47.41248558319639,
+                "p95": 47.54632691659499,
+                "max": 47.680168249993585,
+                "total": 132.1956647079205
               }
             }
           },
@@ -8185,7 +9422,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -8249,6 +9538,19 @@
                 "p95": 13530740326.4,
                 "max": 13530742784.0,
                 "total": 54122610688.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -8335,6 +9637,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 38.053881260508206,
+                "sd": 12.191808453060975,
+                "min": 21.00845633400604,
+                "p25": 33.42120527106454,
+                "median": 41.78927222901257,
+                "p75": 46.42194821845624,
+                "p90": 47.14589383738348,
+                "p95": 47.387209043692565,
+                "max": 47.62852425000165,
+                "total": 152.21552504203282
               }
             }
           },
@@ -8507,7 +9837,59 @@
                 "max": 11878.0,
                 "total": 40271.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 9846.25,
+                "sd": 2840.52980680248,
+                "min": 5642.0,
+                "p25": 9357.5,
+                "median": 11072.5,
+                "p75": 11561.25,
+                "p90": 11583.3,
+                "p95": 11590.65,
+                "max": 11598.0,
+                "total": 39385.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 221.5,
+                "sd": 67.96322535018479,
+                "min": 140.0,
+                "p25": 178.25,
+                "median": 233.0,
+                "p75": 276.25,
+                "p90": 278.5,
+                "p95": 279.25,
+                "max": 280.0,
+                "total": 886.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -8571,6 +9953,19 @@
                 "p95": 13540151296.0,
                 "max": 13540163584.0,
                 "total": 54140715008.0
+              },
+              "summary_peak_rss_bytes": {
+                "n": 4,
+                "mean": 7014703104.0,
+                "sd": 5653837139.884581,
+                "min": 2118336512.0,
+                "p25": 2118336512.0,
+                "median": 7014703104.0,
+                "p75": 11911069696.0,
+                "p90": 11911069696.0,
+                "p95": 11911069696.0,
+                "max": 11911069696.0,
+                "total": 28058812416.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -8657,6 +10052,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 37.8799960417673,
+                "sd": 12.397354583758847,
+                "min": 20.54437483404763,
+                "p25": 33.230114458245225,
+                "median": 41.52464650000911,
+                "p75": 46.174528083531186,
+                "p90": 47.22560103321448,
+                "p95": 47.57595868310891,
+                "max": 47.92631633300334,
+                "total": 151.5199841670692
               }
             }
           },
@@ -8830,7 +10253,59 @@
                 "max": 10787.0,
                 "total": 32807.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 7967.75,
+                "sd": 2030.087416016036,
+                "min": 5642.0,
+                "p25": 7254.5,
+                "median": 7816.5,
+                "p75": 8529.75,
+                "p90": 9769.5,
+                "p95": 10182.75,
+                "max": 10596.0,
+                "total": 31871.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 234.0,
+                "sd": 41.71330722922842,
+                "min": 191.0,
+                "p25": 207.5,
+                "median": 229.0,
+                "p75": 255.5,
+                "p90": 274.4,
+                "p95": 280.7,
+                "max": 287.0,
+                "total": 936.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -8894,6 +10369,19 @@
                 "p95": 9999056896.0,
                 "max": 9999056896.0,
                 "total": 39996227584.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -8980,6 +10468,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 33.438927156006685,
+                "sd": 6.421237416419084,
+                "min": 24.249935000087135,
+                "p25": 31.71510987498914,
+                "median": 35.295920395466965,
+                "p75": 37.01973767648451,
+                "p90": 38.15625477039721,
+                "p95": 38.53509380170144,
+                "max": 38.913932833005674,
+                "total": 133.75570862402674
               }
             }
           },
@@ -9153,7 +10669,59 @@
                 "max": 10787.0,
                 "total": 32807.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 7967.75,
+                "sd": 2030.087416016036,
+                "min": 5642.0,
+                "p25": 7254.5,
+                "median": 7816.5,
+                "p75": 8529.75,
+                "p90": 9769.5,
+                "p95": 10182.75,
+                "max": 10596.0,
+                "total": 31871.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 234.0,
+                "sd": 41.71330722922842,
+                "min": 191.0,
+                "p25": 207.5,
+                "median": 229.0,
+                "p75": 255.5,
+                "p90": 274.4,
+                "p95": 280.7,
+                "max": 287.0,
+                "total": 936.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -9217,6 +10785,19 @@
                 "p95": 9998983987.2,
                 "max": 9998991360.0,
                 "total": 39984529408.0
+              },
+              "summary_peak_rss_bytes": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -9303,6 +10884,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "n": 1,
+                "mean": 24.311990667018108,
+                "sd": null,
+                "min": 24.311990667018108,
+                "p25": 24.311990667018108,
+                "median": 24.311990667018108,
+                "p75": 24.311990667018108,
+                "p90": 24.311990667018108,
+                "p95": 24.311990667018108,
+                "max": 24.311990667018108,
+                "total": 24.311990667018108
+              },
+              "later_finalized": {
+                "n": 3,
+                "mean": 36.70074544435678,
+                "sd": 2.1163930866447624,
+                "min": 34.606065707979724,
+                "p25": 35.63201649999246,
+                "median": 36.657967292005196,
+                "p75": 37.7480853125453,
+                "p90": 38.402156124869364,
+                "p95": 38.620179728977384,
+                "max": 38.8382033330854,
+                "total": 110.10223633307032
               }
             }
           },
@@ -9476,7 +11085,59 @@
                 "max": 10787.0,
                 "total": 32807.0
               },
+              "agent_prompt_tokens": {
+                "n": 4,
+                "mean": 7967.75,
+                "sd": 2030.087416016036,
+                "min": 5642.0,
+                "p25": 7254.5,
+                "median": 7816.5,
+                "p75": 8529.75,
+                "p90": 9769.5,
+                "p95": 10182.75,
+                "max": 10596.0,
+                "total": 31871.0
+              },
+              "agent_completion_tokens": {
+                "n": 4,
+                "mean": 234.0,
+                "sd": 41.71330722922842,
+                "min": 191.0,
+                "p25": 207.5,
+                "median": 229.0,
+                "p75": 255.5,
+                "p90": 274.4,
+                "p95": 280.7,
+                "max": 287.0,
+                "total": 936.0
+              },
               "summary_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_prompt_tokens": {
+                "n": 4,
+                "mean": 0.0,
+                "sd": 0.0,
+                "min": 0.0,
+                "p25": 0.0,
+                "median": 0.0,
+                "p75": 0.0,
+                "p90": 0.0,
+                "p95": 0.0,
+                "max": 0.0,
+                "total": 0.0
+              },
+              "summary_completion_tokens": {
                 "n": 4,
                 "mean": 0.0,
                 "sd": 0.0,
@@ -9540,6 +11201,19 @@
                 "p95": 9952966246.4,
                 "max": 9952968704.0,
                 "total": 39811563520.0
+              },
+              "summary_peak_rss_bytes": {
+                "n": 4,
+                "mean": 1425219584.0,
+                "sd": 54665334.05731794,
+                "min": 1377878016.0,
+                "p25": 1377878016.0,
+                "median": 1425219584.0,
+                "p75": 1472561152.0,
+                "p90": 1472561152.0,
+                "p95": 1472561152.0,
+                "max": 1472561152.0,
+                "total": 5700878336.0
               },
               "run_aggregate_peak_rss_bytes": {
                 "n": 4,
@@ -9626,6 +11300,34 @@
                 "max": null,
                 "n": 0,
                 "total": 0.0
+              }
+            },
+            "latency_by_process_position": {
+              "first_finalized": {
+                "mean": null,
+                "sd": null,
+                "min": null,
+                "p25": null,
+                "median": null,
+                "p75": null,
+                "p90": null,
+                "p95": null,
+                "max": null,
+                "n": 0,
+                "total": 0.0
+              },
+              "later_finalized": {
+                "n": 4,
+                "mean": 33.369973458495224,
+                "sd": 6.626222713109148,
+                "min": 24.006476041977294,
+                "p25": 31.22354707325576,
+                "median": 35.21278645849088,
+                "p75": 37.35921284373035,
+                "p90": 38.37239206250524,
+                "p95": 38.71011846876354,
+                "max": 39.04784487502184,
+                "total": 133.4798938339809
               }
             }
           }

@@ -43,6 +43,10 @@ archived complete blocks. Main and confirmation cohorts stay separate. It report
   absence is not proof that the attacker meaning disappeared.
 - Latency, agent/summary tokens and component/aggregate RSS, including failed
   episodes; common-clean costs avoid comparing early failure with successful work.
+  Launch timestamps, startup costs, run/pair positions, resume observations and
+  interrupted-attempt counts remain in the export. The first finalized episode
+  on a process identifies order, not a verified cold-cache state. Interrupted
+  attempts are preserved separately and are not hidden in final-attempt costs.
 - Paired configuration flips, quantization/context interactions and descriptive
   dominated configurations. None establishes statistical certainty or causality.
   Paired intervals resample whole known tasks within suites (2,000 resamples,
