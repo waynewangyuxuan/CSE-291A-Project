@@ -55,9 +55,14 @@ review is still pending. Later analysis must separate official scores, semantic
 scope, action-state witnesses, attack visibility and unknown outcomes, with
 ASR denominators from all cases, own-clean and common-clean subsets.
 
-Only the requested block launches. Subsequent blocks advance after reviewing
-integrity/errors/runtime identities. Intermediate analysis checkpoints remain
-18, 36 and 54 known tasks. Confirmation stays separate and receives no tuning.
+The matrix launch target starts one block. Continuous collection is now
+authorized: `make phase2-collect` wraps the unchanged frozen driver, waits for
+any active block, skips completed work, re-audits every completed block and
+archives its raw evidence before advancing. `make phase2-collect-status` shows
+all21 blocks. Main blocks precede the separate confirmation blocks. An integrity
+or driver failure stops the queue for investigation; finalized capability/budget
+errors do not trigger automatic reruns. Intermediate analysis checkpoints remain
+18,36 and54 known tasks, without tuning against either cohort's results.
 
 `make phase2-matrix-prepare` deterministically regenerates missing plans and
 rejects differences in existing plans. Do not edit a frozen plan to continue a

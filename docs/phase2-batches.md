@@ -63,9 +63,11 @@ resident in all arms; this measures the controlled shared deployment, not each
 policy's minimum footprint. Existing tool-generated wall-clock timestamps are
 retained as source variation. Main/confirmation runtime remains the pinned
 llama.cpp setup used by the spike; inference-engine optimization is separate.
-The launch target starts only the selected block. At completion, automatic
-collection-integrity auditing precedes the separate complete trace-review gate;
-subsequent blocks advance explicitly after their checkpoints.
+The matrix launch target starts one block; `make phase2-collect` continuously
+advances all frozen blocks after fresh collection-integrity audits and per-block
+raw archival. Full trace review remains a separate gate and proceeds alongside
+collection. Check `make phase2-collect-status` for total progress. No repeated
+user confirmation is needed to advance the authorized main/confirmation matrix.
 
 ## Historical B1 protocol
 
