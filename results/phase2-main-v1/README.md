@@ -97,3 +97,20 @@ Infrastructure retry candidates and specific rare/configuration-flip hypotheses
 will be selected from the completed evidence. Capability failures and deterministic
 context/step-limit failures remain outcomes. Any extra attempt preserves its
 original comparison and has a separately recorded purpose and seed.
+
+## Recover without rerunning models
+
+After ordinary `make setup`, run `make phase2-main-restore`. It restores exactly
+the blocks named in the saved measurement checkpoint under
+`.cache/phase2-main-restored/`, checks every archived file, reruns the applicable
+review/collection gates and reproduces all three measurement tables byte-for-byte.
+No model weights, running inference services or original unarchived run directories
+are needed. It refuses to overwrite different files. Use
+`PHASE2_RESTORE_ROOT=.cache/phase2-another-checkpoint` when restoring a newer
+checkpoint into a separate directory. The resulting `recovery-verification.json`
+records coverage and reproduced hashes; incomplete cohorts remain provisional.
+The [108-episode recovery proof](recovery-checkpoint-108.json) reproduces all
+tables and both complete review gates. A repeated restore preserves the receipt;
+a modified destination file is rejected without overwrite. Legacy absolute runtime
+filenames are relocated only under the restored `artifacts/.../runtime/` tree,
+with the mapping recorded; their evidence bytes remain unchanged.

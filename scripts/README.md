@@ -89,6 +89,7 @@ and `make phase2-qualification`.
 | [phase2_collect.py](phase2_collect.py) | Continue all frozen blocks and verify a raw evidence archive after each block |
 | [analyze_phase2_matrix.py](analyze_phase2_matrix.py) | Export paired formal metrics, exposure/cost accounting and reviewed scorer sensitivity |
 | [plot_phase2_matrix.py](plot_phase2_matrix.py) | Render cohort-separated outcomes, context mechanisms, tradeoffs and interactions |
+| [restore_phase2_evidence.py](restore_phase2_evidence.py) | Restore an archived checkpoint in isolation and reproduce audits/measurements without inference |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
 
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task
