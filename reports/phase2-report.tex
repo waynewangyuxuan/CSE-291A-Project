@@ -176,10 +176,20 @@ It treats tool instructions as source claims rather than authorization.
 The result enters the agent history as a synthetic historical tool
 exchange, not a newly executable tool.
 
-Compression occurs only when needed. Protected indivisible history,
-the generated summary envelope, or the summarizer's own input can
-still overflow; each remains an explicit error. Summary combines
-compression with provenance instructions, so a policy effect cannot
+Compression occurs only when needed. Before generating a summary,
+Summary tests each candidate retained history with a synthetic memory
+exchange containing \texttt{memory}, then adds a $384+32=416$-token
+reserve to the rendered input count. Truncate uses no summary
+placeholder and zero additional reserve. If no candidate fits,
+Summary records \texttt{indivisible\_\allowbreak recent\_\allowbreak history}
+before generation. This conservative reservation stop can occur even
+when the protected request and newest raw group fit Truncate; it does
+not prove that no summary could fit. Post-generation summary-envelope
+overflow and summarizer-input overflow are separate checks. Recorded
+policy failures must therefore be distinguished from theoretical
+feasibility.
+
+Summary combines compression with provenance instructions, so a policy effect cannot
 isolate compression from those instructions. Its fixed F16 model
 also means the precision factor changes the acting agent, not the
 summarizer. The summarizer remains resident in Full and Truncate as

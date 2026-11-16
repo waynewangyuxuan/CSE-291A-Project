@@ -87,11 +87,57 @@ and `make phase2-qualification`.
 | [package_phase2_calibration.py](package_phase2_calibration.py) | Preserve and verify the 24 reviewed calibration episodes and summary replays |
 | [phase2_matrix.py](phase2_matrix.py) | Freeze balanced formal task blocks; launch, resume and inspect one block |
 | [phase2_collect.py](phase2_collect.py) | Continue all frozen blocks and verify a raw evidence archive after each block |
+| [phase2_seed_diagnostics.py](phase2_seed_diagnostics.py) | Prepare and run explicitly selected seed-29 matched pairs only after the completed, fully reviewed 1,098-episode collection; isolated roots, no automatic selection or infrastructure retries |
 | [import_phase2_review.py](import_phase2_review.py) | Verify a completed review receipt, evidence hashes and full gate before publishing its annotations |
 | [analyze_phase2_matrix.py](analyze_phase2_matrix.py) | Export paired formal metrics, exposure/cost accounting and reviewed scorer sensitivity |
 | [plot_phase2_matrix.py](plot_phase2_matrix.py) | Render cohort-separated outcomes, context mechanisms, tradeoffs and interactions |
 | [restore_phase2_evidence.py](restore_phase2_evidence.py) | Restore an archived checkpoint in isolation and reproduce audits/measurements without inference |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
+
+The seed-29 adapter requires an externally supplied selection JSON with exactly
+`schema_version: 1`, `seed: 29`, the SHA256 of the final reviewed
+`results/phase2-main-v1/analysis/episodes.csv` as `reviewed_table_sha256`, and
+`hypotheses`. Each hypothesis has an `id`, a nonempty `question`, exactly two
+distinct `sides` (`precision`: `f16`/`q8`/`q4`, `policy`:
+`full`/`truncate`/`summary`), and `tasks`. Each task names `suite`, `task`
+(`user_task_N`), original `block` (`main-NNN` or `confirmation-NNN`), and two
+`source_runs` in the same order as the sides. Unknown fields, duplicate
+task/configuration pairs, mismatched references and selections above 32 episodes
+are rejected. Every selected task contributes both clean/attack episodes for
+both named sides. The adapter does not choose hypotheses or launch runs during preparation.
+
+From the repository root, after final collection and review:
+
+```sh
+.venv/bin/python scripts/phase2_seed_diagnostics.py prepare --selection /path/to/selected-hypotheses.json --root artifacts/phase2-seed-diagnostics-v1
+.venv/bin/python scripts/phase2_seed_diagnostics.py validate --root artifacts/phase2-seed-diagnostics-v1
+.venv/bin/python scripts/phase2_seed_diagnostics.py run --root artifacts/phase2-seed-diagnostics-v1
+.venv/bin/python scripts/phase2_seed_diagnostics.py status --root artifacts/phase2-seed-diagnostics-v1
+```
+
+Preparation freezes the selection, original evidence/identities, wrapper and
+parent code, protocol, models and runtime files under the supplementary root.
+Only agent seed 17→29 and isolated output/metadata paths change. Existing local
+model verification manifests are read unchanged; no model downloads, probes or
+launches occur during preparation/validation. Runtime configs remain beneath
+the repository, so the unchanged loader resolves the same pinned model paths.
+Execution calls the unchanged `phase2_matrix.run` with process-local alternate
+`CONFIGS`/`OUTPUT`, holds the original queue and collection locks plus its own
+lock throughout, and preserves ports 8087/8086. An occupied port or live original
+service causes refusal; the adapter does not stop an existing service to make room.
+The read-only `status` command remains available during collection; it does not
+claim full evidence validation or rehash model files while inference is running.
+Interrupted supplemental work can resume only with unchanged identities and
+vacant ports; orphaned services require separate inspection before retrying.
+
+The parent driver's collection audit remains partial with respect to review.
+After reviewing every supplementary trace, use `validate --root <same-root>
+--annotations <supplementary-review.csv>` to run the full existing auditor on the
+supplementary plan; do not use the formal review importer. Original outcomes
+are never replaced. Offline tests cover selection, locking and drift refusal;
+real runtime, paired collection/resume and full-review proof await the first
+selected diagnostic. No actual selection or supplementary
+root is shipped by this implementation.
 
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task
 exploratory grid, not the planned full Phase 2 evaluation.

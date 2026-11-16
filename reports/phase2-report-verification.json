@@ -1,23 +1,35 @@
 {
   "status": "draft_methods_evaluation_collection_in_progress",
   "pages": 5,
-  "build": "Tectonic; isolated output and dependency cache; final cached-only build exited 0",
-  "layout": "All five rendered pages visually inspected; no clipping or overlap; no overfull boxes, missing glyphs, unresolved references or citations",
+  "build": "Tectonic --only-cached; isolated output and existing temporary dependency cache; exited 0",
+  "layout": "Five pages; page 1 render unchanged; corrected page 2 and reflowed pages 3-5 visually inspected; no clipping, overlap, overfull boxes, missing glyphs or unresolved references/citations",
   "config_validation": "All 21 hashed plans, 549 clean/attack pairs, fixed controls, cohort totals and main order balance checked",
   "findings": "None inferred; results and conclusion explicitly pending",
   "factual_questions": [],
   "files": {
     "/Users/wang/CSE-291A-Project/reports/phase2-report.tex": {
-      "bytes": 21084,
-      "sha256": "5522870fcf80dbf2de9a2378ef1851e8d1798cabe881b9e340bb2d7eb57dd0bc"
+      "bytes": 21666,
+      "sha256": "36858558eeb9a9bbad7d0beff5e838cd670ab67589b1144d4d31e1d92057c391"
     },
     "/Users/wang/CSE-291A-Project/reports/phase2-report.bib": {
       "bytes": 718,
       "sha256": "1c0db43a3ac64b8a50cc1ddd588cb12df9075ca92a4a1b61a36bc6669c0dbf77"
     },
     "/Users/wang/CSE-291A-Project/reports/phase2-report.pdf": {
-      "bytes": 61652,
-      "sha256": "8d8a74a33380b9ceea8bd90fd7f734d132b5ccad1c2d6ff2880f9cc776fb58c2"
+      "bytes": 62313,
+      "sha256": "d385d3841d9bc1e03e9ea4322e9046b8b44de39e6af6bf9ba599c1377c1ee3eb"
     }
+  },
+  "method_correction": {
+    "source": "src/agent_tradeoffs/memory.py",
+    "source_sha256": "0b8fec2a444818e138372e9b6cfcab32780a12967cf9e1c5a7077cdfa69137c5",
+    "source_lines": [
+      369,
+      381
+    ],
+    "section": "2.3 Context Interventions",
+    "detail": "Summary candidate preflight counts memory_messages(candidate, \"memory\") in the rendered input and additionally reserves summary_max_tokens + 32 = 416 tokens. Truncate uses no placeholder and reserve 0. Summary indivisible_recent_history may therefore be a conservative pre-generation reservation stop even when the protected request and newest raw group fit Truncate; it does not establish theoretical summary infeasibility. Generated-envelope and summarizer-input checks remain separate.",
+    "code_or_configuration_changes": false,
+    "diagnostic_launches": 0
   }
 }
