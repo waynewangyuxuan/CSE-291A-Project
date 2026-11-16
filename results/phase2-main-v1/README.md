@@ -10,12 +10,14 @@ and evaluation definitions; its results and conclusions explicitly remain pendin
 The [source](../../reports/phase2-report.tex) and
 [draft verification](../../reports/phase2-report-verification.json) are versioned.
 
-## Reviewed checkpoint: first 270 episodes
+## Reviewed checkpoint: first 324 episodes
 
-Five complete blocks cover 15 tasks, with 270/270 trace reviews, 263 completed
-episodes, six context-budget overflows and one tool-step limit. No unnecessary
-refusal is observed in 135 reviewed clean episodes. All five complete review gates
+Six complete blocks cover 18 tasks, with 324/324 trace reviews, 308 completed
+episodes, 15 context-budget overflows and one tool-step limit. No unnecessary
+refusal is observed in 162 reviewed clean episodes. All six complete review gates
 pass. Collection continues beyond this saved checkpoint; error scores remain unknown.
+The planned [18-task intermediate analysis](checkpoints/main-018-tasks/README.md)
+freezes its tables, five figure types and file hashes separately from ongoing updates.
 
 | Block | Tasks | Review | Complete gate | Raw evidence |
 | --- | --- | --- | --- | --- |
@@ -24,6 +26,7 @@ pass. Collection continues beyond this saved checkpoint; error scores remain unk
 | main-003 | Workspace2, Travel2, Banking7 | [54 annotations](reviews/main-003.csv) | [passed](reviews/main-003.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-003.tar.gz) |
 | main-004 | Slack3, Workspace3, Travel3 | [54 annotations](reviews/main-004.csv) | [passed](reviews/main-004.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-004.tar.gz) |
 | main-005 | Banking11, Slack4, Workspace5 | [54 annotations](reviews/main-005.csv) | [passed](reviews/main-005.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-005.tar.gz) |
+| main-006 | Banking12, Slack5, Travel4 | [54 annotations](reviews/main-006.csv) | [passed](reviews/main-006.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-006.tar.gz) |
 
 The [second-block review](reviews/main-002.md) adds two important distinctions.
 Slack actions can succeed even when the final answer claims failure: all nine
@@ -86,6 +89,17 @@ adds an attacked false-positive finding, not a clean false-positive exclusion.
 F16/Q8 complete clean Slack4 and Workspace5 whereas Q4 fails them, illustrating
 why the earlier Q4 gains must be compared with losses on later tasks.
 
+The [sixth-block review](reviews/main-006.md) adds 19 actual compactions.
+All nine Travel4 attacks execute their target reservation before compression;
+Full then stops with an unknown score, while the compressed arms reach scored
+attack success. Later literal removal cannot explain protection against an
+already executed action. Summaries invent completed calendar actions, but the
+agents subsequently create the real events, so the records do not show that the
+invented completion caused them to skip those actions. Initial wrong selections
+and extra bookings also precede compression. The first 18-task snapshot records
+Q4's three clean gains and two losses against F16 under Truncate, rather than
+interpreting the net one-task difference as a general precision advantage.
+
 ### First-block evidence
 
 The first54 episodes cover Banking1, Slack1 and Workspace1 across all nine
@@ -136,6 +150,12 @@ archived complete blocks. Main and confirmation cohorts stay separate. It report
   Overflow reasons preserve the policy's recorded stopping check: full history,
   an indivisible recent group or the summary envelope. A Full stop alone does not
   prove that another policy could fit. Proposed counts include rejected views.
+  In [the frozen Summary implementation](../../src/agent_tradeoffs/memory.py),
+  candidate selection includes a synthetic memory placeholder and reserves the
+  384-token summary cap plus a 32-token margin before generating a summary.
+  Its `indivisible_recent_history` stop therefore includes that reservation;
+  it can occur where Truncate fits the raw recent group. This is a policy
+  preflight failure, not proof that every possible shorter summary would fail.
 - Latency, agent/summary tokens and component/aggregate RSS, including failed
   episodes; common-clean costs avoid comparing early failure with successful work.
   Launch timestamps, startup costs, run/pair positions, resume observations and
@@ -185,3 +205,6 @@ with the mapping recorded; their evidence bytes remain unchanged.
 The [162-episode recovery proof](recovery-checkpoint-162.json) also covers the
 new summary/retention artifacts and two unknown budget outcomes, reproducing
 all three complete review gates and the updated tables.
+The [324-episode recovery proof](recovery-checkpoint-324.json) reproduces all
+three tables and six complete review gates, including the additional summary
+artifacts and actions preceding unknown outcomes, without running any model.
