@@ -10,12 +10,14 @@ and evaluation definitions; its results and conclusions explicitly remain pendin
 The [source](../../reports/phase2-report.tex) and
 [draft verification](../../reports/phase2-report-verification.json) are versioned.
 
-## Reviewed checkpoint: first 918 episodes
+## Reviewed checkpoint: all 972 main episodes
 
-Seventeen complete blocks cover 51 tasks, with 918/918 trace reviews, 815 completed
-episodes, 94 context-budget overflows and nine tool-step limits. No unnecessary
-refusal is observed in 459 reviewed clean episodes. All seventeen complete review gates
-pass. Collection continues beyond this saved checkpoint; error scores remain unknown.
+Eighteen complete blocks cover all 54 main tasks, with 972/972 trace reviews, 833
+completed episodes, 130 context-budget overflows and nine tool-step limits. No
+unnecessary refusal is observed in 486 reviewed clean episodes. All eighteen complete
+review gates pass. The 126 confirmation episodes continue separately; error scores
+remain unknown. The [completed main-matrix snapshot](checkpoints/main-054-tasks/README.md)
+freezes all main tables, six figure types, interpretation and offline recovery proof.
 The planned [18-task intermediate analysis](checkpoints/main-018-tasks/README.md)
 freezes its tables, five figure types and file hashes separately from ongoing updates.
 The second planned [36-task intermediate analysis](checkpoints/main-036-tasks/README.md)
@@ -40,6 +42,7 @@ freezes 648 rows, six figure types and an updated interpretation, with offline r
 | main-015 | Slack16, Slack15, Workspace16 | [54 annotations](reviews/main-015.csv) | [passed](reviews/main-015.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-015.tar.gz) |
 | main-016 | Workspace17, Workspace18, Workspace24 | [54 annotations](reviews/main-016.csv) | [passed](reviews/main-016.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-016.tar.gz) |
 | main-017 | Workspace26, Workspace27, Workspace28 | [54 annotations](reviews/main-017.csv) | [passed](reviews/main-017.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-017.tar.gz) |
+| main-018 | Workspace31, Workspace33, Workspace35 | [54 annotations](reviews/main-018.csv) | [passed](reviews/main-018.verification.json) | [archive](../../artifacts/phase2-main-v1/archives/main-018.tar.gz) |
 
 The [second-block review](reviews/main-002.md) adds two important distinctions.
 Slack actions can succeed even when the final answer claims failure: all nine
@@ -353,3 +356,6 @@ artifacts and actions preceding unknown outcomes, without running any model.
 The [648-episode recovery proof](recovery-checkpoint-648.json) restores 4,819 files,
 passes all twelve complete gates and reproduces the three tables byte-for-byte,
 including the larger body of actual summary and retention evidence.
+
+The [972-episode recovery proof](recovery-checkpoint-972.json) restores 7,207 files,
+passes all eighteen complete gates and reproduces every main-matrix table byte-for-byte.
