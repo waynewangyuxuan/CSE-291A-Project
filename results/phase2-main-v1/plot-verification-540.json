@@ -1,0 +1,36 @@
+{
+  "saved_episodes": 540,
+  "focused_tests": "27 passed (plot + existing analysis tests)",
+  "lint": "Ruff check and format passed",
+  "protected_unchanged": 140,
+  "original_01_02_05_byte_identical_formats": [
+    "png",
+    "svg",
+    "pdf"
+  ],
+  "visually_inspected": [
+    "03-tradeoffs.png",
+    "04-interactions.png",
+    "06-checker-sensitivity.png"
+  ],
+  "input_and_output_provenance_matches": true,
+  "public_figures_written": true,
+  "model_calls": 0,
+  "changed_source_sha256": {
+    "scripts/plot_phase2_matrix.py": "7ab89b490ea359bbc3fd4e35c144f43e894ff584aa56642bd2c87429a5f87bf5",
+    "tests/test_phase2_matrix_plots.py": "34df7cffb1107e4e1ea1df0a0e09ccf1b70018fa778853c4b64792d594c15396",
+    "scripts/plot_phase2_matrix.README.md": "6662aaa2396f9ffee7d61a7c1bbcb400882428db9dda21b21f19a1f1dc70d795"
+  },
+  "public_figure_artifacts": 18,
+  "public_figures_byte_equal_to_visually_inspected_render": true,
+  "repository_checks": {
+    "command": "PYTHONPATH=.cache/report-env/lib/python3.12/site-packages:src:scripts make check phase2-lint",
+    "tests_passed": 215,
+    "navigation_links": 117,
+    "indexed_scripts": 45,
+    "phase2_lint": "passed"
+  },
+  "public_provenance_sha256": "1d4b19ec3dcca85893fb0e94db27998059eb97bce503babff60a651ae7ff4d04",
+  "measurements_sha256": "66d352e048b6aa35c0111122046a439aaad286a00f22150c8be78b3daef59116",
+  "episodes_sha256": "19f4f0c047d3adcc15b033d74b65e3d8ff319143c8dd428eca16a29fafc4fcb9"
+}

@@ -1,0 +1,337 @@
+{
+  "status": "final_formal1098_and_separate_diagnostic24_reviewed",
+  "main_tasks": 54,
+  "main_episodes": 972,
+  "confirmation_tasks": 7,
+  "confirmation_episodes": 126,
+  "diagnostic_cases": 6,
+  "diagnostic_new_episodes": 24,
+  "diagnostic_role": "Outcome-selected action review; no pooled estimates or precision ranking",
+  "diagnostic_full_gate": "24 reviewed, nonpartial, passed",
+  "diagnostic_offline_recovery": {
+    "status": "reproduced_offline_without_inference",
+    "archive_sha256": "342be526552443b69bc9d8cd0076ff62fd81ba14c5eeac1c3603dec9465ecae7",
+    "episodes_per_seed": 24,
+    "episode_audits_reproduced": 24,
+    "restored_files": 276,
+    "reproduced": {
+      "comparison.json": "bf109a86a3a0c87824d497f3cd56bacdc6a13bae3c3de777621ac16bfc30b75a",
+      "comparison.csv": "fd32b7058143f0740f06cb4a0fa0bdc979ffb1d6348ef6095c945880128d449f",
+      "provenance.json": "4ad1972baf79131f29563bad877fffa55fcd03544593f201bda5206fe85d7bc9"
+    },
+    "excluded": "Model weights and runtime binaries; original seed17 raw evidence remains in the formal block archives."
+  },
+  "main_identical_to_final_export": true,
+  "scope": "Main, confirmation and diagnostics separate; existing estimates and source-linked action review only",
+  "inputs_sha256": {
+    "results/phase2-main-v1/checkpoints/main-054-tasks/episodes.json": "da7ec56415e1ea9f2c1c4c50388c2a58bfc524753ec26fe94f7a5905106eec0f",
+    "results/phase2-main-v1/checkpoints/main-054-tasks/measurements.json": "2d107031a7d4ba48ca801541cfa24f04bff54175eb7613d429508ecf0697ace4",
+    "results/phase2-main-v1/analysis/episodes.json": "b15daed4b5b64516d120873584f4623e401c16291dd10e345181ba9feccdd45b",
+    "results/phase2-main-v1/analysis/episodes.csv": "0360d985e20cf6e04ebb6ea9afc9ca94b84e4bf83b6e264e371a43d57bf7d52c",
+    "results/phase2-main-v1/analysis/measurements.json": "5f068ac9fa7e6ffdfcd11e5fdb7aec2412d754ee93f1508eec200a59762ca0e0",
+    "results/phase2-seed-diagnostics-v1/README.md": "a8dead67b55b87298b57ef8b03d703a7303f9dd437d37f5e15fb414688bf23bb",
+    "results/phase2-seed-diagnostics-v1/comparison.json": "bf109a86a3a0c87824d497f3cd56bacdc6a13bae3c3de777621ac16bfc30b75a",
+    "results/phase2-seed-diagnostics-v1/comparison.csv": "fd32b7058143f0740f06cb4a0fa0bdc979ffb1d6348ef6095c945880128d449f",
+    "results/phase2-seed-diagnostics-v1/provenance.json": "4ad1972baf79131f29563bad877fffa55fcd03544593f201bda5206fe85d7bc9",
+    "results/phase2-seed-diagnostics-v1/recovery-verification.json": "75c3bd52a98a297a74271b6165d2d2c9c1aef3d1405973bea9e02a026cfc6faf",
+    "results/phase2-seed-diagnostics-v1/review-completion.json": "f534a5bb46df39c56aa30b233f6067d3894e2fd5dfb30604d5cb80c0af30c7cc",
+    "results/phase2-seed-diagnostics-v1/review-findings.md": "2b6d59a6c7ef2666388186dd2bd75c284385181b590ba45620f5c5812fe6494f",
+    "results/phase2-seed-diagnostics-v1/selection.json": "539bf723235abf7d021f6dc47fdff9a6ac95f8667aea43ec4460c27143ab3cf7",
+    "results/phase2-seed-diagnostics-v1/trace-review.csv": "7fd457f1505fedf7c8ff41124054cece246168fa65d3aa1d19a92b74629aae4c",
+    "results/phase2-seed-diagnostics-v1/verification.json": "8ae814c2ecee4b1d31d9497b1e5b64335b6d5b3b892c354a59dae28b674851c3",
+    "results/phase2-main-v1/seed29-hypotheses.json": "eaf26490f0aef45bf5ea0601583488c878fccc8eb56c253d2bd1453a8a086ac4",
+    "results/phase2-main-v1/seed29-hypotheses.md": "381cb89d51405f8f75bbef238e39edcf59d854555a410de363d3d4036249da9a",
+    "artifacts/phase2-seed-diagnostics-v1/evidence.tar.gz": "342be526552443b69bc9d8cd0076ff62fd81ba14c5eeac1c3603dec9465ecae7",
+    "results/phase2-main-v1/reviews/main-001.md": "5bf4fc9170837794da0a97f1438d43e4ad39cfce278bac14c96bed43bef86fd7",
+    "results/phase2-main-v1/reviews/main-001.csv": "9112857653a8796d9b4f8bcf07197dc01bafa90ae31d6af5efb37fed8334076c",
+    "results/phase2-main-v1/reviews/main-002.md": "c07b94a9334dadbf587d7ad1b268b73b0b93d58912f7a695bd24084663e52617",
+    "results/phase2-main-v1/reviews/main-002.csv": "a4e1e262aaa7113519ed93d9bc5f04b89151a63d5ed9762797400ed9a5e1d855",
+    "results/phase2-main-v1/reviews/main-003.md": "3ba0990dc0404657c764ebad07a5600b4083dc8002f5a103c7b0c4904a78b948",
+    "results/phase2-main-v1/reviews/main-003.csv": "ab3ea6ccfcf22ef1b6e17c50f16237b00bb31d157990691ae32ff7f84e69a31a",
+    "results/phase2-main-v1/reviews/main-004.md": "66acfa22acd5768dd592d7f30b4b374d40fa54ad4547a69a8b6fff2c8a7e7afd",
+    "results/phase2-main-v1/reviews/main-004.csv": "7ef5d02a57ad1ab135c7888ab541d8ba8343bcdebb0e76b2eb4ed55abad08b78",
+    "results/phase2-main-v1/reviews/main-005.md": "d6d546c46b4ea31926358a1c10a240cee10e9a77fbf7b61ab6b287c511212aba",
+    "results/phase2-main-v1/reviews/main-005.csv": "4a2ab1fedd9a615b52afa8acdcc686e7fedde32cfac5a7d19f356d13b2da8fe4",
+    "results/phase2-main-v1/reviews/main-006.md": "37856ae49384a10b597b7cfd448596591cd03023b8c8030748ca1697eb6d371c",
+    "results/phase2-main-v1/reviews/main-006.csv": "a91ec556b3cf98ce88861edcceea7edd3959247f75ffd5016bcedf4f38112fbb",
+    "results/phase2-main-v1/reviews/main-007.md": "45f7a2d0aed0f65df38f9b90d60524c1f0dce508b1da513db5bd1141291b0742",
+    "results/phase2-main-v1/reviews/main-007.csv": "89d6058f4fc062b1a95c76c4e7441ba3417f99fe29c45fd2bc8e0e0631f226bf",
+    "results/phase2-main-v1/reviews/main-008.md": "d3568e63eed36cc306a5105f07d9cb59de28adc5bbfda9027a30aa6b741513a3",
+    "results/phase2-main-v1/reviews/main-008.csv": "c6e712bea7fe94ed2b868755d1af4b8fccc0eed35c4d75212b4dd646d4d45d08",
+    "results/phase2-main-v1/reviews/main-009.md": "1e82438c6d662adb6d6b096a8ea431ed2d9a51d031287dcce54951a7aaabe96a",
+    "results/phase2-main-v1/reviews/main-009.csv": "fd5a89f2ce4fdf3f43554234c9be15007e9207a82dee78cb1f6d2b5a1a7d437c",
+    "results/phase2-main-v1/reviews/main-010.md": "a2ee03fe5e05359127ad10a1a6253099bcb74396072d99d4840c8d10f892d875",
+    "results/phase2-main-v1/reviews/main-010.csv": "34868f840e0ac2403041bd692dc8fe85d9f2657de0cc6351c38a11f362b79b6f",
+    "results/phase2-main-v1/reviews/main-011.md": "59851200200c7a89bb85da66666ff4ba10328b415ec70fd29dbd981c84cd1d75",
+    "results/phase2-main-v1/reviews/main-011.csv": "5a36d23a70bcc5f9c6a8d4fffcf388be254cf0403ca5a017a04683bfbf6c17ab",
+    "results/phase2-main-v1/reviews/main-012.md": "628991775ae4f204f630ca9f827d6f193afa4c190abd8023caa98948786a52cd",
+    "results/phase2-main-v1/reviews/main-012.csv": "3c693232e8ac455326e66505eb1c8328dde16c8e4c9f198bd46507579b48a0d9",
+    "results/phase2-main-v1/reviews/main-013.md": "8065ca4543b03748dd976df0d802cb50164697b999f89d0e8111b64906128fda",
+    "results/phase2-main-v1/reviews/main-013.csv": "f593c32d5ab4f43b491c96aa05ec7a9d14dd879dcba37d2bddcee67e61b02fbf",
+    "results/phase2-main-v1/reviews/main-014.md": "0dce6ea8c782c927e8b970db8bb199f62ae2dee54e2ebb1d7c893b8017b3a688",
+    "results/phase2-main-v1/reviews/main-014.csv": "b9e00c5ee4b029d46049b0adb67be1f1d2e0d5a34563e30305f59f5bec59c98a",
+    "results/phase2-main-v1/reviews/main-015.md": "4fa7858f363da62bda0a5bda3f65f4f89ed711483c9d993025d09e56dc6236f4",
+    "results/phase2-main-v1/reviews/main-015.csv": "548f0ac9a24dd3d6610b5f419a11b80623a66ba001a98f103f8f713583d43717",
+    "results/phase2-main-v1/reviews/main-016.md": "c98e0154db56d4c50ed7be85b5a54e60e18daecdd69ac30ced3fb62f72e77496",
+    "results/phase2-main-v1/reviews/main-016.csv": "3dc1cd38dc8e130af04f9a383dc47b1fee526619d073ae63ec3b8fd6dcc15d3e",
+    "results/phase2-main-v1/reviews/main-017.md": "d75a3059828bfa87b2c80561eed54fa9958cc83bc5a32a6ee76f0872da476fba",
+    "results/phase2-main-v1/reviews/main-017.csv": "0df73fa54bf00d7380403b4755b35d4a06256dacd4aac64e78b806c0b93e9f05",
+    "results/phase2-main-v1/reviews/main-018.md": "a0417bdd33377cdde5a8c91b73da078c69791bd2ddb3df71adee9677392f925c",
+    "results/phase2-main-v1/reviews/main-018.csv": "40786cd16d0beea895ac9ab840d043d9d441b990621cf3bcaf756cf6e3a700c1",
+    "results/phase2-main-v1/reviews/confirmation-001.md": "95cb42b61e8836f7149d7bb01b447ec6c4b8fc6bd6b10fe9e4e472ae0200edc5",
+    "results/phase2-main-v1/reviews/confirmation-001.csv": "2a6bdadbdf2463b71fff05be4023c0bef906aa05f8db2dd2451c589a3399d2bd",
+    "results/phase2-main-v1/reviews/confirmation-001.verification.json": "5d5a39fff58ffcf07648a24e221311ffb639fe5b5100be2f3cb7b0bb18caec14",
+    "results/phase2-main-v1/reviews/confirmation-002.md": "04984570e394718763da250b629805aa722b465fa3e2a259d905e19590de8712",
+    "results/phase2-main-v1/reviews/confirmation-002.csv": "fe16a5455942086baeaea067f8cb8d155ff72fc29d9c0bf304cee53e05666a91",
+    "results/phase2-main-v1/reviews/confirmation-002.verification.json": "90379c43b080a2700308f7d5717fcfcf3af08c160dc54f5da666fa9f2d1fad28",
+    "results/phase2-main-v1/reviews/confirmation-003.md": "eadcd9d8622ae23deb0566e1156f0977d452e44f145f221a2f09d23325186250",
+    "results/phase2-main-v1/reviews/confirmation-003.csv": "9af792b6103bbd6ec2ceeb24f945e4bc0d5e7b0fa9bf0160a26af1a53d038e66",
+    "results/phase2-main-v1/reviews/confirmation-003.verification.json": "fa24ff76dc48926d75833f95bec8b75d249a7028881339d000630256e8080cf1",
+    "reports/phase2-figures/make_main_figures.py": "9803fdb264edae1bccc9c4357cfdf235c988b66a453052056a6e6b5f0a25bc11",
+    "scripts/plot_phase2_matrix.py": "7ab89b490ea359bbc3fd4e35c144f43e894ff584aa56642bd2c87429a5f87bf5",
+    "scripts/analyze_phase2_matrix.py": "576a42e2e0122320265cf78f189efb4c69c0d99d3286e234b44371e2ba4116c4"
+  },
+  "outputs_sha256": {
+    "reports/phase2-figures/main-outcomes.tex": "ab24502ce53c614f3ef3019d771625722fcad43cefb0cf781e08c7a9621b322d",
+    "reports/phase2-figures/main-costs.tex": "b29f01cd82e04c1e358d74f372b9c5957c839d6cc0ffa73f5eba34e75817f7d8",
+    "reports/phase2-figures/main-sensitivity.tex": "8fa309455f7822b7622cb18f9fbd62e8a9cce156e6d80fab7dd6cc52885dedf4",
+    "reports/phase2-figures/confirmation-outcomes.tex": "6ea5d85daf1b8e4499fcb7c40bc712a763a5e9f74c55877dc64bf891103be4ad",
+    "reports/phase2-figures/confirmation-costs.tex": "2b5a17babd403b190297b316d39d61411667ca71d02f7d1fb3768efb365d1294",
+    "reports/phase2-figures/paired-main.pdf": "27b43f0664290e8172b5736cadded5d273001891629e626c8a895740c7b361a6",
+    "reports/phase2-figures/paired-main.png": "ab1f152092c4e331aeae0629c2732dfe658ca8a580928ac404a79db4cab9c297",
+    "reports/phase2-figures/context-main.pdf": "01ab56569c9d2bff0dbf81dc2494a410f2a67695ecbc81fa8332bc67aefc8575",
+    "reports/phase2-figures/context-main.png": "c7a9d958e00adcd41fa64c227162dbce28b91be27ec4cfbe795f5e26438697d5",
+    "reports/phase2-figures/interaction-main.pdf": "60006c5e55a3120febc6c3a5a6bc412d50f62160d35e68b480b292f74fcd48f9",
+    "reports/phase2-figures/interaction-main.png": "43d18f37129d60807729438aa74ae13e971bcc96b57b582a9d5d652cddd22260",
+    "reports/phase2-figures/cost-main.pdf": "816bd7a1f77e0b8f4d24959836599c5c243dda93397dccde5510961e831360ba",
+    "reports/phase2-figures/cost-main.png": "61d74813d19c770cf9f5b2f236350b2e2ad14fe4293e8c39c5bee32f2b4c3a2a"
+  },
+  "matched_compaction": {
+    "f16/full": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "f16/truncate": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "f16/summary": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "q8/full": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "q8/truncate": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 1,
+        "compacted_episodes": 1
+      }
+    },
+    "q8/summary": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 1,
+        "compacted_episodes": 1
+      }
+    },
+    "q4/full": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "q4/truncate": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    },
+    "q4/summary": {
+      "clean": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      },
+      "attack": {
+        "tasks": 18,
+        "episodes": 18,
+        "compacted_tasks": 0,
+        "compacted_episodes": 0
+      }
+    }
+  },
+  "interaction_compaction": {
+    "q8/truncate/clean_utility": {
+      "tasks": 46,
+      "episodes": 184,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/truncate/attack_success_common_clean": {
+      "tasks": 17,
+      "episodes": 68,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/summary/clean_utility": {
+      "tasks": 46,
+      "episodes": 184,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/summary/attack_success_common_clean": {
+      "tasks": 17,
+      "episodes": 68,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/truncate/clean_utility": {
+      "tasks": 45,
+      "episodes": 180,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/truncate/attack_success_common_clean": {
+      "tasks": 18,
+      "episodes": 72,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/summary/clean_utility": {
+      "tasks": 45,
+      "episodes": 180,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/summary/attack_success_common_clean": {
+      "tasks": 18,
+      "episodes": 72,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    }
+  },
+  "confirmation_interaction_compaction": {
+    "q8/truncate/clean_utility": {
+      "tasks": 3,
+      "episodes": 12,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/truncate/attack_success_common_clean": {
+      "tasks": 1,
+      "episodes": 4,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/summary/clean_utility": {
+      "tasks": 3,
+      "episodes": 12,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q8/summary/attack_success_common_clean": {
+      "tasks": 1,
+      "episodes": 4,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/truncate/clean_utility": {
+      "tasks": 4,
+      "episodes": 16,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/truncate/attack_success_common_clean": {
+      "tasks": 1,
+      "episodes": 4,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/summary/clean_utility": {
+      "tasks": 4,
+      "episodes": 16,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    },
+    "q4/summary/attack_success_common_clean": {
+      "tasks": 1,
+      "episodes": 4,
+      "compacted_tasks": 0,
+      "compacted_episodes": 0
+    }
+  }
+}

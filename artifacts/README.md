@@ -78,3 +78,25 @@ The [inventory](phase2-calibration/manifest.json) hashes every member;
 `make phase2-calibration-verify` checks it without inference. Weights and runtime
 binaries are excluded. See the [calibration report](../results/phase2-calibration/README.md)
 for the selected protocol, scorer limitations and scope of the next batches.
+
+## Phase 2 formal block evidence
+
+Verified block archives are saved under `phase2-main-v1/archives/`. Each has an
+inventory of member hashes and a fresh collection audit; review annotations stay
+separate in [the formal results](../results/phase2-main-v1/README.md). All 21 archives are committed, covering 1,098 formal episodes. The
+[first archive](phase2-main-v1/archives/main-001.tar.gz) and every later block
+restore without weights or running services. `make phase2-main-restore` checks
+every member, repeats all 21 full review gates and reproduces the three final
+tables byte-for-byte; see the [final recovery proof](../results/phase2-main-v1/recovery-checkpoint-1098.json).
+The preserved queue used fresh collection audits and archival before each advance.
+
+## Phase 2 selected diagnostic evidence
+
+[phase2-seed-diagnostics-v1/evidence.tar.gz](phase2-seed-diagnostics-v1/evidence.tar.gz)
+preserves all 24 selected seed29 episodes, their complete reviews, runtime logs,
+exact retention/summary records, and source-bound comparison dependencies.
+The [inventory](phase2-seed-diagnostics-v1/manifest.json) hashes 276 files.
+The [reviewed supplement](../results/phase2-seed-diagnostics-v1/README.md)
+provides a verified isolated recovery recipe; all three comparison exports
+reproduce byte-for-byte without weights or inference. These selected cases stay
+separate from the 1,098 formal episodes and from development/calibration.

@@ -1,0 +1,35 @@
+{
+  "status": "reproduced_offline_without_inference",
+  "checkpoint_sha256": "e903536014eb97bfbdd391f1cccd01234545a89734118fe040bcca4ac0f69e86",
+  "blocks": 2,
+  "episodes": 108,
+  "reviewed_episodes": 108,
+  "restored_files": 824,
+  "relocated_runtime_paths": {
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-f16/20261115T213813.944916Z/server.json": "artifacts/phase2-main-v1/runtime/agent-f16/20261115T213813.944916Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-f16/20261115T213813.944916Z/server.log": "artifacts/phase2-main-v1/runtime/agent-f16/20261115T213813.944916Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q4/20261115T220138.250477Z/server.json": "artifacts/phase2-main-v1/runtime/agent-q4/20261115T220138.250477Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q4/20261115T220138.250477Z/server.log": "artifacts/phase2-main-v1/runtime/agent-q4/20261115T220138.250477Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q8/20261115T215042.966150Z/server.json": "artifacts/phase2-main-v1/runtime/agent-q8/20261115T215042.966150Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q8/20261115T215042.966150Z/server.log": "artifacts/phase2-main-v1/runtime/agent-q8/20261115T215042.966150Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/summarizer/20261115T213803.796801Z/server.json": "artifacts/phase2-main-v1/runtime/summarizer/20261115T213803.796801Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/summarizer/20261115T213803.796801Z/server.log": "artifacts/phase2-main-v1/runtime/summarizer/20261115T213803.796801Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-f16/20261116T000310.015980Z/server.json": "artifacts/phase2-main-v1/runtime/agent-f16/20261116T000310.015980Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-f16/20261116T000310.015980Z/server.log": "artifacts/phase2-main-v1/runtime/agent-f16/20261116T000310.015980Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q4/20261116T001510.202719Z/server.json": "artifacts/phase2-main-v1/runtime/agent-q4/20261116T001510.202719Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q4/20261116T001510.202719Z/server.log": "artifacts/phase2-main-v1/runtime/agent-q4/20261116T001510.202719Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q8/20261116T002630.911718Z/server.json": "artifacts/phase2-main-v1/runtime/agent-q8/20261116T002630.911718Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/agent-q8/20261116T002630.911718Z/server.log": "artifacts/phase2-main-v1/runtime/agent-q8/20261116T002630.911718Z/server.log",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/summarizer/20261116T000306.921252Z/server.json": "artifacts/phase2-main-v1/runtime/summarizer/20261116T000306.921252Z/server.json",
+    "/Users/wang/CSE-291A-Project/artifacts/phase2-main-v1/runtime/summarizer/20261116T000306.921252Z/server.log": "artifacts/phase2-main-v1/runtime/summarizer/20261116T000306.921252Z/server.log"
+  },
+  "reproduced": {
+    "measurements.json": "e903536014eb97bfbdd391f1cccd01234545a89734118fe040bcca4ac0f69e86",
+    "episodes.json": "0c71eaa2173709f6bd1ac16b13c9036fdb220f413eeffe0b87e855c98c7c0a1c",
+    "episodes.csv": "16018af74973369bddf95a944eb09b2dd857852d4832085ed10a5a9550f3fc85"
+  },
+  "repeat_restoration": "identical_receipt",
+  "changed_existing_file": "rejected_without_overwrite",
+  "unsafe_paths": "parent_absolute_and_symlink_escape_rejected",
+  "restorer_sha256": "6567700c12eb623dd345930beeb851431da6f907a162424b46508f1759253eab"
+}

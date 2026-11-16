@@ -63,9 +63,11 @@ resident in all arms; this measures the controlled shared deployment, not each
 policy's minimum footprint. Existing tool-generated wall-clock timestamps are
 retained as source variation. Main/confirmation runtime remains the pinned
 llama.cpp setup used by the spike; inference-engine optimization is separate.
-The launch target starts only the selected block. At completion, automatic
-collection-integrity auditing precedes the separate complete trace-review gate;
-subsequent blocks advance explicitly after their checkpoints.
+The matrix launch target starts one block; `make phase2-collect` continuously
+advances all frozen blocks after fresh collection-integrity audits and per-block
+raw archival. Full trace review remains a separate gate and proceeds alongside
+collection. Check `make phase2-collect-status` for total progress. No repeated
+user confirmation is needed to advance the authorized main/confirmation matrix.
 
 ## Historical B1 protocol
 
@@ -138,3 +140,30 @@ tradeoffs. Four main figures cover paired success/security effects, retention
 mechanisms, precision-by-policy interactions and cost/capability/security
 frontiers. A finding of little precision effect is valid; a single seed and
 shared task families limit certainty and must remain visible in the report.
+
+## Completed collection and diagnostic checkpoint (2026-11-16)
+
+B3/B4 finalized and fully reviewed all 1,098 formal episodes in 21 archived
+blocks. There are 913 normal returns, 164 context-budget stops and 21 tool-step
+limits. B5 has zero infrastructure retry candidates; these capability/budget
+outcomes retain unknown scores. The planned 18/36/54-task snapshots remain
+immutable, and the [final formal export](../results/phase2-main-v1/README.md)
+keeps main and confirmation separate. All 21 full gates pass and offline recovery
+reproduces all three tables byte-for-byte.
+
+B6 finalized 24 additional episodes for six questions fixed from main results
+before confirmation review, using seed29 with both comparison sides and clean
+controls. All 24 are reviewed: 22 normal returns and two capability-limit errors,
+with no infrastructure retries. The [case supplement](../results/phase2-seed-diagnostics-v1/README.md)
+records changed action splits and clean eligibility, partial context-mechanism
+recurrence, and the fixed greedy-summary caveat. These selected cases do not
+estimate population variance and are not pooled into the formal matrix. No
+third seed, new context budget or replacement confirmation tasks were added.
+
+B7's formal and diagnostic review gates, measurements, figures and recoverable
+archives are complete; the [report](../reports/phase2-report.pdf) integrates them.
+The delivered formal-plus-diagnostic total is 1,122 episodes. Including the
+42 development episodes gives 1,164, with the 16 standalone summary calls still
+separate. Confirmation's sole official clean-success task is a reviewed false
+positive in all arms, leaving no reviewed-unflagged official clean eligibility;
+this limitation is part of the result rather than a reason to retune the study.
