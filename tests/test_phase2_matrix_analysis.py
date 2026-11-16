@@ -90,11 +90,13 @@ def test_reviewed_false_positive_is_excluded_only_from_sensitivity(analysis):
 
 def test_paired_flips_exclude_unknowns_without_dropping_their_count(analysis):
     result = analysis["paired"](
-        {"a": False, "b": True, "c": None}, {"a": True, "b": False, "c": True}
+        {("s", "a"): False, ("s", "b"): True, ("s", "c"): None},
+        {("s", "a"): True, ("s", "b"): False, ("s", "c"): True},
     )
     assert result["n"] == 3 and result["unknown_pairs"] == 1
     assert result["false_to_true"] == result["true_to_false"] == 1
     assert result["delta_known"] == 0
+    assert result["delta_unknown_bounds"] == [0, 1 / 3]
     with pytest.raises(ValueError, match="same task set"):
         analysis["paired"]({"a": True}, {"b": True})
 
@@ -145,3 +147,15 @@ def test_incomplete_costs_cannot_establish_dominance(analysis, invalid):
     result = analysis["dominance"](analysis["aggregates"](rows))
     assert ("q8", "full") not in result["eligible_configurations"]
     assert all(("q8", "full") not in edge.values() for edge in result["edges"])
+
+
+def test_paired_intervals_preserve_pair_direction_and_suite_coverage(analysis):
+    a = {("a", "1"): False, ("a", "2"): True, ("b", "1"): True, ("b", "2"): True}
+    b = {("a", "1"): True, ("a", "2"): True, ("b", "1"): False, ("b", "2"): False}
+    forward = analysis["paired"](a, b)["uncertainty"]
+    reverse = analysis["paired"](b, a)["uncertainty"]
+    assert forward["tasks_by_suite"] == {"a": 2, "b": 2}
+    assert forward["interval_95"] == [-v for v in reversed(reverse["interval_95"])]
+    sparse = analysis["paired"]({("s", "1"): False}, {("s", "1"): True})
+    assert sparse["uncertainty"]["status"] == "insufficient_tasks_within_suite"
+    assert sparse["uncertainty"]["interval_95"] is None

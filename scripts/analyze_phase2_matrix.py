@@ -7,6 +7,7 @@ import csv
 import gzip
 import itertools
 import json
+import random
 import re
 import subprocess
 import sys
@@ -57,6 +58,38 @@ def labels(row):
 def repeated_calls(calls):
     signatures = [json.dumps((call["function"], call["args"]), sort_keys=True) for call in calls]
     return len(signatures) - len(set(signatures))
+
+
+def paired_uncertainty(values):
+    strata = {}
+    for (suite, _), value in sorted(values.items()):
+        strata.setdefault(suite, []).append(value)
+    result = {
+        "method": "task_paired_suite_stratified_percentile_bootstrap_2000_seed0",
+        "scope": "Known task pairs; shared task families and seed variation are not modeled",
+        "tasks_by_suite": {suite: len(v) for suite, v in strata.items()},
+        "interval_95": None,
+        "degenerate": None,
+    }
+    if not strata or any(len(v) < 2 for v in strata.values()):
+        return result | {"status": "insufficient_tasks_within_suite"}
+    rng = random.Random(0)
+    n = len(values)
+    samples = sorted(
+        sum(sum(rng.choices(v, k=len(v))) for v in strata.values()) / n for _ in range(2000)
+    )
+
+    def quantile(p):
+        position = (len(samples) - 1) * p
+        lower = int(position)
+        fraction = position - lower
+        return samples[lower] * (1 - fraction) + samples[lower + 1] * fraction
+
+    return result | {
+        "status": "estimated",
+        "interval_95": [quantile(0.025), quantile(0.975)],
+        "degenerate": samples[0] == samples[-1],
+    }
 
 
 def annotation_index(block_id):
@@ -377,6 +410,8 @@ def paired(values_a, values_b):
     known = [key for key in values_a if values_a[key] is not None and values_b[key] is not None]
     gain = sum(values_b[k] is True and values_a[k] is False for k in known)
     loss = sum(values_b[k] is False and values_a[k] is True for k in known)
+    lower = sum(int(values_b[k] is True) - int(values_a[k] is not False) for k in values_a)
+    upper = sum(int(values_b[k] is not False) - int(values_a[k] is True) for k in values_a)
     return {
         "n": len(values_a),
         "known_pairs": len(known),
@@ -384,6 +419,10 @@ def paired(values_a, values_b):
         "false_to_true": gain,
         "true_to_false": loss,
         "delta_known": (gain - loss) / len(known) if known else None,
+        "delta_unknown_bounds": [lower / len(values_a), upper / len(values_a)]
+        if values_a
+        else None,
+        "uncertainty": paired_uncertainty({k: int(values_b[k]) - int(values_a[k]) for k in known}),
     }
 
 
@@ -430,13 +469,13 @@ def comparisons(rows):
             ("attack_success_common_clean", attacked, all_common),
         ):
             known = [k for k in selected if all(values[c][k] is not None for c in cells)]
-            differences = [
-                int(values[cells[0]][k])
+            differences = {
+                k: int(values[cells[0]][k])
                 - int(values[cells[1]][k])
                 - int(values[cells[2]][k])
                 + int(values[cells[3]][k])
                 for k in known
-            ]
+            }
             interactions.append(
                 {
                     "precision": precision,
@@ -444,7 +483,10 @@ def comparisons(rows):
                     "outcome": name,
                     "n": len(selected),
                     "known_tasks": len(known),
-                    "difference_in_differences": sum(differences) / len(known) if known else None,
+                    "difference_in_differences": sum(differences.values()) / len(known)
+                    if known
+                    else None,
+                    "uncertainty": paired_uncertainty(differences),
                 }
             )
     return effects, interactions
@@ -575,6 +617,8 @@ def export(final=False):
             "it may double-count shared pages.",
             "Tasks share environments/families; paired differences and single-seed patterns "
             "do not establish broad population effects.",
+            "Paired bootstrap intervals resample known tasks within suites; singleton suites "
+            "have no interval. A degenerate interval does not establish equivalence.",
         ],
         "cohorts": cohorts,
     }

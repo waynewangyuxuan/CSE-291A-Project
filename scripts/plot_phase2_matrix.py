@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 
@@ -11,7 +12,10 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
+
+matplotlib.rcParams["svg.hashsalt"] = "phase2-main-v1"
 
 ROOT = Path("results/phase2-main-v1/analysis")
 POLICIES = ("full", "truncate", "summary")
@@ -23,7 +27,12 @@ def save(fig, path):
         metadata = {"Date": None} if extension == "svg" else {}
         if extension == "pdf":
             metadata = {"CreationDate": None, "ModDate": None}
-        fig.savefig(path.with_suffix("." + extension), dpi=180, metadata=metadata)
+        destination = path.with_suffix("." + extension)
+        fig.savefig(destination, dpi=180, metadata=metadata)
+        if extension == "svg":
+            destination.write_text(
+                "\n".join(line.rstrip() for line in destination.read_text().splitlines()) + "\n"
+            )
     plt.close(fig)
 
 
@@ -78,6 +87,64 @@ def figures(report, cohort, data):
         ncol=2,
     )
     save(fig, output / "01-outcomes")
+
+    fig, axes = plt.subplots(1, 2, figsize=(12, 5), sharey=True, layout="constrained")
+    contrasts = [(policy, precision) for policy in POLICIES for precision in ("q8", "q4")]
+    for ax, key, name in zip(
+        axes,
+        ("clean_utility", "attack_success_common_clean"),
+        ("Clean success: quantized − F16", "ASR: quantized − F16 on pairwise common-clean"),
+        strict=True,
+    ):
+        for i, (policy, precision) in enumerate(contrasts):
+            comparison = next(
+                c
+                for c in data["paired_comparisons"]
+                if c["a"] == ["f16", policy] and c["b"] == [precision, policy]
+            )[key]
+            bounds = comparison["delta_unknown_bounds"]
+            if bounds and comparison["unknown_pairs"]:
+                ax.hlines(i, *bounds, color="#7b8796", linestyle="--", linewidth=2)
+            value = comparison["delta_known"]
+            if value is not None:
+                interval = comparison["uncertainty"]["interval_95"]
+                if interval:
+                    ax.hlines(i, *interval, color="#226e93", linewidth=3)
+                ax.plot(value, i, "o", color="#226e93")
+            ax.text(
+                1.05,
+                i,
+                f"{comparison['false_to_true']}↑ {comparison['true_to_false']}↓  "
+                f"n={comparison['known_pairs']}/{comparison['n']}",
+                va="center",
+                fontsize=8,
+            )
+        ax.axvline(0, color="#a6adb5", linewidth=1)
+        ax.set_xlim(-1.05, 1.75)
+        ax.set_xticks([-1, -0.5, 0, 0.5, 1])
+        ax.set_xlabel("Paired rate difference")
+        ax.set_title(name, fontsize=10)
+        ax.grid(axis="x", alpha=0.15)
+    axes[0].set_yticks(range(len(contrasts)), [f"{p.upper()} / {c.title()}" for c, p in contrasts])
+    axes[0].invert_yaxis()
+    fig.suptitle("RQ1: paired precision effects — " + title, fontsize=12)
+    fig.legend(
+        handles=[
+            Line2D(
+                [0], [0], color="#226e93", marker="o", label="Known-pair delta / 95% task bootstrap"
+            ),
+            Line2D(
+                [0], [0], color="#7b8796", linestyle="--", label="All-pair unknown-outcome bounds"
+            ),
+        ],
+        loc="outside lower center",
+        ncol=2,
+        fontsize=9,
+        title="↑/↓: outcome flips. Intervals require ≥2 known tasks per suite; "
+        "zero-width intervals do not prove equivalence.",
+        title_fontsize=8,
+    )
+    save(fig, output / "05-paired-precision")
 
     lookup = {(c["precision"], c["policy"]): c for c in configs}
     metrics = (
@@ -242,6 +309,21 @@ if __name__ == "__main__":
         raise ValueError("Figures require final review or explicit --provisional labeling")
     for cohort, data in report["cohorts"].items():
         figures(report, cohort, data)
+    paths = [
+        ROOT / "measurements.json",
+        Path(__file__).relative_to(Path.cwd()),
+        *(p for p in sorted((ROOT / "figures").glob("*/*")) if p.is_file()),
+    ]
+    (ROOT / "figures" / "provenance.json").write_text(
+        json.dumps(
+            {
+                "status": report["status"],
+                "sha256": {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths},
+            },
+            indent=2,
+        )
+        + "\n"
+    )
     print(
         json.dumps(
             {

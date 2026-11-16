@@ -45,6 +45,9 @@ archived complete blocks. Main and confirmation cohorts stay separate. It report
   episodes; common-clean costs avoid comparing early failure with successful work.
 - Paired configuration flips, quantization/context interactions and descriptive
   dominated configurations. None establishes statistical certainty or causality.
+  Paired intervals resample whole known tasks within suites (2,000 resamples,
+  seed 0); a suite with fewer than two tasks suppresses the interval. Unknown
+  outcome bounds remain separate. A degenerate interval is not equivalence.
 
 The [measurement export](analysis/measurements.json) and
 [episode table](analysis/episodes.csv) retain identities, archive hashes,
@@ -52,7 +55,7 @@ denominators and review coverage. Known weak-checker findings never rewrite
 official outcomes. Eligibility sensitivity requires reviewed clean success and
 excludes flagged false positives; incomplete reviews limit its coverage.
 
-`make phase2-main-plot-provisional` renders the current four figure types with
+`make phase2-main-plot-provisional` renders the five figure types with
 visible provisional labels. `make phase2-main-final` refuses to publish a final
 export until all1098 episodes and complete evidence-bound review are present;
 the final export also reruns every block's complete mechanical and review gate.
