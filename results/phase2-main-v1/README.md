@@ -78,6 +78,16 @@ are versioned separately so the raw collection archive remains unchanged.
 
 ## Analysis protocol
 
+The reviewer writes a completion receipt after inspecting each block's actual
+traces. `make phase2-main-import-review PHASE2_REVIEW_BLOCK=main-004` verifies
+that receipt, raw/decompressed evidence hashes, frozen identities and the full
+review gate before copying its annotations and findings into this directory.
+Missing receipts, changed evidence and different existing publications stop the
+import; this command verifies a completed review and does not generate judgments.
+The [isolated import proof](review-import-verification.json) reuses 54 reviewed
+archived episodes, rejects a changed receipt and conflicting publication, and
+repeats without changing the published files.
+
 `make phase2-main-analyze` exports explicitly provisional measurements from
 archived complete blocks. Main and confirmation cohorts stay separate. It reports:
 

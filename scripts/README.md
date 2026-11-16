@@ -87,6 +87,7 @@ and `make phase2-qualification`.
 | [package_phase2_calibration.py](package_phase2_calibration.py) | Preserve and verify the 24 reviewed calibration episodes and summary replays |
 | [phase2_matrix.py](phase2_matrix.py) | Freeze balanced formal task blocks; launch, resume and inspect one block |
 | [phase2_collect.py](phase2_collect.py) | Continue all frozen blocks and verify a raw evidence archive after each block |
+| [import_phase2_review.py](import_phase2_review.py) | Verify a completed review receipt, evidence hashes and full gate before publishing its annotations |
 | [analyze_phase2_matrix.py](analyze_phase2_matrix.py) | Export paired formal metrics, exposure/cost accounting and reviewed scorer sensitivity |
 | [plot_phase2_matrix.py](plot_phase2_matrix.py) | Render cohort-separated outcomes, context mechanisms, tradeoffs and interactions |
 | [restore_phase2_evidence.py](restore_phase2_evidence.py) | Restore an archived checkpoint in isolation and reproduce audits/measurements without inference |

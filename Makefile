@@ -89,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py scripts/analyze_phase2_matrix.py scripts/plot_phase2_matrix.py scripts/restore_phase2_evidence.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py scripts/analyze_phase2_matrix.py scripts/plot_phase2_matrix.py scripts/restore_phase2_evidence.py scripts/import_phase2_review.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -245,3 +245,7 @@ PHASE2_RESTORE_ROOT ?= .cache/phase2-main-restored
 
 phase2-main-restore: ## Restore the analyzed checkpoint and reproduce metrics without inference
 	$(UV) run --frozen python scripts/restore_phase2_evidence.py --output "$(PHASE2_RESTORE_ROOT)"
+
+.PHONY: phase2-main-import-review
+phase2-main-import-review: ## Verify and publish a completed reviewer receipt for PHASE2_REVIEW_BLOCK
+	$(UV) run --frozen python scripts/import_phase2_review.py --block "$(PHASE2_REVIEW_BLOCK)"
