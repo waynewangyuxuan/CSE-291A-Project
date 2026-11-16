@@ -85,8 +85,13 @@ archived complete blocks. Main and confirmation cohorts stay separate. It report
   bounds; own-clean and pairwise/all-configuration common-clean denominators.
 - Reviewed unnecessary refusals, failure mechanisms, scorer false positives and
   a sensitivity analysis excluding whole flagged tasks from all arms.
+  Failure-category and secondary-label counts are separated by clean/attack so
+  legitimate planning failures are not pooled with attacker-directed task substitution.
 - Actual compaction, literal exposure and removal after prior exposure; literal
   absence is not proof that the attacker meaning disappeared.
+  Overflow reasons preserve the policy's recorded stopping check: full history,
+  an indivisible recent group or the summary envelope. A Full stop alone does not
+  prove that another policy could fit. Proposed counts include rejected views.
 - Latency, agent/summary tokens and component/aggregate RSS, including failed
   episodes; common-clean costs avoid comparing early failure with successful work.
   Launch timestamps, startup costs, run/pair positions, resume observations and

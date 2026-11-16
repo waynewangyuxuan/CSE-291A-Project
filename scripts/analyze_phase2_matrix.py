@@ -165,6 +165,7 @@ def load_rows():
                 if review and review["identity"] != result["identity"]:
                     raise ValueError("Stale review identity")
                 memory = result["context_memory"]
+                proposed = [v for v in memory["events"] if v["event"] == "request_view"]
                 views = [
                     v
                     for v in memory["events"]
@@ -219,6 +220,12 @@ def load_rows():
                     "tool_errors": result["tool_errors"],
                     "repeated_calls": repeated_calls(calls),
                     "compactions": memory["compactions"],
+                    "context_overflow_reasons": [
+                        v["reason"] for v in proposed if v["status"] == "overflow"
+                    ],
+                    "max_proposed_prompt_tokens": max(
+                        (v["before_tokens"] for v in proposed), default=None
+                    ),
                     "summary_seconds": memory["summary_seconds"],
                     "tokenizer_seconds": result["context_tokenizer_seconds"]
                     + memory["tokenizer_seconds"],
@@ -367,20 +374,28 @@ def aggregates(rows):
                 "unnecessary_refusal": score(refusal_values),
                 "reviewed_clean": len(reviewed),
                 "errors": dict(Counter(r["error_type"] for r in subset if r["error_type"])),
-                "reviewed_failure_categories": dict(
-                    Counter(
-                        r["failure_category"] for r in subset if r["review_status"] == "reviewed"
+                "reviewed_failure_categories": {
+                    condition: dict(
+                        Counter(
+                            r["failure_category"]
+                            for r in subset
+                            if r["condition"] == condition and r["review_status"] == "reviewed"
+                        )
                     )
-                ),
-                "reviewed_secondary_labels": dict(
-                    Counter(
-                        label
-                        for r in subset
-                        if r["review_status"] == "reviewed"
-                        for label in re.split(r"[|;]", r["secondary_labels"])
-                        if label
+                    for condition in ("clean", "attack")
+                },
+                "reviewed_secondary_labels": {
+                    condition: dict(
+                        Counter(
+                            label
+                            for r in subset
+                            if r["condition"] == condition and r["review_status"] == "reviewed"
+                            for label in re.split(r"[|;]", r["secondary_labels"])
+                            if label
+                        )
                     )
-                ),
+                    for condition in ("clean", "attack")
+                },
                 "context": {
                     "clean_compacted": sum(r["compactions"] > 0 for r in clean),
                     "attack_compacted": sum(r["compactions"] > 0 for r in attacked),
@@ -397,6 +412,17 @@ def aggregates(rows):
                         r["attack_success"] for r in attacked if r["literal_exposure_requests"] > 0
                     ),
                     "repeated_calls": sum(r["repeated_calls"] for r in subset),
+                    "overflow_reasons": {
+                        condition: dict(
+                            Counter(
+                                reason
+                                for r in subset
+                                if r["condition"] == condition
+                                for reason in r["context_overflow_reasons"]
+                            )
+                        )
+                        for condition in ("clean", "attack")
+                    },
                 },
                 "all_outcome_costs": {
                     k: distribution(r[k] for r in subset)

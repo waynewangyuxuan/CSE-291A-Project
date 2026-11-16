@@ -31,6 +31,7 @@ def episode(task, condition, utility, attack_success, secondary=""):
         "memory_sampling_errors": [],
         "first_finalized_episode_on_process": False,
         "compactions": 0,
+        "context_overflow_reasons": [],
         "literal_exposure_requests": 1,
         "literal_removal_after_exposure": False,
         "repeated_calls": 0,
