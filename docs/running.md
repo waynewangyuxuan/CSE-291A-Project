@@ -4,12 +4,12 @@ Run commands from the repository root. `make` or `make help` lists the supported
 entry points. Ordinary development, report generation, and live inference have
 separate requirements.
 
-For the new Phase 2 study, follow the [batch plan](phase2-batches.md) and the
-[reviewed development spike](../results/phase2-spike/README.md).
-`make phase2-spike-status` shows the 18-episode development collection; the formal
-protocol is still pending calibration. `make phase2-qualification` audits
-candidates without model calls. `phase2-prepare` and `phase2` remain historical
-pilot commands.
+Phase 2 is complete: [1,098 formal episodes](../results/phase2-main-v1/README.md)
+and [24 selected diagnostic episodes](../results/phase2-seed-diagnostics-v1/README.md),
+all trace-reviewed. Use the offline report and recovery commands below to inspect
+them. The [batch plan](phase2-batches.md) records the frozen collection design and
+completion. `make phase2-spike-status` refers only to the 18-episode development
+spike; `phase2-prepare` and `phase2` remain historical pilot commands.
 
 ## Development checks: no model required
 
@@ -51,6 +51,38 @@ input files. No restored `.cache/recovery` tree or model weights are needed.
 Keep the report plotting environment separate from `uv.lock`: the latter is part
 of frozen execution identities. The Phase 2 pilot has its own historical plotting
 requirements in `configs/phase2/analysis-requirements.txt`.
+
+## Rebuild and recover Phase 2: no inference
+
+After ordinary setup and installing Tectonic, use the same isolated plotting
+environment as the Phase 1 report (the setup target retains its historical name):
+
+```sh
+make phase1-report-setup
+make phase2-main-plot
+MPLCONFIGDIR=.cache/matplotlib .cache/report-env/bin/python reports/phase2-figures/make_main_figures.py
+tectonic --keep-logs reports/phase2-report.tex
+```
+
+The formal plots read committed final tables. The report helper pins the
+immutable 54-task main snapshot, separate final confirmation tables, and reviewed
+selected diagnostics, checking their hashes before and after generation. It does
+not run inference or rescore tasks. Inspect rebuilt figures/PDF before committing;
+[report verification](../reports/phase2-report-verification.json) records the
+completed build and all eleven rendered page checks. A fully cached Tectonic
+build can use `--only-cached` after dependencies have been downloaded.
+
+To reconstruct raw formal evidence and re-export all tables without models:
+
+```sh
+make phase2-main-restore
+```
+
+This restores 8,170 files into an isolated tree, reruns all 21 full gates, and
+requires the three tables to match the committed final bytes. It refuses changed
+existing destination files. The [diagnostic supplement's recovery recipe](../results/phase2-seed-diagnostics-v1/README.md)
+separately restores 276 files and reproduces all 24 episode audits and three
+comparison exports. The cohorts and selected diagnostics are never pooled.
 
 ## Start local inference
 

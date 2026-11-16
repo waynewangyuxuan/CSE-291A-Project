@@ -1,4 +1,4 @@
-"""Compact report figures/tables from the immutable, reviewed 972-episode main export."""
+"""Report tables and figures from hash-pinned formal exports, keeping cohorts separate."""
 
 from __future__ import annotations
 
@@ -22,6 +22,38 @@ PINNED = {
     "episodes.json": "da7ec56415e1ea9f2c1c4c50388c2a58bfc524753ec26fe94f7a5905106eec0f",
     "measurements.json": "2d107031a7d4ba48ca801541cfa24f04bff54175eb7613d429508ecf0697ace4",
 }
+FORMAL = ROOT / "results/phase2-main-v1/analysis"
+FORMAL_PINNED = {
+    "episodes.json": "b15daed4b5b64516d120873584f4623e401c16291dd10e345181ba9feccdd45b",
+    "episodes.csv": "0360d985e20cf6e04ebb6ea9afc9ca94b84e4bf83b6e264e371a43d57bf7d52c",
+    "measurements.json": "5f068ac9fa7e6ffdfcd11e5fdb7aec2412d754ee93f1508eec200a59762ca0e0",
+}
+DIAGNOSTICS = ROOT / "results/phase2-seed-diagnostics-v1"
+DIAGNOSTIC_PINNED = {
+    "README.md": "a8dead67b55b87298b57ef8b03d703a7303f9dd437d37f5e15fb414688bf23bb",
+    "comparison.json": "bf109a86a3a0c87824d497f3cd56bacdc6a13bae3c3de777621ac16bfc30b75a",
+    "comparison.csv": "fd32b7058143f0740f06cb4a0fa0bdc979ffb1d6348ef6095c945880128d449f",
+    "provenance.json": "4ad1972baf79131f29563bad877fffa55fcd03544593f201bda5206fe85d7bc9",
+    "recovery-verification.json": (
+        "75c3bd52a98a297a74271b6165d2d2c9c1aef3d1405973bea9e02a026cfc6faf"
+    ),
+    "review-completion.json": "f534a5bb46df39c56aa30b233f6067d3894e2fd5dfb30604d5cb80c0af30c7cc",
+    "review-findings.md": "2b6d59a6c7ef2666388186dd2bd75c284385181b590ba45620f5c5812fe6494f",
+    "selection.json": "539bf723235abf7d021f6dc47fdff9a6ac95f8667aea43ec4460c27143ab3cf7",
+    "trace-review.csv": "7fd457f1505fedf7c8ff41124054cece246168fa65d3aa1d19a92b74629aae4c",
+    "verification.json": "8ae814c2ecee4b1d31d9497b1e5b64335b6d5b3b892c354a59dae28b674851c3",
+}
+DIAGNOSTIC_DESIGN_PINNED = {
+    "results/phase2-main-v1/seed29-hypotheses.json": (
+        "eaf26490f0aef45bf5ea0601583488c878fccc8eb56c253d2bd1453a8a086ac4"
+    ),
+    "results/phase2-main-v1/seed29-hypotheses.md": (
+        "381cb89d51405f8f75bbef238e39edcf59d854555a410de363d3d4036249da9a"
+    ),
+    "artifacts/phase2-seed-diagnostics-v1/evidence.tar.gz": (
+        "342be526552443b69bc9d8cd0076ff62fd81ba14c5eeac1c3603dec9465ecae7"
+    ),
+}
 
 
 def sha(path):
@@ -41,9 +73,34 @@ def main():
     assert report["included_episodes"] == report["reviewed_episodes"] == len(rows) == 972
     assert set(report["cohorts"]) == {"main"}
     data = report["cohorts"]["main"]
+    for name, expected in FORMAL_PINNED.items():
+        if sha(FORMAL / name) != expected:
+            raise ValueError(f"Frozen formal export changed: {name}")
+    formal = json.loads((FORMAL / "measurements.json").read_text())
+    formal_rows = json.loads((FORMAL / "episodes.json").read_text())
+    assert formal["status"] == "final_reviewed"
+    assert formal["included_episodes"] == formal["reviewed_episodes"] == len(formal_rows) == 1098
+    assert formal["cohorts"]["main"] == data
+    assert [r for r in formal_rows if r["cohort"] == "main"] == rows
+    diagnostic_inputs = {DIAGNOSTICS / n: h for n, h in DIAGNOSTIC_PINNED.items()}
+    diagnostic_inputs.update({ROOT / n: h for n, h in DIAGNOSTIC_DESIGN_PINNED.items()})
+    for path, expected in diagnostic_inputs.items():
+        if sha(path) != expected:
+            raise ValueError(f"Frozen diagnostic evidence changed: {path}")
+    diagnostic_rows = json.loads((DIAGNOSTICS / "comparison.json").read_text())
+    diagnostic_gate = json.loads((DIAGNOSTICS / "verification.json").read_text())
+    diagnostic_recovery = json.loads((DIAGNOSTICS / "recovery-verification.json").read_text())
+    assert diagnostic_gate["checks"] == "passed" and diagnostic_gate["partial"] is False
+    assert diagnostic_gate["reviewed_episodes"] == len(diagnostic_rows) == 24
+    assert diagnostic_recovery["status"] == "reproduced_offline_without_inference"
+    assert diagnostic_recovery["episode_audits_reproduced"] == 24
+    for name, expected in diagnostic_recovery["reproduced"].items():
+        assert sha(DIAGNOSTICS / name) == expected
     sys.path.insert(0, str(ROOT / "scripts"))
     plotter = importlib.import_module("plot_phase2_matrix")
     scope = plotter.plot_scope(report, rows)["main"]
+    confirmation = formal["cohorts"]["confirmation"]
+    confirmation_scope = plotter.plot_scope(formal, formal_rows)["confirmation"]
     configs = data["configurations"]
     labels = [f"{c['precision'].upper()} {c['policy'][0].upper()}" for c in configs]
     plt.rcParams.update(
@@ -129,6 +186,53 @@ def main():
             for label, c in zip(labels, configs, strict=True)
         ],
     )
+
+    confirmation_rows = []
+    confirmation_costs = []
+    for c in confirmation["configurations"]:
+        label = f"{c['precision'].upper()} {c['policy'][0].upper()}"
+        assert c["clean_utility"]["success"] == c["attacked_utility"]["success"] == 1
+        for metric in ("attack_success_own_clean", "attack_success_common_clean"):
+            assert c[metric]["n"] == 1 and c[metric]["success"] == c[metric]["unknown"] == 0
+        sensitivity = c["reviewed_clean_eligibility_sensitivity"]
+        assert sensitivity["own_clean_ASR"]["n"] == sensitivity["common_clean_ASR"]["n"] == 0
+        assert sensitivity["own_clean_ASR"]["lower_bound"] is None
+        confirmation_rows.append(
+            " & ".join(
+                [
+                    label,
+                    *(
+                        count(c[k])
+                        for k in ("clean_utility", "attacked_utility", "attack_success_all")
+                    ),
+                    f"{c['context']['clean_compacted']}/{c['context']['attack_compacted']}",
+                ]
+            )
+            + r" \\"
+        )
+        a = c["all_outcome_costs"]
+        confirmation_costs.append(
+            " & ".join(
+                [
+                    label,
+                    f"{a['seconds']['median']:.1f}/{a['seconds']['p90']:.1f}",
+                    *(
+                        f"{a[k]['total'] / 1000:.1f}"
+                        for k in (
+                            "agent_prompt_tokens",
+                            "agent_completion_tokens",
+                            "summary_prompt_tokens",
+                            "summary_completion_tokens",
+                        )
+                    ),
+                    f"{a['summary_seconds']['total']:.1f}",
+                    f"{a['run_aggregate_peak_rss_bytes']['median'] / 2**30:.2f}",
+                ]
+            )
+            + r" \\"
+        )
+    table("confirmation-outcomes.tex", confirmation_rows)
+    table("confirmation-costs.tex", confirmation_costs)
 
     fig, axes = plt.subplots(1, 2, figsize=(6.8, 2.35), layout="constrained", sharey=True)
     contrasts = [(p, q) for p in ("full", "truncate", "summary") for q in ("q8", "q4")]
@@ -268,10 +372,17 @@ def main():
     )
     save(fig, "cost-main")
     evidence = [SOURCE / n for n in PINNED]
+    evidence.extend(FORMAL / n for n in FORMAL_PINNED)
+    evidence.extend(diagnostic_inputs)
     evidence.extend(
         ROOT / "results/phase2-main-v1/reviews" / f"main-{i:03d}.{ext}"
         for i in range(1, 19)
         for ext in ("md", "csv")
+    )
+    evidence.extend(
+        ROOT / "results/phase2-main-v1/reviews" / f"confirmation-{i:03d}.{ext}"
+        for i in range(1, 4)
+        for ext in ("md", "csv", "verification.json")
     )
     evidence.extend(
         [
@@ -282,25 +393,53 @@ def main():
     )
     for name, expected in PINNED.items():
         assert sha(SOURCE / name) == expected
+    for name, expected in FORMAL_PINNED.items():
+        assert sha(FORMAL / name) == expected
+    for path, expected in diagnostic_inputs.items():
+        assert sha(path) == expected
     (OUT / "provenance.json").write_text(
         json.dumps(
             {
-                "status": "main972_reviewed_confirmation_and_diagnostics_pending",
+                "status": "final_formal1098_and_separate_diagnostic24_reviewed",
                 "main_tasks": 54,
                 "main_episodes": 972,
-                "scope": "Main only; no new scores, CIs or paired comparisons",
+                "confirmation_tasks": 7,
+                "confirmation_episodes": 126,
+                "diagnostic_cases": 6,
+                "diagnostic_new_episodes": 24,
+                "diagnostic_role": (
+                    "Outcome-selected action review; no pooled estimates or precision ranking"
+                ),
+                "diagnostic_full_gate": "24 reviewed, nonpartial, passed",
+                "diagnostic_offline_recovery": diagnostic_recovery,
+                "main_identical_to_final_export": True,
+                "scope": (
+                    "Main, confirmation and diagnostics separate; "
+                    "existing estimates and source-linked action review only"
+                ),
                 "inputs_sha256": {str(p.relative_to(ROOT)): sha(p) for p in evidence},
                 "outputs_sha256": {str(p.relative_to(ROOT)): sha(p) for p in produced},
                 "matched_compaction": {f"{q}/{p}": c for (q, p), c in scope["matched"].items()},
                 "interaction_compaction": {
                     "/".join(k): c for k, c in scope["interactions"].items()
                 },
+                "confirmation_interaction_compaction": {
+                    "/".join(k): c for k, c in confirmation_scope["interactions"].items()
+                },
             },
             indent=2,
         )
         + "\n"
     )
-    print(json.dumps({"status": "main972_only", "outputs": len(produced), "directory": str(OUT)}))
+    print(
+        json.dumps(
+            {
+                "status": "final_formal1098_separate_diagnostic24",
+                "outputs": len(produced),
+                "directory": str(OUT),
+            }
+        )
+    )
 
 
 if __name__ == "__main__":

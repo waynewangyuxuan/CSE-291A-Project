@@ -1,6 +1,6 @@
 # Results index
 
-Start with the current report's baseline. Other directories are distinct
+Start with Phase 2 for the deployment study and Phase 1 for its baseline. Other directories are distinct
 collections; matching task IDs do not make their outcomes interchangeable.
 Raw requests and traces are described in the [evidence layout](../artifacts/README.md).
 
@@ -13,7 +13,8 @@ Raw requests and traces are described in the [evidence layout](../artifacts/READ
 | [prompt-defense-seed29-diagnostics-v1](prompt-defense-seed29-diagnostics-v1/README.md) | Historical 20-episode selected-case follow-up, not a full second seed |
 | [research-investigation-v1](research-investigation-v1/README.md) | Historical task-contract, attack-stage and stance analyses derived from the prompt study |
 | [phase2-first-pass-v1](phase2-first-pass-v1/README.md) | Historical single-seed, 12-task quantization/context pilot; not the final Phase 2 grid |
-| [phase2-main-v1](phase2-main-v1/README.md) | Ongoing frozen formal matrix; separate main/confirmation cohorts and reviewed intermediate checkpoints |
+| [phase2-main-v1](phase2-main-v1/README.md) | Completed 1,098-episode formal matrix and full trace reviews; main/confirmation kept separate, final tables/figures and offline recovery |
+| [phase2-seed-diagnostics-v1](phase2-seed-diagnostics-v1/README.md) | Completed 24-episode selected seed29 diagnostic with full review and offline recovery; not a representative second seed or pooled estimate |
 
 The original raw traces for historical collections are unavailable. The committed
 archive covers newly reproduced Phase 1 baseline/retry evidence. Historical

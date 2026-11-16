@@ -6,11 +6,11 @@ The continuous queue advances through all21 blocks after fresh integrity audits
 and per-block raw archival. Use `make phase2-collect-status` for live progress;
 the files below are reproducible checkpoints, not a live completion counter.
 All 1,098 formal episodes and trace reviews are complete, and all 21 full review
-gates pass. The [report](../../reports/phase2-report.pdf) is being updated with
-confirmation findings and the separately selected 24-episode seed29 diagnostic.
+gates pass. The [11-page report](../../reports/phase2-report.pdf) includes the final
+confirmation findings and separately selected 24-episode seed29 diagnostic.
 The formal data and figures below are final; the diagnostic is not pooled into them.
 The [source](../../reports/phase2-report.tex) and
-[draft verification](../../reports/phase2-report-verification.json) are versioned.
+[report verification](../../reports/phase2-report-verification.json) are versioned.
 
 ## Reviewed checkpoint: all 972 main episodes
 
@@ -329,8 +329,12 @@ reproduces all three tables byte-for-byte.
 The six [main-case questions](seed29-hypotheses.md) were fixed before confirmation
 review. Their [24-episode seed29 selection](../phase2-seed-diagnostics-v1/selection.json)
 was bound to the completed formal table and launched only after its final gate.
-It tests recurrence of named actions, not population variance; variable tool
-outputs and runtime nondeterminism also limit seed-only causal attribution.
+All 24 episodes now have complete trace reviews, a full gate and offline recovery;
+see the [separate diagnostic](../phase2-seed-diagnostics-v1/README.md). The original
+five selected precision action splits do not persist, while the context case
+shows partial mechanism recurrence. This tests named actions, not population
+variance; variable tool outputs and runtime nondeterminism also limit seed-only
+causal attribution. Formal rates remain unchanged.
 
 ## Analysis protocol
 

@@ -136,9 +136,10 @@ After reviewing every supplementary trace, use `validate --root <same-root>
 --annotations <supplementary-review.csv>` to run the full existing auditor on the
 supplementary plan; do not use the formal review importer. Original outcomes
 are never replaced. Offline tests cover selection, locking and drift refusal;
-real runtime, paired collection/resume and full-review proof await the first
-selected diagnostic. No actual selection or supplementary
-root is shipped by this implementation.
+real runtime, all 24 paired episodes, full-review validation, comparison export
+and isolated recovery are now proven by the [selected supplement](../results/phase2-seed-diagnostics-v1/README.md).
+Interrupted supplemental resume was not exercised by this completed run.
+The supplement includes its frozen selection and recoverable raw evidence.
 
 See [the pilot protocol](../docs/phase2-first-pass.md). This is the 12-task
 exploratory grid, not the planned full Phase 2 evaluation.
@@ -183,4 +184,6 @@ from this offline audit/comparison proof.
 
 The Phase 2 main-report tables and compact plots use
 [reports/phase2-figures/make_main_figures.py](../reports/phase2-figures/make_main_figures.py)
-on the immutable54-task checkpoint, with their own input/output provenance.
+on the immutable54-task checkpoint and separate final confirmation export, with
+their own input/output provenance; the report also integrates separately reviewed
+selected seed diagnostics.
