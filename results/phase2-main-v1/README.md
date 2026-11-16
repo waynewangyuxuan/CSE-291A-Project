@@ -5,8 +5,9 @@ Collection uses the [frozen matrix](../../configs/phase2-main-v1/README.md):
 The continuous queue advances through all21 blocks after fresh integrity audits
 and per-block raw archival. Use `make phase2-collect-status` for live progress;
 the files below are reproducible checkpoints, not a live completion counter.
-The [report draft](../../reports/phase2-report.pdf) contains the frozen methods
-and evaluation definitions; its results and conclusions explicitly remain pending.
+The [eight-page report draft](../../reports/phase2-report.pdf) contains the frozen
+methods and complete main-cohort results. Confirmation, selected diagnostics and
+the final deployment synthesis remain pending.
 The [source](../../reports/phase2-report.tex) and
 [draft verification](../../reports/phase2-report-verification.json) are versioned.
 

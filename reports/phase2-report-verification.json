@@ -1,24 +1,85 @@
 {
-  "status": "draft_methods_evaluation_collection_in_progress",
-  "pages": 5,
-  "build": "Tectonic --only-cached; isolated output and existing temporary dependency cache; exited 0",
-  "layout": "Five pages; page 1 render unchanged; corrected page 2 and reflowed pages 3-5 visually inspected; no clipping, overlap, overfull boxes, missing glyphs or unresolved references/citations",
-  "config_validation": "All 21 hashed plans, 549 clean/attack pairs, fixed controls, cohort totals and main order balance checked",
-  "findings": "None inferred; results and conclusion explicitly pending",
-  "factual_questions": [],
-  "files": {
-    "/Users/wang/CSE-291A-Project/reports/phase2-report.tex": {
-      "bytes": 21666,
-      "sha256": "36858558eeb9a9bbad7d0beff5e838cd670ab67589b1144d4d31e1d92057c391"
-    },
-    "/Users/wang/CSE-291A-Project/reports/phase2-report.bib": {
-      "bytes": 718,
-      "sha256": "1c0db43a3ac64b8a50cc1ddd588cb12df9075ca92a4a1b61a36bc6669c0dbf77"
-    },
-    "/Users/wang/CSE-291A-Project/reports/phase2-report.pdf": {
-      "bytes": 62313,
-      "sha256": "d385d3841d9bc1e03e9ea4322e9046b8b44de39e6af6bf9ba599c1377c1ee3eb"
-    }
+  "status": "draft_main972_reviewed_confirmation126_and_selected_seed29_pending",
+  "pages": 8,
+  "scope": "54-task main cohort only. No model calls, new scores, statistical re-estimation or formal-data changes.",
+  "build": {
+    "command": "TECTONIC_CACHE_DIR=/private/tmp/phase2-report-build.3E21Jb/tectonic-cache tectonic --only-cached --keep-logs --keep-intermediates --outdir /private/tmp/phase2-main-report-proof reports/phase2-report.tex",
+    "result": "Successful PDF output, 8 A4 pages; no missing glyphs, overfull boxes, unresolved references/citations. Underfull justification warnings remain.",
+    "log": "/private/tmp/phase2-main-report-proof/build.stdout.log",
+    "log_sha256": "53dc4781e30e2e21e454d6050cecb1bbee16e5d8baf98e710a4acba7ea362eac"
+  },
+  "visual_review": {
+    "renderer": "Poppler pdftoppm, 1600-pixel page renders",
+    "pages_inspected": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "result": "All pages and all four report figures inspected; readable tables/labels and body text; no clipping or overlap. Pages 1-7 manuscript, page 8 references.",
+    "renders": [
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-1.png",
+        "sha256": "21968160d60b1957d5ad460f637049d845b0b1b9d686a971c90ba318780fb081"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-2.png",
+        "sha256": "a63217d9f6a0d450e87148c0bd47f60c88337eb171bb666237629636dda32b25"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-3.png",
+        "sha256": "a7ae51def43fde6f6c1dd97274d6d7f9ba911473320b6c41c914ddd0a722c617"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-4.png",
+        "sha256": "c2104c0d1407e6ff3cff0b76b33ee97cfbc8b83bbb260ccd10401c815430c04b"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-5.png",
+        "sha256": "9006abbaf3ca8e019dcf0213824d673893a1b84d9489f951847c309c12fad76f"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-6.png",
+        "sha256": "319e44b41c20b842428f3de71b8a0c44e4c7d1b36bb0127430989f8463289191"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-7.png",
+        "sha256": "90e32b002605f61df64904d5189389dfea099d03de55b06be1cbd498852c8a62"
+      },
+      {
+        "path": "/private/tmp/phase2-main-report-proof/page-8.png",
+        "sha256": "42b833e6a7f18da5b3d28b9bbbd20af9093163c0b806a5c2dea9d870ba45099c"
+      }
+    ]
+  },
+  "data": {
+    "source": "results/phase2-main-v1/checkpoints/main-054-tasks",
+    "tasks": 54,
+    "episodes": 972,
+    "reviewed_episodes": 972,
+    "official_unknown_clean": 64,
+    "official_unknown_attack": 75,
+    "applied_compactions": 124,
+    "compacted_episodes": 46,
+    "summary_active_episodes": 16,
+    "summary_updates": 24,
+    "official_common_clean_tasks": 18,
+    "reviewed_common_clean_tasks": 15,
+    "matched_clean_compacted_episodes": 0,
+    "matched_attacked_compaction": "One Workspace28 attacked episode each for Q8 Truncate and Summary; other arms zero.",
+    "known_four_cell_DID_compacted_episodes": 0,
+    "strict_dominance_eligible_configurations": 0,
+    "inputs_checked_unchanged": true
+  },
+  "proof": {
+    "helper_lint": "ruff check and ruff format passed",
+    "real_path": "Ran report helper on immutable reviewed972 export; generated 3 table snippets and 4 PDF/PNG figure pairs; checked every provenance input/output SHA256 again before PDF delivery. Cached TeX build and all-page visual inspection completed.",
+    "provenance": "reports/phase2-figures/provenance.json",
+    "counts_only": "Exact existing cohort/pair selection from plot_scope; all point estimates, CIs and outcome bounds read from export, not recalculated."
   },
   "method_correction": {
     "source": "src/agent_tradeoffs/memory.py",
@@ -27,9 +88,40 @@
       369,
       381
     ],
-    "section": "2.3 Context Interventions",
+    "section": "2 Controlled Experiment: Context policies",
     "detail": "Summary candidate preflight counts memory_messages(candidate, \"memory\") in the rendered input and additionally reserves summary_max_tokens + 32 = 416 tokens. Truncate uses no placeholder and reserve 0. Summary indivisible_recent_history may therefore be a conservative pre-generation reservation stop even when the protected request and newest raw group fit Truncate; it does not establish theoretical summary infeasibility. Generated-envelope and summarizer-input checks remain separate.",
     "code_or_configuration_changes": false,
     "diagnostic_launches": 0
+  },
+  "selection_status": {
+    "source": "results/phase2-main-v1/seed29-hypotheses.json",
+    "sha256": "eaf26490f0aef45bf5ea0601583488c878fccc8eb56c253d2bd1453a8a086ac4",
+    "episodes": 24,
+    "main_cases": 6,
+    "execution_claimed": false
+  },
+  "remaining": [
+    "Reviewed confirmation126 results and separate main/confirmation synthesis",
+    "Authorized selected seed29 evidence, if actually executed and reviewed",
+    "Final interpretation and any resulting condensation/layout rebuild"
+  ],
+  "factual_questions": [],
+  "files": {
+    "reports/phase2-report.tex": {
+      "bytes": 27895,
+      "sha256": "59d2b2654c46bf9673a3ac7a9add6760bce90faed98b04859294b9688c2f4652"
+    },
+    "reports/phase2-report.bib": {
+      "bytes": 1238,
+      "sha256": "d3f5273d976ec829a7f08c6daf328247178b22e22f2f7b64c40cfcde3a6600c8"
+    },
+    "reports/phase2-report.pdf": {
+      "bytes": 136507,
+      "sha256": "d4f5d8efac71eafef7532a8e69ac607cd2680e10ee643665cdb39cb01c58a6e8"
+    },
+    "reports/phase2-figures/provenance.json": {
+      "bytes": 10263,
+      "sha256": "0c9dcc9a0b35261d6c23f63366133dd5c33e59f9d7360e3021aee7bd5101d60b"
+    }
   }
 }
