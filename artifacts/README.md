@@ -78,3 +78,12 @@ The [inventory](phase2-calibration/manifest.json) hashes every member;
 `make phase2-calibration-verify` checks it without inference. Weights and runtime
 binaries are excluded. See the [calibration report](../results/phase2-calibration/README.md)
 for the selected protocol, scorer limitations and scope of the next batches.
+
+## Phase 2 formal block evidence
+
+Verified block archives are saved under `phase2-main-v1/archives/`. Each has an
+inventory of member hashes and a fresh collection audit; review annotations stay
+separate in [the formal results](../results/phase2-main-v1/README.md). The first
+[54-episode archive](phase2-main-v1/archives/main-001.tar.gz) is committed and
+restores without weights or running services. The continuous queue archives
+later blocks before advancing, preserving the frozen execution protocol.

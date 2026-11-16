@@ -13,6 +13,7 @@ Raw requests and traces are described in the [evidence layout](../artifacts/READ
 | [prompt-defense-seed29-diagnostics-v1](prompt-defense-seed29-diagnostics-v1/README.md) | Historical 20-episode selected-case follow-up, not a full second seed |
 | [research-investigation-v1](research-investigation-v1/README.md) | Historical task-contract, attack-stage and stance analyses derived from the prompt study |
 | [phase2-first-pass-v1](phase2-first-pass-v1/README.md) | Historical single-seed, 12-task quantization/context pilot; not the final Phase 2 grid |
+| [phase2-main-v1](phase2-main-v1/README.md) | Ongoing frozen formal matrix; separate main/confirmation cohorts and reviewed intermediate checkpoints |
 
 The original raw traces for historical collections are unavailable. The committed
 archive covers newly reproduced Phase 1 baseline/retry evidence. Historical

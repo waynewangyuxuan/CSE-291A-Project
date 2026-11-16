@@ -89,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py
+PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py scripts/analyze_phase2_matrix.py scripts/plot_phase2_matrix.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -223,3 +223,19 @@ phase2-collect: ## Continue all frozen blocks with per-block audits and raw arch
 
 phase2-collect-status: ## Show aggregate main and confirmation collection progress
 	$(UV) run --frozen python scripts/phase2_collect.py status
+
+.PHONY: phase2-main-analyze phase2-main-final
+
+phase2-main-analyze: ## Export explicitly provisional metrics from archived formal blocks
+	$(UV) run --frozen python scripts/analyze_phase2_matrix.py
+
+phase2-main-final: ## Export final metrics only after complete collection and trace review
+	$(UV) run --frozen python scripts/analyze_phase2_matrix.py --final
+
+.PHONY: phase2-main-plot-provisional phase2-main-plot
+
+phase2-main-plot-provisional: ## Render visibly provisional figures from the current export
+	MPLCONFIGDIR=.cache/matplotlib $(REPORT_PYTHON) scripts/plot_phase2_matrix.py --provisional
+
+phase2-main-plot: ## Render final reviewed formal figures
+	MPLCONFIGDIR=.cache/matplotlib $(REPORT_PYTHON) scripts/plot_phase2_matrix.py
