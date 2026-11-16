@@ -25,7 +25,7 @@ because frozen export/provenance records and imports refer to them.
 | [export_phase1_evaluation.py](export_phase1_evaluation.py) | Export a complete audited/reviewed cohort into a new immutable snapshot |
 | [plot_phase1_evaluation.py](plot_phase1_evaluation.py) | Plot a fully reviewed export; accepts explicit input/output paths |
 
-The report's compact figure generator is
+The Phase 1 report's compact figure generator is
 [reports/figures/make_report_figures.py](../reports/figures/make_report_figures.py).
 It reads the current recovered tables. New collection uses the package CLI,
 not an additional collection script.
@@ -90,6 +90,7 @@ and `make phase2-qualification`.
 | [phase2_seed_diagnostics.py](phase2_seed_diagnostics.py) | Prepare and run explicitly selected seed-29 matched pairs only after the completed, fully reviewed 1,098-episode collection; isolated roots, no automatic selection or infrastructure retries |
 | [import_phase2_review.py](import_phase2_review.py) | Verify a completed review receipt, evidence hashes and full gate before publishing its annotations |
 | [analyze_phase2_matrix.py](analyze_phase2_matrix.py) | Export paired formal metrics, exposure/cost accounting and reviewed scorer sensitivity |
+| [analyze_phase2_seed_diagnostics.py](analyze_phase2_seed_diagnostics.py) | Reproduce case-level seed17/29 comparisons from complete source-bound reviews, including isolated restored evidence; no pooled inference |
 | [plot_phase2_matrix.py](plot_phase2_matrix.py) | Render cohort-separated outcomes, context mechanisms, tradeoffs and interactions |
 | [restore_phase2_evidence.py](restore_phase2_evidence.py) | Restore an archived checkpoint in isolation and reproduce audits/measurements without inference |
 | [audit_phase2_candidates.py](audit_phase2_candidates.py) | Check candidate clean/attack pairs offline; does not freeze tasks or evaluate models |
@@ -154,3 +155,32 @@ Some publication-specific source snapshots remain under `results/*/support/`.
 Those belong to their historical publication, not to the default operational
 workflow. Add new reusable behavior to `src/agent_tradeoffs/`; add a script here
 only when a campaign or maintenance operation needs its own entry point.
+
+## Reviewed local seed comparisons
+
+After the selected diagnostic collection, save its complete review as
+`artifacts/phase2-seed-diagnostics-v1/review-draft.csv` and
+`review-findings.md`, then run the adapter's full `validate --annotations` gate.
+The offline comparison exporter requires the original selection source inside
+the repository (the execution adapter also supports external selections). It
+replays every episode audit, verifies the frozen parent plan/manifest, recomputes
+the seed29 identity and checks captured sampling settings. It binds annotation
+hashes, checks unchanged attack payloads/environments/tools against seed17, and
+preserves unknown outcomes. It reports paired case rows without inferring that
+equal scores prove equal behavior. Review the action-level findings separately.
+
+```sh
+.venv/bin/python scripts/analyze_phase2_seed_diagnostics.py --root artifacts/phase2-seed-diagnostics-v1 --output results/phase2-seed-diagnostics-v1
+```
+
+Its provenance lists every read input and both table hashes. `--evidence-root`
+can point to an isolated restored repository tree: embedded original absolute
+paths are mapped only beneath that tree, while recorded evidence bytes and
+identities stay unchanged. This does not need model weights or live services.
+Existing differing output files are rejected; repeating an identical export
+preserves them. The adapter's earlier deployment validation remains distinct
+from this offline audit/comparison proof.
+
+The Phase 2 main-report tables and compact plots use
+[reports/phase2-figures/make_main_figures.py](../reports/phase2-figures/make_main_figures.py)
+on the immutable54-task checkpoint, with their own input/output provenance.
