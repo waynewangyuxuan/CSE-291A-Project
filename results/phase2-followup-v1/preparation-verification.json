@@ -1,0 +1,44 @@
+{
+  "kind": "phase2_followup_preparation_verification",
+  "checked_at": "2026-11-18T00:50:10.172349+00:00",
+  "checks": "passed",
+  "fast_gate": {
+    "command": "PYTHONPATH=.cache/report-env/lib/python3.12/site-packages:src:scripts make check phase2-lint",
+    "tests_passed": 332,
+    "seconds": 51.13,
+    "navigation_links": 140,
+    "indexed_scripts": 52,
+    "phase2_scripts_lint_format": 25
+  },
+  "real_paths": {
+    "historical_clean_reviews": 48,
+    "qualified_tasks": 17,
+    "reference_context_episodes": 108,
+    "mechanism_trace_reviews": 162,
+    "offline_exact_checkpoint_restorations": 2,
+    "model_pilot_finalized": 24,
+    "model_pilot_full_reviews": 24,
+    "repeat_adapter_frozen_sources_validated": true,
+    "raw_archive_members_independently_hashed": 234,
+    "raw_archive_bytes": 1192384
+  },
+  "boundaries": [
+    "Only 24 of 612 fresh episodes collected at this checkpoint.",
+    "Mechanical estimator remains provisional even though pilot full review passes.",
+    "Checkpoint restoration is offline, not model continuation or causal evidence.",
+    "Pilot inference overlapped with offline work; not an isolated performance comparison.",
+    "Raw archive created before review; review gate is a separate source-bound artifact."
+  ],
+  "sha256": {
+    "configs/phase2-followup-v1/repeat-selection.json": "ae4635cc77f0eab4145ed982f22142780daea1ceb3bab3a9c06f6c5a56c2af27",
+    "configs/phase2-followup-v1/context-selection.json": "2a5c82564b523611cd7f77a63fc7bc0f1f19f0dff4a851b7caa9e4be96d4f30e",
+    "results/phase2-followup-v1/capability/qualification.json": "b85276bc5b0c14a4384fa3b2958fbc13e9b968af255125af3bcce2e6d50f38ea",
+    "results/phase2-followup-v1/context/summary.json": "ee6d3b3df86057c07484ff44e5d40a51ea0ecc9d957516968b805dc31d1884a0",
+    "results/phase2-followup-v1/mechanisms/verification.json": "01bba16fd589acd00541a86ccfa9386a359a47e923992bae8fcaab8166535ea1",
+    "results/phase2-followup-v1/checkpoint-restore/verification.json": "696d613131b4b7e71110b67b3e2090cca72001e3c71fe5e96621c29b0f45dafe",
+    "results/phase2-followup-v1/pilot-review/trace-review.csv": "6bbdf00c27aee13547e71a7567bafaf1957a3c3b8f4b49ccf0d860f41ec09ca1",
+    "results/phase2-followup-v1/pilot-review/verification.json": "bd9c3cb5cd3b085c97071bced5687c00b17b9015c97b40821214fdb904ab2f71",
+    "results/phase2-followup-v1/repeats/analysis.json": "629265747aed4a593688a00942e3e8f26933b63bec5244363c06aebcb654ba3f",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-001.manifest.json": "57885b1ba50a292ae7334e4dd83f26b0867eafb3477d7bf9e5664b3ce544ef7c"
+  }
+}

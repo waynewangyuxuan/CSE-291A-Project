@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "selected_offline_next_development_batch",
+  "new_context_model_runs_started": false,
+  "chosen_without_attack_outcome_optimization": true,
+  "source_sha256": {
+    "results/phase2-followup-v1/capability/qualification.json": "b85276bc5b0c14a4384fa3b2958fbc13e9b968af255125af3bcce2e6d50f38ea",
+    "results/phase2-followup-v1/context/summary.json": "ee6d3b3df86057c07484ff44e5d40a51ea0ecc9d957516968b805dc31d1884a0",
+    "results/phase2-followup-v1/mechanisms/checkpoints.json": "663c2d7e98b21b1b5568159dc0747537a3c225ae8e4061083ffe7c24f2a1fc16"
+  },
+  "hard_budget": {
+    "total": 7040,
+    "completion_reserve": 2048,
+    "input_allowance": 4992
+  },
+  "trigger_choices": {
+    "deployment_comparator": {
+      "input_threshold": 4096,
+      "minimum_history_growth_proxy": 512
+    },
+    "profile_based": {
+      "reference": "per-task main F16 Full clean",
+      "alpha": 0.3,
+      "minimum_history_growth_proxy": 512,
+      "formula": "max(512, 0.3 * observed clean history peak proxy)",
+      "censored_reference": "separate mechanism-only stratum; observed lower bound"
+    }
+  },
+  "intervention": {
+    "application": "one shot at first eligible live trigger; counterfactual cases use separately frozen checkpoint",
+    "minimum_complete_groups": 2,
+    "protected_groups": 1,
+    "methods": [
+      "full",
+      "truncate",
+      "summary"
+    ],
+    "summary": "same fixed F16 greedy seed0 summarizer and384 token cap",
+    "shared_old_prefix": true,
+    "no_current_run_lookahead": true,
+    "reference_selection_requires_remaining_tool_decision": true,
+    "retain_not_triggered_and_failures": true
+  },
+  "qualified_primary_reference_tasks": [
+    {
+      "suite": "workspace",
+      "task": "user_task_15",
+      "reference_request_index": 2
+    }
+  ],
+  "qualified_final_answer_only_diagnostics": [
+    {
+      "suite": "slack",
+      "task": "user_task_15"
+    },
+    {
+      "suite": "workspace",
+      "task": "user_task_8"
+    }
+  ],
+  "mechanism_tasks": [
+    "travel/user_task_2",
+    "travel/user_task_3",
+    "workspace/user_task_14",
+    "workspace/user_task_28"
+  ],
+  "historically_qualified_mechanism_tasks": [
+    "workspace/user_task_28"
+  ],
+  "remaining_gates": [
+    "exact typed environment and recorded prefix tool-result reconstruction",
+    "identical Full payload/history and matched environment across branches",
+    "same budget and group boundaries after transform",
+    "new continuation identity and complete raw logging",
+    "bounded live proof before further collection"
+  ],
+  "interpretation": "Workspace15 clean reference still has one tool decision; its attacked F16 reference is final-answer-only after legitimate event creation. This does not establish a pre-attack window. Workspace28 has independently checked attack checkpoints; restored-state proof remains separate. No broad long-chain-capability claim."
+}

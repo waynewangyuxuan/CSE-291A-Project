@@ -89,7 +89,7 @@ phase2: ## Run the quantization/context pilot (requires prepared models)
 phase2-report:
 	$(UV) run --frozen python scripts/phase2_first_pass.py report
 
-PHASE2_SCRIPTS := scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py scripts/analyze_phase2_matrix.py scripts/plot_phase2_matrix.py scripts/restore_phase2_evidence.py scripts/import_phase2_review.py scripts/phase2_seed_diagnostics.py scripts/analyze_phase2_seed_diagnostics.py
+PHASE2_SCRIPTS := scripts/phase2_followup_checkpoint.py scripts/profile_phase2_context.py scripts/profile_phase2_mechanisms.py scripts/profile_phase2_capability.py scripts/analyze_phase2_repeats.py scripts/phase2_repeat_study.py scripts/prepare-q4.py scripts/phase2_first_pass.py scripts/verify_phase2.py scripts/analyze_phase2.py scripts/plot_phase2.py scripts/phase2_case_cards.py scripts/audit_phase2_candidates.py scripts/phase2_budget_spike.py scripts/audit_phase2_spike.py scripts/phase2_calibration.py scripts/package_phase2_calibration.py scripts/phase2_matrix.py scripts/phase2_collect.py scripts/analyze_phase2_matrix.py scripts/plot_phase2_matrix.py scripts/restore_phase2_evidence.py scripts/import_phase2_review.py scripts/phase2_seed_diagnostics.py scripts/analyze_phase2_seed_diagnostics.py
 
 phase2-lint:
 	$(UV) run --frozen ruff check $(PHASE2_SCRIPTS)
@@ -249,3 +249,40 @@ phase2-main-restore: ## Restore the analyzed checkpoint and reproduce metrics wi
 .PHONY: phase2-main-import-review
 phase2-main-import-review: ## Verify and publish a completed reviewer receipt for PHASE2_REVIEW_BLOCK
 	$(UV) run --frozen python scripts/import_phase2_review.py --block "$(PHASE2_REVIEW_BLOCK)"
+
+.PHONY: phase2-repeat-prepare phase2-repeat-status phase2-repeat-run
+PHASE2_REPEAT_ROOT ?= artifacts/phase2-repeat-study-v1
+PHASE2_REPEAT_SELECTION ?= configs/phase2-followup-v1/repeat-selection.json
+PHASE2_REPEAT_BLOCK ?= seed-41-batch-001
+
+phase2-repeat-prepare: ## Freeze fresh-seed pairs from the reviewed baseline qualification
+	$(UV) run --frozen python scripts/phase2_repeat_study.py prepare --root "$(PHASE2_REPEAT_ROOT)" --selection "$(PHASE2_REPEAT_SELECTION)"
+
+phase2-repeat-status: ## Inspect follow-up collection without recomputing source audits
+	$(UV) run --frozen python scripts/phase2_repeat_study.py status --root "$(PHASE2_REPEAT_ROOT)"
+
+phase2-repeat-run: ## Run or resume one declared repeat block with the frozen driver
+	$(UV) run --frozen python scripts/phase2_repeat_study.py run --root "$(PHASE2_REPEAT_ROOT)" --block "$(PHASE2_REPEAT_BLOCK)"
+
+.PHONY: phase2-capability-profile phase2-repeat-analyze phase2-repeat-queue
+PHASE2_REPEAT_MAX_BLOCKS ?= 1
+
+phase2-capability-profile: ## Reproduce the reviewed historical capability cohort and tool profile
+	$(UV) run --frozen python scripts/profile_phase2_capability.py --source-root . --output results/phase2-followup-v1/capability
+
+phase2-repeat-analyze: ## Export mechanically audited repeat progress with unknowns retained
+	$(UV) run --frozen python scripts/analyze_phase2_repeats.py --root "$(PHASE2_REPEAT_ROOT)" --output results/phase2-followup-v1/repeats
+
+phase2-repeat-queue: ## Run up to PHASE2_REPEAT_MAX_BLOCKS pending blocks, archiving each before advancing
+	$(UV) run --frozen python scripts/phase2_repeat_study.py queue --root "$(PHASE2_REPEAT_ROOT)" --max-blocks "$(PHASE2_REPEAT_MAX_BLOCKS)"
+
+.PHONY: phase2-context-profile phase2-mechanism-profile
+phase2-context-profile: ## Reproduce source-bound context profiles and capability intersections
+	$(UV) run --frozen python scripts/profile_phase2_context.py --source-root . --output results/phase2-followup-v1/context
+
+phase2-mechanism-profile: ## Revalidate attack timelines and intervention candidates
+	$(UV) run --frozen python scripts/profile_phase2_mechanisms.py --source-root . --output results/phase2-followup-v1/mechanisms
+
+.PHONY: phase2-followup-checkpoint
+phase2-followup-checkpoint: ## Reconstruct two verified attack-exposed states offline; no model calls
+	$(UV) run --frozen python scripts/phase2_followup_checkpoint.py --source-root . --output results/phase2-followup-v1/checkpoint-restore
