@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "purpose": "offline preparation; not a frozen inference matrix",
+  "source_commit": "617d3eb1cffca5a6e137c63ea7b1ba429cc51eb9",
+  "formal_episodes": "results/phase2-main-v1/analysis/episodes.json",
+  "baseline_episodes": "results/phase1-recovery/evaluation-episodes.csv",
+  "baseline_seeds": [
+    17,
+    29
+  ],
+  "cohort": "main",
+  "context_reference": {
+    "precision": "f16",
+    "policy": "full",
+    "selection_condition": "clean"
+  },
+  "trigger_candidates": {
+    "history_fractions": [
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "minimum_history_growth_tokens": [
+      512,
+      1024,
+      1536
+    ]
+  },
+  "constraints": {
+    "total_token_budget": 7040,
+    "completion_reserve_tokens": 2048,
+    "protect_latest_complete_group": true,
+    "keep_errors_as_unknown": true,
+    "exclude_confirmation_from_tuning": true,
+    "model_jobs_at_once": 1,
+    "pilot_episode_ceiling": 24,
+    "pilot_wall_minutes_ceiling": 90
+  },
+  "lane_outputs": {
+    "capability": "results/phase2-followup-v1/capability/",
+    "context": "results/phase2-followup-v1/context/",
+    "mechanisms": "results/phase2-followup-v1/mechanisms/"
+  }
+}
