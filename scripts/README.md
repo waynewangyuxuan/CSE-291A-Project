@@ -187,3 +187,9 @@ The Phase 2 main-report tables and compact plots use
 on the immutable54-task checkpoint and separate final confirmation export, with
 their own input/output provenance; the report also integrates separately reviewed
 selected seed diagnostics.
+
+## Phase 2 follow-up study
+
+| Script | Purpose |
+| --- | --- |
+| [phase2_repeat_study.py](phase2_repeat_study.py) | Prepare and run isolated fresh-seed Full-context pairs on the complete historically qualified task set; reuse the frozen driver, keep unknown outcomes and require separate trace review |
