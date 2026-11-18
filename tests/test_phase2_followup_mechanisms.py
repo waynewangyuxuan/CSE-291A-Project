@@ -225,3 +225,14 @@ def test_repeat_preserves_bytes_and_unknown_values(profiler, tmp_path):
         {"official_attack_success": None, "official_status": "error"}
     ]
     assert (tmp_path / "cases.json").stat().st_mtime_ns == before
+
+
+def test_writer_rejects_output_symlink_without_changing_source(profiler, tmp_path):
+    source = tmp_path / "source.json"
+    source.write_text('{"original":true}')
+    output = tmp_path / "derived"
+    output.mkdir()
+    (output / "cases.json").symlink_to(source)
+    with pytest.raises(ValueError, match="Output symlink refused"):
+        profiler.write_outputs(output, {"cases.json": {"replacement": True}})
+    assert source.read_text() == '{"original":true}'

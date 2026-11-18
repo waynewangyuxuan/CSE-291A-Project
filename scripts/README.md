@@ -193,3 +193,8 @@ selected seed diagnostics.
 | Script | Purpose |
 | --- | --- |
 | [phase2_repeat_study.py](phase2_repeat_study.py) | Prepare and run isolated fresh-seed Full-context pairs on the complete historically qualified task set; reuse the frozen driver, keep unknown outcomes and require separate trace review |
+| [profile_phase2_capability.py](profile_phase2_capability.py) | Verify both historical clean traces per candidate, select the fixed capability cohort and profile current Full clean tool/cost evidence |
+| [analyze_phase2_repeats.py](analyze_phase2_repeats.py) | Audit declared fresh repeats, preserve missing/unknown outcomes and calculate taskwise Attack@k completion bounds; full review remains separate |
+| [profile_phase2_context.py](profile_phase2_context.py) | Reproduce main-task context profiles, trigger coverage and source-bound capability intersections without inference |
+| [profile_phase2_mechanisms.py](profile_phase2_mechanisms.py) | Revalidate source-to-memory-to-action timelines and conservative same-state intervention checkpoints |
+| [phase2_followup_checkpoint.py](phase2_followup_checkpoint.py) | Replay verified simulated tool prefixes and prove exact environment/payload reconstruction for two follow-up cases; no model calls |

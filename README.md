@@ -50,6 +50,7 @@ Local inference uses Apple Silicon, llama.cpp with Metal, and Qwen3-8B F16.
 | --- | --- |
 | Read the reports | [Phase 1 PDF](reports/phase1-report.pdf), [Phase 2 PDF](reports/phase2-report.pdf), [Phase 2 source](reports/phase2-report.tex) |
 | Inspect results, reviews, and follow-ups | [Phase 1 baseline](results/phase1-recovery/README.md), [Phase 2 formal study](results/phase2-main-v1/README.md) |
+| Track the follow-up study | [Qualification, profiles and fresh-seed batches](results/phase2-followup-v1/README.md) |
 | Revisit Phase 2 findings and follow-up questions | [Post-study research memo (中文)](docs/phase2-post-study-review.md) |
 | Understand what is current versus historical | [Results index](results/README.md) |
 | Find raw model requests, tool actions, and state changes | [Evidence layout](artifacts/README.md) |

@@ -511,14 +511,24 @@ def pair_triggers(clean, attack, fractions, floors):
     return triggers, definitions
 
 
-def parent_integration(tasks):
-    relative = "results/phase2-followup-v1/context/parent-capability-intersections.json"
-    path = Path(__file__).resolve().parents[1] / relative
-    raw = path.read_bytes()
-    supplied = json.loads(raw)
+def capability_integration(tasks, evidence):
+    relative = "results/phase2-followup-v1/capability/qualification.json"
+    raw = evidence.read(relative)
+    qualification = json.loads(raw)
+    for name, digest in qualification["source_hashes"].items():
+        evidence.read(name, digest)
+    eligible = {(t["suite"], t["task"]) for t in qualification["tasks"] if t["eligible"]}
+    selected = {
+        key: [
+            {"suite": t["suite"], "task": t["task"]}
+            for t in tasks
+            if (t["suite"], t["task"]) in eligible and t["trigger_candidates"][key]["clean"]
+        ]
+        for key in ("profile_a0.3_g512", "fixed_input_4096", "fixed_input_4096_g512")
+    }
     indexed = {(t["suite"], t["task"]): t for t in tasks}
     intersections = {}
-    for key, identities in supplied["intersections"].items():
+    for key, identities in selected.items():
         details = []
         for identity in identities:
             task = indexed[(identity["suite"], identity["task"])]
@@ -547,7 +557,8 @@ def parent_integration(tasks):
     return {
         "input_path": relative,
         "input_sha256": sha(raw),
-        "supplied": supplied,
+        "qualified_tasks": len(eligible),
+        "basis": "Source-bound semantic qualification from both Phase1 seeds",
         "intersections": intersections,
         "primary_rule": (
             "Exclude short/final-answer-only trajectories from primary mechanism subset. "
@@ -742,7 +753,7 @@ def build_profile(source_root):
                 "cases."
             ),
         },
-        "cross_lane_preliminary": parent_integration(tasks),
+        "capability_integration": capability_integration(tasks, evidence),
         "floor512_sensitivity": floor_sensitivity(tasks),
         "primary_mechanism_candidates_before_capability_gate": [
             {
@@ -806,8 +817,9 @@ def build_profile(source_root):
             "first_runtime_budget_episodes_ceiling": constraints["pilot_episode_ceiling"],
             "first_runtime_budget_wall_minutes_ceiling": constraints["pilot_wall_minutes_ceiling"],
             "stability_plan_independent": (
-                "Six fresh-seed Full-context stability plan is separate; up to 864 episodes "
-                "and historical candidate estimate 8.47h are not this intervention's budget "
+                "Six fresh-seed Full-context stability plan has 612 episodes "
+                "on 17 qualified tasks; "
+                "its historical estimate of 5.17h is not this intervention's budget "
                 "or threshold-selection criterion. No inference is run in this lane."
             ),
         },
@@ -953,12 +965,11 @@ def render_readme(profile):
             "的动作证据结合。"
         ),
         "",
-        "## 与父任务语义资格的初步交集",
+        "## 与历史语义资格的源绑定交集",
         "",
         (
-            "父任务提供17个Phase1语义合格任务及两组显式交集；本lane未重新做语义审阅。"
-            "输入已保存为 parent-capability-intersections.json并绑定哈希，"
-            "最终需父任务接入能力证据。"
+            "交集由 capability/qualification.json 的17个合格任务自动计算，"
+            "并逐项核对该文件及其全部来源哈希；本画像不另外创造语义评分。"
             "下面的触发index、历史增长与剩余步骤则由本lane逐条核对原始请求。index从0开始，"
             "剩余模型步骤包含当前即将执行的请求。"
         ),
@@ -966,7 +977,7 @@ def render_readme(profile):
         "| 任务 | 触发规则 | index | 历史增长代理 | 剩余模型步 | 剩余工具决策 | 定位 |",
         "| --- | --- | ---: | ---: | ---: | ---: | --- |",
     ]
-    for key, entries in profile["cross_lane_preliminary"]["intersections"].items():
+    for key, entries in profile["capability_integration"]["intersections"].items():
         for entry in entries:
             hit = entry["trigger"]
             role = "主机制候选" if entry["mechanism_primary_candidate"] else "仅最终回答诊断"

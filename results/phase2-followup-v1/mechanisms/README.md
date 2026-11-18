@@ -2,16 +2,16 @@
 
 本批只做离线证据检查，未运行模型，也未修改正式分数。完整主集 **972 条、54 个任务**中，**46 条 episode 实际压缩，共 124 次**。先从全表枚举覆盖，再检查所有发生压缩任务的全部 18 个配置单元，共 **9 个任务、162 条 episode**；其中选出 **15 个案例**提供完整时间线。确认集不参与选择。
 
-找到 **4 个任务、21 条 episode、42 个结构合格检查点**。这些是机制候选，历史能力资格尚未合并；`historical_capability_qualified=null`。同一轨迹的多个检查点、尚未触发策略的重复配置均不能算独立样本。
+找到 **4 个任务、21 条 episode、42 个结构合格检查点**。这些是机制候选，原始检查点表保留`historical_capability_qualified=null`；跨表资格交集由本目录上层的源绑定策略选择记录。同一轨迹的多个检查点、尚未触发策略的重复配置均不能算独立样本。
 
-父任务提供的初步交集名单为 Slack15、Workspace8、Workspace15（30% + 512 floor）。它们与本 lane 的四个任务交集为空。父任务尚未交付完整 17 个历史资格任务的源绑定名单，因此这里不推断四个任务在该 17 项集合中的归属；最终能力交集由父任务合并。
+与[17项历史资格](../capability/qualification.json)交叉后，四个机制任务中只有Workspace28合格：Q8 Full/Truncate/Summary的request2/3共六个结构检查点。三个历史策略不能视作独立复制。与profiling后仍有工具决策的clean能力任务Workspace15交集为空；两种筛选回答不同问题。
 
 ## 文件与复现
 
 - [cases.json](cases.json)：顶层为 15 项列表。每项包含 suite/task、precision/policy、episode 文件 SHA-256、选中检查点、资格及原因、观察说明和时间线。
 - [coverage.json](coverage.json)：全主集 972 行、54 任务的覆盖账本。全部 result 文件与正式表核对；`deep_profiled=true` 的 162 条另核对 trace、实际请求、响应、token 记录和摘要。
 - [checkpoints.json](checkpoints.json)：162 条 episode 的每个请求准备点，保留合格与排除项。每个合格点都有工具 schema 哈希、原历史切片和恢复说明。
-- [annotations.json](annotations.json)：人工制定、agent 核对的语义观察及字面断言。语义判断不是关键词分类器自动证明的结论。
+- [annotations.json](annotations.json)：由agent逐项制定并核对的语义观察及字面断言。语义判断不是关键词分类器自动证明的结论。
 - [sources.json](sources.json)：1,746 个输入文件的 SHA-256，包括协议、正式表、原始证据、manifest 和实际检查过的运行器/工具实现。
 - [verification.json](verification.json)：脚本、注释、输入清单和三个生成结果的哈希。脚本格式变化后必须重新生成。
 

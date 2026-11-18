@@ -452,3 +452,42 @@ def test_equal_coverage_does_not_require_identical_floor_bound_thresholds(tmp_pa
     )
     assert result["profile_a0.5_g512"]["floor_bound_tasks"] == 0
     assert result["profile_a0.5_g512"]["different_first_sent_request_from_a03"] == []
+
+
+def test_capability_join_uses_pinned_semantic_qualification(tmp_path):
+    root = tmp_path
+    lane = root / "results/phase2-followup-v1/capability"
+    lane.mkdir(parents=True)
+    evidence_file = root / "review.json"
+    evidence_file.write_text('{"checked":true}')
+    qualification = {
+        "source_hashes": {"review.json": digest(evidence_file.read_bytes())},
+        "tasks": [
+            {"suite": "slack", "task": "user_task_1", "eligible": True},
+            {"suite": "slack", "task": "user_task_2", "eligible": False},
+        ],
+    }
+    (lane / "qualification.json").write_text(json.dumps(qualification))
+    hit = {"reference_censored": False, "final_answer_only": False}
+    tasks = [
+        {
+            "suite": "slack",
+            "task": f"user_task_{n}",
+            "clean_reference": {
+                "source": f"source-{n}",
+                "source_hashes": {"trace.json.gz": {"sha256": "a" * 64}},
+                "initial_input_tokens_including_fixed_template_and_tools": 1000,
+            },
+            "trigger_candidates": {
+                key: {"clean": hit}
+                for key in ("profile_a0.3_g512", "fixed_input_4096", "fixed_input_4096_g512")
+            },
+        }
+        for n in (1, 2)
+    ]
+    joined = profile.capability_integration(tasks, profile.Evidence(root))
+    assert joined["qualified_tasks"] == 1
+    assert {r["task"] for rs in joined["intersections"].values() for r in rs} == {"user_task_1"}
+    evidence_file.write_text('{"checked":false}')
+    with pytest.raises(ValueError, match="Source hash mismatch"):
+        profile.capability_integration(tasks, profile.Evidence(root))

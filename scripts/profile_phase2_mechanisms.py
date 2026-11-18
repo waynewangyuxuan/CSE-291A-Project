@@ -830,9 +830,11 @@ def write_outputs(output, outputs):
     for name, value in outputs.items():
         data = encoded_json(value)
         destination = output / name
+        require(not destination.is_symlink(), "Output symlink refused")
         if destination.is_file() and destination.read_bytes() == data:
             continue
         temporary = output / f".{name}.tmp"
+        require(not temporary.is_symlink(), "Temporary output symlink refused")
         temporary.write_bytes(data)
         os.replace(temporary, destination)
 
@@ -847,7 +849,8 @@ def main(argv=None):
     try:
         root, output = args.source_root.resolve(), args.output.resolve()
         require(
-            not any(
+            output == root / "results/phase2-followup-v1/mechanisms"
+            or not any(
                 output.is_relative_to(root / part)
                 for part in ("artifacts", "results", "src", "configs", ".venv")
             ),
