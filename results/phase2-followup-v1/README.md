@@ -25,7 +25,7 @@ make phase2-repeat-queue PHASE2_REPEAT_MAX_BLOCKS=1
 
 队列默认最多推进一批。每批先校验并归档原始证据，再继续下一批；服务错误会停止队列，已完成的任务限制错误保留为unknown。归档在`artifacts/phase2-repeat-study-v1/archives/`，每个成员有SHA-256；模型权重不进入归档。执行入口复用冻结driver并校验来源，旧实验记录不变。资源采集包含常驻F16摘要器，Full策略不会调用摘要器。
 
-[机械分析](repeats/analysis.json)始终标为provisional，记录完整计划的缺失/已完成覆盖率，不将模型未执行的记录当作失败或安全。当前采集状态以状态命令为准；确认全审阅前不发布正式稳定性结论。
+[机械分析](repeats/analysis.json)始终标为provisional，记录完整计划的缺失/已完成覆盖率，不将模型未执行的记录当作失败或安全。当前导出的clean_capability/current_clean_eligible仍使用官方utility，完整审阅后的语义资格需要单独接入分析，不能直接将这些列解释成语义正确。当前采集状态以状态命令为准；确认全审阅前不发布正式稳定性结论。
 
 ## 上下文与机制：已选择的下一开发批次
 
