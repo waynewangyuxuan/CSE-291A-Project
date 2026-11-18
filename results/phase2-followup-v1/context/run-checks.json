@@ -1,0 +1,42 @@
+{
+  "all_54_tasks_108_trajectories": true,
+  "second_full_run_byte_identical": true,
+  "generator_hash_verified": true,
+  "all_source_paths_main_relative": true,
+  "artifact_hashes": {
+    "summary.json": "0eab48ef143687af0449588d52a13e96ef164ba6fe130e05a12a14a35e3cdd54",
+    "README.md": "654a7a88a75f0ea51494f7d740dde8acf605cd444b1b02ce05528d8bafddbb19",
+    "context-profile.png": "bc8c49211509c1de15675bc1c4f0f25f770a05335cca721a7c6de7ea2f666b10",
+    "verification.json": "f9d7cc70a5a1b89682d4b171218b21a7085840bf4c538f67afe1fb53481bf53d",
+    "parent-capability-intersections.json": "2e3c3ef79d8b069622b10d24c7f5341e0c39d3ab506240c9a906616183ed5dd6"
+  },
+  "real_source_failure_checks": [
+    {
+      "failure": "missing",
+      "exit_code": 2,
+      "message": "Context profiling failed: Missing source evidence: artifacts/phase2-main-v1/main-001/runs/f16-full-banking1/episodes/user_task_1__clean/context-requests.jsonl.gz",
+      "existing_output_unchanged": true
+    },
+    {
+      "failure": "corrupt",
+      "exit_code": 2,
+      "message": "Context profiling failed: Source hash mismatch: artifacts/phase2-main-v1/main-001/runs/f16-full-banking1/episodes/user_task_1__clean/context-requests.jsonl.gz",
+      "existing_output_unchanged": true
+    }
+  ],
+  "ruff_check": {
+    "exit_code": 0,
+    "stdout": "All checks passed!"
+  },
+  "ruff_format_check": {
+    "exit_code": 0,
+    "stdout": "2 files already formatted"
+  },
+  "pytest": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=<source-root>/.cache/report-env/lib/python3.12/site-packages:src:scripts <source-root>/.venv/bin/python -m pytest -q -p no:cacheprovider",
+    "passed": 260,
+    "failed": 0,
+    "owned_tests": 20
+  },
+  "plot_visual_review": "Passed: labels and coverage annotations legible; completed/censored prefixes separated."
+}
