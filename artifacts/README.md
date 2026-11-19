@@ -100,3 +100,7 @@ The [reviewed supplement](../results/phase2-seed-diagnostics-v1/README.md)
 provides a verified isolated recovery recipe; all three comparison exports
 reproduce byte-for-byte without weights or inference. These selected cases stay
 separate from the 1,098 formal episodes and from development/calibration.
+
+## Phase 2 fresh-repeat evidence
+
+Thirty committed archives under `phase2-repeat-study-v1/archives/` preserve all612 fresh-repeat episodes (39,022,172 compressed bytes), with member inventories. [Collection verification](../results/phase2-followup-v1/collection-verification.json) and [full source-bound review/gates](../results/phase2-followup-v1/reviewed-analysis/analysis.json) are separate proofs. Archived collection-time review flags remain historical; the new review parts and gate outputs establish complete review. Model weights are excluded.
