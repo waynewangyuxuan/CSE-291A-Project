@@ -200,3 +200,4 @@ selected seed diagnostics.
 | [phase2_followup_checkpoint.py](phase2_followup_checkpoint.py) | Replay verified simulated tool prefixes and prove exact environment/payload reconstruction for two follow-up cases; no model calls |
 | [analyze_phase2_reviewed_repeats.py](analyze_phase2_reviewed_repeats.py) | Require full source-bound review and original per-block gates, then compare semantic stability, finite-repeat Attack@k and tool/cost cohorts |
 | [plot_phase2_reviewed_repeats.py](plot_phase2_reviewed_repeats.py) | Draw reviewed per-task stability, repeated-attack bounds and common-stable-task tool/cost comparisons |
+| [phase2_context_continuation.py](phase2_context_continuation.py) | Freeze, run and audit 18 bounded Full/Truncate/Summary continuations from two exactly restored states; [parent launch recipe](../results/phase2-followup-v1/continuation/README.md) |

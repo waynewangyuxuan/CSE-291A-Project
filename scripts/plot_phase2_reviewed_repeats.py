@@ -18,12 +18,18 @@ COLORS = {"f16": "#2364AA", "q8": "#2A9D8F", "q4": "#D97732"}
 
 
 def save(figure, output, name):
+    metadata = {
+        "png": {"Software": "Phase2 reviewed repeat analysis"},
+        "pdf": {
+            "Creator": "Phase2 reviewed repeat analysis",
+            "CreationDate": None,
+            "ModDate": None,
+        },
+        "svg": {"Creator": "Phase2 reviewed repeat analysis", "Date": None},
+    }
     for suffix in ("png", "pdf", "svg"):
         figure.savefig(
-            output / f"{name}.{suffix}",
-            dpi=180,
-            bbox_inches="tight",
-            metadata={"Creator": "Phase2 reviewed repeat analysis"} if suffix == "pdf" else None,
+            output / f"{name}.{suffix}", dpi=180, bbox_inches="tight", metadata=metadata[suffix]
         )
     plt.close(figure)
 
@@ -62,20 +68,22 @@ def plot_stability(report, output):
         for i in range(len(tasks)):
             for j in range(3):
                 v = data[i, j]
+                observed = index[*tasks[i], PRECISIONS[j]]["observed_n"]
+                value = "?" if np.isnan(v) else f"{v:.2f}"
                 ax.text(
                     j,
                     i,
-                    "?" if np.isnan(v) else f"{v:.2f}",
+                    f"{value}\nn={observed}/6",
                     ha="center",
                     va="center",
-                    fontsize=8,
+                    fontsize=7,
                     color="white" if not np.isnan(v) and v > 0.65 else "black",
                 )
     fig.colorbar(im, ax=axes, shrink=0.7, label="Disagreeing unordered run pairs / observed pairs")
     fig.suptitle("Six fresh repeats: outcome and action variation", fontsize=15)
     fig.supxlabel(
-        "Gray = unknown; action variation can be legitimate. "
-        "Fixed tasks, not a seed-only causal estimate.",
+        "n = observed runs / 6; gray = insufficient pairs. "
+        "Action variation can be legitimate; no seed-only causal claim.",
         fontsize=10,
     )
     save(fig, output, "repeat-stability")
@@ -83,7 +91,7 @@ def plot_stability(report, output):
 
 def plot_risk(report, output):
     fig, axes = plt.subplots(2, 2, figsize=(11, 8), layout="constrained", sharex=True, sharey=True)
-    for i, population in enumerate(("all_enrolled", "same_seed_semantic_clean")):
+    for i, population in enumerate(("all_enrolled", "common_stable_across_all_precisions")):
         for j, metric in enumerate(("reviewed_exact_goal", "unauthorized_action")):
             ax = axes[i, j]
             for precision in PRECISIONS:
@@ -111,7 +119,7 @@ def plot_risk(report, output):
                 ax.fill_between(x, lo, hi, color=COLORS[precision], alpha=0.15)
                 ax.plot(x, hi, ":", color=COLORS[precision], linewidth=0.8)
             ax.set_title(
-                ("All enrolled tasks" if i == 0 else "Same-seed reviewed clean success")
+                ("All enrolled tasks" if i == 0 else "Common tasks: all 18 clean repeats succeed")
                 + "\n"
                 + ("Exact malicious goal" if j == 0 else "Any witnessed unauthorized action")
             )
@@ -140,52 +148,102 @@ def plot_tools(report, output):
     n = selected["f16"]["tasks"]
     x = np.arange(3)
     colors = [COLORS[p] for p in PRECISIONS]
+    for ax in axes.flat:
+        ax.set_xticks(x, [p.upper() for p in PRECISIONS])
+        ax.set_xlim(-0.6, len(PRECISIONS) - 0.4)
+        ax.spines[["top", "right"]].set_visible(False)
     for ax, name, field in [
         (axes[0, 0], "Executed tool calls", "executed_tool_calls"),
         (axes[0, 1], "Tool exceptions / failures", "tool_errors"),
-        (axes[0, 2], "Witnessed redundant calls", "redundant_calls"),
     ]:
-        values = [
-            selected[p]["redundant_calls_observed"]
-            if field == "redundant_calls"
-            else selected[p]["execution"][field]["total"]
-            for p in PRECISIONS
-        ]
+        values = [selected[p]["execution"][field]["total"] for p in PRECISIONS]
         ax.bar(x, values, color=colors)
         ax.set_title(name)
         for j, v in enumerate(values):
             ax.text(j, v, str(v), ha="center", va="bottom")
+    ax = axes[0, 2]
+    coverage = []
+    for j, p in enumerate(PRECISIONS):
+        row = selected[p]
+        complete = row["redundancy_complete_episodes"]
+        lower = row["redundancy_lower_bound_episodes"]
+        unknown = row["redundancy_unknown_episodes"]
+        coverage.append(f"{p.upper()}\nC{complete} / L{lower} / U{unknown}")
+        value = row["redundant_calls_observed"]
+        if complete + lower:
+            ax.bar(j, value, color=colors[j])
+            label = f"≥{value}" if lower or unknown else str(value)
+            ax.text(j, value, label, ha="center", va="bottom")
+        else:
+            ax.text(j, 0.02, "NA", transform=ax.get_xaxis_transform(), ha="center", va="bottom")
+    ax.set_title("Witnessed redundant calls")
+    ax.set_xticks(x, coverage, fontsize=8)
+    ax.margins(y=0.15)
+    ax.set_ylim(bottom=0)
     for ax, name, field, divisor in [
         (axes[1, 0], "Episode latency (seconds)", "duration_seconds", 1),
         (axes[1, 2], "Agent process peak RSS (GiB)", "agent_peak_rss_bytes", 2**30),
     ]:
-        med = [selected[p][field]["median"] for p in PRECISIONS]
-        if all(v is not None for v in med):
-            values = np.array(med) / divisor
-            lo = [
-                (selected[p][field]["median"] - selected[p][field]["p25"]) / divisor
-                for p in PRECISIONS
-            ]
-            hi = [
-                (selected[p][field]["p75"] - selected[p][field]["median"]) / divisor
-                for p in PRECISIONS
-            ]
-            ax.bar(x, values, color=colors, yerr=[lo, hi], capsize=4)
+        coverage = []
+        for j, p in enumerate(PRECISIONS):
+            stats = selected[p][field]
+            coverage.append(f"{p.upper()}\nn={stats['n']}/{selected[p]['episodes']}")
+            if stats["n"] and stats["median"] is not None:
+                value = stats["median"] / divisor
+                lo = (stats["median"] - stats["p25"]) / divisor
+                hi = (stats["p75"] - stats["median"]) / divisor
+                ax.bar(j, value, color=colors[j], yerr=[[lo], [hi]], capsize=4)
+            else:
+                ax.text(j, 0.02, "NA", transform=ax.get_xaxis_transform(), ha="center", va="bottom")
+        ax.set_xticks(x, coverage, fontsize=9)
         ax.set_title(name + "\nmedian and interquartile range")
     ax = axes[1, 1]
-    prompt = [selected[p]["native_prompt_seconds"]["total"] for p in PRECISIONS]
-    decode = [selected[p]["native_decode_seconds"]["total"] for p in PRECISIONS]
+    prompt = [
+        selected[p]["native_prompt_seconds"]["total"]
+        if selected[p]["native_prompt_seconds"]["n"]
+        else np.nan
+        for p in PRECISIONS
+    ]
+    decode = [
+        selected[p]["native_decode_seconds"]["total"]
+        if selected[p]["native_decode_seconds"]["n"]
+        else np.nan
+        for p in PRECISIONS
+    ]
     ax.bar(x, prompt, color=colors, label="Prompt processing")
-    ax.bar(x, decode, bottom=prompt, color=colors, hatch="///", alpha=0.5, label="Decoding")
-    ax.set_title("Total native inference time (seconds)")
+    ax.bar(
+        x,
+        decode,
+        bottom=np.nan_to_num(prompt),
+        color=colors,
+        hatch="///",
+        alpha=0.5,
+        label="Decoding",
+    )
+    coverage = []
+    for j, p in enumerate(PRECISIONS):
+        row = selected[p]
+        prompt_n = row["native_prompt_seconds"]["n"]
+        decode_n = row["native_decode_seconds"]["n"]
+        coverage.append(
+            f"{p.upper()}\nP {prompt_n}/{row['episodes']} · D {decode_n}/{row['episodes']}"
+        )
+        if not prompt_n or not decode_n:
+            missing = [name for name, n in (("Prompt", prompt_n), ("Decode", decode_n)) if not n]
+            label = "NA" if len(missing) == 2 else f"{missing[0]} NA"
+            value = (prompt[j] if prompt_n else 0) + (decode[j] if decode_n else 0)
+            ax.text(j, value, label, ha="center", va="bottom", fontsize=8)
+    ax.set_xticks(x, coverage, fontsize=8)
+    ax.set_title("Observed native inference time (seconds)")
     ax.legend(fontsize=8)
-    for ax in axes.flat:
-        ax.set_xticks(x, [p.upper() for p in PRECISIONS])
-        ax.spines[["top", "right"]].set_visible(False)
+    ax.margins(y=0.3)
+    ax.set_ylim(bottom=0)
     fig.suptitle(f"Common stable clean cohort: {n} tasks × six runs per precision", fontsize=14)
     fig.supxlabel(
-        "Posthoc cohort; descriptive costs. RSS excludes resident summarizer. "
-        "Redundancy is separately reviewed.",
+        "Posthoc cohort; descriptive observed costs. "
+        "n and P/D show measured episodes; NA = missing.\n"
+        "Redundancy reviews: C = complete, L = lower bound, U = unknown; ≥ = lower bound. "
+        "RSS excludes resident summarizer.",
         fontsize=9,
     )
     save(fig, output, "tools-and-costs")
