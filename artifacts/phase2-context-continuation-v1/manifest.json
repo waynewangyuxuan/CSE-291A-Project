@@ -1,0 +1,1796 @@
+{
+  "archive_bytes": 6144452,
+  "archive_sha256": "257f39490b7125dc53f7492a93db495df0cb0ff913c5feec458415d9588bd814",
+  "audit_reproduction_limit": "Full audit remains bound to the recorded source root and installed pinned runtime. Archive inventory and raw trace inspection need neither model weights nor inference.",
+  "excluded_dependencies": [
+    {
+      "path": ".cache/runtime/llama-b11678/llama-server",
+      "reason": "pinned runtime binary; reinstall separately",
+      "sha256": "981b460a278e9a0c880cef32d6fab42785a119084456b16845304cf38c32cf69"
+    }
+  ],
+  "members": [
+    {
+      "bytes": 33520,
+      "path": ".cache/recovery/artifacts/runs/phase1-f16-s17-workspace-clean/episodes/user_task_28__clean/trace.json.gz",
+      "sha256": "d78cb54796302b41f53f6f0fef607a99a4f689929ce2c9d91a2558cf1f7c1315"
+    },
+    {
+      "bytes": 33519,
+      "path": ".cache/recovery/artifacts/runs/phase1-f16-s29-workspace-clean/episodes/user_task_28__clean/trace.json.gz",
+      "sha256": "a9cec127dbb88bfaf98f9b8db3e6270aa517582d615dc2d26dc95ac06fb6b4de"
+    },
+    {
+      "bytes": 1,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/__init__.py",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "bytes": 1556,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/__init__.py",
+      "sha256": "b86f458f03f25bc322e897b63348eef2d0480bdd4abcdd80f321d85902fcd80f"
+    },
+    {
+      "bytes": 11726,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/agent_pipeline.py",
+      "sha256": "ed50995dafa8e9678c214387ef366b4487fb1bdff52d47cfa2c20f975376ad48"
+    },
+    {
+      "bytes": 1318,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/base_pipeline_element.py",
+      "sha256": "b15f0eb72a286fdfd26f45a3ac587fd4f44063c2a49ed017d580f5f3f0d1fc34"
+    },
+    {
+      "bytes": 2075,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/basic_elements.py",
+      "sha256": "0c35aae9ae3fb8dfdbc5bc7534db51349632ac9743331234f3ee6a86583a5962"
+    },
+    {
+      "bytes": 870,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/errors.py",
+      "sha256": "1a828a45524b0e64c3e4abdab342fba721581134b7808dd00f02fa5bc5ca52e1"
+    },
+    {
+      "bytes": 2421,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/ground_truth_pipeline.py",
+      "sha256": "acfb119e091589beafc53e98e8371088014d703c4e3f227c09732a86596ad194"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 12764,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/anthropic_llm.py",
+      "sha256": "381d91588b533fd3d78688730a4e95adf6c5d328eb4114754b43bc364d27694e"
+    },
+    {
+      "bytes": 10109,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/cohere_llm.py",
+      "sha256": "46bda8fe1df1131df7af448a435a33e469431009ab6fccab1544da849eddea1d"
+    },
+    {
+      "bytes": 11620,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/google_llm.py",
+      "sha256": "ed9c2d032733a00ea0592f561b6f612f4677aa43f70ac585a7c9741bc83104dc"
+    },
+    {
+      "bytes": 7388,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/local_llm.py",
+      "sha256": "11dae03f5abf634a6380f419ccf308c0e12cbb07af00355aaa249ff8f1b14acc"
+    },
+    {
+      "bytes": 9011,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/openai_llm.py",
+      "sha256": "009a04eaa07bbacffe4de45c4c9928b76d4a74d4119214403e22728672e2bf14"
+    },
+    {
+      "bytes": 16407,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/llms/prompting_llm.py",
+      "sha256": "e3ddbb7bb8e494ce5840f5dd51f7ad3b5e52bf7c08178e177903214231fa140c"
+    },
+    {
+      "bytes": 7114,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/pi_detector.py",
+      "sha256": "9008a2c063ed5cf826f4de23468d4f78369b127782d398a4e5933561e746ecb8"
+    },
+    {
+      "bytes": 1867,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/planner.py",
+      "sha256": "b5bb490fb3e88ebcc1f995c87b8bdf438419bc67b06ae8d3e812b9fcb3ee851b"
+    },
+    {
+      "bytes": 6624,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/agent_pipeline/tool_execution.py",
+      "sha256": "96842ef579714cdc7f854bc13d4bca2be0c27897abc29dad2e1ba33ce3b11bdc"
+    },
+    {
+      "bytes": 3400,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/ast_utils.py",
+      "sha256": "89799be22b4775764ed48c924cbbb5d91af50c8589fea761275cfc185ab9cd7f"
+    },
+    {
+      "bytes": 493,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/__init__.py",
+      "sha256": "e5f2a950166c3ef6974ce8f8fcb7ab7dd33a6cd3496205b10c7bd907aa4287b6"
+    },
+    {
+      "bytes": 1326,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/attack_registry.py",
+      "sha256": "cdbfefa137485531fa3ff33f3235b769d5116b4a1a4544b0fe48bffe212aafe5"
+    },
+    {
+      "bytes": 6329,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/base_attacks.py",
+      "sha256": "d962c68a8a6cd41c33eac0a2fd27fe38d77dfb3e2f85425b2c2fda63c920b62b"
+    },
+    {
+      "bytes": 2864,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/baseline_attacks.py",
+      "sha256": "0e3f3cec2173524989d67bd3d934d032774ad3fc5995969c9565613efaa21c6d"
+    },
+    {
+      "bytes": 4540,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/dos_attacks.py",
+      "sha256": "160aa9604ce31cd3e54ecb06d9ed4acc770066a0dedd11d0742f6205d6077859"
+    },
+    {
+      "bytes": 6222,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/attacks/important_instructions_attacks.py",
+      "sha256": "519f24e0b9d72f43343d665679adacc33758b50cd1b586a81fa53fb098dcfe71"
+    },
+    {
+      "bytes": 6880,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/base_tasks.py",
+      "sha256": "08d3a4646d1a250968045b0f933803335650a4ed04c9d2387b17d08b1e0427c5"
+    },
+    {
+      "bytes": 17743,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/benchmark.py",
+      "sha256": "eb74af7595194314ab54889b4ca7653f7f60b101e81167c035e384eeb2378163"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/__init__.py",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "bytes": 348,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/banking/__init__.py",
+      "sha256": "06dbcff8dddf069419eb0bc4ff7ffaf45c38fc6d0f5ac978d76da47b03700ac3"
+    },
+    {
+      "bytes": 15309,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/banking/injection_tasks.py",
+      "sha256": "fa2dedf8e66c95ffadb54f5a26648728b08c56f302858de4ee9a5cc0b3891618"
+    },
+    {
+      "bytes": 1093,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/banking/task_suite.py",
+      "sha256": "c58ec73db16f713a16aaec787dac45856e546f4d95be84ab6a4bed9bc12613b6"
+    },
+    {
+      "bytes": 19450,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/banking/user_tasks.py",
+      "sha256": "37af838194f001af80cc040315bcb2d69d0112324d424f9a323473b41b317f82"
+    },
+    {
+      "bytes": 334,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/slack/__init__.py",
+      "sha256": "711f6ab4ef9cbe2ca5f4ba24cd29ad0d749117572716dcd8ec2d06416ea1def1"
+    },
+    {
+      "bytes": 9144,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/slack/injection_tasks.py",
+      "sha256": "d5775da1689e13192b665837e72cee88ed76f622e9b998e9def18b700fdc5afc"
+    },
+    {
+      "bytes": 939,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/slack/task_suite.py",
+      "sha256": "bdc6798e8ef83a54e787af80ed44f94e4be8f24aba2eaec2103e3120958c3670"
+    },
+    {
+      "bytes": 26012,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/slack/user_tasks.py",
+      "sha256": "25e43a0c58109765da090aa2f01bfb0892aaee70ca1622028074d7b49443a57b"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5137,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/banking_client.py",
+      "sha256": "0e4273f521db7ff6d5e7f7f552e917b11940102abd932aea8a2998b517441b42"
+    },
+    {
+      "bytes": 10237,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/calendar_client.py",
+      "sha256": "5d551339fb87237dd1414a003b26f4f851dbdd2b0826225025e44f16420add22"
+    },
+    {
+      "bytes": 5577,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/cloud_drive_client.py",
+      "sha256": "19376d95731c46477037986319bc8522b4bc96f4924e730b11906df23fc00b93"
+    },
+    {
+      "bytes": 10235,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/email_client.py",
+      "sha256": "782adb70c81ec765919ae835494fac163dbb46f21ef46f6dcf18eab390b5e294"
+    },
+    {
+      "bytes": 435,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/file_reader.py",
+      "sha256": "09438864a1e1ac6564df3e4f7eb60a9a224de2ef8a92c4eb4899f7768ce49d6d"
+    },
+    {
+      "bytes": 4586,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/slack.py",
+      "sha256": "c70dbc7b3356e93a1c2bd4e78700859ea58b36adbf8169e51b03f355b0a5fe69"
+    },
+    {
+      "bytes": 15177,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/travel_booking_client.py",
+      "sha256": "ad6b3441a38a1ff4bdc7227a15fb9ed764a7906baf2f75902bdb70f2100f69ba"
+    },
+    {
+      "bytes": 3422,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/types.py",
+      "sha256": "691ed3353bd04e9f8233c4f70901daefb564e56209a8946f516496520aca3c13"
+    },
+    {
+      "bytes": 1978,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/user_account.py",
+      "sha256": "f097c4b2b6cd6784272987d8d37dd7cc5d599620d64b371f7c2af8e65d7ad673"
+    },
+    {
+      "bytes": 1436,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/tools/web.py",
+      "sha256": "246cc534a939ade2864bb62441d8452de7a840d007147c22391ad07bff91594c"
+    },
+    {
+      "bytes": 341,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/travel/__init__.py",
+      "sha256": "bd0bf8a57c39846c9476adc60be5c870faba09dd497254c2d4520bea21ab3bba"
+    },
+    {
+      "bytes": 12604,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/travel/injection_tasks.py",
+      "sha256": "9252be834b0ae0e28fe06744e052987d71d8ad3666b8d0b1f65f2875f998fca8"
+    },
+    {
+      "bytes": 3127,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/travel/task_suite.py",
+      "sha256": "a2b58f094bd61a79e245ca74c94d9a3d62cc6bc744e5ee21bdadabb43960ba60"
+    },
+    {
+      "bytes": 76962,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/travel/user_tasks.py",
+      "sha256": "757f0e28208f92c2082e016469654524cb1120ec10928ce229da15fe32f6d3ee"
+    },
+    {
+      "bytes": 362,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/workspace/__init__.py",
+      "sha256": "b50429a079625b039389dce1063d993e38d18213ace046dffa65a735e73d08f9"
+    },
+    {
+      "bytes": 10615,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/workspace/injection_tasks.py",
+      "sha256": "03e0894ffb544a79fd0bfd2c62cc5f90b19a2b1d429068d800239bfd020b6dcc"
+    },
+    {
+      "bytes": 2199,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/workspace/task_suite.py",
+      "sha256": "96fa51ab20f03c30cd2d7bc754b76d717ddbd68bdf39adc85f0e92fc4d2c7ec4"
+    },
+    {
+      "bytes": 55415,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1/workspace/user_tasks.py",
+      "sha256": "d2a550b812b7f40ee2dea17ac19d44f2dd063d103524118216b563eca6e44171"
+    },
+    {
+      "bytes": 69,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1/__init__.py",
+      "sha256": "6afde4c3d03f2535eaf4b7764f6bc35864fe748c2e89b4673e952c2665813b71"
+    },
+    {
+      "bytes": 73458,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1/travel/user_tasks.py",
+      "sha256": "de8746e57fa85a5ee3ec9e4e6d66316c7c33e166e51404ffb64709b4458b9ae6"
+    },
+    {
+      "bytes": 307,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/__init__.py",
+      "sha256": "c12b7d8faa09c773e1432f680c55d2272a21609b8a8460844c0d4f313483e022"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/banking/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2751,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/banking/user_tasks.py",
+      "sha256": "d7858d3f9a573fcc334d19d4aa63ba92867cd8d5b99e2d102f7c60840fd42b81"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/slack/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 11114,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/slack/user_tasks.py",
+      "sha256": "d63bace385d0f341cb3d20bbb698a3d1530d7eb6e346cc65d04e4b7ea255467d"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/travel/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 2995,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/travel/injection_tasks.py",
+      "sha256": "23f325aa0821c7982991657588ee0b58057423559e97d6ebd6febc8274b5ac1b"
+    },
+    {
+      "bytes": 4257,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/travel/user_tasks.py",
+      "sha256": "356e46470861de40172a252e92149a2396bca3f66cfcadc0e5a4450fe11c979f"
+    },
+    {
+      "bytes": 8010,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_1/workspace/user_tasks.py",
+      "sha256": "76da20246f658609a96d95dc206ae7f58785cab5b1f100f76d367c8e4b6fc7f9"
+    },
+    {
+      "bytes": 201,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/__init__.py",
+      "sha256": "2a9e4756075bf0f0db19525d86dec24c98df7ac7a1f5e7fb239a5d438fd6b720"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/travel/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 5267,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/travel/injection_tasks.py",
+      "sha256": "d8688a8896736e4807b649340b84af65eb7b36f34d082073690333445a410b39"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/workspace/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 8339,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/workspace/injection_tasks.py",
+      "sha256": "3ffccf1e54362377a3d02955010b041a572c64aa209bb3e8b70c1fe5fc76fdad"
+    },
+    {
+      "bytes": 5395,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_1_2/workspace/user_tasks.py",
+      "sha256": "ff4e1b65f10346ba167d44b3236f4fe10fbb2066d6e2a22c4edc8b243d0f0a53"
+    },
+    {
+      "bytes": 365,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/__init__.py",
+      "sha256": "cc643d412ba5aea5dfe7896a130af95d05740bcc62ff9df97835ed66786b7498"
+    },
+    {
+      "bytes": 15207,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/banking/injection_tasks.py",
+      "sha256": "3e678ad165f911dbc16c8307de761dcc15da274716bec7ac0d05db167ec2c311"
+    },
+    {
+      "bytes": 3377,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/slack/user_tasks.py",
+      "sha256": "36c51c6fd744301ed5dd9b654f02aca504af50df827453d1754862ed6201fcc2"
+    },
+    {
+      "bytes": 2048,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/travel/injection_tasks.py",
+      "sha256": "15b8ccee487223bfc6afc58cf05591e3a96fb668eee39d7d47ac2fd98f5173c0"
+    },
+    {
+      "bytes": 5037,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/travel/user_tasks.py",
+      "sha256": "a563163efea5e723e4fbbafae66fca33e6b743e50f6c25865167dc0663615ef9"
+    },
+    {
+      "bytes": 17855,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/workspace/injection_tasks.py",
+      "sha256": "d11a9a4aa86085a1b0e8cea20652dd20f903adedfc6065175a0ead858c29e4a3"
+    },
+    {
+      "bytes": 8951,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2/workspace/user_tasks.py",
+      "sha256": "6b21b84053d1ac1703674e75d75dd4986e489d3434fcf60e8707b96114ab03bb"
+    },
+    {
+      "bytes": 79,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_1/__init__.py",
+      "sha256": "e092b155d26104e080e15ccb1747fdc0365be0b318475886337e4089d9484739"
+    },
+    {
+      "bytes": 4361,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_1/workspace/injection_tasks.py",
+      "sha256": "5a30d439850b58cfb834840bdfe7bbdf4405859bb1899e59ef476f29156078e8"
+    },
+    {
+      "bytes": 132,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_2/__init__.py",
+      "sha256": "12ca1e18055f78ee067cc25e94cce459426ec744b70edd4a335aca4d5df2f157"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_2/banking/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1945,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_2/banking/user_tasks.py",
+      "sha256": "f3b8417c51b7fe33c0f85571d543a64811f6ef3e4ab9c7ae9568834db66064b2"
+    },
+    {
+      "bytes": 74,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_2/workspace/__init__.py",
+      "sha256": "f79fffc92bb4655f4c3a575a56ec8e19c1c1979618bed8e70e43b49ea58ca689"
+    },
+    {
+      "bytes": 1452,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/default_suites/v1_2_2/workspace/user_tasks.py",
+      "sha256": "4873a5c1ba3be813cff5f85e6f921f92f7b3a90e21d2d412e043bcfea696de9b"
+    },
+    {
+      "bytes": 12627,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/functions_runtime.py",
+      "sha256": "3c67f71eb8a7f15d2a15fe9595d84218c5e6868d95fd71d1cef679cd2192d0f7"
+    },
+    {
+      "bytes": 10004,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/logging.py",
+      "sha256": "74d46f7ff3e3eb45b1fae7a025ca0f0dcc4b2e125533927748728c81ae02ce50"
+    },
+    {
+      "bytes": 5008,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/models.py",
+      "sha256": "004bbe91e78660418de9426fa79b3c8862e0b02ab20bb480de5c60679122aea5"
+    },
+    {
+      "bytes": 0,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/scripts/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 10333,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/scripts/benchmark.py",
+      "sha256": "084c76adf43f70a98e3ec329caa73c86b8838bb899c9bae3066f12373fd1e27f"
+    },
+    {
+      "bytes": 2591,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/scripts/check_suites.py",
+      "sha256": "7806527357e126d54fa88a2a0ef2eec3f7b6ffefca90f63c179012dc51d91ef6"
+    },
+    {
+      "bytes": 280,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/strenum.py",
+      "sha256": "ac76fd07924a27fc42c33e626c77ed93ea48e9f7d4effc1548b8b908b166737f"
+    },
+    {
+      "bytes": 374,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/task_suite/__init__.py",
+      "sha256": "6821364aecf7c72451e36fde92974188e221e71b19936659795d9ff771718406"
+    },
+    {
+      "bytes": 3143,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/task_suite/load_suites.py",
+      "sha256": "e9c97813ed8295f25526733df044e9adf8ba18567eaeec3455591c4fbc1caa12"
+    },
+    {
+      "bytes": 3526,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/task_suite/task_combinators.py",
+      "sha256": "a225f427c006b2fd814df86c47225ce9193d51857e3f14e69c8a56ee49116df1"
+    },
+    {
+      "bytes": 19818,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/task_suite/task_suite.py",
+      "sha256": "2e69da06f7e150dd6d238c53a74845b56eebeb224e07f694e1051a6e0c6a2bc1"
+    },
+    {
+      "bytes": 3490,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/types.py",
+      "sha256": "207b688794d5e214099c00b0dff3a03429f8f3632fcbbdafeac291dc190fbfca"
+    },
+    {
+      "bytes": 2597,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo/yaml_loader.py",
+      "sha256": "73443ec93c140dd2365d1c093f983729dca25075ee39e99047fa6c3d22ad9194"
+    },
+    {
+      "bytes": 5153,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo-0.1.35.dist-info/METADATA",
+      "sha256": "040debfb631300ae585218cce787d82fc93010affc9beddcfe7682d0fae24a7d"
+    },
+    {
+      "bytes": 1161,
+      "path": ".venv/lib/python3.12/site-packages/agentdojo-0.1.35.dist-info/licenses/LICENSE",
+      "sha256": "4285a071f2d382338e52b4fb0a186d952984a34d43a33d8872e1a1d8cb43401e"
+    },
+    {
+      "bytes": 6415,
+      "path": "artifacts/phase2-context-continuation-v1/audit.json",
+      "sha256": "fa943dd77267324b2b73a6ff0eecf0a6cb5d45cd5eccc710b649e264d71598d3"
+    },
+    {
+      "bytes": 4992,
+      "path": "artifacts/phase2-context-continuation-v1/budget.json",
+      "sha256": "d1ffb2f0281c4bb6ee30d6a1d8632accadf03b8001ab0b926749eaa270493022"
+    },
+    {
+      "bytes": 595,
+      "path": "artifacts/phase2-context-continuation-v1/configs/runtime-f16.toml",
+      "sha256": "f27aa4875d0bd3268897e880d10155f391b7bdf2ed3a34803ecb745645b9c6bf"
+    },
+    {
+      "bytes": 603,
+      "path": "artifacts/phase2-context-continuation-v1/configs/runtime-q8.toml",
+      "sha256": "2cdd0b6952c48138021c87a75903091dd978fa99769770e73761ad74fdf2ce83"
+    },
+    {
+      "bytes": 602,
+      "path": "artifacts/phase2-context-continuation-v1/configs/runtime-summarizer.toml",
+      "sha256": "43f7c90a05af29caa513fd32175cc4d998a1882234d44cb0264ec3f2a0bc8fb3"
+    },
+    {
+      "bytes": 82879,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/context-requests.jsonl",
+      "sha256": "6b4e60cd70665ab99a56915d3ebcaac9d52ed8d642dbb939b399a8d1544e5721"
+    },
+    {
+      "bytes": 48284,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/prefixes.jsonl",
+      "sha256": "ab3bb90996c2e10560fc7212ed9a472e8dbb4cb0b3bc2ca6e6c8cc1d4fb94935"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/receipt.json",
+      "sha256": "6737d4c3597bde5de8cd867a05190f136ecd13cc25b3b24dec1b7efb263282fd"
+    },
+    {
+      "bytes": 61057,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/requests.jsonl",
+      "sha256": "b81562091e878b11484908b520fceab72005243bce7d46c2e0a4868351fe9dfa"
+    },
+    {
+      "bytes": 1835,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/result.json",
+      "sha256": "8a0cb85cce182668e01e2408f900a3de4f8e14f65853995276c89767b021c8d7"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 352781,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/start.json",
+      "sha256": "bb49178c03405dab1518f132231fb4348533a9af7e4c5c94f373e6e211f84db9"
+    },
+    {
+      "bytes": 698117,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/tool-steps.jsonl",
+      "sha256": "b7846ecec650fe7b76880265f58eda0cc5b3dbfeb83afc803c7f047b304a59f8"
+    },
+    {
+      "bytes": 451181,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-full/trace.json",
+      "sha256": "c5eac56ca3fbc4163295ad0834a2fe9c1876d49086559834b605cba471fc74d6"
+    },
+    {
+      "bytes": 78119,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/context-requests.jsonl",
+      "sha256": "30bca6cdfef8b812d48c5ec886fe8daeea8c95fbc2c2d6d3f75ef81f36ab5b83"
+    },
+    {
+      "bytes": 48066,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/prefixes.jsonl",
+      "sha256": "e900852023de353dad5c51e6bfc2eeb508d3b6aec94170a39be21e695525fca8"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/receipt.json",
+      "sha256": "c9851948e87b3d7796e4540eddbd2f464e82efb840fc946595617bee1188db72"
+    },
+    {
+      "bytes": 55829,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/requests.jsonl",
+      "sha256": "dcae95cd4bf4031cab3e3c2279b371828e3b342764bfc6a57a4c1ffcef0dcbc4"
+    },
+    {
+      "bytes": 1836,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/result.json",
+      "sha256": "e6619b15b9628f807eeca083b043c26b8648e40d9fc997221bbee4ced61b4295"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 351251,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/start.json",
+      "sha256": "2caa27adc315ce81009d7a3f6eff8a0b5223911009b76fefd5466b5500ccf339"
+    },
+    {
+      "bytes": 700495,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/tool-steps.jsonl",
+      "sha256": "f041353b3bcbd956d783d0c26437710e570f96d9d86be8af87a0c66c3611007b"
+    },
+    {
+      "bytes": 454732,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-summary/trace.json",
+      "sha256": "1698af0d51aed8ba3fe8190cd00438e328684bf3ec08507133495ab2ba53b0be"
+    },
+    {
+      "bytes": 35725,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/context-requests.jsonl",
+      "sha256": "b609f61a042cb9f7f6de171026abdb9f1a2097892f399a2fddc65e3e656c2f09"
+    },
+    {
+      "bytes": 19728,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/prefixes.jsonl",
+      "sha256": "d78e3a211c358bd9fc17b6b7f5aa1c710d2500c45df148818d5a72ef71b71da6"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/receipt.json",
+      "sha256": "17f8127be1173618967c0eeee71032a1078aeb916797d53eea6f444c6d028837"
+    },
+    {
+      "bytes": 34776,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/requests.jsonl",
+      "sha256": "6971defdbfa63e6a8405fa5eda983c25e325634227fa3c434bbac5fca72ff879"
+    },
+    {
+      "bytes": 1713,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/result.json",
+      "sha256": "4bd298641fa087ba94937d34c8be67df04c4594a84a45b744cd18f4a2b0b9a12"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 348378,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/start.json",
+      "sha256": "80e2644790388f6bc9e9611636a101443cb900d67195525129cb51f99f05ca1f"
+    },
+    {
+      "bytes": 235256,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/tool-steps.jsonl",
+      "sha256": "063eea288d6b1275a1cdde1660f1772d407d42e5f2a1fdba282e964a2e701a82"
+    },
+    {
+      "bytes": 450386,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed41-truncate/trace.json",
+      "sha256": "0ea19aebf08774c1e05a15c349a48e064d5539f338769d6337f6917869e3a907"
+    },
+    {
+      "bytes": 82877,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/context-requests.jsonl",
+      "sha256": "de25d644231a64f545a3379c51fae893ff70b95e39eff5c1908c0b6da42ecc78"
+    },
+    {
+      "bytes": 48284,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/prefixes.jsonl",
+      "sha256": "81b0297862818cd424b83c5e59bc8cec7ac66fabaf2f92fd70434e80eaf28bc9"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/receipt.json",
+      "sha256": "fdac5beeeb002d7915f23cfcfc77322b500e57d078d95c65d5cf7de8276611a3"
+    },
+    {
+      "bytes": 61058,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/requests.jsonl",
+      "sha256": "5fe54df907635f7a585baebb0df4a0ecb0aec89a1c53eb9004060234b5432f3b"
+    },
+    {
+      "bytes": 1833,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/result.json",
+      "sha256": "662d5343c27952776db8bd2834278d9c1df6e61eb4e11e9038d6cae83fb3cb0d"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 352781,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/start.json",
+      "sha256": "987fcbab1e4cd860ebb2eebcbb42f3a3e0adcc5157989d0dd66796d2ce8b286e"
+    },
+    {
+      "bytes": 698112,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/tool-steps.jsonl",
+      "sha256": "d9de3242ef545b6e8e86806588242e0447bcd1e04f9c9caebe19bc851519475d"
+    },
+    {
+      "bytes": 451181,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-full/trace.json",
+      "sha256": "613cf71f73e55a6f270b944e9c11a8f606c28679756956e9bb36e380a58c3117"
+    },
+    {
+      "bytes": 78122,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/context-requests.jsonl",
+      "sha256": "9cd57ea1875b0298b2f098ba34920bfff8d87e349e2117082175e74fa002ed9f"
+    },
+    {
+      "bytes": 48066,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/prefixes.jsonl",
+      "sha256": "3f889793a1de549613ab5a7272191a9a39e0031531c1117829f6b146b7b887c2"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/receipt.json",
+      "sha256": "bc1caa00addc45302e96c5c853baa780050500951feab08b92f621bd32d06843"
+    },
+    {
+      "bytes": 55829,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/requests.jsonl",
+      "sha256": "103af95448be3e1b879535c86179b6b22e4e28b60e594cd1c78b13b87df8fdc7"
+    },
+    {
+      "bytes": 1836,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/result.json",
+      "sha256": "1183445853bd9385913530b71152bdae827626d82bf3a71f5f43008845ed7bd3"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 351251,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/start.json",
+      "sha256": "0d9b2f951c30e0527464251bc10e96494f6c0a0b07ffb6fe9121a9eed8531a9e"
+    },
+    {
+      "bytes": 700498,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/tool-steps.jsonl",
+      "sha256": "03b5012e32ca0666c749f3e6e35f0b41d683fb81986e85e8b3bd7ab0de613d1f"
+    },
+    {
+      "bytes": 454732,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-summary/trace.json",
+      "sha256": "d60c02b9a119bea318100ceea4dc4c6a412767eb767a7aff0ad6a81e77926146"
+    },
+    {
+      "bytes": 35724,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/context-requests.jsonl",
+      "sha256": "92cb86784691f7436318f0e1d5fdb2d3112e2060e2bae27bc49d7acc174df37f"
+    },
+    {
+      "bytes": 19728,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/prefixes.jsonl",
+      "sha256": "14af2d5b8b759dc5c91b4d894b1c0f2f7fe81855e64839f0c0bb0b4984d4f1c8"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/receipt.json",
+      "sha256": "12776353822fb1cf98fe237d2a4bbd84467b4f7ea0b116eb9835bd65a495ffe6"
+    },
+    {
+      "bytes": 34770,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/requests.jsonl",
+      "sha256": "bd2e5c3f037e5e0044a1f0a1127e33bad3facf013e79aaecfebcde4845cb0101"
+    },
+    {
+      "bytes": 1714,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/result.json",
+      "sha256": "9583eccc154965455163cf468fa7f81f6bb51f48ff8fd8b7bb996e46aa3c33e6"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 348378,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/start.json",
+      "sha256": "e9a6058def38e29dd43c2a16216479cd9c8c83fcfc18725d154b21d7aa84a9d7"
+    },
+    {
+      "bytes": 235256,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/tool-steps.jsonl",
+      "sha256": "e6586467e3af6215a5a41df14da57b4709bf2433412c06b34e14fc2ecfec035a"
+    },
+    {
+      "bytes": 450382,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed53-truncate/trace.json",
+      "sha256": "5ec7eaa223141f8c220996d93732cfde1bca96d748358f383c6f34b36080dcb8"
+    },
+    {
+      "bytes": 82877,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/context-requests.jsonl",
+      "sha256": "9ca0a0255d25cc21b5979095cd7a7cb354872506de36140663851bcd087e54d0"
+    },
+    {
+      "bytes": 48284,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/prefixes.jsonl",
+      "sha256": "2a8e7288d1204483352760b6ef673fd319ccc5cfc3052c9ff0bd3e8e85c6172b"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/receipt.json",
+      "sha256": "e8b0af2a08c1fb72219ef76f4043cdcc866d7cbed72d630f0771b7021dbeb84b"
+    },
+    {
+      "bytes": 61059,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/requests.jsonl",
+      "sha256": "87da14eadb77293689067e68c8b20209dc2b3836dc6ff0c6252c4f11f5c16fef"
+    },
+    {
+      "bytes": 1835,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/result.json",
+      "sha256": "4f4023425d1117b91585d3a2313ae5e9a7ec79f5d1f8e90f169f4c710f9eaa4b"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 352781,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/start.json",
+      "sha256": "bc2e6ee6462d0b9a77dd386c098f3421a64b264ddcddaa3b1a145c005fef6472"
+    },
+    {
+      "bytes": 698118,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/tool-steps.jsonl",
+      "sha256": "88dbdd257cb5c8fad0a747732e9a977d944e1fd304cf78cb5f40bf3e18b6b14a"
+    },
+    {
+      "bytes": 451180,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-full/trace.json",
+      "sha256": "e68eb71942b57f96b2ac2edfcd254a87e5577494a11cb71cb61cb55d7e0c01a6"
+    },
+    {
+      "bytes": 78121,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/context-requests.jsonl",
+      "sha256": "b89d4adda0d26ad19222d563c8a38c38086261b8c3c634a19ea8b6a85742056c"
+    },
+    {
+      "bytes": 48066,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/prefixes.jsonl",
+      "sha256": "85758b870a7056127099557bcd51b590ef5148cfb67068437d5e1d13c671c8e8"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/receipt.json",
+      "sha256": "e85d10045fb6ef4b67d70a1d1db6ab7872ab79816bc543053882a4bad651437c"
+    },
+    {
+      "bytes": 55832,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/requests.jsonl",
+      "sha256": "3e451f8a8edd92fec932db2d862734b299148e12fac9ac0cf524f4904fd30316"
+    },
+    {
+      "bytes": 1836,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/result.json",
+      "sha256": "8a298f478496d252e3371b1de88b65c03ddb6330f0350869476b86c0a3c06594"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 351251,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/start.json",
+      "sha256": "678fb7c571d2d6a7796943d463bea87dc6d43a0734b20bf4bce1dc22c164592b"
+    },
+    {
+      "bytes": 700497,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/tool-steps.jsonl",
+      "sha256": "e4c2183dfe80b6e978a50ad294704a607596d32604095fd6c0e20fccc2f83e65"
+    },
+    {
+      "bytes": 454732,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-summary/trace.json",
+      "sha256": "e0e6902ccb0371b10886e2fd63e45186bc99b352c71e08fe43ad19ce3ec011aa"
+    },
+    {
+      "bytes": 35725,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/context-requests.jsonl",
+      "sha256": "3273d91ac772404af0fc06f2f79ea81efceb772fdfc149c4c7eec880a792a849"
+    },
+    {
+      "bytes": 19728,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/prefixes.jsonl",
+      "sha256": "da9e649687c677041f3956d34b601b634c83df404491c4ec37daf1f15e19ee48"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/receipt.json",
+      "sha256": "67fb2556b58ce1a09bc32b486ca20e4ac0fe4a9298042f8cfe115eec53fc9aae"
+    },
+    {
+      "bytes": 34774,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/requests.jsonl",
+      "sha256": "91eed85fbbc1167dbb65461bf600d8edb9aabcaa1cffcfb812da393d55b73c6f"
+    },
+    {
+      "bytes": 1713,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/result.json",
+      "sha256": "874069d13830ce590687ab0ec40d5900b2382930c310091f593743b8b672028c"
+    },
+    {
+      "bytes": 29817,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/runtime.json",
+      "sha256": "c997781ef7c4ed7ef5b17be9fbc861f8a8694acf909fc9466ae01b3e31d43c7a"
+    },
+    {
+      "bytes": 348378,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/start.json",
+      "sha256": "927b9c89a99e13e154ff43d71ff7a32ac36377f4d439b2a53fe2e4da9a0e6073"
+    },
+    {
+      "bytes": 235257,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/tool-steps.jsonl",
+      "sha256": "69df61a0f9d73d7af15430970df45e8be1932af1812adf61cb22e729aeafe3f1"
+    },
+    {
+      "bytes": 450383,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace14-f16-request3-seed67-truncate/trace.json",
+      "sha256": "5a518917a53e27801115020edbdd6ec019000412bc0df398e782e154bd360dba"
+    },
+    {
+      "bytes": 79918,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/context-requests.jsonl",
+      "sha256": "a5cc9f9c4954e06eca3c98ed3d5c83d3c59db065800c04fb28a79d7d16f75c93"
+    },
+    {
+      "bytes": 41392,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/prefixes.jsonl",
+      "sha256": "3b745aebe0a93b5120ec1318732b047dd0290595e3174b5acd679cf27a53e5a4"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/receipt.json",
+      "sha256": "fab93624ce61eb973df9d8cf7ad6e7bd7a129a55e2496ce1e62c3aaf23d7f319"
+    },
+    {
+      "bytes": 57651,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/requests.jsonl",
+      "sha256": "453143111b6959f7c6b7d8dbaac979017737a180f80692e77ae8720644007c8a"
+    },
+    {
+      "bytes": 1671,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/result.json",
+      "sha256": "d17f7b3b09879e02c67c77698681eceaf06278990cce6f3e06716bce50463a22"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345502,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/start.json",
+      "sha256": "c750d2d9c0271b05dfef1cb9f86b67e5c6d29642dac385f74d18334bd168263b"
+    },
+    {
+      "bytes": 699482,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/tool-steps.jsonl",
+      "sha256": "71af989a039fbd987aa5e94b731b016e6a29e31d10935381d778efd06f7a69e1"
+    },
+    {
+      "bytes": 450218,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-full/trace.json",
+      "sha256": "e9beb8d58773aa76cd9f1f50971c7789db1c2fa136bd7b1c09e55a3ed17f69aa"
+    },
+    {
+      "bytes": 222934,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/context-requests.jsonl",
+      "sha256": "a91316b5df07f4e295682a26759216163b347a062a95be93d715ce48ed2a1417"
+    },
+    {
+      "bytes": 137336,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/prefixes.jsonl",
+      "sha256": "7e5a5ed64a16f8ebe8b791ef4fa46e8caa488b202fa2a3c912f23125db2b7d73"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/receipt.json",
+      "sha256": "afb797b0e2a184c034a3fd87090d139d0de1d8ff1812abf0c746c412020b8d9b"
+    },
+    {
+      "bytes": 199223,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/requests.jsonl",
+      "sha256": "3b24134a4d762ede6c31d947f61c33fd6b60dca7d0410c67c515b563aaf015d0"
+    },
+    {
+      "bytes": 1678,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/result.json",
+      "sha256": "bb478e1cb7d0e5d4256a970a5dbd4a5433885e7332995b55c728a33245ac8c27"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345145,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/start.json",
+      "sha256": "de1006d2b0bd74f2b90735db8a0f22eda7d40ce81ff310d12a53100e5c04f3a6"
+    },
+    {
+      "bytes": 2327080,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/tool-steps.jsonl",
+      "sha256": "30edc7e6a41344a1141fc4c7ec1c68737725156a0e17ac6df526a501dd070efb"
+    },
+    {
+      "bytes": 466057,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-summary/trace.json",
+      "sha256": "7ae51a34f36c96459e87791efde7516e69f3c3900d22d9d3163413103de5006e"
+    },
+    {
+      "bytes": 150433,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/context-requests.jsonl",
+      "sha256": "a3ee1071423ecdc89b0a04a149c6fb770d97cd05b55e17bd3864d04f9cf5ccb0"
+    },
+    {
+      "bytes": 80546,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/prefixes.jsonl",
+      "sha256": "7b378c7be645ef073d44edf3fc987df1b47d63d1ae6c9d4a984124be619cfdd0"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/receipt.json",
+      "sha256": "f988556468d8674b83a01867f6327a0cc62d3b1c4b07b7b164b43b8c6c43b393"
+    },
+    {
+      "bytes": 148967,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/requests.jsonl",
+      "sha256": "a48faf14f3b0b9f9c2f938ec86388c33176759b163dd3480401add4899f31d26"
+    },
+    {
+      "bytes": 1549,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/result.json",
+      "sha256": "7b9a9091ce62ce383fa418102ddcb3fdb49c2272c923425a28887db6e0469ec8"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 343440,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/start.json",
+      "sha256": "1379b7f26ffebd1568172d4695c7e844d04da35f21068edaa7eaea6f2f6e84a0"
+    },
+    {
+      "bytes": 1628360,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/tool-steps.jsonl",
+      "sha256": "4e8251e2f03ead867f919c20664d6578aa6254d766b3002d389634d7522a4e19"
+    },
+    {
+      "bytes": 458100,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed41-truncate/trace.json",
+      "sha256": "d9b042b5c1a949701682caaff473231f3a2e76b6bb0cb6fa07f912865eb83ccb"
+    },
+    {
+      "bytes": 80667,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/context-requests.jsonl",
+      "sha256": "d4ef30606ec8aa34cc5f390462cecdd5d73dafc46863fe757c13d2fde3dc4949"
+    },
+    {
+      "bytes": 42890,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/prefixes.jsonl",
+      "sha256": "da6e39f62a92cad4a68ab3142220507ffc0e962be28b9e453e850ac9377364d2"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/receipt.json",
+      "sha256": "c75f36b46223e5954bdc618dfbedc87ec69ec6bdee9d2f46c7ed845bcdf93e26"
+    },
+    {
+      "bytes": 57960,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/requests.jsonl",
+      "sha256": "73b5577a4764dcc1138905d18d4ac36cd3eafee618c146855dc2cd2570030a1a"
+    },
+    {
+      "bytes": 1672,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/result.json",
+      "sha256": "13cfabae0839f0d39d18c475bd17b89046438da8d1ea1110467874132c6e0ef7"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345502,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/start.json",
+      "sha256": "0dedecc01d50c558661a2cdb5bc08f5ea8f5b454cd107030e60dae8deb1dceb5"
+    },
+    {
+      "bytes": 701595,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/tool-steps.jsonl",
+      "sha256": "8011ca7402b325e5a2bf479a085b9f8d1853e530852c180f0cea39c965d94ad5"
+    },
+    {
+      "bytes": 452921,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-full/trace.json",
+      "sha256": "1683d23497032ebe95e533c265deccba9cf714713a04908d2d5c8facc7d3158f"
+    },
+    {
+      "bytes": 77146,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/context-requests.jsonl",
+      "sha256": "e5fb708a1c70c8ccb4e402eb2831b4dfab51ca89e9b683f861b0c01ff5808d2b"
+    },
+    {
+      "bytes": 39564,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/prefixes.jsonl",
+      "sha256": "7d85d1d9b21aa821c32188fc82cb201df5f3a46ebaa71f2b36c78288af5c4f3d"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/receipt.json",
+      "sha256": "e87b1a51cfd38cee4f798bcdb381587b665e1001d13b8912ce3986492ded549e"
+    },
+    {
+      "bytes": 54839,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/requests.jsonl",
+      "sha256": "b3d4af08f51a12edba753222ad1c60477fba6a47f7d80091de0e55a8ac2e8117"
+    },
+    {
+      "bytes": 1674,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/result.json",
+      "sha256": "01dca55a12d37d3933eaef507b0ff2c1b627c0f0402e4c4f56b2b3dac40e69c0"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345145,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/start.json",
+      "sha256": "5d1089ccdaa22a3b57b6e9ea489d30e825396aa8ca159150ed2be133728a4203"
+    },
+    {
+      "bytes": 700343,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/tool-steps.jsonl",
+      "sha256": "3cae5ed17f34ff3f237c247981178b6082c8d7426323da1ba8dc2c3faad14c73"
+    },
+    {
+      "bytes": 451712,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-summary/trace.json",
+      "sha256": "47bb09241e59f3f677d2fb1fbfe1f9c979725ab48a091175d48bfb4b530b8d7e"
+    },
+    {
+      "bytes": 150433,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/context-requests.jsonl",
+      "sha256": "a326c973cd6539f3b119382d9e56b6c4cf4c7b32f7455f12b7051ced2fe4b508"
+    },
+    {
+      "bytes": 80546,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/prefixes.jsonl",
+      "sha256": "ca1d654a7325c75b996c74979e334b2838c89678442321fdff307b15d1207e0c"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/receipt.json",
+      "sha256": "3473bcefa8eaef5e8eaf766ab99508fc389182449b000a38a27adaa1fc28bf8b"
+    },
+    {
+      "bytes": 149198,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/requests.jsonl",
+      "sha256": "500066ac164ca11283a7704b8b7eb0e24c757127e87858e08c76efb53704b627"
+    },
+    {
+      "bytes": 1549,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/result.json",
+      "sha256": "1d7cbbf38ebb069cc8ed1af745b9e9e46c2c257314833ee0d10975c17245f93f"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 343440,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/start.json",
+      "sha256": "b183b836341d470c720e98cd0769f2dc605e0de645043ea888485bedc51928b2"
+    },
+    {
+      "bytes": 1628362,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/tool-steps.jsonl",
+      "sha256": "85ac4e552760a871020a62db13cf8c0c41e9f653299379af8477cee0eceb6a4f"
+    },
+    {
+      "bytes": 458287,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed53-truncate/trace.json",
+      "sha256": "b9297d235679335ced6de61cf651ba7fab49f459ab412aa570315c003c0d46c1"
+    },
+    {
+      "bytes": 81420,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/context-requests.jsonl",
+      "sha256": "bb0d4cfa8724bdf537dee52389546c58b19173a41986f8fe3adf4ca86b7fac97"
+    },
+    {
+      "bytes": 44398,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/prefixes.jsonl",
+      "sha256": "dbdf78d99093f0ad2a491d76a168b883961a0d8d6358f965e13d567cce4d0a74"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/receipt.json",
+      "sha256": "34dacdbb94e0b403affdac9ea99315ab3f3f5682b454517742b786fd241dbab6"
+    },
+    {
+      "bytes": 57643,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/requests.jsonl",
+      "sha256": "cbee1da8878084c38a04f32d7edb17c5b019944a258b50426cfc2e428753dc55"
+    },
+    {
+      "bytes": 1669,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/result.json",
+      "sha256": "12c046071fbc1153a3cc43925fb003f8541945f46a2e8304c543bc260eed62d0"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345502,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/start.json",
+      "sha256": "56eaa2067128c56c1aa3109ac6b82aff6e9326d5cd9b2350798b4b2607557587"
+    },
+    {
+      "bytes": 700981,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/tool-steps.jsonl",
+      "sha256": "ef522a2f0c785250c41b96fdf4154e19293a91de5c4096bd628522adfaa86094"
+    },
+    {
+      "bytes": 451712,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-full/trace.json",
+      "sha256": "f4c1a5ace1fdb4d524aeb46a54c71d470ce6a91cabc7b1b2cd140537641fb80c"
+    },
+    {
+      "bytes": 77146,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/context-requests.jsonl",
+      "sha256": "f9dd868ed6c04e540e8bb7aec61b1526908d430120f75d80e59c09899b978371"
+    },
+    {
+      "bytes": 39564,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/prefixes.jsonl",
+      "sha256": "a8b32a68157fff1c625fcc1342e0bfaedc05c4307a2d68aabbdbcf98ec2eee8a"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/receipt.json",
+      "sha256": "ba56f7fb11d489a246de4955d317939afc5bbb28cd1f62bfa40f97a5c4a58c39"
+    },
+    {
+      "bytes": 54838,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/requests.jsonl",
+      "sha256": "d019979be8de9368d46cdec1aecfa40aa5728e5b5604c25220d93c541af21628"
+    },
+    {
+      "bytes": 1673,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/result.json",
+      "sha256": "a6293e5a4025893f8c40967fc835b58662fa65dabc66679fa86ee27f98588935"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 345145,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/start.json",
+      "sha256": "0fabda750761ba39d8ae1e3d10c6564280192b7b8bb6b2dbe8ced07d54b754dc"
+    },
+    {
+      "bytes": 700342,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/tool-steps.jsonl",
+      "sha256": "cd249fd3c5d3a0bfe59805399e8e1f07216a7eb3d93063b1db7da9f11ecc6c21"
+    },
+    {
+      "bytes": 451712,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-summary/trace.json",
+      "sha256": "f94cb9f2c79797561ef33ca723a8209d3959d05b06bbeb42ae09b3c42744413d"
+    },
+    {
+      "bytes": 150433,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/context-requests.jsonl",
+      "sha256": "9627c0496a51db4cb80c8e993096c45ccd54ca3ef0f392b00771533ffdec081d"
+    },
+    {
+      "bytes": 80546,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/prefixes.jsonl",
+      "sha256": "ef1a02d23425b412184a3be73852953086f257a5a249252e66f608f07d954f58"
+    },
+    {
+      "bytes": 738,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/receipt.json",
+      "sha256": "7c4e21bb9432ebe6239c1bba4995f5ceeb737f89e112b99bd7b6111678498d04"
+    },
+    {
+      "bytes": 149060,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/requests.jsonl",
+      "sha256": "2df6d6c59927ee0242f902edb3532d47222050ed0980dbbcc3c7f94b33ac9bfe"
+    },
+    {
+      "bytes": 1547,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/result.json",
+      "sha256": "53b553757391b0c2360d4c7aac6e273b5a48b13bd19f88365084c7867cab2b35"
+    },
+    {
+      "bytes": 31411,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/runtime.json",
+      "sha256": "b333346fc27d3729544d0480faf9f76d2a8ad3562cde16a6a7cbd9aac754b9e6"
+    },
+    {
+      "bytes": 343440,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/start.json",
+      "sha256": "761af24b7a6118c009695bbb9131cc8cdbbfcdf0b18db538ca9cb344efbdfba7"
+    },
+    {
+      "bytes": 1628360,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/tool-steps.jsonl",
+      "sha256": "8e5732591a022b777ec2c1e8c1ab42aac1713569533aa88ec58fbd14b44d5d40"
+    },
+    {
+      "bytes": 458162,
+      "path": "artifacts/phase2-context-continuation-v1/continuations/workspace28-q8-request2-seed67-truncate/trace.json",
+      "sha256": "841972df4d4ed7e82d1f72e5bcbe7aa22ee21b0e9e4c4302977dfd1343bb1052"
+    },
+    {
+      "bytes": 5121,
+      "path": "artifacts/phase2-context-continuation-v1/parent.log",
+      "sha256": "8a8383ea20ece44b58955a4c1994ceb235d0bd2e12e2d710ee60ed375c0df42a"
+    },
+    {
+      "bytes": 866332,
+      "path": "artifacts/phase2-context-continuation-v1/plan.json",
+      "sha256": "03374f38879ea9685c11cde43abe6482c619bf7a57d9a31cb4cb8679bd4c26dd"
+    },
+    {
+      "bytes": 13304,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/f16/20261119T052829.193128Z/server.json",
+      "sha256": "57a14d787dfb35efe28beffedde6d87d99d59e618a8c9f7adbfb7b1b59e0095b"
+    },
+    {
+      "bytes": 29856,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/f16/20261119T052829.193128Z/server.log",
+      "sha256": "fb7b3fc74277f1f438c403313c460039fcf4c0a5a7ca471d9250b79059493b77"
+    },
+    {
+      "bytes": 13304,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/f16/latest.json",
+      "sha256": "57a14d787dfb35efe28beffedde6d87d99d59e618a8c9f7adbfb7b1b59e0095b"
+    },
+    {
+      "bytes": 13304,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/f16/server.json",
+      "sha256": "57a14d787dfb35efe28beffedde6d87d99d59e618a8c9f7adbfb7b1b59e0095b"
+    },
+    {
+      "bytes": 14813,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/q8/20261119T051649.537825Z/server.json",
+      "sha256": "d59dcdf8a7e392a3ef480910c39908744262c5ab0cbc2f5b874d3b42ac485069"
+    },
+    {
+      "bytes": 61105,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/q8/20261119T051649.537825Z/server.log",
+      "sha256": "5ded360a78c8fb0e33c9b0ba7639c7c9eaf8528f3024e038dee60fb782a19be2"
+    },
+    {
+      "bytes": 14813,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/q8/latest.json",
+      "sha256": "d59dcdf8a7e392a3ef480910c39908744262c5ab0cbc2f5b874d3b42ac485069"
+    },
+    {
+      "bytes": 14813,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/q8/server.json",
+      "sha256": "d59dcdf8a7e392a3ef480910c39908744262c5ab0cbc2f5b874d3b42ac485069"
+    },
+    {
+      "bytes": 13311,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/summarizer/20261119T051558.987346Z/server.json",
+      "sha256": "95513fdf1936b67be27dcab368bd96c3d123db448ce38ca3e83151085995384a"
+    },
+    {
+      "bytes": 3761,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/summarizer/20261119T051558.987346Z/server.log",
+      "sha256": "8d0e20bce24fc3bcc387f7d43b936501fd44485c662dd9aac1337a9ee59a827d"
+    },
+    {
+      "bytes": 13311,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/summarizer/latest.json",
+      "sha256": "95513fdf1936b67be27dcab368bd96c3d123db448ce38ca3e83151085995384a"
+    },
+    {
+      "bytes": 13311,
+      "path": "artifacts/phase2-context-continuation-v1/runtime/summarizer/server.json",
+      "sha256": "95513fdf1936b67be27dcab368bd96c3d123db448ce38ca3e83151085995384a"
+    },
+    {
+      "bytes": 7820,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/memory-requests.jsonl",
+      "sha256": "3e9b59d12cf07a5bea6daf1f7b4ef3e7da6d9c36a65878c337d73323114807af"
+    },
+    {
+      "bytes": 477,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/receipt.json",
+      "sha256": "8e1acb846b06d41d39471b6d694ad072501fe61196b3d3af7fff4862d7b96a0e"
+    },
+    {
+      "bytes": 1458,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/result.json",
+      "sha256": "3eebce49d1c170356cb5672250ac98dffb770ec5db2ef0f6508e953f9bb814ab"
+    },
+    {
+      "bytes": 29824,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/runtime.json",
+      "sha256": "8d6f55dda1b89de7be04cf9bdd505e27dc005d9d852a29f8833397143106fdc8"
+    },
+    {
+      "bytes": 9070,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/source.json",
+      "sha256": "9ee0e32a23c0ac71a994b7b12e784ba99e6036422cca9bde9ac0ff3d0813865f"
+    },
+    {
+      "bytes": 5669,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace14-f16-request3/summary-context.jsonl",
+      "sha256": "439ec8f22021a9950ba872b6ff7d9dd176e3f994323626dd815c5074ec9ed7ab"
+    },
+    {
+      "bytes": 4890,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/memory-requests.jsonl",
+      "sha256": "e9f4460ae3050061820064622fa4adb62095baa49c471eea8acda9fec9b88653"
+    },
+    {
+      "bytes": 477,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/receipt.json",
+      "sha256": "4a10c2fa11613d5db75db3508faf613ba4cec6f2fb4fab0118ea23e1f3668e2b"
+    },
+    {
+      "bytes": 875,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/result.json",
+      "sha256": "1362d7b40c98911c6448733644ec2784de0c9b6745b74130de70ecfac39669b0"
+    },
+    {
+      "bytes": 29824,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/runtime.json",
+      "sha256": "8d6f55dda1b89de7be04cf9bdd505e27dc005d9d852a29f8833397143106fdc8"
+    },
+    {
+      "bytes": 4299,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/source.json",
+      "sha256": "7cdd38a6f391c429aad152342942bb7a3dae6a530ecae062b9f7b355ee8e88bf"
+    },
+    {
+      "bytes": 3403,
+      "path": "artifacts/phase2-context-continuation-v1/summaries/workspace28-q8-request2/summary-context.jsonl",
+      "sha256": "293cf92ba9a7b11b0ee8f342d0bc0c3164d1fb7bd0cb3c30c4391e85619275dc"
+    },
+    {
+      "bytes": 966,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/episodes/user_task_14__injection_task_0__attack/compression.json",
+      "sha256": "29bbdd5f8fde885eebf6cabbf68421c39099a9eb682473cb6217b729184392df"
+    },
+    {
+      "bytes": 6139,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/episodes/user_task_14__injection_task_0__attack/context-requests.jsonl.gz",
+      "sha256": "7f56cbcfca71bee4588dd2fb384a31101177955008af8df9daae200b16e3c3bc"
+    },
+    {
+      "bytes": 6532,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/episodes/user_task_14__injection_task_0__attack/requests.jsonl.gz",
+      "sha256": "da89cd8ba3c242dab6d87ff041cb6006b03bd601ad3d7803de1609cee8813cfa"
+    },
+    {
+      "bytes": 6589,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/episodes/user_task_14__injection_task_0__attack/result.json",
+      "sha256": "740a88bc9c5061ffa0519b3167ca6194b71109559b05fb279fe78ab00052a3cf"
+    },
+    {
+      "bytes": 34544,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/episodes/user_task_14__injection_task_0__attack/trace.json.gz",
+      "sha256": "07f71d2aa573eabd2f59a4b0c755aac9a322d176348ad802f0c7a22a0c8cff34"
+    },
+    {
+      "bytes": 33384,
+      "path": "artifacts/phase2-main-v1/main-014/runs/f16-full-workspace14/manifest.json",
+      "sha256": "616a851d5109e23ed79826868b2a341edef3151fb08faf9b5aef3a93bcbb1838"
+    },
+    {
+      "bytes": 965,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/episodes/user_task_28__injection_task_0__attack/compression.json",
+      "sha256": "98ca21ec474fb4e50c360a1d186dcd69a0c32efe6c1a3a13db9d4cc1d3f079e2"
+    },
+    {
+      "bytes": 6092,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/episodes/user_task_28__injection_task_0__attack/context-requests.jsonl.gz",
+      "sha256": "c3ab0ac126579d0e9027733eb278e54333eb3b2cc05ac2d0f570cbce0685c75b"
+    },
+    {
+      "bytes": 6289,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/episodes/user_task_28__injection_task_0__attack/requests.jsonl.gz",
+      "sha256": "a454c8b93a387e25a36dc0cfb9657ab4084abfbd8b8794ae3b324b72bd4ab18f"
+    },
+    {
+      "bytes": 5708,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/episodes/user_task_28__injection_task_0__attack/result.json",
+      "sha256": "918b8c73b72f5327c9541fca3380d336ba62055d261d33e7e2a7fcaf61aee9d7"
+    },
+    {
+      "bytes": 35201,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/episodes/user_task_28__injection_task_0__attack/trace.json.gz",
+      "sha256": "23dc7ade109c7663c73082b10e953388fb68e3dfa4cf9d303bfdbbc2ce4904ab"
+    },
+    {
+      "bytes": 35043,
+      "path": "artifacts/phase2-main-v1/main-017/runs/q8-full-workspace28/manifest.json",
+      "sha256": "ed8663d4685d6860d37e90ce13a99efbf622d7ed61f6a0ab2a131860ef4fe04d"
+    },
+    {
+      "bytes": 2903,
+      "path": "configs/phase2-followup-v1/context-selection.json",
+      "sha256": "2a5c82564b523611cd7f77a63fc7bc0f1f19f0dff4a851b7caa9e4be96d4f30e"
+    },
+    {
+      "bytes": 1197,
+      "path": "configs/phase2-followup-v1/continuation.json",
+      "sha256": "fdc6502a01652ae02c23b528c143490571a15803fd86b7eb418e157ff1cad746"
+    },
+    {
+      "bytes": 556,
+      "path": "configs/phase2-main-v1/runtime-f16.toml",
+      "sha256": "0eb8db0a8c47862aea4b717b19642071cce6f01b97047480e2651452778f34b3"
+    },
+    {
+      "bytes": 564,
+      "path": "configs/phase2-main-v1/runtime-q8.toml",
+      "sha256": "804c6b1751332ac07847f58b882fe8b0176bc2697ec33ea6070785b9a5d3c9ce"
+    },
+    {
+      "bytes": 557,
+      "path": "configs/phase2-main-v1/runtime-summarizer.toml",
+      "sha256": "50a24af2639f864bed9b74a83b42883a92268d484b0c0c1513b65aee48ceaa13"
+    },
+    {
+      "bytes": 1047,
+      "path": "pyproject.toml",
+      "sha256": "bd2ec72efe95a6af96b1731d97f3000bdb2a49816c05fbd7eb2401923cf05828"
+    },
+    {
+      "bytes": 185475,
+      "path": "results/phase2-followup-v1/capability/qualification.json",
+      "sha256": "b85276bc5b0c14a4384fa3b2958fbc13e9b968af255125af3bcce2e6d50f38ea"
+    },
+    {
+      "bytes": 180831,
+      "path": "results/phase2-followup-v1/checkpoint-restore/f16-full-workspace14-request3.json",
+      "sha256": "da22001d6820695b501bc5cbba9d23017daa9d6a4f71a5c2be3f812cf8098ad0"
+    },
+    {
+      "bytes": 175758,
+      "path": "results/phase2-followup-v1/checkpoint-restore/q8-full-workspace28-request2.json",
+      "sha256": "0e5febde227aa4a94c85a2f505c9b21da21970a6e467734625683dedaa5440b0"
+    },
+    {
+      "bytes": 103891,
+      "path": "results/phase2-followup-v1/checkpoint-restore/summary.json",
+      "sha256": "c94a403812dfe7c23de79245aa1fc97ea020a213e178d43c2607acf394a0bb80"
+    },
+    {
+      "bytes": 555,
+      "path": "results/phase2-followup-v1/checkpoint-restore/verification.json",
+      "sha256": "696d613131b4b7e71110b67b3e2090cca72001e3c71fe5e96621c29b0f45dafe"
+    },
+    {
+      "bytes": 14852,
+      "path": "results/phase2-followup-v1/continuation/README.md",
+      "sha256": "a2c4fee0ff04321de4c66bc063340745ece4f37c2cac58bf609703c6ba5e0136"
+    },
+    {
+      "bytes": 33555,
+      "path": "results/phase2-followup-v1/continuation/f16-review.json",
+      "sha256": "ca230a15a13b1465faf1282f9be527a169a7f58e3af0fe72526093e37f47e036"
+    },
+    {
+      "bytes": 20156,
+      "path": "results/phase2-followup-v1/continuation/f16-review.md",
+      "sha256": "cdde96751255d69e315558bfb18fd4c725421b72f9ae95ca8061c21719ce6bcd"
+    },
+    {
+      "bytes": 28707,
+      "path": "results/phase2-followup-v1/continuation/q8-review.json",
+      "sha256": "8b290a0a34516be904805aa587ae07af3a9b785ba7889a55ae958bfccae9008e"
+    },
+    {
+      "bytes": 22192,
+      "path": "results/phase2-followup-v1/continuation/q8-review.md",
+      "sha256": "35ed763747bac08c3b4126208e1f467e7f5f9fca94c17740071bd8d79994e8c0"
+    },
+    {
+      "bytes": 75880,
+      "path": "results/phase2-followup-v1/continuation/summary.json",
+      "sha256": "5178cf943e0a8d50cff49c74182bb8ab99c08ac232475c0455fda3a6d04dcc53"
+    },
+    {
+      "bytes": 1618930,
+      "path": "results/phase2-followup-v1/mechanisms/checkpoints.json",
+      "sha256": "663c2d7e98b21b1b5568159dc0747537a3c225ae8e4061083ffe7c24f2a1fc16"
+    },
+    {
+      "bytes": 322342,
+      "path": "results/phase2-followup-v1/mechanisms/sources.json",
+      "sha256": "d22775f517e5f9a51012fc1fb15bc8524f31c088537ce9a23a8ed58a7d03cb83"
+    },
+    {
+      "bytes": 716,
+      "path": "results/phase2-followup-v1/mechanisms/verification.json",
+      "sha256": "01bba16fd589acd00541a86ccfa9386a359a47e923992bae8fcaab8166535ea1"
+    },
+    {
+      "bytes": 5162774,
+      "path": "results/phase2-main-v1/analysis/episodes.json",
+      "sha256": "b15daed4b5b64516d120873584f4623e401c16291dd10e345181ba9feccdd45b"
+    },
+    {
+      "bytes": 32002,
+      "path": "scripts/analyze_phase2_matrix.py",
+      "sha256": "576a42e2e0122320265cf78f189efb4c69c0d99d3286e234b44371e2ba4116c4"
+    },
+    {
+      "bytes": 14501,
+      "path": "scripts/audit_phase2_spike.py",
+      "sha256": "71afbe334a4d7624e5c6334ff32b162a36914046b1754eecc1b9be6d6edb3787"
+    },
+    {
+      "bytes": 18169,
+      "path": "scripts/phase2_calibration.py",
+      "sha256": "c92a27dc03d89d9cd6f8b0b956e25df1e6809f13df797ee4581f24e80a2d2a8f"
+    },
+    {
+      "bytes": 51155,
+      "path": "scripts/phase2_context_continuation.py",
+      "sha256": "94a5bebbb86a29b020274ef07ef7ec6c7773992aaac0b0b136ece77d615876e2"
+    },
+    {
+      "bytes": 21878,
+      "path": "scripts/phase2_followup_checkpoint.py",
+      "sha256": "df330f49ccb7f77495f8d875350552f81e96f484988a1bd0eb4ebab42ed042fd"
+    },
+    {
+      "bytes": 18871,
+      "path": "scripts/phase2_matrix.py",
+      "sha256": "2057cd9dc5ef509706c83571179649be090adcc3fbc4d7ca8d375e910b6c5302"
+    },
+    {
+      "bytes": 28261,
+      "path": "scripts/phase2_seed_diagnostics.py",
+      "sha256": "4d2a2d1104960de34b20c892f8321b5989f959451e7904f5227f260c7c31bc23"
+    },
+    {
+      "bytes": 37702,
+      "path": "scripts/profile_phase2_mechanisms.py",
+      "sha256": "dfe94c39016483791086943e9dcbce5a4b080ad62f87531374619f6fd530a157"
+    },
+    {
+      "bytes": 83,
+      "path": "src/agent_tradeoffs/__init__.py",
+      "sha256": "5e5a0761e699d88bf05ebef8336399fd054aa31d1291aa27ec970c2556e38641"
+    },
+    {
+      "bytes": 14678,
+      "path": "src/agent_tradeoffs/agent.py",
+      "sha256": "102235b332e4cd5c271def9180a3b4895b596df8e714122dbd01d6966e590c85"
+    },
+    {
+      "bytes": 58437,
+      "path": "src/agent_tradeoffs/analysis.py",
+      "sha256": "15136ff51b4e4d31eb49c52aea362a64e796d0482e670955d1aa98fe8f83a882"
+    },
+    {
+      "bytes": 3945,
+      "path": "src/agent_tradeoffs/artifact_io.py",
+      "sha256": "de84c7084846990f2cc3a11a4af966b925fa3ed96293834de1347a417aa3619c"
+    },
+    {
+      "bytes": 10587,
+      "path": "src/agent_tradeoffs/campaign.py",
+      "sha256": "dc9e302464448a5f2f3c910864276b2285e9e3fca32e1aba3304f2ac5331389d"
+    },
+    {
+      "bytes": 7899,
+      "path": "src/agent_tradeoffs/cli.py",
+      "sha256": "7276a16322726a7d540d0a2305c93f814c10e2432de771c6fd98f0998838390b"
+    },
+    {
+      "bytes": 7844,
+      "path": "src/agent_tradeoffs/config.py",
+      "sha256": "e52bfc9e69230cc888c9681f64090720a5bda9298839152d0e5a87d66ab2bcf8"
+    },
+    {
+      "bytes": 1779,
+      "path": "src/agent_tradeoffs/context.py",
+      "sha256": "36cb73993f625a9cd357b327a8ee2474d2fab5d1b4150fe1531c9363d15f2278"
+    },
+    {
+      "bytes": 23149,
+      "path": "src/agent_tradeoffs/memory.py",
+      "sha256": "0b8fec2a444818e138372e9b6cfcab32780a12967cf9e1c5a7077cdfa69137c5"
+    },
+    {
+      "bytes": 18155,
+      "path": "src/agent_tradeoffs/model_artifacts.py",
+      "sha256": "a002197fd519abbf66453089a6629faa6a60ea3bc5b9fa047dda25ca9231fe4d"
+    },
+    {
+      "bytes": 17991,
+      "path": "src/agent_tradeoffs/prompt_defense.py",
+      "sha256": "a9d6b67cea3f37e0c616d018cd4e839683ecc437a048f5f83eb492e7311bc3fe"
+    },
+    {
+      "bytes": 14284,
+      "path": "src/agent_tradeoffs/prompt_defense_analysis.py",
+      "sha256": "639dd03e513c0cf00e841a800284506af2a736118da503e2dac1cdfd664aee66"
+    },
+    {
+      "bytes": 1512,
+      "path": "src/agent_tradeoffs/prompt_policy.py",
+      "sha256": "3c710361f29e50d0282ddd4821ca228a87cc282739d829e012bc0783bb178f1b"
+    },
+    {
+      "bytes": 6994,
+      "path": "src/agent_tradeoffs/reporting.py",
+      "sha256": "d6a51a0f3c8c1b9b8b78fdc609ed21ac769ddf65e7212bb665ce5bb56ace0dfc"
+    },
+    {
+      "bytes": 2324,
+      "path": "src/agent_tradeoffs/request_tokens.py",
+      "sha256": "4073e4e6fa82a1dcba79edee39253a41eb31a25c165aa38a78026eb0594c60c1"
+    },
+    {
+      "bytes": 23539,
+      "path": "src/agent_tradeoffs/runner.py",
+      "sha256": "db5996abf4c73c49ebc241e9470e336c3d8fd52afb14fca8c94c487464021851"
+    },
+    {
+      "bytes": 25146,
+      "path": "src/agent_tradeoffs/runtime.py",
+      "sha256": "1c870822e951a77d2cd58dc1f0e1f990499a403d2a79b63f89e2621e55f0ea00"
+    },
+    {
+      "bytes": 22125,
+      "path": "tests/test_phase2_context_continuation.py",
+      "sha256": "2b8b94de4d51c1db23293177b7ad0aafb6635163515a5d2c752deac472289e83"
+    },
+    {
+      "bytes": 199269,
+      "path": "uv.lock",
+      "sha256": "e887e14c3d9a3444e199d0d760a2d83310611907744f1109db4e72900853ec7b"
+    }
+  ],
+  "scope": "18 real same-state continuations,2 fixed summaries,reviewed results,source snapshots; no model weights",
+  "verification": "every member read and hashed; repeated build byte identical"
+}

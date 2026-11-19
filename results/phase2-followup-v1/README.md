@@ -4,7 +4,7 @@
 
 612条新seed实验已全部采集并逐条审阅，30个原协议完整gate全部通过。576条正常结束，36条Workspace31上下文限制错误保留未知。[完整分析与三张主图](reviewed-analysis/README.md)报告稳定性、Attack@k、共同稳定任务上的工具行为/成本及评分敏感性。原始证据共30个归档、39,022,172字节，[采集验证](collection-verification.json)与[审阅分析](reviewed-analysis/analysis.json)分别记录来源。
 
-[同状态机制续跑](continuation/README.md)独立比较两个恢复状态的Full/Truncate/Summary，每种三个新seed。该小样本解释机制，不作为第二个精度矩阵或普遍防御结论。
+[同状态机制续跑](continuation/README.md)18条已全部完成并审阅，完整audit通过；两例的三个Truncate都正确作答，其余12条保留超限未知。该小样本记录攻击重新暴露、残留联系人上下文与一条终止前未授权发信，不作为第二个精度矩阵或普遍防御结论。
 
 ## 已确定的重复实验
 
