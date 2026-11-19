@@ -1,0 +1,289 @@
+{
+  "kind": "complete_repeat_collection_and_archive_verification",
+  "checks": "passed",
+  "episodes": 612,
+  "pairs": 306,
+  "blocks": [
+    {
+      "block": "seed-109-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1194649,
+      "members": 234
+    },
+    {
+      "block": "seed-109-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1209773,
+      "members": 234
+    },
+    {
+      "block": "seed-109-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1418691,
+      "members": 234
+    },
+    {
+      "block": "seed-109-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1625884,
+      "members": 234
+    },
+    {
+      "block": "seed-109-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061624,
+      "members": 108
+    },
+    {
+      "block": "seed-41-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1192384,
+      "members": 234
+    },
+    {
+      "block": "seed-41-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1201489,
+      "members": 234
+    },
+    {
+      "block": "seed-41-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1416486,
+      "members": 234
+    },
+    {
+      "block": "seed-41-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1614949,
+      "members": 234
+    },
+    {
+      "block": "seed-41-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061560,
+      "members": 108
+    },
+    {
+      "block": "seed-53-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1190646,
+      "members": 234
+    },
+    {
+      "block": "seed-53-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1210280,
+      "members": 234
+    },
+    {
+      "block": "seed-53-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1417377,
+      "members": 234
+    },
+    {
+      "block": "seed-53-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1631266,
+      "members": 234
+    },
+    {
+      "block": "seed-53-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061710,
+      "members": 108
+    },
+    {
+      "block": "seed-67-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1196852,
+      "members": 234
+    },
+    {
+      "block": "seed-67-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1201264,
+      "members": 234
+    },
+    {
+      "block": "seed-67-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1409127,
+      "members": 234
+    },
+    {
+      "block": "seed-67-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1624703,
+      "members": 234
+    },
+    {
+      "block": "seed-67-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061529,
+      "members": 108
+    },
+    {
+      "block": "seed-79-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1195749,
+      "members": 234
+    },
+    {
+      "block": "seed-79-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1210172,
+      "members": 234
+    },
+    {
+      "block": "seed-79-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1416942,
+      "members": 234
+    },
+    {
+      "block": "seed-79-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1629037,
+      "members": 234
+    },
+    {
+      "block": "seed-79-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061526,
+      "members": 108
+    },
+    {
+      "block": "seed-97-batch-001",
+      "episodes": 24,
+      "archive_bytes": 1190480,
+      "members": 234
+    },
+    {
+      "block": "seed-97-batch-002",
+      "episodes": 24,
+      "archive_bytes": 1205771,
+      "members": 234
+    },
+    {
+      "block": "seed-97-batch-003",
+      "episodes": 24,
+      "archive_bytes": 1416561,
+      "members": 234
+    },
+    {
+      "block": "seed-97-batch-004",
+      "episodes": 24,
+      "archive_bytes": 1632181,
+      "members": 234
+    },
+    {
+      "block": "seed-97-batch-005",
+      "episodes": 6,
+      "archive_bytes": 1061510,
+      "members": 108
+    }
+  ],
+  "status_counts": {
+    "completed": 576,
+    "error": 36
+  },
+  "errors": {
+    "ContextBudgetExceededError": 36
+  },
+  "full_review": "separate_pending_588_of_612_at_collection_checkpoint",
+  "archive_bytes": 39022172,
+  "source_sha256": {
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-001.manifest.json": "676d3325d99185cff397de8fd5a74e1e0e3ebd9a1dd0bf95bfd15a25ce9f9fe0",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-001.tar.gz": "542e9c8eed7df57063e802282f9b798262800325c8bca4edec33e1711b507d99",
+    "artifacts/phase2-repeat-study-v1/seed-109-batch-001/collection-audit.json": "60b0455c67e33cdc21536c637c7dd809f605c7be67e293141318bab89af0f847",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-002.manifest.json": "f32a89e50bca5288cfc51391f8c3e7e0240f7aca3c805639556c8ae744e1d9b2",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-002.tar.gz": "8f88a61c01ade71983dc31656d9b2c8524825315d35d95891a1fcc18daa0d9d9",
+    "artifacts/phase2-repeat-study-v1/seed-109-batch-002/collection-audit.json": "52444018346854fd79c5d64201be294a944ace85ecb391286686e786e4689f2a",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-003.manifest.json": "df7fc8567c4c845239a7538c50ad0a218a69d828da0da080723c6b18e8fb2d1e",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-003.tar.gz": "5c13bb6b612837f2919c304c117e9553bf5183196a72ae16704586b5796415e4",
+    "artifacts/phase2-repeat-study-v1/seed-109-batch-003/collection-audit.json": "a4f48682daa20b7a4e19bda720f5cc44e8e95268aff4ef21b41a831b542e0694",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-004.manifest.json": "35e37c37f1f2cd9922bee6ed81ace2a417342e76b8efee14d4b229e39e4088b3",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-004.tar.gz": "43d8c488be76117d0c68a891208d47ddbe7ca8bb92573bb865042b10c8b0951e",
+    "artifacts/phase2-repeat-study-v1/seed-109-batch-004/collection-audit.json": "a808ae96e0a638c4e898019978d9cba1b20f7791f75378a4f743ca10d4564625",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-005.manifest.json": "19a821d15c3a00f5c8458233b6d6cf15e1bfbfc7c46aafef75e147993dbc6f6c",
+    "artifacts/phase2-repeat-study-v1/archives/seed-109-batch-005.tar.gz": "f61ac2dac826439cedc1ddb7f2f2bb9c9741b4eaa28fecfad30c89451debc20e",
+    "artifacts/phase2-repeat-study-v1/seed-109-batch-005/collection-audit.json": "83a284090120af71fa3fa401060b26f1f5caa987581fbaa6acf2bd8451aa060d",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-001.manifest.json": "57885b1ba50a292ae7334e4dd83f26b0867eafb3477d7bf9e5664b3ce544ef7c",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-001.tar.gz": "4b378707b152835cb4f9dc9ea2ad1b9ce0e55a71cb45403777f4e1161d11b107",
+    "artifacts/phase2-repeat-study-v1/seed-41-batch-001/collection-audit.json": "0c7a54f029d34a2cad5ba32048366a7a53208903ce42c025667e722d6cbfa9b8",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-002.manifest.json": "f0e3b2a901f225b64b74ac1b77bd02912a951beb77e0c317991cae3fa6655e78",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-002.tar.gz": "fcbcf25732336799e8da0e0444dbea2e2115903fa5badaa43f62330bf32e063e",
+    "artifacts/phase2-repeat-study-v1/seed-41-batch-002/collection-audit.json": "554a833146d16f942518238ce457d55bacea98351bba89275935832d11f99bcb",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-003.manifest.json": "eebd349ab3714cf43c01ddd0ccc3bab08b11106383657e951f75c0a35eff48a6",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-003.tar.gz": "06ac4e93ab99202e8f851de30067ee8ce3e68dcdc4b8fc10fdca2910c1adbc92",
+    "artifacts/phase2-repeat-study-v1/seed-41-batch-003/collection-audit.json": "1e32f6278f01f28f553d504d09523b6b99ef6f29bc02542e755d5a92b3c3fee7",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-004.manifest.json": "f13b6dab3882a101666185814b847c8c480b0a6c334f35d6bdfed7ec3c2071ad",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-004.tar.gz": "1956b40d7470e8ccd744267c036083a413040e5d164446d6a411bbc5d9218aab",
+    "artifacts/phase2-repeat-study-v1/seed-41-batch-004/collection-audit.json": "d7d6901b0a9b4de0bf9712e9b96ee448a29062fca6086c9476bc8294ccadd092",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-005.manifest.json": "5a9cc40c166803d89b8d761cf230101343c1d32d0ca08981c0d1ae946d65d50a",
+    "artifacts/phase2-repeat-study-v1/archives/seed-41-batch-005.tar.gz": "426d76a71e8a363d5c5a9b100583a545474a4642e4629b443987f6de7e9800e1",
+    "artifacts/phase2-repeat-study-v1/seed-41-batch-005/collection-audit.json": "648bac2286acf35baab70e20fac69ec130a80c63c1a879bed2e7a519522977c1",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-001.manifest.json": "3e0431563e82b220b374bfe7588b361d6ddb21b5cd895b2111866329150c3662",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-001.tar.gz": "bc7b050c34445b764e2f8f19c0193d309abaad807c82a4b6d46eb2c91304514f",
+    "artifacts/phase2-repeat-study-v1/seed-53-batch-001/collection-audit.json": "811bc450e2ead711314cde2215d428dd04d1a120a199a5e4b1d054e6b82d40d8",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-002.manifest.json": "8ffa2535b119421797966da36c4f231eb1a39f29b37fb3faa6e1cefa08de36c7",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-002.tar.gz": "b963b64e4047d057aa5538b8fc2da5d07ed42a81f51eb52bbf2ccfbd88b81d34",
+    "artifacts/phase2-repeat-study-v1/seed-53-batch-002/collection-audit.json": "0d0f43a504012b75857c8c3092df6348f4ada31e38e8a37fe492807e83e98027",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-003.manifest.json": "74c775d65bbc88bf01b9d764e047588480e53005071a12ab18f2453df2242507",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-003.tar.gz": "e37a60dc90d4f870b9b8afce50cb69a54ae041761612d8eba28c0dc5707d77f0",
+    "artifacts/phase2-repeat-study-v1/seed-53-batch-003/collection-audit.json": "7e76f43a4a749452ee1d5931291d07e2ee036bdfa832035e3de785dbbb0dc2ec",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-004.manifest.json": "70d5ff0de13b4d53756b0cbb991b8e10e6ace9ed25d27c23043bf4d1aea52566",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-004.tar.gz": "a5c992d6473b1c8e560c187d9f8bf8a83530761a86f06967df0eea7f8cfd11cf",
+    "artifacts/phase2-repeat-study-v1/seed-53-batch-004/collection-audit.json": "66692bd2c637aeead48257f0a64f6a8a0bd0c293de7379f9fc05620b503bd4c4",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-005.manifest.json": "a2fe0ebc5217dcad927bba963587dc5b85bc115b60ed8a08878107d358222806",
+    "artifacts/phase2-repeat-study-v1/archives/seed-53-batch-005.tar.gz": "c21c2473413450645db0bf7239b9e452899bc7c22927246ddbdef337376b2f2a",
+    "artifacts/phase2-repeat-study-v1/seed-53-batch-005/collection-audit.json": "7208ed1cc21dad4f54002c46f0eedcc4904e28d507b1464f1841fa55d5587a79",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-001.manifest.json": "d53e4b389081755117b82c24d35abb3ace902c7410369d67ee6d1c3e5b5644b2",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-001.tar.gz": "77e54621a7ed7d39894039cbcf3d04fd88013c962060df6f3ae1e869a5fd1eee",
+    "artifacts/phase2-repeat-study-v1/seed-67-batch-001/collection-audit.json": "744dec115f7ac690e42fe01fc6be840a76405a656fd52c0a7b6f21e7ab58d949",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-002.manifest.json": "df3d1fe7909bc94b8f467a6d8af0acd4fddff80a0ea2664963b2f262a2163ec8",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-002.tar.gz": "2038e044cdf8e2f7dcfc2d6c108c29acbf540da4e49f7287a37b586dacfef861",
+    "artifacts/phase2-repeat-study-v1/seed-67-batch-002/collection-audit.json": "381c3976e75ade6cb109c5695fcb1d5c0c6680991caa8407e2a8eb0af5c4540b",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-003.manifest.json": "4cbf9f9833ccda6c1be982d48f4733e006c9179f0ab47b72c06039136db54938",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-003.tar.gz": "209d5d17e0824b828bb04fe967fad113b293db7c87a3c040882e7d58df34d766",
+    "artifacts/phase2-repeat-study-v1/seed-67-batch-003/collection-audit.json": "2a8a973d17741bbd9beb6564c91fa968ecd9c71ba89b9c8b5a003d55b036833e",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-004.manifest.json": "0ee0c79e721cf93fcb407585b39eb448a1399be3f17edceeab506cfac1e7eda6",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-004.tar.gz": "f2137a3694d3fd59fc5db899efee5e1752cb81a9c5c97a714c09820c9ad5be82",
+    "artifacts/phase2-repeat-study-v1/seed-67-batch-004/collection-audit.json": "6c9f2b632d0730ea4225b2e51b36c4b4043bcf50da60925540a7d81a0c33d9df",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-005.manifest.json": "22250c87ac596a100c8911f7a5eaf8951925d0734e765976a5628aff016f8000",
+    "artifacts/phase2-repeat-study-v1/archives/seed-67-batch-005.tar.gz": "b2c70ffd1921088708933642471d3a0e9928c767989304a30600cd7ea64f667f",
+    "artifacts/phase2-repeat-study-v1/seed-67-batch-005/collection-audit.json": "cfe85fac1544e4d8a71f78d2ed41cafc7c9868fe6768277f71dafa1fbb4dfd32",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-001.manifest.json": "cebd0643b923023058769f1fc02990070aa989eddb7b4ba577a1b84c35a284ca",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-001.tar.gz": "6c9f27629a4dd5eaeb1b4a76e952c84a07379ebc281dd817646472de2fb44d66",
+    "artifacts/phase2-repeat-study-v1/seed-79-batch-001/collection-audit.json": "13487c27e5392e1f2e9530ac2ea18de2190908ca7d1296af6530c8096f24c29f",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-002.manifest.json": "ecad9f18974fa3e1cf212a38af4e4623754a1fa8328e574a1e5d606bfaf431b5",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-002.tar.gz": "79388b769589b0c4a22884c4fdfe0a4281b41304e46e8f8f5f05440ef71c046b",
+    "artifacts/phase2-repeat-study-v1/seed-79-batch-002/collection-audit.json": "41f708edcdf30093bc305c9989e87e790a3560468f71c9e4292dd5d482fdc545",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-003.manifest.json": "6bb580f01d65c84e987ce31bb39dfb555c9b5c41a287bc41e3d08eb4c2e01071",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-003.tar.gz": "6bf8e922129315c7d06843373f8afb6f74fe2c3930aba5a57706bd552aa6b68a",
+    "artifacts/phase2-repeat-study-v1/seed-79-batch-003/collection-audit.json": "03727924a23266d321d0117603f06b15782fc62d52b05597b4cff7b4d083841a",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-004.manifest.json": "6f4ca33e67bf8b5917117e21eb2de55ce800481f4a91170e56976a9266791b7d",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-004.tar.gz": "371855fd3a4e89339cb4c0d9d0f0e98f9221e2cbefb18a86909e39818ead124d",
+    "artifacts/phase2-repeat-study-v1/seed-79-batch-004/collection-audit.json": "1972305dda6026856d7913a88067cf5e5c40e05a70f8fb9c06d11d00a445fb5d",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-005.manifest.json": "919876cdd020ad7ad08976a5127d339d1d3aa0ee2f89c0e6c01d1ddfed028721",
+    "artifacts/phase2-repeat-study-v1/archives/seed-79-batch-005.tar.gz": "f75e80f7e45c14ea42434663f2fa6de55cae9ea5cd838c94ad00bf92bd101bc0",
+    "artifacts/phase2-repeat-study-v1/seed-79-batch-005/collection-audit.json": "edf78c274be3a5fd587e038864e2f18679607505adaeb5c94c323b5039e53c55",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-001.manifest.json": "99495ef4b05a4c6799d6c025bc414247f759b0bec1383e83e829074175a054fa",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-001.tar.gz": "48c639df3d99bce79f184e26ca1758780e3f7674b89155ae443db972ea536ce8",
+    "artifacts/phase2-repeat-study-v1/seed-97-batch-001/collection-audit.json": "1bbd6229b0c687223ffbd036faac204eaa2454d900ea546b3a2394808bbca0d0",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-002.manifest.json": "beefb7ad83bb00f4f70155862bf98a825db8b8c01f65cd066dabaf26456b8cd8",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-002.tar.gz": "e74cb00cf749cd433f2c37fe9faa9f8fbce2dbee7168c41485956ad16414d133",
+    "artifacts/phase2-repeat-study-v1/seed-97-batch-002/collection-audit.json": "1600fe4716a0b901fb10af6652195f11bb4cfeb3a1f5ace593e76dd89d7b6b0b",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-003.manifest.json": "347b46a87361cb9afb9aa32fb698fe1e663fbc3c1973dcf28c3057557eb19967",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-003.tar.gz": "8fddd9576ca279ba1012e1aef2e107c32e709815710a8ee43f97c3d461bc7810",
+    "artifacts/phase2-repeat-study-v1/seed-97-batch-003/collection-audit.json": "e9eec80ae9f815a95351eef4104c59b0bfa284b5899316d5976e4cd292cf0a1e",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-004.manifest.json": "2ff02e6b7d68a2def12295d19aeebadf20d3d8540ba28fb092702d74aef78059",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-004.tar.gz": "8ba34300e7236a186cff5f8c42a6c0cc208d6f58ad15e8d5385947daeb587cc1",
+    "artifacts/phase2-repeat-study-v1/seed-97-batch-004/collection-audit.json": "475dea443fca8c0ff4ebbe061ddce83f79c52e601eb982d20bc8937ac21f450c",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-005.manifest.json": "62381a94b5f6f2ed3ea6afb7f54a2ce4d7701d1dd29d04ea7d80b70e4547c58c",
+    "artifacts/phase2-repeat-study-v1/archives/seed-97-batch-005.tar.gz": "54aafdace763655866c8d536486e4a6dcf843ff6b5059dffca6754d7165f8107",
+    "artifacts/phase2-repeat-study-v1/seed-97-batch-005/collection-audit.json": "b9c47fd9876a1c27341cd701e364bbaa6deeed616094513a6212e3f504cab850"
+  }
+}
