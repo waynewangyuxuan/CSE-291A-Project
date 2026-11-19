@@ -198,3 +198,5 @@ selected seed diagnostics.
 | [profile_phase2_context.py](profile_phase2_context.py) | Reproduce main-task context profiles, trigger coverage and source-bound capability intersections without inference |
 | [profile_phase2_mechanisms.py](profile_phase2_mechanisms.py) | Revalidate source-to-memory-to-action timelines and conservative same-state intervention checkpoints |
 | [phase2_followup_checkpoint.py](phase2_followup_checkpoint.py) | Replay verified simulated tool prefixes and prove exact environment/payload reconstruction for two follow-up cases; no model calls |
+| [analyze_phase2_reviewed_repeats.py](analyze_phase2_reviewed_repeats.py) | Require full source-bound review and original per-block gates, then compare semantic stability, finite-repeat Attack@k and tool/cost cohorts |
+| [plot_phase2_reviewed_repeats.py](plot_phase2_reviewed_repeats.py) | Draw reviewed per-task stability, repeated-attack bounds and common-stable-task tool/cost comparisons |
