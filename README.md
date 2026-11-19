@@ -28,6 +28,8 @@ and planning failures, and no demonstrated general compression defense. The only
 officially successful confirmation task is a reviewed scorer false positive;
 reviewed clean-conditional security is therefore undefined in that cohort.
 
+**Follow-up:** all **612 fresh-seed episodes are fully trace-reviewed**, with all 30 complete block gates passed. The [reviewed repeat analysis](results/phase2-followup-v1/reviewed-analysis/README.md) separates semantic capability, fixed-attack repeated risk, and tool/cost behavior on common capable tasks. The [same-state context study](results/phase2-followup-v1/continuation/README.md) is a separate bounded mechanism experiment.
+
 ## Run a first check
 
 Python 3.12 and [uv](https://docs.astral.sh/uv/) are required. Run commands from

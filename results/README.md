@@ -16,6 +16,8 @@ Raw requests and traces are described in the [evidence layout](../artifacts/READ
 | [phase2-main-v1](phase2-main-v1/README.md) | Completed 1,098-episode formal matrix and full trace reviews; main/confirmation kept separate, final tables/figures and offline recovery |
 | [phase2-seed-diagnostics-v1](phase2-seed-diagnostics-v1/README.md) | Completed 24-episode selected seed29 diagnostic with full review and offline recovery; not a representative second seed or pooled estimate |
 
+[Phase 2 follow-up](phase2-followup-v1/README.md): 612 fresh-seed episodes with full reviews and 30 gates, [stability / Attack@k / tools analysis](phase2-followup-v1/reviewed-analysis/README.md), plus a separate [same-state context mechanism study](phase2-followup-v1/continuation/README.md). These do not replace or pool into the original formal/confirmation matrix.
+
 The original raw traces for historical collections are unavailable. The committed
 archive covers newly reproduced Phase 1 baseline/retry evidence. Historical
 curated results remain preserved and must be labeled as such when cited.

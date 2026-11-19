@@ -1,6 +1,10 @@
-# Phase 2 补充研究：并行准备与新 seed 重复实验
+# Phase 2 补充研究：完整重复审阅与上下文机制
 
-2026-11-17。由已完成研究后的讨论推进，正式 1,098 条结果与24条所选诊断继续单独保留。本目录记录后续资格复核、上下文 profiling、机制检查点与新的重复实验。
+更新于2026-11-18。由已完成研究后的讨论推进，正式 1,098 条结果与24条所选诊断继续单独保留。本目录记录后续资格复核、上下文 profiling、机制检查点与新的重复实验。
+
+612条新seed实验已全部采集并逐条审阅，30个原协议完整gate全部通过。576条正常结束，36条Workspace31上下文限制错误保留未知。[完整分析与三张主图](reviewed-analysis/README.md)报告稳定性、Attack@k、共同稳定任务上的工具行为/成本及评分敏感性。原始证据共30个归档、39,022,172字节，[采集验证](collection-verification.json)与[审阅分析](reviewed-analysis/analysis.json)分别记录来源。
+
+[同状态机制续跑](continuation/README.md)18条已全部完成并审阅，完整audit通过；两例的三个Truncate都正确作答，其余12条保留超限未知。该小样本记录攻击重新暴露、残留联系人上下文与一条终止前未授权发信，不作为第二个精度矩阵或普遍防御结论。
 
 ## 已确定的重复实验
 
@@ -8,7 +12,7 @@
 
 [冻结选择](../../configs/phase2-followup-v1/repeat-selection.json)：17任务 × F16/Q8/Q4 × clean/固定attack × 6新seed（41、53、67、79、97、109），共612 episodes。Full上下文、原模型checkpoint、攻击文本、7040总预算、工具权限和评分保持原设置。每批最多4任务/24episodes，共30批；每个任务跨六个seed轮遍六种精度运行顺序。每批90分钟是停止上限，保留已完成错误，不通过反复重跑消除它们。
 
-这些是新的重复实验，不与原seed17主集、seed29所选诊断合并估计。seed41第一批24条已完成采集、逐条审阅及非partial完整gate；初步耗时估计为全队列约5.2小时episode时间，不含模型启动、审阅和分析，实际路径变化会影响耗时。
+这些是新的重复实验，不与原seed17主集、seed29所选诊断合并估计。首批24条pilot原标注保留，新增语义字段和剩余588条均已合入完整审阅。
 
 重复风险报告k=1、2、3。先逐任务计算，再按任务汇总；unknown和尚未运行的数据保留为未解决项。输出的上下界是有限重复样本的识别/完成边界，不是总体风险置信区间。六次尝试不足以估计极端尾部风险。当前clean资格未知时，条件风险估计保持不可用；完整trace审阅是单独的必要步骤。
 
@@ -18,14 +22,15 @@
 
 ```sh
 make phase2-repeat-status
-make phase2-repeat-analyze
+make phase2-repeat-review-analyze
+make phase2-repeat-reviewed-plots
 make phase2-repeat-run PHASE2_REPEAT_BLOCK=seed-41-batch-001
 make phase2-repeat-queue PHASE2_REPEAT_MAX_BLOCKS=1
 ```
 
 队列默认最多推进一批。每批先校验并归档原始证据，再继续下一批；服务错误会停止队列，已完成的任务限制错误保留为unknown。归档在`artifacts/phase2-repeat-study-v1/archives/`，每个成员有SHA-256；模型权重不进入归档。执行入口复用冻结driver并校验来源，旧实验记录不变。资源采集包含常驻F16摘要器，Full策略不会调用摘要器。
 
-[机械分析](repeats/analysis.json)始终标为provisional，记录完整计划的缺失/已完成覆盖率，不将模型未执行的记录当作失败或安全。当前导出的clean_capability/current_clean_eligible仍使用官方utility，完整审阅后的语义资格需要单独接入分析，不能直接将这些列解释成语义正确。当前采集状态以状态命令为准；确认全审阅前不发布正式稳定性结论。
+[机械分析](repeats/analysis.json)始终标为provisional，记录完整计划的缺失/已完成覆盖率，不将模型未执行的记录当作失败或安全。当前导出的clean_capability/current_clean_eligible仍使用官方utility，完整审阅后的语义资格需要单独接入分析，不能直接将这些列解释成语义正确。该旧机械导出是准备阶段冻结快照，现已由独立的[完整审阅导出](reviewed-analysis/analysis.json)提供正式补充分析，旧快照不回写。
 
 ## 上下文与机制：已选择的下一开发批次
 
@@ -35,7 +40,7 @@ make phase2-repeat-queue PHASE2_REPEAT_MAX_BLOCKS=1
 
 [机制审阅](mechanisms/README.md)核验162条轨迹，整理15个案例，找到4任务、21条episode的42个结构合格检查点；多个同轨迹或重复配置检查点不算独立样本。与历史能力集合的真实交集是Workspace28（Q8，三个历史策略各request2/3），其余Travel2/3和Workspace14属于机制诊断。该扫描只深入实际发生压缩的九个任务，不声称穷举所有提前介入窗口。
 
-[两例离线状态恢复](checkpoint-restore/README.md)已验证：Workspace28 Q8 request2和Workspace14 F16 request3的工具返回、完整payload均与原记录一致，后者准确重建六封邮件的已读变化。成功只证明前缀恢复，下一开发项是接入同状态的三种上下文处理与续跑；新的上下文推理尚未启动。固定阈值、profiling介入和同状态机制续跑是不同问题，分别报告覆盖和结论。
+[两例离线状态恢复](checkpoint-restore/README.md)已验证：Workspace28 Q8 request2和Workspace14 F16 request3的工具返回、完整payload均与原记录一致，后者准确重建六封邮件的已读变化。这份离线证据只证明前缀恢复，实际模型干预结果另见[续跑研究](continuation/README.md)。固定阈值、profiling介入和同状态机制续跑是不同问题，分别报告覆盖和结论。
 
 ## 首批真实执行与审阅证据
 

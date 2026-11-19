@@ -100,3 +100,11 @@ The [reviewed supplement](../results/phase2-seed-diagnostics-v1/README.md)
 provides a verified isolated recovery recipe; all three comparison exports
 reproduce byte-for-byte without weights or inference. These selected cases stay
 separate from the 1,098 formal episodes and from development/calibration.
+
+## Phase 2 fresh-repeat evidence
+
+Thirty committed archives under `phase2-repeat-study-v1/archives/` preserve all612 fresh-repeat episodes (39,022,172 compressed bytes), with member inventories. [Collection verification](../results/phase2-followup-v1/collection-verification.json) and [full source-bound review/gates](../results/phase2-followup-v1/reviewed-analysis/analysis.json) are separate proofs. Archived collection-time review flags remain historical; the new review parts and gate outputs establish complete review. Model weights are excluded.
+
+## Same-state context continuation evidence
+
+[phase2-context-continuation-v1/evidence.tar.gz](phase2-context-continuation-v1/evidence.tar.gz) preserves18 real continuations, two fixed summaries, raw sent views, per-tool state transitions and source-bound semantic review. Its [manifest](phase2-context-continuation-v1/manifest.json) verifies each member; a second build is byte-identical. Model weights and the pinned runtime binary are excluded. See the [mechanism findings and full audit](../results/phase2-followup-v1/continuation/README.md). Original source-root/runtime requirements still apply to reproducing the complete audit; inventory checks and reading raw traces need no model.
