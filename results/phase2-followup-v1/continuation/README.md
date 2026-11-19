@@ -60,30 +60,60 @@ OUT="$PWD/artifacts/phase2-context-continuation-v1"
   --source-root "$PWD" --output-root "$OUT"
 ```
 
-The following service operations are for the parent only. Keep the stages serial; the summarizer
-does not need to remain resident during continuation. Each stage acquires the existing formal
-queue/run/launch locks and both shared endpoint evaluator locks. The exact original agent runtime
-semantic identity is required; the summary identity is the pinned F16 runtime at port 8086.
+Preparation generates `$OUT/configs/runtime-{q8,f16,summarizer}.toml`. Only `output_root`
+differs from the frozen originals, pointing to `$OUT/runtime/<role>`. `server.json`, launch logs
+and shutdown metadata stay there. Model paths, commands, flags and expected semantic identities
+remain unchanged. The runner reads only these owned metadata paths.
+
+The following parent-only wrapper holds **the same locks across startup, inference and shutdown**:
+MAIN `artifacts/phase2-main-v1/{.queue.lock,.lock,.launch.lock}`, `$OUT/.lock`, and both MAIN
+`artifacts/runtime/evaluator-locks/` locks keyed by the frozen runner's normalized loopback ports
+8086 and 8087. It calls the existing lifecycle helpers without editing them and stops its owned
+service in `finally`, including a rejected or interrupted stage. Do not invoke `run_locked`
+without `study_locks`; the ordinary `run` CLI acquires these locks itself when the parent has
+already launched a matching owned service.
 
 ```sh
-.venv/bin/agent-tradeoffs serve --config configs/phase2-main-v1/runtime-summarizer.toml --background
-.venv/bin/python scripts/phase2_context_continuation.py run --stage summaries \
-  --source-root "$PWD" --output-root "$OUT"
-.venv/bin/agent-tradeoffs stop --config configs/phase2-main-v1/runtime-summarizer.toml
+parent_stage() {
+  .venv/bin/python - "$OUT" "$1" <<'PARENT_PY'
+import sys
+from pathlib import Path
+sys.path.insert(0, "scripts")
+import phase2_context_continuation as study
+from agent_tradeoffs.runtime import start_server, stop_server
 
-.venv/bin/agent-tradeoffs serve --config configs/phase2-main-v1/runtime-q8.toml --background
-.venv/bin/python scripts/phase2_context_continuation.py run --stage q8 \
-  --source-root "$PWD" --output-root "$OUT"
-.venv/bin/agent-tradeoffs stop --config configs/phase2-main-v1/runtime-q8.toml
-
-.venv/bin/agent-tradeoffs serve --config configs/phase2-main-v1/runtime-f16.toml --background
-.venv/bin/python scripts/phase2_context_continuation.py run --stage f16 \
-  --source-root "$PWD" --output-root "$OUT"
-.venv/bin/agent-tradeoffs stop --config configs/phase2-main-v1/runtime-f16.toml
-
+output = study.output_root(Path.cwd(), Path(sys.argv[1]))
+stage = sys.argv[2]
+assert stage in ("summaries", "q8", "f16")
+role = "summarizer" if stage == "summaries" else stage
+plan = study.read(output / "plan.json")
+config = output / f"configs/runtime-{role}.toml"
+with study.study_locks(output):
+    study.verify_sources(plan)
+    study.verify_runtime_configs(plan, output)
+    start_server(config)
+    try:
+        study.run_locked(plan, output, stage)
+    finally:
+        stop_server(config)
+PARENT_PY
+}
+parent_stage summaries || exit 1
+parent_stage q8 || exit 1
+parent_stage f16 || exit 1
 .venv/bin/python scripts/phase2_context_continuation.py audit \
   --source-root "$PWD" --output-root "$OUT"
 ```
+
+The explicit inference-only equivalent for a matching service already owned by the parent is:
+
+```sh
+.venv/bin/python scripts/phase2_context_continuation.py run --stage summaries \
+  --source-root "$PWD" --output-root "$OUT"
+```
+
+Use `--stage q8` or `--stage f16` for the corresponding continuation stage and stop that owned
+service before advancing. Never launch a continuation service with the original formal configs.
 
 Stop and review a rejected stage before the next command. Existing services must already match
 the intended stage; the runner never kills or adopts an unrelated process. Source drift, changed
@@ -94,6 +124,7 @@ runner must remain unchanged after preparation; integration precedes preparation
 Expected artifacts under `$OUT`:
 
 - `plan.json`: complete source-bound snapshots, configuration, immutable source hashes and 18 units.
+- `configs/runtime-*.toml`, `runtime/<role>/`: derived owned service configuration and lifecycle evidence.
 - `budget.json`: every reservation, elapsed/charged seconds, interrupted reservations.
 - `summaries/<case>/`: original/canonical source mapping, runtime capture, raw memory requests and
   responses, rendered token-count log, validated result and file-hash receipt.
@@ -109,7 +140,7 @@ Literal attack-payload exposure, original call IDs and source-message markers ar
 `last_sent_retention` describes the last actual request (null when none was sent), while
 `archival_retention` describes the retained audit history. These are deliberately separate.
 The Summary envelope enumerates every source ID: Workspace14 records `[2, 3, 4, 5]`.
-semantic retention and refusals remain unknown pending raw-trace review. Behavior errors keep
+Semantic retention and refusals remain unknown pending raw-trace review. Behavior errors keep
 utility/attack outcomes null. `real_model_proof` requires raw responses in all 18 continuations;
 an audited error or a synthetic test does not establish intervention effectiveness.
 
@@ -130,9 +161,10 @@ and `aac68bef47527e3d290c46a849de55563c99154d3fc88c80dfa635a3f4e87b0a` (Workspac
 Tests use synthetic responses only at model boundaries, with real typed environments and
 the real LocalAgent/tool runtime, to test contracts. They are not real-model proof.
 
-Worker verification on 2026-11-18: 33 targeted tests passed; the complete worktree suite passed
-354 tests with 2 skips. Ruff lint/format and diff whitespace checks passed. Two consecutive
-real-source preparations were identical, and all six case/seed Full starting payloads matched
-the originals except seed. Plan hash:
-`82489f748f68b33d1b539fce5d86621d0569c03750b00ce3b6dcabd0ee00e1ac`.
+Worker verification on 2026-11-18: 34 targeted tests passed; the complete worktree suite passed
+355 tests with 2 skips. Ruff lint/format and diff whitespace checks passed. Two consecutive
+real-source preparations were identical. All six case/seed Full starting payloads matched the
+originals except seed; the three derived runtime configurations change only service output paths.
+Final plan hash for the documented MAIN output directory:
+`c848e7e7eb567a831ac449cdaafeb436d7a0b53bfcbc692bf0ebaf8dc418441c`.
 No model service or inference was started by the worker.

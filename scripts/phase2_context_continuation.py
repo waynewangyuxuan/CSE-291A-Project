@@ -11,6 +11,7 @@ import re
 import sys
 import tempfile
 import time
+import tomllib
 from contextlib import ExitStack, contextmanager
 from pathlib import Path
 from types import SimpleNamespace
@@ -156,7 +157,40 @@ def boundaries(snapshot):
     return boundary
 
 
-def build_plan(root, spec_path=SPEC):
+def runtime_configs(root, output):
+    configs = {}
+    for role in ("q8", "f16", "summarizer"):
+        original = (root / f"configs/phase2-main-v1/runtime-{role}.toml").read_text()
+        replacement = str(output / "runtime" / role)
+        text, count = re.subn(
+            r'^output_root = "[^"\n]+"$',
+            f'output_root = "{replacement}"',
+            original,
+            flags=re.MULTILINE,
+        )
+        expected = tomllib.loads(original)
+        expected["runtime"]["output_root"] = replacement
+        require(
+            count == 1 and tomllib.loads(text) == expected, "Only runtime output_root may change"
+        )
+        configs[f"configs/runtime-{role}.toml"] = text
+    return configs
+
+
+def verify_runtime_configs(plan, output):
+    require(plan["output_root"] == str(output), "Prepared output root differs")
+    for name, expected in plan["runtime_configs"].items():
+        path = output / name
+        require(path.read_text() == expected, "Owned runtime config changed")
+        role = path.stem.removeprefix("runtime-")
+        source = Path(plan["source_root"]) / f"configs/phase2-main-v1/runtime-{role}.toml"
+        require(
+            server_command(path) == server_command(source),
+            "Owned runtime changed model, command or flags",
+        )
+
+
+def build_plan(root, output, spec_path=SPEC):
     root = root.resolve()
     spec = read(spec_path)
     validate_spec(spec)
@@ -273,6 +307,8 @@ def build_plan(root, spec_path=SPEC):
     return {
         "schema_version": 1,
         "source_root": str(root),
+        "output_root": str(output),
+        "runtime_configs": runtime_configs(root, output),
         "spec": spec,
         "driver_sha256": sha256_file(WRAPPER),
         "spec_sha256": sha256_file(spec_path),
@@ -482,7 +518,7 @@ class LoggedFunctions:
             raise
 
 
-def model_config(case, seed, directory):
+def model_config(case, seed, directory, output):
     config = copy.deepcopy(case["config"])
     config["model"]["seed"] = seed
     config["runner"].update(
@@ -490,11 +526,12 @@ def model_config(case, seed, directory):
         server_pid=None,
         episode_timeout_seconds=280,
         compact_artifacts=False,
+        runtime_metadata_path=str(output / "runtime" / case["precision"] / "server.json"),
     )
     return ExperimentConfig.model_validate(config)
 
 
-def summary_config(plan):
+def summary_config(plan, output):
     config = copy.deepcopy(plan["cases"][1]["config"])
     config["model"].update(
         model="qwen3-8b-f16",
@@ -511,13 +548,13 @@ def summary_config(plan):
     config["runner"].update(
         server_pid=None,
         episode_timeout_seconds=120,
-        runtime_metadata_path="artifacts/phase2-main-v1/runtime/summarizer/server.json",
+        runtime_metadata_path=str(output / "runtime/summarizer/server.json"),
     )
     return ExperimentConfig.model_validate(config)
 
 
-def summary_settings(plan):
-    config = summary_config(plan)
+def summary_settings(plan, output):
+    config = summary_config(plan, output)
     return SummaryContext(
         policy="summary",
         max_context_tokens=7040,
@@ -668,7 +705,9 @@ def run_summary(plan, output, case, deployment, guard):
     result = {"status": "error", "summary": None, "case": case["id"]}
     started = time.monotonic()
     services = MemoryServices(
-        summary_settings(plan), directory, lambda: max(0.001, 120 - (time.monotonic() - started))
+        summary_settings(plan, output),
+        directory,
+        lambda: max(0.001, 120 - (time.monotonic() - started)),
     )
     try:
         with reservation(output, "summary-" + case["id"], 120):
@@ -710,7 +749,7 @@ def run_continuation(plan, output, case, unit, deployment, guard):
     summary_directory = output / "summaries" / case["id"]
     verify_seal(summary_directory)
     summary = summary_text(summary_directory, case) if unit["arm"] == "summary" else ""
-    config = model_config(case, unit["seed"], directory)
+    config = model_config(case, unit["seed"], directory, output)
     identity = stable_hash(
         {
             "plan": stable_hash(plan),
@@ -835,43 +874,67 @@ def study_locks(output):
 
 def run(plan, output, stage):
     with study_locks(output):
+        run_locked(plan, output, stage)
+
+
+def run_locked(plan, output, stage):
+    verify_sources(plan)
+    verify_runtime_configs(plan, output)
+    case = next((c for c in plan["cases"] if c["precision"] == stage), None)
+    config = (
+        summary_config(plan, output)
+        if stage == "summaries"
+        else model_config(case, 41, output, output)
+    )
+    expected = (
+        plan["expected_summary_runtime"] if stage == "summaries" else case["expected_runtime"]
+    )
+    deployment, pid = capture_runtime(config)
+    require(
+        deployment["semantic_identity"] == expected, "Live runtime differs from frozen identity"
+    )
+    require(
+        deployment["live_server_props"]["model_ftype"] == ("Q8_0" if stage == "q8" else "F16"),
+        "Original precision changed",
+    )
+
+    def guard():
         verify_sources(plan)
-        case = next((c for c in plan["cases"] if c["precision"] == stage), None)
-        config = summary_config(plan) if stage == "summaries" else model_config(case, 41, output)
-        expected = (
-            plan["expected_summary_runtime"] if stage == "summaries" else case["expected_runtime"]
-        )
-        deployment, pid = capture_runtime(config)
-        require(
-            deployment["semantic_identity"] == expected, "Live runtime differs from frozen identity"
-        )
-        require(
-            deployment["live_server_props"]["model_ftype"] == ("Q8_0" if stage == "q8" else "F16"),
-            "Original precision changed",
-        )
+        verify_runtime_configs(plan, output)
+        guard_runtime_process(pid, deployment["metadata_snapshot"]["process_identity"])
 
-        def guard():
-            verify_sources(plan)
-            guard_runtime_process(pid, deployment["metadata_snapshot"]["process_identity"])
-
-        require_disk_reserve(output, config.runner.min_free_disk_bytes)
-        if stage == "summaries":
-            for selected in plan["cases"]:
-                run_summary(plan, output, selected, deployment, guard)
-        else:
-            for unit in plan["units"]:
-                if unit["case"] == case["id"]:
-                    run_continuation(plan, output, case, unit, deployment, guard)
-        guard()
+    require_disk_reserve(output, config.runner.min_free_disk_bytes)
+    if stage == "summaries":
+        for selected in plan["cases"]:
+            run_summary(plan, output, selected, deployment, guard)
+    else:
+        for unit in plan["units"]:
+            if unit["case"] == case["id"]:
+                run_continuation(plan, output, case, unit, deployment, guard)
+    guard()
 
 
 def prepare(root, output, check_only=False):
-    plan = build_plan(root)
+    plan = build_plan(root, output)
     if output.exists() and (output / "plan.json").exists():
         require(read(output / "plan.json") == plan, "Existing study plan differs; use a fresh root")
     elif output.exists():
-        require(not list(output.iterdir()), "Output is not an empty study directory")
+        present = {
+            str(p.relative_to(output)): p.read_text() for p in output.rglob("*") if p.is_file()
+        }
+        require(
+            all(plan["runtime_configs"].get(name) == content for name, content in present.items()),
+            "Output contains files outside the prepared runtime configs",
+        )
     if not check_only:
+        for name, content in plan["runtime_configs"].items():
+            path = output / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            if path.exists():
+                require(path.read_text() == content, "Owned runtime config differs")
+            else:
+                path.write_text(content)
+        verify_runtime_configs(plan, output)
         save(output / "plan.json", plan)
     return {
         "status": "offline_restoration_verified",
@@ -889,9 +952,13 @@ def prepare(root, output, check_only=False):
     }
 
 
-def audit_deployment(deployment, expected, precision):
+def audit_deployment(deployment, expected, precision, owned_directory):
     require(deployment["semantic_identity"] == expected, "Runtime semantic identity differs")
     metadata, props = deployment["metadata_snapshot"], deployment["live_server_props"]
+    require(
+        Path(metadata["log_path"]).resolve().is_relative_to(owned_directory),
+        "Runtime evidence points outside the owned service directory",
+    )
     require(
         deployment["model_digest_verified"] is True
         and metadata["process_identity"]
@@ -971,7 +1038,10 @@ def audit_tools(directory, case, trace, result):
 
 def audit(plan, output, partial=False):
     verify_sources(plan)
-    require(build_plan(Path(plan["source_root"])) == plan, "Prepared plan does not reproduce")
+    verify_runtime_configs(plan, output)
+    require(
+        build_plan(Path(plan["source_root"]), output) == plan, "Prepared plan does not reproduce"
+    )
     summaries = {}
     for case in plan["cases"]:
         directory = output / "summaries" / case["id"]
@@ -979,7 +1049,9 @@ def audit(plan, output, partial=False):
             continue
         verify_seal(directory)
         deployment = read(directory / "runtime.json")
-        audit_deployment(deployment, plan["expected_summary_runtime"], "f16")
+        audit_deployment(
+            deployment, plan["expected_summary_runtime"], "f16", output / "runtime/summarizer"
+        )
         summaries[case["id"]] = summary_text(directory, case)
     rows = []
     identities = set()
@@ -993,7 +1065,12 @@ def audit(plan, output, partial=False):
             read(directory / name) for name in ("start.json", "result.json", "trace.json")
         ]
         deployment = read(directory / "runtime.json")
-        audit_deployment(deployment, case["expected_runtime"], case["precision"])
+        audit_deployment(
+            deployment,
+            case["expected_runtime"],
+            case["precision"],
+            output / "runtime" / case["precision"],
+        )
         summary = summaries[case["id"]] if unit["arm"] == "summary" else ""
         expected = copy.deepcopy(case["snapshot"]["payload"])
         expected.update(seed=unit["seed"], messages=transform(case, unit["arm"], summary))
@@ -1013,7 +1090,7 @@ def audit(plan, output, partial=False):
         identities.add(identity)
         require(start["unit"] == result["unit"] == unit, "Unit changed")
         require(
-            start["config"] == plain(model_config(case, unit["seed"], directory)),
+            start["config"] == plain(model_config(case, unit["seed"], directory, output)),
             "Continuation configuration differs",
         )
         require(

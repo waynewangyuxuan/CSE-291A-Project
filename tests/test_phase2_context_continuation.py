@@ -106,6 +106,7 @@ def case():
     }
     return {
         "id": "synthetic-contract",
+        "precision": "q8",
         "snapshot": snapshot,
         "boundary": 4,
         "archive": [{"message_id": i, **m} for i, m in enumerate(payload["messages"][2:4], 2)],
@@ -153,7 +154,7 @@ def tool_output(call_id="new0"):
 
 def agent_for(tmp_path, case, arm, outputs):
     runtime = study.checkpoint.runtime_for("v1.2.2", "workspace")
-    config = study.model_config(case, 41, tmp_path)
+    config = study.model_config(case, 41, tmp_path, tmp_path)
     client = FakeClient(outputs)
     agent = study.ContinuationAgent(config, tmp_path, case["attack_payloads"], client=client)
     agent.counter = FakeCounter()
@@ -375,10 +376,15 @@ def test_tool_evidence_links_restored_state_to_actual_final_state(tmp_path, case
 
 
 def synthetic_summary(tmp_path, case, monkeypatch):
+    from agent_tradeoffs import memory
+
+    monkeypatch.setattr(
+        memory.openai, "OpenAI", lambda **_: FakeClient([{"content": "[m3] Search failed."}])
+    )
+
     class SyntheticServices(study.MemoryServices):
         def __init__(self, settings, directory, remaining):
             super().__init__(settings, directory, remaining)
-            self.client = FakeClient([{"content": "[m3] Search failed."}])
 
             def count(payload):
                 study.append_jsonl(
@@ -495,3 +501,45 @@ def test_retention_uses_last_sent_payload_not_archived_history(tmp_path, case):
     visible = study.last_sent_retention(tmp_path, case)
     assert visible["request_index"] == 3
     assert visible["literal_payload_vectors"] == ["email"]
+
+
+def test_owned_runtime_configs_change_only_output_paths(tmp_path, case):
+    root = tmp_path / "source"
+    source_configs = root / "configs/phase2-main-v1"
+    source_configs.mkdir(parents=True)
+    (root / "pyproject.toml").write_text("")
+    originals = {}
+    for role in ("q8", "f16", "summarizer"):
+        name = f"runtime-{role}.toml"
+        originals[name] = (ROOT / "configs/phase2-main-v1" / name).read_text()
+        (source_configs / name).write_text(originals[name])
+    output = root / "artifacts/phase2-context-continuation-test"
+    configs = study.runtime_configs(root, output)
+    for name, text in configs.items():
+        path = output / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text)
+        role = path.stem.removeprefix("runtime-")
+        before = study.tomllib.loads(originals[path.name])
+        after = study.tomllib.loads(text)
+        assert after["runtime"].pop("output_root") == str(output / "runtime" / role)
+        before["runtime"].pop("output_root")
+        assert before == after
+    plan = {"source_root": str(root), "output_root": str(output), "runtime_configs": configs}
+    study.verify_runtime_configs(plan, output)
+    for name, text in originals.items():
+        assert (source_configs / name).read_text() == text
+    assert (
+        study.model_config(
+            case, 41, output / "continuations/unit", output
+        ).runner.runtime_metadata_path
+        == output / "runtime/q8/server.json"
+    )
+    assert (
+        study.summary_config({"cases": [case, case]}, output).runner.runtime_metadata_path
+        == output / "runtime/summarizer/server.json"
+    )
+    path = output / "configs/runtime-q8.toml"
+    path.write_text(path.read_text().replace("port = 8087", "port = 8097"))
+    with pytest.raises(ValueError, match="Owned runtime config changed"):
+        study.verify_runtime_configs(plan, output)
